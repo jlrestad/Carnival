@@ -4435,7 +4435,7 @@ MonoBehaviour:
   jumpSpeed: 8
   lookSpeed: 2.5
   gravity: 20
-  slideSpeed: 6
+  slideSpeed: 15
   slideTime: 0.5
   slideHeight: 0.8
   crouchHeight: 1
@@ -4448,6 +4448,7 @@ MonoBehaviour:
   isSliding: 0
   isCrouching: 0
   isUp: 0
+  slidingAllowed: 1
 --- !u!143 &290120327
 CharacterController:
   m_ObjectHideFlags: 0

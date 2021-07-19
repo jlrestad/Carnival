@@ -38,6 +38,7 @@ public class FPSController : MonoBehaviour
 
     bool run, jump, slide, crouch;
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;
+    public bool slidingAllowed = true;
 
     void Start()
     {
@@ -70,9 +71,16 @@ public class FPSController : MonoBehaviour
         isCrouching = crouch && !isUp;
 
         // Sliding
-        if (isSliding)
+        if (slidingAllowed && isSliding)
         {
+            // slide once
             Slide();
+            slidingAllowed = false;
+        }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            // allow for sliding again
+            slidingAllowed = true;
         }
      
 
@@ -95,6 +103,13 @@ public class FPSController : MonoBehaviour
         //If canMove is true and isRunning is true, then speed is runSpeed, else speed is walkSpeed.
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+
+        if (isSliding)
+        {
+            curSpeedX = slideSpeed * Input.GetAxis("Vertical");
+            curSpeedZ = slideSpeed * Input.GetAxis("Horizontal");
+        }
+
         float moveDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
 
@@ -134,12 +149,10 @@ public class FPSController : MonoBehaviour
 
     private void Slide()
     {
-        Debug.Log("Sliding");
-
         isUp = false;
         
         characterController.height = slideHeight;
-        characterController.Move(slideSpeed * Time.deltaTime * moveDirection);
+        characterController.Move(moveDirection * Time.deltaTime/* * slideSpeed*/);
 
         playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
         //transform.rotation = Quaternion.Euler(0, transform.rotation.y, -10.0f);
@@ -149,8 +162,6 @@ public class FPSController : MonoBehaviour
 
     private void GoUp()
     {
-        Debug.Log("Go up");
-
         isUp = true;
 
         characterController.height = originalHeight;
@@ -175,8 +186,6 @@ public class FPSController : MonoBehaviour
 
     private void Crouch()
     {
-        Debug.Log("Crouch");
-
         isUp = false;
 
         characterController.height = crouchHeight;
