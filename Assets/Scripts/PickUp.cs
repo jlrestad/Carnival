@@ -5,61 +5,77 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     public Transform holdDest;
+    
     public bool isHolding;
+    public float pickUpRange;
+    public float throwSpeed = 20.0f;
 
-    private void OnTriggerEnter(Collider other)
+    [HideInInspector] public Vector3 distanceToPlayer;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public BoxCollider collider;
+
+    private void Start()
     {
-        if (other.gameObject.tag == "Player")
+        rb = GetComponent<Rigidbody>();
+        collider = GetComponent<BoxCollider>();
+    }
+
+    public void Update()
+    {
+        distanceToPlayer = holdDest.position - transform.position;
+
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isHolding)
         {
-            Debug.Log("You have entered box space.");
-
-            // GRAB
-            if (Input.GetKey(KeyCode.E))
-            {
-                Debug.Log("Grabbing!");
-
-                GetComponent<BoxCollider>().enabled = false;
-                GetComponent<Rigidbody>().useGravity = false;
-                this.transform.position = holdDest.position;
-                this.transform.parent = GameObject.Find("ObjectHold").transform;
-
-                isHolding = true;
-
-            }
-
-            // THROW
-            if (Input.GetKey(KeyCode.E) && isHolding)
-            {
-                Debug.Log("Throwing!");
-
-                this.transform.parent = null;
-                GetComponent<Rigidbody>().useGravity = true;
-                GetComponent<BoxCollider>().enabled = false;
-
-                isHolding = false;
-            }
+            Grab();
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && isHolding)
+        {
+            Drop();
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && isHolding)
+        {
+            Throw();
         }
     }
 
-    void GrabObject()
-    {
-        // GRAB
-        if (Input.GetKey(KeyCode.E))
+    void Grab()
         {
-            GetComponent<Rigidbody>().useGravity = false;
+            Debug.Log("Grab!");
+
+            collider.enabled = false;
+            rb.isKinematic = true;
+            
             this.transform.position = holdDest.position;
             this.transform.parent = GameObject.Find("ObjectHold").transform;
 
             isHolding = true;
-
         }
-        
-        // THROW
-        if (Input.GetKey(KeyCode.E) && isHolding)
+
+        void Drop()
         {
-            this.transform.parent = null;
-            GetComponent<Rigidbody>().useGravity = true;
-        }
-    }
+            Debug.Log("Dropped!");
 
+            this.transform.parent = null;
+
+            rb.isKinematic = false;
+            collider.enabled = true;
+
+            isHolding = false;
+        }
+
+    void Throw()
+    {
+        Debug.Log("Throw!");
+
+        this.transform.parent = null;
+
+        rb.isKinematic = false;
+        collider.enabled = true;
+
+        // Throw
+        //rb.AddForce(transform.forward * throwSpeed, ForceMode.Impulse);
+        rb.velocity = transform.forward * throwSpeed;
+
+        isHolding = false;
+    }
 }

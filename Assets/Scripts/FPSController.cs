@@ -33,6 +33,7 @@ public class FPSController : MonoBehaviour
     Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
 
+    [Header("BOOLS")]
     //[HideInInspector]
     public bool canMove = true;
 
