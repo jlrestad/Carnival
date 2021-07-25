@@ -12,9 +12,9 @@ public class PickUp : MonoBehaviour
 
     [HideInInspector] public Vector3 distanceToPlayer;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public BoxCollider collider;
+    [HideInInspector] public new BoxCollider collider;
 
-    private void Start()
+    public void Start()
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<BoxCollider>();

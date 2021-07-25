@@ -32,21 +32,22 @@ public class FPSController : MonoBehaviour
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
+    GameObject weapon;
 
     [Header("BOOLS")]
     //[HideInInspector]
     public bool canMove = true;
+    public bool weaponIsEquipped;
 
     bool run, jump, slide, crouch;
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;
     public bool slidingAllowed = true;
 
-    void Start()
+    public void Start()
     {
         characterController = GetComponent<CharacterController>();
 
         originalHeight = characterController.height;
-        //slideTimeCounter = slideTime;
 
         canMove = true;
         isUp = true;
@@ -56,8 +57,10 @@ public class FPSController : MonoBehaviour
         Cursor.visible = false;
     }
 
-    private void Update()
+    public void Update()
     {
+        //weaponIsEquipped = weapon.GetComponent<WeaponEquip>().isEquipped;
+
         //Controls
         run = Input.GetKey(KeyCode.LeftShift);
         jump = Input.GetButton("Jump");

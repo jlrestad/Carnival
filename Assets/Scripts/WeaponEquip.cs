@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class WeaponEquip : MonoBehaviour
 {
-    public Transform weaponDist;
+    public Transform player;
+    public Transform holsterPos;
+    public GameObject activeWeapon;
 
     public bool isEquipped;
     public float pickUpRange;
 
     [HideInInspector] public Vector3 distanceToPlayer;
+    [HideInInspector] public Vector3 distanceToHolster;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public BoxCollider collider;
+    [HideInInspector] public new BoxCollider collider;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        distanceToPlayer = weaponDist.position - transform.position;
+        distanceToPlayer = player.position - transform.position;
+        distanceToHolster = holsterPos.position - player.position;
 
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped)
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && activeWeapon.activeInHierarchy == false)
         {
             Equip();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && isEquipped)
+        else if (distanceToHolster.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && isEquipped && activeWeapon.activeInHierarchy == true)
         {
             Unequip();
         }
@@ -39,12 +43,8 @@ public class WeaponEquip : MonoBehaviour
     {
         Debug.Log("Equip!");
 
-        //collider.enabled = false;
-        //rb.isKinematic = true;
-
-        //this.transform.position = weaponDest.position;
-        //this.transform.parent = GameObject.Find("ObjectHold").transform;
-        this.gameObject.SetActive(false);
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        activeWeapon.SetActive(true);
 
         isEquipped = true;
     }
@@ -53,12 +53,8 @@ public class WeaponEquip : MonoBehaviour
     {
         Debug.Log("Unequip!");
 
-        //this.transform.parent = null;
-
-        //rb.isKinematic = false;
-        //collider.enabled = true;
-
-        this.gameObject.SetActive(true);
+        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        activeWeapon.SetActive(false);
 
         isEquipped = false;
     }
