@@ -45,16 +45,16 @@ public class FPSController : MonoBehaviour
 
     public void Start()
     {
+        // Lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         characterController = GetComponent<CharacterController>();
 
         originalHeight = characterController.height;
 
         canMove = true;
         isUp = true;
-
-        // Lock cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     public void Update()
