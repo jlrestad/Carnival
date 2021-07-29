@@ -43,24 +43,22 @@ public class FPSController : MonoBehaviour
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;
     public bool slidingAllowed = true;
 
-    public void Start()
+    void Start()
     {
+        // Lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         characterController = GetComponent<CharacterController>();
 
         originalHeight = characterController.height;
 
         canMove = true;
         isUp = true;
-
-        // Lock cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
-    public void Update()
+    void Update()
     {
-        //weaponIsEquipped = weapon.GetComponent<WeaponEquip>().isEquipped;
-
         //Controls
         run = Input.GetKey(KeyCode.LeftShift);
         jump = Input.GetButton("Jump");

@@ -5,10 +5,11 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     public Transform holdDest;
+    public GameObject player;
     
     public bool isHolding;
     public float pickUpRange;
-    public float throwSpeed = 20.0f;
+    public float throwSpeed = 30.0f;
 
     [HideInInspector] public Vector3 distanceToPlayer;
     [HideInInspector] public Rigidbody rb;
@@ -18,6 +19,7 @@ public class PickUp : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<BoxCollider>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Update()
@@ -73,8 +75,8 @@ public class PickUp : MonoBehaviour
         collider.enabled = true;
 
         // Throw
-        //rb.AddForce(transform.forward * throwSpeed, ForceMode.Impulse);
-        rb.velocity = transform.forward * throwSpeed;
+        rb.AddForce(player.transform.forward * throwSpeed, ForceMode.Impulse);
+        //rb.velocity = player.transform.forward * throwSpeed;
 
         isHolding = false;
     }
