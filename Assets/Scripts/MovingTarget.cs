@@ -42,12 +42,12 @@ public class MovingTarget : MonoBehaviour
     {
         if (!movedUp)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
             MoveUp();
         }
         else
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
             MoveDown();
         }
 
