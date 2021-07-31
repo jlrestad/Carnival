@@ -39,7 +39,7 @@ public class Menu : MonoBehaviour
     {
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
-        SceneManager.LoadScene("Level01", LoadSceneMode.Single);
+        SceneManager.LoadScene("SandBox", LoadSceneMode.Single);
         Debug.Log(GM.gameState);
     }
 
