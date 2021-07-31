@@ -134,7 +134,10 @@ public class FPSController : MonoBehaviour
         }
 
         // Move the player
-        characterController.Move(moveDirection * Time.deltaTime);
+        if (characterController.enabled == true)
+        {
+            characterController.Move(moveDirection * Time.deltaTime);
+        }
 
         // Player and camera rotation
         if (canMove)
@@ -157,7 +160,6 @@ public class FPSController : MonoBehaviour
         characterController.Move(moveDirection * Time.deltaTime/* * slideSpeed*/);
 
         playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
-        //transform.rotation = Quaternion.Euler(0, transform.rotation.y, -10.0f);
 
         StartCoroutine(DoneSliding());
     }
@@ -179,11 +181,7 @@ public class FPSController : MonoBehaviour
 
         characterController.height = originalHeight;
 
-        //float rotX = transform.rotation.x;
-        //float rotY = transform.rotation.y;
-
         playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
-        //transform.rotation = Quaternion.Euler(rotX, rotY, 0);
     }
 
     private void Crouch()
