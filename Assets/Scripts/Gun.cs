@@ -53,7 +53,7 @@ public class Gun : MonoBehaviour
             StartCoroutine(OffMuzzleLight());
 
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 2f);
+            Destroy(impact, 1f);
         }
 
     }

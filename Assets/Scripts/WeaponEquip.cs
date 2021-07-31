@@ -46,6 +46,8 @@ public class WeaponEquip : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         activeWeapon.SetActive(true);
 
+        player.GetComponentInParent<CharacterController>().enabled = false;
+
         isEquipped = true;
     }
 
@@ -56,6 +58,17 @@ public class WeaponEquip : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().enabled = true;
         activeWeapon.SetActive(false);
 
+        player.GetComponentInParent<CharacterController>().enabled = true;
+
         isEquipped = false;
+    }
+
+    void GetCharacterController()
+    {
+        if (isEquipped)
+            player.GetComponent<CharacterController>().enabled = false;
+        else
+            player.GetComponent<CharacterController>().enabled = true;
+
     }
 }
