@@ -7,9 +7,17 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     GameManager GM;
+
+    [Header("AUDIO")]
     public AudioMixer audioMixer;
     public AudioSource introAudio;
     public string exposedParam;
+
+    [Header("OBJECTS")]
+    public GameObject titleScreen;
+    public GameObject titleCamera;
+
+    [Header("LEVEL LOAD")]
     public float delayTime = 3f;
 
     private void Awake()
@@ -45,6 +53,7 @@ public class Menu : MonoBehaviour
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
         Invoke("LoadLevel", delayTime);
+
         Debug.Log(GM.gameState);
     }
 
@@ -56,22 +65,16 @@ public class Menu : MonoBehaviour
 
     public void LoadLevel()
     {
-        SceneManager.LoadScene("Level01", LoadSceneMode.Single);
+        titleScreen.SetActive(false);
+        titleCamera.SetActive(false);
+
+        SceneManager.LoadScene("Level01", LoadSceneMode.Additive);
         introAudio.volume = 1;
+        
     }
 
     public void AudioFade()
     {
-        //float elapsedTime = 0;
-        //float currentVolume = introAudio.volume;
-
-        //while (elapsedTime < delayTime)
-        //{
-        //    elapsedTime += Time.deltaTime;
-        //    introAudio.volume = Mathf.Lerp(currentVolume, 0, elapsedTime / delayTime);
-        //}
-
         StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 3, 0));
-
     }
 }

@@ -25,7 +25,7 @@ public class Intro : MonoBehaviour
     public void HandleOnStateChange()
     {
         Debug.Log("Handling state change to: " + GM.gameState);
-        Invoke("ShowMenu", 3f);
+        Invoke("ShowMenu", 2f);
     }
 
     public void ShowMenu()
