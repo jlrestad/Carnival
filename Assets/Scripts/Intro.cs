@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Intro : MonoBehaviour
 {
     GameManager GM;
+    public GameObject menu;
 
     private void Awake()
     {
@@ -24,7 +25,12 @@ public class Intro : MonoBehaviour
     public void HandleOnStateChange()
     {
         Debug.Log("Handling state change to: " + GM.gameState);
-        Invoke("LoadLevel", 3f);
+        Invoke("ShowMenu", 3f);
+    }
+
+    public void ShowMenu()
+    {
+        menu.SetActive(true);
     }
 
     public void LoadLevel()
