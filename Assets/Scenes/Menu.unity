@@ -337,7 +337,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59838b6e1438d804eaef0ba705b19aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 0}
+  audioMixer: {fileID: 0}
+  introAudio: {fileID: 0}
+  pauseSound: {fileID: 0}
+  exposedParam: 
+  titleScreen: {fileID: 0}
+  titleCamera: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  delayTime: 3
 --- !u!4 &1722923148
 Transform:
   m_ObjectHideFlags: 0
@@ -409,7 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1032908633}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1853619897

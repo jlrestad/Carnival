@@ -76,7 +76,7 @@ public class FPSController : MonoBehaviour
         if (slidingAllowed && isSliding)
         {
             // slide once
-            Slide();
+            Invoke("Slide", 0.1f);
             slidingAllowed = false;
         }
         if (Input.GetKeyUp(KeyCode.R))
@@ -102,10 +102,11 @@ public class FPSController : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         
-        //If canMove is true and isRunning is true, then speed is runSpeed, else speed is walkSpeed.
+        // If canMove is true and isRunning is true, then speed is runSpeed, else speed is walkSpeed.
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
 
+        // Change the speed if player is sliding.
         if (isSliding)
         {
             curSpeedX = slideSpeed * Input.GetAxis("Vertical");
