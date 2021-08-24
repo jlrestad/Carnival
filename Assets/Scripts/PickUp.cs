@@ -6,8 +6,9 @@ public class PickUp : MonoBehaviour
 {
     public Transform holdDest;
     public GameObject player;
+    new AudioSource audio;
     
-    public bool isHolding;
+    bool isHolding;
     public float pickUpRange;
     public float throwSpeed = 30.0f;
 
@@ -20,6 +21,7 @@ public class PickUp : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<BoxCollider>();
         player = GameObject.FindGameObjectWithTag("Player");
+        audio = GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -38,33 +40,40 @@ public class PickUp : MonoBehaviour
         {
             Throw();
         }
+
+        // Turn off audio looping when thrown object stops moving.
+        if (rb.velocity.magnitude < 0.7f) { audio.loop = false; }
+
     }
 
+    // Parents the object to the Player at specified location.
     void Grab()
-        {
-            Debug.Log("Grab!");
+    {
+        Debug.Log("Grab!");
 
-            collider.enabled = false;
-            rb.isKinematic = true;
+        collider.enabled = false;
+        rb.isKinematic = true;
             
-            this.transform.position = holdDest.position;
-            this.transform.parent = GameObject.Find("ObjectHold").transform;
+        this.transform.position = holdDest.position;
+        this.transform.parent = GameObject.Find("ObjectHold").transform;
 
-            isHolding = true;
-        }
+        isHolding = true;
+    }
 
-        void Drop()
-        {
-            Debug.Log("Dropped!");
+    // Unparents the object from the Player.
+    void Drop()
+    {
+        Debug.Log("Dropped!");
 
-            this.transform.parent = null;
+        this.transform.parent = null;
 
-            rb.isKinematic = false;
-            collider.enabled = true;
+        rb.isKinematic = false;
+        collider.enabled = true;
 
-            isHolding = false;
-        }
+        isHolding = false;
+    }
 
+    // Adds  force to the object being thrown.
     void Throw()
     {
         Debug.Log("Throw!");
@@ -76,8 +85,34 @@ public class PickUp : MonoBehaviour
 
         // Throw
         rb.AddForce(player.transform.forward * throwSpeed, ForceMode.Impulse);
-        //rb.velocity = player.transform.forward * throwSpeed;
+        //rb.velocity = player.transform.forward * throwSpeed; //Another way to move an object.
 
         isHolding = false;
+    }
+    
+    // Randomizes and plays audio when object is thrown.
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag != "Player" && !isHolding && rb.velocity.magnitude >= 0.7f)
+        {
+            //if (rb.velocity.magnitude >= 0.3f || rb.velocity.magnitude < 0.7f)
+            //{
+            //    Debug.Log("LOOP AUDIO");
+            //    audio.loop = true; //Continues to play audio when object rolls on the ground.
+            //    audio.pitch = Random.Range(0.8f, 1.2f);
+            //    audio.Play();
+            //}
+            //else
+            //{
+            //    audio.pitch = Random.Range(0.8f, 1.2f);
+            //    audio.Play();
+            //}
+
+            if (rb.velocity.magnitude != 0f)
+            {
+                audio.pitch = Random.Range(0.8f, 1.2f);
+                audio.Play();
+            }
+        }
     }
 }

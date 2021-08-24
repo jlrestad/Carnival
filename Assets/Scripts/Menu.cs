@@ -1,11 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
     GameManager GM;
+
+    [Header("AUDIO")]
+    public AudioMixer audioMixer;
+    public AudioSource introAudio;
+    public string exposedParam;
+
+    [Header("OBJECTS")]
+    public GameObject titleScreen;
+    public GameObject titleCamera;
+
+    [Header("LEVEL LOAD")]
+    public float delayTime = 3f;
 
     private void Awake()
     {
@@ -39,7 +52,8 @@ public class Menu : MonoBehaviour
     {
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
-        SceneManager.LoadScene("Level01", LoadSceneMode.Single);
+        Invoke("LoadLevel", delayTime);
+
         Debug.Log(GM.gameState);
     }
 
@@ -47,5 +61,20 @@ public class Menu : MonoBehaviour
     {
         Debug.Log("Quit!");
         Application.Quit();
+    }
+
+    public void LoadLevel()
+    {
+        titleScreen.SetActive(false);
+        titleCamera.SetActive(false);
+
+        SceneManager.LoadScene("Level01", LoadSceneMode.Additive);
+        introAudio.volume = 1;
+        
+    }
+
+    public void AudioFade()
+    {
+        StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 3, 0));
     }
 }

@@ -12,6 +12,13 @@ public class Gun : MonoBehaviour
     public GameObject muzzleLight;
     public GameObject impactEffect;
 
+    public AudioSource shootAudio;
+
+    void Start()
+    {
+        shootAudio = GetComponent<AudioSource>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -37,6 +44,9 @@ public class Gun : MonoBehaviour
     {
         muzzleLight.GetComponent<Light>().enabled = true;
         muzzleFlash.Play();
+
+        shootAudio.pitch = Random.Range(0.8f, 1.3f);
+        shootAudio.Play();
 
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
