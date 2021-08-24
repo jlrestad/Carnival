@@ -8,7 +8,7 @@ public class PickUp : MonoBehaviour
     public GameObject player;
     new AudioSource audio;
     
-    bool isHolding;
+    public bool isHolding;
     public float pickUpRange;
     public float throwSpeed = 30.0f;
 
@@ -32,11 +32,11 @@ public class PickUp : MonoBehaviour
         {
             Grab();
         }
-        else if (Input.GetKeyDown(KeyCode.Q) && isHolding)
+        else if (Input.GetKeyDown(KeyCode.E) && isHolding)
         {
             Drop();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && isHolding)
+        else if (Input.GetMouseButtonDown(0) && isHolding)
         {
             Throw();
         }
