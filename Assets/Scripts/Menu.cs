@@ -99,7 +99,7 @@ public class Menu : MonoBehaviour
         titleScreen.SetActive(false);
         titleCamera.SetActive(false);
 
-        SceneManager.LoadScene("Level01", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Level01-Terrain", LoadSceneMode.Additive);
         introAudio.volume = 1;
         
     }

@@ -14,6 +14,7 @@ public class FPSController : MonoBehaviour
     public float lookSpeed = 2.5f;
     public float gravity = 20.0f;
     public float slideSpeed = 2.0f;
+    public float pushPower = 10.0f;
 
     [Header("TIMING")]
     public float slideTime = 2;
@@ -23,6 +24,8 @@ public class FPSController : MonoBehaviour
     public float slideHeight;
     public float crouchHeight;
     float originalHeight;
+    float heightPos;
+    float originalSlopeLimit;
 
     [Header("CAMERA")]
     public Camera playerCamera;
@@ -44,18 +47,25 @@ public class FPSController : MonoBehaviour
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;
     public bool slidingAllowed = true;
 
+    public void OnValidate()
+    {
+        characterController = GetComponent<CharacterController>();
+    }
+
     void Start()
     {
+        // Get and set the original settings of player
+        originalHeight = characterController.height;
+        originalCamHeight = playerCamera.transform.position.y;
+        originalSlopeLimit = characterController.slopeLimit;
+        heightPos = characterController.transform.position.y;
+
+        Debug.Log("Original Camera Height: " + originalCamHeight);
+        Debug.Log("Player Y Position: " + heightPos);
+
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        characterController = GetComponent<CharacterController>();
-
-        // Set the original heights of player and camera
-        originalHeight = characterController.height;
-        originalCamHeight = playerCamera.transform.position.y;
-        Debug.Log("Original Camera Height: " + originalCamHeight);
 
         canMove = true;
         isUp = true;
@@ -65,7 +75,7 @@ public class FPSController : MonoBehaviour
     {
         //Controls
         run = Input.GetKey(KeyCode.LeftShift);
-        jump = Input.GetButton("Jump");
+        jump = Input.GetButtonDown("Jump");
         slide = Input.GetKey(KeyCode.R);
         crouch = Input.GetKeyDown(KeyCode.LeftControl);
 
@@ -157,6 +167,31 @@ public class FPSController : MonoBehaviour
         }
     }
 
+    // PUSHES RIDIDBODIES THAT PLAYER CONTACTS
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        // No rigidbody
+        if (body == null || body.isKinematic)
+        {
+            return;
+        }
+
+        // We dont want to push objects below us
+        if (hit.moveDirection.y < -0.3)
+        {
+            return;
+        }
+
+        // Calculate push direction from move direction,
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+
+        // Apply the push
+        body.velocity = pushDir * pushPower;
+    }   
+
+
     private void Slide()
     {
         isUp = false;
@@ -164,7 +199,7 @@ public class FPSController : MonoBehaviour
         characterController.height = slideHeight;
         characterController.Move(moveDirection * Time.deltaTime * slideSpeed);
 
-        playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
+        //playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
 
         StartCoroutine(DoneSliding());
     }
@@ -175,7 +210,7 @@ public class FPSController : MonoBehaviour
 
         characterController.height = originalHeight;
 
-        playerCamera.transform.position = new Vector3(transform.position.x, originalCamHeight, transform.position.z);        
+        //playerCamera.transform.position = new Vector3(transform.position.x, originalCamHeight, transform.position.z);        
     }
 
     private void Crouch()
@@ -184,7 +219,7 @@ public class FPSController : MonoBehaviour
 
         characterController.height = crouchHeight;
 
-        playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
+        //playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
     }
 
     IEnumerator DoneSliding()
@@ -195,7 +230,7 @@ public class FPSController : MonoBehaviour
 
         characterController.height = originalHeight;
 
-        playerCamera.transform.position = new Vector3(transform.position.x, originalCamHeight, transform.position.z);
+        //playerCamera.transform.position = new Vector3(transform.position.x, originalCamHeight, transform.position.z);
         Debug.Log("Camera Height: " + originalCamHeight);
     }
 
