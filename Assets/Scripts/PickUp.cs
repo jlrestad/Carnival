@@ -53,9 +53,13 @@ public class PickUp : MonoBehaviour
 
         collider.enabled = false;
         rb.isKinematic = true;
-            
-        this.transform.position = holdDest.position;
-        this.transform.parent = GameObject.Find("ObjectHold").transform;
+         
+        // Only allow one item to be picked up at a time.
+        if (holdDest.childCount == 0)
+        {
+            this.transform.position = holdDest.position;
+            this.transform.parent = GameObject.Find("ObjectHold").transform;
+        }
 
         isHolding = true;
     }
