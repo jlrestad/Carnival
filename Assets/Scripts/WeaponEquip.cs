@@ -7,6 +7,7 @@ public class WeaponEquip : MonoBehaviour
     public Transform player;
     public Transform holsterPos;
     public GameObject activeWeapon;
+    public GameObject holsteredWeapon;
 
     public bool isEquipped;
     public float pickUpRange;
@@ -43,10 +44,11 @@ public class WeaponEquip : MonoBehaviour
     {
         Debug.Log("Equip!");
 
-        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        holsteredWeapon.SetActive(false);
         activeWeapon.SetActive(true);
 
-        player.GetComponentInParent<CharacterController>().enabled = false;
+        //LOCK PLAYER MOVEMENT FOR BOOTH GAME
+        //player.GetComponentInParent<CharacterController>().enabled = false;
 
         isEquipped = true;
     }
@@ -55,7 +57,7 @@ public class WeaponEquip : MonoBehaviour
     {
         Debug.Log("Unequip!");
 
-        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        holsteredWeapon.SetActive(true);
         activeWeapon.SetActive(false);
 
         player.GetComponentInParent<CharacterController>().enabled = true;

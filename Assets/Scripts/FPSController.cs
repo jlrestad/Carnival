@@ -63,9 +63,13 @@ public class FPSController : MonoBehaviour
         Debug.Log("Original Camera Height: " + originalCamHeight);
         Debug.Log("Player Y Position: " + heightPos);
 
-        // Lock cursor
+        // LOCK CURSOR
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
 
         canMove = true;
         isUp = true;
