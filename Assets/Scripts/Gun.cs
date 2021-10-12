@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
+//using UnityEngine.Experimental.GlobalIllumination;
 
 public class Gun : MonoBehaviour
 {
-    public float damage = 10f;
-    public float range = 100f;
+
+    [SerializeField] int damage = 10;
+    [SerializeField] float range = 100f;
 
     public Camera fpsCam;
     public ParticleSystem muzzleFlash;
@@ -14,9 +15,13 @@ public class Gun : MonoBehaviour
 
     public AudioSource shootAudio;
 
-    void Start()
+    private void Awake()
     {
         shootAudio = GetComponent<AudioSource>();
+    }
+
+    void Start()
+    {
     }
 
     // Update is called once per frame
@@ -33,7 +38,7 @@ public class Gun : MonoBehaviour
     }
 
     // Turn off the light if the fire button is held down.
-    IEnumerator OffMuzzleLight()
+    IEnumerator TurnOffMuzzleLight()
     {
         yield return new WaitForSeconds(0.05f);
 
@@ -60,7 +65,7 @@ public class Gun : MonoBehaviour
                 target.TakeDamage(damage);
             }
 
-            StartCoroutine(OffMuzzleLight());
+            StartCoroutine(TurnOffMuzzleLight());
 
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impact, 1f);

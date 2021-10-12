@@ -1,12 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    private WeaponType weaponType;
     public float health = 100f;
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(int damageAmount)
     {
-        health -= amount;
+        health -= damageAmount;
 
         if (health <= 0f)
         {
@@ -16,7 +19,8 @@ public class Target : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 }

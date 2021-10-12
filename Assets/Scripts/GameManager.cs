@@ -32,5 +32,4 @@ public class GameManager : ScriptableObject
         this.gameState = state;
         OnStateChange();
     }
-
 }

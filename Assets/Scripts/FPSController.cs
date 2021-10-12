@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 
 [RequireComponent(typeof(CharacterController))]
 
 public class FPSController : MonoBehaviour
 {
+    CharacterController characterController;
+
     [Header("SPEEDS")]
     public float walkSpeed = 7.0f;
     public float runSpeed = 10.0f;
@@ -32,11 +34,8 @@ public class FPSController : MonoBehaviour
     float originalCamHeight;
     public float lookXLimit = 45.0f;
     
-
-    CharacterController characterController;
     Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
-    GameObject weapon;
 
     [Header("BOOLS")]
     //[HideInInspector]
@@ -52,23 +51,20 @@ public class FPSController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    void Start()
+    void Awake()
     {
-        // Get and set the original settings of player
-        originalHeight = characterController.height;
-        originalCamHeight = playerCamera.transform.position.y;
-        originalSlopeLimit = characterController.slopeLimit;
-        heightPos = characterController.transform.position.y;
-
         Debug.Log("Original Camera Height: " + originalCamHeight);
         Debug.Log("Player Y Position: " + heightPos);
+
+        characterController = GetComponent<CharacterController>();
+
 
         // LOCK CURSOR
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         canMove = true;
@@ -77,6 +73,12 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
+        // Get and set the original settings of player
+        originalHeight = characterController.height;
+        originalCamHeight = playerCamera.transform.position.y;
+        originalSlopeLimit = characterController.slopeLimit;
+        heightPos = characterController.transform.position.y;
+
         //Controls
         run = Input.GetKey(KeyCode.LeftShift);
         jump = Input.GetButtonDown("Jump");
@@ -93,7 +95,7 @@ public class FPSController : MonoBehaviour
         // Sliding
         if (slidingAllowed && isSliding)
         {
-            // slide once
+            // slide once (**Note: Change to a Coroutine for optimization!**)
             Invoke(nameof(Slide), 0.1f);
             slidingAllowed = false;
         }
@@ -171,7 +173,7 @@ public class FPSController : MonoBehaviour
         }
     }
 
-    // PUSHES RIDIDBODIES THAT PLAYER CONTACTS
+    // PUSHES RIDIDBODIES THAT PLAYER CONTACTS (Runs into)
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody body = hit.collider.attachedRigidbody;
