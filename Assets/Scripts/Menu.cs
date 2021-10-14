@@ -37,7 +37,7 @@ public class Menu : MonoBehaviour
     [Header("LEVEL LOAD")]
     public float delayTime = 3f;
 
-    int counter = 0;
+    int counter = 0; //Used to handle pause.
 
     private void Awake()
     {
@@ -68,26 +68,28 @@ public class Menu : MonoBehaviour
     {
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
-        Invoke("LoadLevel", delayTime);
+        //Invoke("LoadLevel", delayTime);
+        LoadLevel();
 
-        Debug.Log(GM.gameState);
+        Debug.Log(GM.GameState);
     }
 
     public void PauseGame()
     {
+        Cursor.lockState = CursorLockMode.None;
+
         counter = 1;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
-
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void UnpauseGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         counter = 0;
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void DelayQuit() 

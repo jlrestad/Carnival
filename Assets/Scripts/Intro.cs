@@ -13,19 +13,20 @@ public class Intro : MonoBehaviour
         GM = GameManager.Instance;
         GM.OnStateChange += HandleOnStateChange;
 
-        Debug.Log("Current game state when Awake: " + GM.gameState);
+        Debug.Log("Current game state when Awake: " + GM.GameState);
     }
 
     void Start()
     {
-        Debug.Log("Current game state when Start: " + GM.gameState);
+        Debug.Log("Current game state when Start: " + GM.GameState);
         GM.SetGameState(GameState.MAIN_MENU);
     }
 
     public void HandleOnStateChange()
     {
-        Debug.Log("Handling state change to: " + GM.gameState);
-        Invoke("ShowMenu", 1f);
+        Debug.Log("Handling state change to: " + GM.GameState);
+        //Invoke("ShowMenu", 1f);
+        ShowMenu();
     }
 
     public void ShowMenu()
