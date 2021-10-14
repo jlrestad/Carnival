@@ -15,7 +15,7 @@ public class MalletEquip : MonoBehaviour
     [SerializeField] bool haveMallet;
     [SerializeField] bool inInventory;
 
-    public float pickUpRange;
+    public float pickUpRange = 1f;
 
     Vector3 distanceToPlayer;
     //[HideInInspector] public BoxCollider collider;

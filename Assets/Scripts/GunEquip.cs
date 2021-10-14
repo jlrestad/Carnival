@@ -38,10 +38,6 @@ public class GunEquip : MonoBehaviour
         {
             GetGun(weaponType);
         }
-        //else if (distanceToHolster.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && isEquipped && activeWeapon.activeInHierarchy == true)
-        //{
-        //    Unequip();
-        //}
         else if (Input.GetKeyDown(KeyCode.E) && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
         {
             HideWeapon(weaponType);
@@ -66,7 +62,7 @@ public class GunEquip : MonoBehaviour
         //LOCK PLAYER MOVEMENT FOR BOOTH GAME
         //player.GetComponentInParent<CharacterController>().enabled = false;
 
-        haveGun = true; //Mallet is had!
+        haveGun = true; //Gun is had!
         isEquipped = true; //And is now equipped!
         inInventory = false; //Haven't put in inventory yet.                         
     }
@@ -75,7 +71,7 @@ public class GunEquip : MonoBehaviour
     {
         Debug.Log("Unequip!");
 
-        //holsteredWeapon.SetActive(true);
+        holsteredWeapon.SetActive(false);
         activeWeapon.SetActive(false);
 
         //player.GetComponentInParent<CharacterController>().enabled = true;
