@@ -6,7 +6,6 @@ using UnityEngine;
 public class Mallet : MonoBehaviour
 {
     //[SerializeField] int damage = 10;
-    [SerializeField] GameObject target;
     [SerializeField] float speed = 5f;
     RaycastHit hit;
     [SerializeField] LayerMask layerMask;
@@ -24,6 +23,5 @@ public class Mallet : MonoBehaviour
 
     public void Swing()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target.transform.rotation, speed * Time.deltaTime);
     }
 }

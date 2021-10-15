@@ -9,7 +9,7 @@ public class MalletEquip : MonoBehaviour
     public GameObject activeWeapon;
     public GameObject gameMallet;
 
-    [SerializeField] WeaponType weaponType = WeaponType.Mallet;
+    [SerializeField] WeaponTypes weapon = WeaponTypes.Melee;
 
     [SerializeField] bool isEquipped;
     [SerializeField] bool haveMallet;
@@ -33,28 +33,23 @@ public class MalletEquip : MonoBehaviour
 
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && activeWeapon.activeInHierarchy == false && haveMallet == false)
         {
-            GetMallet(weaponType);
+            GetMallet(weapon);
         }
-        else if (Input.GetKeyDown(KeyCode.E) && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
+        else if (Input.GetButtonDown("Fire2") && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
         {
-            HideWeapon(weaponType);
+            HideWeapon(weapon);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon.activeInHierarchy == false && isEquipped == false && inInventory == true)
-        {
-            ShowWeapon(weaponType);
-        }    
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon.activeInHierarchy == true && isEquipped == true)
-        {
-            HideWeapon(weaponType);
-        }  
+        //else if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon.activeInHierarchy == false && isEquipped == false && inInventory == true)
+        //{
+        //    ShowWeapon(weapon);
+        //}    
+        //else if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon.activeInHierarchy == true && isEquipped == true)
+        //{
+        //    HideWeapon(weapon);
+        //}  
     }
 
-    private void LateUpdate()
-    {
-
-    }
-
-    public void GetMallet(WeaponType weaponType)
+    public void GetMallet(WeaponTypes weaponType)
     {
         Debug.Log("Got the mallet!");
 
@@ -67,7 +62,7 @@ public class MalletEquip : MonoBehaviour
 
     }
 
-    void HideWeapon(WeaponType weaponType)
+    void HideWeapon(WeaponTypes weaponType)
     {
         Debug.Log("Unequip!");
 
@@ -77,7 +72,7 @@ public class MalletEquip : MonoBehaviour
         inInventory = true; //Put in inventory.
     }
 
-    void ShowWeapon(WeaponType weaponType)
+    void ShowWeapon(WeaponTypes weaponType)
     {
         Debug.Log("ReEquip!");
 

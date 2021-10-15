@@ -14,7 +14,7 @@ public class GunEquip : MonoBehaviour
     [SerializeField] bool haveGun;
     [SerializeField] bool inInventory;
 
-    [SerializeField] WeaponType weaponType = WeaponType.Gun;
+    [SerializeField] WeaponTypes weapon = WeaponTypes.Shoot;
 
     public float pickUpRange;
 
@@ -36,23 +36,23 @@ public class GunEquip : MonoBehaviour
 
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && activeWeapon.activeInHierarchy == false && haveGun == false)
         {
-            GetGun(weaponType);
+            GetGun(weapon);
         }
-        else if (Input.GetKeyDown(KeyCode.E) && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
+        else if (Input.GetButtonDown("Fire2") && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
         {
-            HideWeapon(weaponType);
+            HideWeapon(weapon);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon.activeInHierarchy == false && isEquipped == false && inInventory == true)
-        {
-            ShowWeapon(weaponType);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon.activeInHierarchy == true && isEquipped == true)
-        {
-            HideWeapon(weaponType);
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon.activeInHierarchy == false && isEquipped == false && inInventory == true)
+        //{
+        //    ShowWeapon(weapon);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon.activeInHierarchy == true && isEquipped == true)
+        //{
+        //    HideWeapon(weapon);
+        //}
     }
 
-    public void GetGun(WeaponType weaponType)
+    public void GetGun(WeaponTypes weapon)
     {
         Debug.Log("Equipped gun!");
 
@@ -67,7 +67,7 @@ public class GunEquip : MonoBehaviour
         inInventory = false; //Haven't put in inventory yet.                         
     }
 
-    public void HideWeapon(WeaponType weaponType)
+    public void HideWeapon(WeaponTypes weapon)
     {
         Debug.Log("Unequip!");
 
@@ -80,7 +80,7 @@ public class GunEquip : MonoBehaviour
         inInventory = true; //Put in inventory.
     }
 
-    void ShowWeapon(WeaponType weaponType)
+    void ShowWeapon(WeaponTypes weapon)
     {
         Debug.Log("ReEquip!");
 

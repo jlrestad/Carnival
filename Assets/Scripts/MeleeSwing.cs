@@ -10,7 +10,6 @@ public class MeleeSwing : MonoBehaviour
 
     private void Start()
     {
-        //collider = GetComponent<BoxCollider>();
     }
 
     private void Update()
@@ -25,11 +24,13 @@ public class MeleeSwing : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider)
+        if (other.gameObject.tag == "Enemy")
         {
             body.SetActive(false);
+            target.GetComponent<Rigidbody>().isKinematic = false;
+            target.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 
