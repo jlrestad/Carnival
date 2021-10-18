@@ -6,7 +6,7 @@ public class MeleeSwing : MonoBehaviour
 {
     [SerializeField] GameObject target;
     [SerializeField] GameObject body;
-    [SerializeField] BoxCollider collider;
+    //[SerializeField] BoxCollider collider;
 
     private void Start()
     {

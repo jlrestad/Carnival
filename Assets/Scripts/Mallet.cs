@@ -6,7 +6,7 @@ using UnityEngine;
 public class Mallet : MonoBehaviour
 {
     //[SerializeField] int damage = 10;
-    [SerializeField] float speed = 5f;
+    //[SerializeField] float speed = 5f;
     RaycastHit hit;
     [SerializeField] LayerMask layerMask;
 

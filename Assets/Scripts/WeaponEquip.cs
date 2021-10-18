@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
 
-public enum WeaponTypes
-{
-    Shoot,
-    Melee,
-    Throw
-}
 
 public class WeaponEquip : MonoBehaviour
 {
     public static WeaponEquip Instance;
 
-    //private List<GameObject> weapons = new List<GameObject>();
-    [SerializeField] GameObject[] weapons;
-
-    [SerializeField] GameObject currentWeapon = null;
-    int weaponNumber = -1;
-
+    //[SerializeField] GameObject gun, mallet; //use to find distance from player (magnitude)
+    [Space(15)]
+    [SerializeField] public List<GameObject> weapons;
+    [Space(15)]
+    public GameObject currentWeapon = null;
+    public int weaponNumber = 0;
 
 
     private void Awake()
@@ -29,50 +23,44 @@ public class WeaponEquip : MonoBehaviour
 
     void Update()
     {
-        //Forward
+        //Debug.Log("List amount: " + weapons.Count);
+
+        //Roll scroll wheel forward
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
         {
-            if (currentWeapon != null)
+            //If there is already a weapon equipped, hide it.
+            if (currentWeapon != null && weapons.Count > 0)
             {
                 currentWeapon.SetActive(false);
+                weaponNumber++; //move to next list weapon
+                currentWeapon = weapons[weaponNumber]; //set current weapon to the index number
+                currentWeapon.SetActive(true); //show the weapon
             }
-           
-            weaponNumber = (weaponNumber + 1);
 
-            if (weaponNumber >= weapons.Length)
+            //Set the bounds.
+            if (weaponNumber > weapons.Count)
             {
                 weaponNumber = 0;
             }
 
-            currentWeapon = weapons[weaponNumber];
-            currentWeapon.SetActive(true);
-        }
-
-        //Reverse
-        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
-        {
-            if (currentWeapon != null)
+            //Roll scroll wheel back
+            if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
             {
-                currentWeapon.SetActive(false);
+                //If there is already a weapon equipped, hide it.
+                if (currentWeapon != null && weapons.Count > 0)
+                {
+                    currentWeapon.SetActive(false);
+                    weaponNumber--; //move to the previous list weapon
+                    currentWeapon = weapons[weaponNumber]; //set current weapon to the index number
+                    currentWeapon.SetActive(false); //show the weapon
+                }
+
+                //Set the bounds.        
+                if (weaponNumber < 0)
+                {
+                    weaponNumber = 0;
+                }
             }
-
-            weaponNumber = (weaponNumber - 1);
-
-            if (weaponNumber < 0)
-            {
-                weaponNumber = weapons.Length-1;
-            }
-
-            currentWeapon = weapons[weaponNumber];
-            currentWeapon.SetActive(true);
-        }
-
-        //Put weapon away
-        if (Input.GetButtonDown("Fire2") && currentWeapon.activeInHierarchy == true)
-        {
-            currentWeapon.SetActive(false);
         }
     }
-
-
 }
