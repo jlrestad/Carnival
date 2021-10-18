@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour
     [SerializeField] float range = 100f;
 
     public Camera fpsCam;
+    //public GameObject firePoint;
     public ParticleSystem muzzleFlash;
     public GameObject muzzleLight;
     public GameObject impactEffect;
@@ -24,7 +25,6 @@ public class Gun : MonoBehaviour
     {
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))

@@ -5,60 +5,51 @@ using UnityEngine;
 
 public class GunEquip : MonoBehaviour
 {
+    public static GunEquip Instance;
+
     public Transform player;
     public Transform holsterPos;
     public GameObject activeWeapon;
     public GameObject holsteredWeapon;
 
     [SerializeField] bool isEquipped;
-    [SerializeField] bool haveGun;
+    public bool haveGun;
     [SerializeField] bool inInventory;
-
-    [SerializeField] WeaponType weaponType = WeaponType.Gun;
 
     public float pickUpRange;
 
     [HideInInspector] public Vector3 distanceToPlayer;
     [HideInInspector] public Vector3 distanceToHolster;
-    //[HideInInspector] public BoxCollider collider;
 
-    // Start is called before the first frame update
-    public void Start()
+    public void Awake()
     {
-        //collider = GetComponent<BoxCollider>();
+        Instance = this;
     }
 
-    // Update is called once per frame
     public void Update()
     {
         distanceToPlayer = player.position - transform.position;
         distanceToHolster = holsterPos.position - player.position;
 
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && activeWeapon.activeInHierarchy == false && haveGun == false)
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun)
         {
-            GetGun(weaponType);
+            GetGun();
         }
-        //else if (distanceToHolster.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && isEquipped && activeWeapon.activeInHierarchy == true)
-        //{
-        //    Unequip();
-        //}
-        else if (Input.GetKeyDown(KeyCode.E) && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
+        else if (Input.GetButtonDown("Fire2") && activeWeapon.activeInHierarchy && isEquipped && !inInventory)
         {
-            HideWeapon(weaponType);
+            HideWeapon();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon.activeInHierarchy == false && isEquipped == false && inInventory == true)
+        else if (Input.GetButtonDown("Fire2") && !activeWeapon.activeInHierarchy && !isEquipped && inInventory)
         {
-            ShowWeapon(weaponType);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon.activeInHierarchy == true && isEquipped == true)
-        {
-            HideWeapon(weaponType);
+            ShowWeapon();
         }
     }
 
-    public void GetGun(WeaponType weaponType)
+    public void GetGun()
     {
         Debug.Log("Equipped gun!");
+
+        WeaponEquip.Instance.weapons.Add(this.gameObject); //Add this weapon to the weapons list.
 
         holsteredWeapon.SetActive(false);
         activeWeapon.SetActive(true);
@@ -66,16 +57,15 @@ public class GunEquip : MonoBehaviour
         //LOCK PLAYER MOVEMENT FOR BOOTH GAME
         //player.GetComponentInParent<CharacterController>().enabled = false;
 
-        haveGun = true; //Mallet is had!
+        haveGun = true; //Gun is had!
         isEquipped = true; //And is now equipped!
         inInventory = false; //Haven't put in inventory yet.                         
     }
 
-    public void HideWeapon(WeaponType weaponType)
+    public void HideWeapon()
     {
         Debug.Log("Unequip!");
 
-        //holsteredWeapon.SetActive(true);
         activeWeapon.SetActive(false);
 
         //player.GetComponentInParent<CharacterController>().enabled = true;
@@ -84,13 +74,14 @@ public class GunEquip : MonoBehaviour
         inInventory = true; //Put in inventory.
     }
 
-    void ShowWeapon(WeaponType weaponType)
+    void ShowWeapon()
     {
         Debug.Log("ReEquip!");
 
         activeWeapon.SetActive(true);
 
         isEquipped = true; //Is now equipped.
+        inInventory = false;
     }
 
     //void GetCharacterController()

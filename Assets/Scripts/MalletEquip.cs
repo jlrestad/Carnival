@@ -5,24 +5,27 @@ using UnityEngine;
 
 public class MalletEquip : MonoBehaviour
 {
+    public static MalletEquip Instance;
+
     public GameObject player;
     public GameObject activeWeapon;
     public GameObject gameMallet;
 
-    [SerializeField] WeaponType weaponType = WeaponType.Mallet;
-
     [SerializeField] bool isEquipped;
-    [SerializeField] bool haveMallet;
+    public bool haveMallet;
     [SerializeField] bool inInventory;
 
-    public float pickUpRange;
+    public float pickUpRange = 1f;
 
     Vector3 distanceToPlayer;
-    //[HideInInspector] public BoxCollider collider;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void Start()
     {
-        //collider = GetComponent<BoxCollider>();
         player = GameObject.Find("FPSPlayer");
         gameMallet = GameObject.Find("GameMallet"); 
     }
@@ -31,32 +34,25 @@ public class MalletEquip : MonoBehaviour
     {
         distanceToPlayer = player.transform.position - transform.position;
 
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && activeWeapon.activeInHierarchy == false && haveMallet == false)
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet)
         {
-            GetMallet(weaponType);
+            GetMallet();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && activeWeapon.activeInHierarchy == true && isEquipped == true && inInventory == false)
+        else if (Input.GetButtonDown("Fire2") && activeWeapon.activeInHierarchy && isEquipped && !inInventory)
         {
-            HideWeapon(weaponType);
+            HideWeapon();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon.activeInHierarchy == false && isEquipped == false && inInventory == true)
+        else if (Input.GetButtonDown("Fire2") && !activeWeapon.activeInHierarchy && !isEquipped && inInventory)
         {
-            ShowWeapon(weaponType);
-        }    
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon.activeInHierarchy == true && isEquipped == true)
-        {
-            HideWeapon(weaponType);
-        }  
+            ShowWeapon();
+        }
     }
 
-    private void LateUpdate()
-    {
-
-    }
-
-    public void GetMallet(WeaponType weaponType)
+    public void GetMallet( )
     {
         Debug.Log("Got the mallet!");
+
+        WeaponEquip.Instance.weapons.Add(this.gameObject); //Add this weapon to the weapons list.
 
         gameMallet.SetActive(false);
         activeWeapon.SetActive(true);
@@ -67,7 +63,7 @@ public class MalletEquip : MonoBehaviour
 
     }
 
-    void HideWeapon(WeaponType weaponType)
+    void HideWeapon( )
     {
         Debug.Log("Unequip!");
 
@@ -77,13 +73,14 @@ public class MalletEquip : MonoBehaviour
         inInventory = true; //Put in inventory.
     }
 
-    void ShowWeapon(WeaponType weaponType)
+    void ShowWeapon( )
     {
         Debug.Log("ReEquip!");
 
         activeWeapon.SetActive(true);
 
         isEquipped = true; //Is now equipped.
+        inInventory = false;
     }
 
 }
