@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType
-{
-    Gun,
-    Mallet,
-    Dynomite
-}
 
 public class Weapon : MonoBehaviour
 {
 
+    public static Weapon Instance;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
 
 }

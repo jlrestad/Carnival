@@ -9,7 +9,7 @@ public class PickUp : MonoBehaviour
     new AudioSource audio;
     
     public bool isHolding;
-    public float pickUpRange;
+    public float pickUpRange = .5f;
     public float throwSpeed = 30.0f;
 
     [HideInInspector] public Vector3 distanceToPlayer;
@@ -21,6 +21,7 @@ public class PickUp : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<BoxCollider>();
         player = GameObject.FindGameObjectWithTag("Player");
+        holdDest = GameObject.Find("ObjectHold").transform;
         audio = GetComponent<AudioSource>();
     }
 

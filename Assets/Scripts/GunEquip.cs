@@ -7,6 +7,8 @@ public class GunEquip : MonoBehaviour
 {
     public static GunEquip Instance;
 
+    public WeaponEquip weaponEquip;
+
     public Transform player;
     public Transform holsterPos;
     public GameObject activeWeapon;
@@ -24,6 +26,11 @@ public class GunEquip : MonoBehaviour
     public void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        weaponEquip = player.GetComponent<WeaponEquip>();
     }
 
     public void Update()
@@ -49,7 +56,7 @@ public class GunEquip : MonoBehaviour
     {
         Debug.Log("Equipped gun!");
 
-        WeaponEquip.Instance.weapons.Add(this.gameObject); //Add this weapon to the weapons list.
+        weaponEquip.weaponList.Add(this.gameObject); //Add this weapon to the weapons list.
 
         holsteredWeapon.SetActive(false);
         activeWeapon.SetActive(true);

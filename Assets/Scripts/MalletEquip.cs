@@ -7,6 +7,8 @@ public class MalletEquip : MonoBehaviour
 {
     public static MalletEquip Instance;
 
+    public WeaponEquip weaponEquip;
+
     public GameObject player;
     public GameObject activeWeapon;
     public GameObject gameMallet;
@@ -27,7 +29,9 @@ public class MalletEquip : MonoBehaviour
     public void Start()
     {
         player = GameObject.Find("FPSPlayer");
-        gameMallet = GameObject.Find("GameMallet"); 
+        gameMallet = GameObject.Find("GameMallet");
+
+        weaponEquip = player.GetComponent<WeaponEquip>();
     }
 
     public void Update()
@@ -52,7 +56,7 @@ public class MalletEquip : MonoBehaviour
     {
         Debug.Log("Got the mallet!");
 
-        WeaponEquip.Instance.weapons.Add(this.gameObject); //Add this weapon to the weapons list.
+        weaponEquip.weaponList.Add(this.gameObject); //Add this weapon to the weapons list.
 
         gameMallet.SetActive(false);
         activeWeapon.SetActive(true);

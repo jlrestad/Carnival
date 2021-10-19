@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private WeaponType weaponType;
     public float health = 100f;
 
     public void TakeDamage(int damageAmount)
