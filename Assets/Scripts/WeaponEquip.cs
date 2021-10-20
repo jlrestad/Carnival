@@ -40,7 +40,7 @@ public class WeaponEquip : MonoBehaviour
         FindClosestWeapon();
         ChangeWeapon();
 
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("Fire1") && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("Fire1") && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
         {
             PickUpWeapon();
         }
