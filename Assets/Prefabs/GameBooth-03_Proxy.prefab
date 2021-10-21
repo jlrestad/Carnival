@@ -11313,7 +11313,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -11778,7 +11778,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -14661,7 +14661,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -17916,7 +17916,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -20427,7 +20427,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -21450,7 +21450,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -28741,6 +28741,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6757287095146704778, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
+      propertyPath: pickUpRange
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6757287095146704779, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
       propertyPath: m_Name
       value: BOX (3)
@@ -28827,6 +28831,10 @@ PrefabInstance:
     - target: {fileID: 6757287095146704776, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757287095146704778, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
+      propertyPath: pickUpRange
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6757287095146704779, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
       propertyPath: m_Name
@@ -28915,6 +28923,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6757287095146704778, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
+      propertyPath: pickUpRange
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6757287095146704779, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
       propertyPath: m_Name
       value: BOX (2)
@@ -29001,6 +29013,10 @@ PrefabInstance:
     - target: {fileID: 6757287095146704776, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757287095146704778, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
+      propertyPath: pickUpRange
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6757287095146704779, guid: 552d5c7f44d00514998c1bd09333ce2f, type: 3}
       propertyPath: m_Name

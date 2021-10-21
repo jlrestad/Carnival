@@ -5,11 +5,11 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float health = 100f;
-    MeshRenderer enemy;
+    [SerializeField] GameObject spawnHead;
+    [SerializeField] GameObject headPrefab;
 
-    private void Start()
+    private void Awake()
     {
-        enemy = GetComponent<MeshRenderer>();
     }
 
     public void TakeDamage(int damageAmount)
@@ -26,16 +26,10 @@ public class Target : MonoBehaviour
     {
         if (CompareTag("WhackEm"))
         {
-            MeshRenderer head = GetComponentInChildren<MeshRenderer>();
-            Rigidbody rb = GetComponentInChildren<Rigidbody>();
-            
-            head.enabled = true;
-            rb.isKinematic = false;
+            //Call method to throwable object
+            WhackEmEnemy.Instance.SpawnHead();
 
-            //TODO: Create a spawn point on critter where the head will appear after it is killed. This should keep
-            // the mesh from bouncing around and allow the head mesh to be enabled.
-
-            enemy.enabled = false;
+            this.gameObject.SetActive(false);
         }
         else
         {

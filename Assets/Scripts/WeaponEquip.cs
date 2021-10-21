@@ -6,16 +6,22 @@ using UnityEngine;
 
 public class WeaponEquip : MonoBehaviour
 {
+    public static WeaponEquip Instance;
+
     [Space(15)]
     public GameObject gun;
     public GameObject mallet;
+
     [Space(15)]
     [SerializeField] public List<GameObject> weaponList;
+
     [Space(15)]
     public int weaponNumber = 0;
+
     [Space(15)]
     [SerializeField] bool inInventory;
-    [SerializeField] bool isEquipped;
+    public bool isEquipped;
+
     [Space(15)]
     [SerializeField] private GameObject closestWeapon = null;
     [SerializeField] float pickUpRange = 1f;
@@ -27,18 +33,13 @@ public class WeaponEquip : MonoBehaviour
 
     private void Awake()
     {
-        //Instance = this;
-    }
-
-    private void Start()
-    {
-       
+        Instance = this;
     }
 
     void Update()
     {
         FindClosestWeapon();
-        ChangeWeapon();
+        //ChangeWeapon();
 
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
         {
