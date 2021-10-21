@@ -27,7 +27,6 @@ public class FPSController : MonoBehaviour
     public float crouchHeight;
     float originalHeight;
     float heightPos;
-    float originalSlopeLimit;
 
     [Header("CAMERA")]
     public Camera playerCamera;
@@ -46,26 +45,29 @@ public class FPSController : MonoBehaviour
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;
     public bool slidingAllowed = true;
 
+    Transform capsule;
+
     public void OnValidate()
     {
         characterController = GetComponent<CharacterController>();
     }
 
-    void Awake()
+    void Start()
     {
         Debug.Log("Original Camera Height: " + originalCamHeight);
         Debug.Log("Player Y Position: " + heightPos);
 
         characterController = GetComponent<CharacterController>();
+        capsule = GetComponentInChildren<Transform>();
 
+        //Get and set the original settings of player
+        originalHeight = characterController.height;
+        originalCamHeight = playerCamera.transform.position.y;
+        heightPos = characterController.transform.position.y;
 
         // LOCK CURSOR
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
 
         canMove = true;
         isUp = true;
@@ -73,12 +75,6 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
-        // Get and set the original settings of player
-        originalHeight = characterController.height;
-        originalCamHeight = playerCamera.transform.position.y;
-        originalSlopeLimit = characterController.slopeLimit;
-        heightPos = characterController.transform.position.y;
-
         //Controls
         run = Input.GetKey(KeyCode.LeftShift);
         jump = Input.GetButtonDown("Jump");
@@ -91,31 +87,8 @@ public class FPSController : MonoBehaviour
         isRunning = run && !isJumping && characterController.isGrounded;
         isSliding = slide && isRunning;
         isCrouching = crouch && !isUp;
-
-        // Sliding
-        if (slidingAllowed && isSliding)
-        {
-            // slide once (**Note: Change to a Coroutine for optimization!**)
-            Invoke(nameof(Slide), 0.1f);
-            slidingAllowed = false;
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            // allow for sliding again
-            slidingAllowed = true;
-        }
-     
-
-        // Crouching
-        if (crouch && isUp)
-        {
-            Crouch();
-        }
-        else if (isCrouching)
-        {
-            GoUp();
-        }
     }
+
     void FixedUpdate()
     {
         // Player is grounded -- recalculate the move direction based on axes
@@ -171,9 +144,31 @@ public class FPSController : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+
+        // Sliding
+        if (slidingAllowed && isSliding)
+        {
+            StartCoroutine(Slide());
+            slidingAllowed = false;
+        }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            // allow for sliding again
+            slidingAllowed = true;
+        }
+
+        // Crouching
+        if (crouch && isUp)
+        {
+            Crouch();
+        }
+        else if (isCrouching)
+        {
+            StandUp();
+        }
     }
 
-    // PUSHES RIDIDBODIES THAT PLAYER CONTACTS (Runs into)
+    // PUSHES RIDIDBODIES THAT PLAYER RUNS INTO
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody body = hit.collider.attachedRigidbody;
@@ -184,10 +179,15 @@ public class FPSController : MonoBehaviour
             return;
         }
 
-        // We dont want to push objects below us
+        //Keep from pushing objects below us
         if (hit.moveDirection.y < -0.3)
         {
             return;
+        }
+
+        if (hit.gameObject.isStatic == true)
+        {
+            characterController.Move(moveDirection * Time.deltaTime * 0);
         }
 
         // Calculate push direction from move direction,
@@ -197,26 +197,11 @@ public class FPSController : MonoBehaviour
         body.velocity = pushDir * pushPower;
     }   
 
-
-    private void Slide()
-    {
-        isUp = false;
-        
-        characterController.height = slideHeight;
-        characterController.Move(moveDirection * Time.deltaTime * slideSpeed);
-
-        //playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
-
-        StartCoroutine(DoneSliding());
-    }
-
-    private void GoUp()
+    private void StandUp()
     {
         isUp = true;
 
         characterController.height = originalHeight;
-
-        //playerCamera.transform.position = new Vector3(transform.position.x, originalCamHeight, transform.position.z);        
     }
 
     private void Crouch()
@@ -224,21 +209,43 @@ public class FPSController : MonoBehaviour
         isUp = false;
 
         characterController.height = crouchHeight;
-
-        //playerCamera.transform.position = new Vector3(transform.position.x, characterController.height, transform.position.z);
     }
 
-    IEnumerator DoneSliding()
+    IEnumerator Slide()
     {
-        yield return new WaitForSeconds(slideTime);
+        isUp = false;
 
+        yield return new WaitForFixedUpdate();
+
+        characterController.height = slideHeight;
+        characterController.Move(moveDirection * Time.deltaTime * slideSpeed);
+        capsule = transform;
+
+        //Tilt to the side during slide
+        //capsule.transform.Rotate(0f, 0f, 8f, Space.Self); //works...
+
+        yield return new WaitForSeconds(slideTime);
+      
         isUp = true;
 
-        characterController.height = originalHeight;
+        //Return to upright position after slide
+        //capsule.transform.Rotate(0f, 0f, 0f, Space.Self); //not working....
 
-        //playerCamera.transform.position = new Vector3(transform.position.x, originalCamHeight, transform.position.z);
-        Debug.Log("Camera Height: " + originalCamHeight);
+        characterController.height = originalHeight;
+        
+
+        //StartCoroutine(DoneSliding());
     }
 
+    //IEnumerator DoneSliding()
+    //{
+    //    yield return new WaitForSeconds(slideTime);
 
+    //    isUp = true;
+
+    //    characterController.height = originalHeight;
+
+    //    //Return to upright position after slide
+    //    characterController.transform.rotation = Quaternion.Euler(moveDirection.x, moveDirection.y, moveDirection.z * 0);
+    //}
 }

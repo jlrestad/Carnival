@@ -8458,6 +8458,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1401557924
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124421811740117582}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16372372, y: 0.9664551, z: 0.6598278}
+  m_Center: {x: 0.004226209, y: 0.43422693, z: -0.017354963}
+--- !u!114 &1401557923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124421811740117582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5626be329768d3f49a3e0d3c68a0e040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6155343661082853270
 GameObject:
   m_ObjectHideFlags: 0
@@ -17831,7 +17856,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -18482,7 +18507,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -22295,7 +22320,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -22760,7 +22785,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -27224,7 +27249,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -28154,7 +28179,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.9303901, b: 0.75780225, a: 1}
   m_Intensity: 5
-  m_Range: 1
+  m_Range: 2.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
