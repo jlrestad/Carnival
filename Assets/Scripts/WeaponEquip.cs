@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class WeaponEquip : MonoBehaviour
 {
@@ -30,12 +30,20 @@ public class WeaponEquip : MonoBehaviour
     private GameObject currentWeapon = null;
     private Weapon newWeapon;
     [SerializeField]private bool haveGun, haveMallet;
-    Canvas canvas;
+    public Canvas crossHair;
+    public Menu menu;
+    public GameObject actionPrompt;
 
     private void Awake()
     {
         Instance = this;
-        canvas = FindObjectOfType<Canvas>();
+    }
+
+    private void Start()
+    {
+        //To make the action prompt appear
+        menu = FindObjectOfType<Menu>();
+        actionPrompt = menu.ePrompt;
     }
 
     void Update()
@@ -45,13 +53,14 @@ public class WeaponEquip : MonoBehaviour
 
         if (isEquipped)
         {
-            canvas.enabled = true;
+            crossHair.enabled = true;
         }
         else
         {
-            canvas.enabled = false;
+            crossHair.enabled = false;
         }
 
+        
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
         {
             PickUpWeapon();
@@ -63,6 +72,30 @@ public class WeaponEquip : MonoBehaviour
         else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
         {
             ShowWeapon();
+        }
+
+        //Show action prompt
+        if (distanceToPlayer.magnitude <= pickUpRange)
+        {
+            if (!isEquipped)
+            {
+                actionPrompt.SetActive(true);
+            }
+            if (haveGun)
+            {
+                if (closestWeapon.CompareTag("Gun"))
+                {
+                    actionPrompt.SetActive(false);
+                }
+                else
+                {
+                    actionPrompt.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            actionPrompt.SetActive(false);
         }
     }
 

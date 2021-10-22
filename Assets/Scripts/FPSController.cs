@@ -39,7 +39,6 @@ public class FPSController : MonoBehaviour
     [Header("BOOLS")]
     //[HideInInspector]
     public bool canMove = true;
-    public bool weaponIsEquipped;
 
     bool run, jump, slide, crouch;
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;

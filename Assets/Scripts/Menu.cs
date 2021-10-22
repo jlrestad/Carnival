@@ -38,6 +38,7 @@ public class Menu : MonoBehaviour
     public float delayTime = 3f;
 
     int counter = 0; //Used to handle pause.
+    public GameObject ePrompt;
 
     private void Awake()
     {
@@ -131,7 +132,6 @@ public class Menu : MonoBehaviour
 
         SceneManager.LoadScene("Level01-Terrain", LoadSceneMode.Additive);
         introAudio.volume = 1;
-        
     }
 
     public void AudioFade()
