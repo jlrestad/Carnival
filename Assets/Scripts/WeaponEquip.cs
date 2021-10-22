@@ -30,16 +30,27 @@ public class WeaponEquip : MonoBehaviour
     private GameObject currentWeapon = null;
     private Weapon newWeapon;
     [SerializeField]private bool haveGun, haveMallet;
+    Canvas canvas;
 
     private void Awake()
     {
         Instance = this;
+        canvas = FindObjectOfType<Canvas>();
     }
 
     void Update()
     {
         FindClosestWeapon();
         //ChangeWeapon();
+
+        if (isEquipped)
+        {
+            canvas.enabled = true;
+        }
+        else
+        {
+            canvas.enabled = false;
+        }
 
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
         {
