@@ -1,23 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MeleeSwing : MonoBehaviour
 {
-    [SerializeField] Target newTarget;
-    [SerializeField] GameObject closestTarget;
-    List<GameObject> targetList;
+    public Target target;
+    //[SerializeField] WhackEmEnemy newWhackEm;
+    //[SerializeField] GameObject closestWhackEm;
+    [SerializeField] WhackEmEnemy[] whackEmEnemy;
     Vector3 distanceToPlayer;
-    [SerializeField] int damage = 10;
+    [SerializeField] float meleeRange = 2f;
+    [SerializeField] int damage = 50;
 
     private void Start()
     {
-        newTarget = GameObject.FindObjectOfType<Target>();
+        target = Target.Instance;
+        whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
     }
 
     private void Update()
     {
-        //FindClosestTarget();
+        //FindClosestWhackEm();
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -27,53 +31,66 @@ public class MeleeSwing : MonoBehaviour
         {
             Return();
         }
+
+
+        foreach (WhackEmEnemy whackEm in whackEmEnemy)
+        {
+            distanceToPlayer = transform.position - whackEm.transform.position;
+
+            if (distanceToPlayer.magnitude <= meleeRange)
+            {
+                target = whackEm.GetComponent<Target>();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "WhackEm")
+        if (other.gameObject.tag == "WhackEm" || other.gameObject.tag == "Enemy")
         {
-            newTarget.TakeDamage(damage);
+            target.TakeDamage(damage);
 
-            Debug.Log("Damaged enemy!");
+            Debug.Log("Smashed enemy!");
         }
     }
 
     // Find the enemy that is closest to the player
-    //public GameObject FindClosestTarget()   
+    //public GameObject FindClosestWhackEm()
     //{
-    //    float distanceToClosestTarget = Mathf.Infinity;
+    //    float distanceToClosesWhackEm = Mathf.Infinity;
 
-    //    Target[] allTargets = GameObject.FindObjectsOfType<Target>(); //Array to hold all weapons of the scene
+    //    WhackEmEnemy[] allWhackEms = GameObject.FindObjectsOfType<WhackEmEnemy>(); //Array to hold all weapons of the scene
 
     //    // Move through the list of weapons to find the closest
-    //    foreach (Target target in allTargets)
+    //    foreach (WhackEmEnemy whackEm in allWhackEms)
     //    {
-    //        float distanceToTarget = (target.transform.position - this.transform.position).sqrMagnitude;
+    //        float distanceToWhackEm = (whackEm.transform.position - this.transform.position).sqrMagnitude;
 
-    //        if (distanceToTarget < distanceToClosestTarget)
+    //        if (distanceToWhackEm < distanceToClosesWhackEm)
     //        {
-    //            distanceToClosestTarget = distanceToTarget; //update the closest weapon
-    //            newTarget = target; //set the closest weapon
-    //            string targetName = newTarget.gameObject.name.ToString(); //get the name of the closest weapon
+    //            distanceToClosesWhackEm = distanceToWhackEm; //update the closest weapon
+    //            newWhackEm = whackEm; //set the closest weapon
+    //            string targetName = newWhackEm.gameObject.name.ToString(); //get the name of the closest weapon
 
-    //            closestTarget = GameObject.Find(targetName); //use the name of the weapon to get the game object that is attached so it can be returned
+    //            closestWhackEm = GameObject.Find(targetName); //use the name of the weapon to get the game object that is attached so it can be returned
 
-    //            targetList.Add(closestTarget);
+    //            whackEmList.Add(closestWhackEm);
+
+    //            distanceToPlayer = transform.position - closestWhackEm.transform.position;
     //        }
     //    }
 
-    //    return closestTarget;
+    //    return closestWhackEm;
     //}
 
     public void MeleeAttack()
     {
-        transform.Rotate(Vector3.right, 87f);
+        transform.Rotate(Vector3.right, 90f);
     }
 
     public void Return()
     {
-        transform.Rotate(Vector3.right, 36f);
+        transform.Rotate(Vector3.right, 30f);
     }
 
     protected void LateUpdate()

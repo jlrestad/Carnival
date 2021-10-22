@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    public static Target Instance;
+
     public float health = 100f;
-    [SerializeField] GameObject spawnHead;
-    [SerializeField] GameObject headPrefab;
 
     private void Awake()
     {
+        Instance = this;
     }
 
     public void TakeDamage(int damageAmount)

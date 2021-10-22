@@ -43,7 +43,7 @@ public class WeaponEquip : MonoBehaviour
     {
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
-        actionPrompt = menu.ePrompt;
+        //actionPrompt = menu.ePrompt; //Turned off while working in level scene
     }
 
     void Update()
@@ -74,29 +74,32 @@ public class WeaponEquip : MonoBehaviour
             ShowWeapon();
         }
 
-        //Show action prompt
-        if (distanceToPlayer.magnitude <= pickUpRange)
-        {
-            if (!isEquipped)
-            {
-                actionPrompt.SetActive(true);
-            }
-            if (haveGun)
-            {
-                if (closestWeapon.CompareTag("Gun"))
-                {
-                    actionPrompt.SetActive(false);
-                }
-                else
-                {
-                    actionPrompt.SetActive(true);
-                }
-            }
-        }
-        else
-        {
-            actionPrompt.SetActive(false);
-        }
+        //Show action prompt if within pickup range
+        //if (distanceToPlayer.magnitude <= pickUpRange)
+        //{
+        //    //If within pickup range and nothing is equipped show the prompt.
+        //    if (!isEquipped)
+        //    {
+        //        actionPrompt.SetActive(true);
+        //    }
+        //    if (haveGun)
+        //    {
+        //        //If have gun and closest weapon is a gun don't show the prompt.
+        //        if (closestWeapon.CompareTag("Gun"))
+        //        {
+        //            actionPrompt.SetActive(false);
+        //        }
+        //        //If have gun but closest weapon is not a gun show the prompt.
+        //        else
+        //        {
+        //            actionPrompt.SetActive(true);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    actionPrompt.SetActive(false);
+        //}
     }
 
     // Find the weapon that is closest to the player

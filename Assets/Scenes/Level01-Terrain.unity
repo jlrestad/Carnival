@@ -155,7 +155,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949225}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.1686306, y: 1.7261202, z: 0.72561604}
@@ -208,8 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  spawnHead: {fileID: 989437518}
-  headPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
 --- !u!114 &949233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +502,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-9398
+  m_Name: pb_Mesh-531482
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3919,7 +3917,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868950709}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.1686306, y: 1.7261202, z: 0.725616}
@@ -3972,8 +3970,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  spawnHead: {fileID: 1172171912}
-  headPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
 --- !u!114 &868950717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4308,7 +4304,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-9494
+  m_Name: pb_Mesh-531578
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4508,7 +4504,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-9430
+  m_Name: pb_Mesh-531514
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5793,7 +5789,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-9462
+  m_Name: pb_Mesh-531546
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6623,6 +6619,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5009739870312083594, guid: 4f1678567cf1fbb478b44003c2d76bc7, type: 3}
+--- !u!1 &1340224463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8477729248151646984, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+  m_PrefabInstance: {fileID: 8795133895650341505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1340224465
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340224463}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1342392759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7765,7 +7782,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567428718}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.1686305, y: 1.7261202, z: 0.725616}
@@ -7818,8 +7835,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  spawnHead: {fileID: 934268091}
-  headPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
 --- !u!114 &1567428726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12548,6 +12563,10 @@ PrefabInstance:
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 1895608326}
+    - target: {fileID: 8477729248151646987, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: damage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8567739266467498283, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_Name
       value: FPSPlayer
@@ -12595,6 +12614,10 @@ PrefabInstance:
     - target: {fileID: 8567739266467498286, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795133894535168231, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
