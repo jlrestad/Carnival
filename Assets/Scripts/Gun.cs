@@ -13,6 +13,7 @@ public class Gun : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject muzzleLight;
     public GameObject impactEffect;
+    [SerializeField] int rateOfFire = 10;
 
     public AudioSource shootAudio;
 
@@ -25,7 +26,11 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            //Burst shot
+            for (int i = 0; i < rateOfFire; i++)
+            {
+                Shoot();
+            }
         }
         if (Input.GetButtonUp("Fire1"))
         {

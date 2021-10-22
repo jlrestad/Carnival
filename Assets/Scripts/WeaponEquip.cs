@@ -9,8 +9,8 @@ public class WeaponEquip : MonoBehaviour
     public static WeaponEquip Instance;
 
     [Space(15)]
-    public GameObject gun;
-    public GameObject mallet;
+    public GameObject gunHold;
+    public GameObject malletHold;
 
     [Space(15)]
     [SerializeField] public List<GameObject> weaponList;
@@ -43,7 +43,7 @@ public class WeaponEquip : MonoBehaviour
     {
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
-        //actionPrompt = menu.ePrompt; //Turned off while working in level scene
+        actionPrompt = menu.ePrompt; //Turned off while working in level scene
     }
 
     void Update()
@@ -75,31 +75,31 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //Show action prompt if within pickup range
-        //if (distanceToPlayer.magnitude <= pickUpRange)
-        //{
-        //    //If within pickup range and nothing is equipped show the prompt.
-        //    if (!isEquipped)
-        //    {
-        //        actionPrompt.SetActive(true);
-        //    }
-        //    if (haveGun)
-        //    {
-        //        //If have gun and closest weapon is a gun don't show the prompt.
-        //        if (closestWeapon.CompareTag("Gun"))
-        //        {
-        //            actionPrompt.SetActive(false);
-        //        }
-        //        //If have gun but closest weapon is not a gun show the prompt.
-        //        else
-        //        {
-        //            actionPrompt.SetActive(true);
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    actionPrompt.SetActive(false);
-        //}
+        if (distanceToPlayer.magnitude <= pickUpRange)
+        {
+            //If within pickup range and nothing is equipped show the prompt.
+            if (!isEquipped)
+            {
+                actionPrompt.SetActive(true);
+            }
+            if (haveGun)
+            {
+                //If have gun and closest weapon is a gun don't show the prompt.
+                if (closestWeapon.CompareTag("Gun"))
+                {
+                    actionPrompt.SetActive(false);
+                }
+                //If have gun but closest weapon is not a gun show the prompt.
+                else
+                {
+                    actionPrompt.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            actionPrompt.SetActive(false);
+        }
     }
 
     // Find the weapon that is closest to the player
@@ -208,12 +208,12 @@ public class WeaponEquip : MonoBehaviour
         //Check which weapon it is and get the tag.
         if (weaponList[index].tag == "Gun" && !haveGun)
         {
-            currentWeapon = gun;
+            currentWeapon = gunHold;
             haveGun = true;
         }
         if (weaponList[index].tag == "Mallet" && !haveMallet)
         {
-            currentWeapon = mallet;
+            currentWeapon = malletHold;
             haveMallet = true;
         }
 

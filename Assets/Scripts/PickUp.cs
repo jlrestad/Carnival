@@ -14,12 +14,12 @@ public class PickUp : MonoBehaviour
 
     [HideInInspector] public Vector3 distanceToPlayer;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public new BoxCollider collider;
+    [HideInInspector] public new Collider collider;
 
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<BoxCollider>();
+        collider = GetComponent<Collider>();
         player = GameObject.FindGameObjectWithTag("Player");
         holdDest = GameObject.Find("ObjectHold").transform;
         audio = GetComponent<AudioSource>();
