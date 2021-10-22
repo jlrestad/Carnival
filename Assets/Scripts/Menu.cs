@@ -38,6 +38,7 @@ public class Menu : MonoBehaviour
     public float delayTime = 3f;
 
     int counter = 0; //Used to handle pause.
+    public GameObject ePrompt;
 
     private void Awake()
     {
@@ -68,8 +69,9 @@ public class Menu : MonoBehaviour
     {
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
-        //Invoke("LoadLevel", delayTime);
-        LoadLevel();
+
+        Invoke("LoadLevel", delayTime);
+        //LoadLevel();
 
         Debug.Log(GM.GameState);
     }
@@ -77,6 +79,7 @@ public class Menu : MonoBehaviour
     public void PauseGame()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         counter = 1;
         pauseMenu.SetActive(true);
@@ -86,22 +89,33 @@ public class Menu : MonoBehaviour
     public void UnpauseGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         counter = 0;
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
     }
 
-    public void DelayQuit() 
-    {
-        Invoke("Quit", 2f);
-    }
+    //public void DelayQuit() 
+    //{
+    //    #if UNITY_EDITOR
+    //            UnityEditor.EditorApplication.isPlaying = false;
+    //    #endif
+    //    Invoke("Quit", 2f);
+    //}
 
     public void Quit()
     {
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+        StartCoroutine("DelayQuit");
+    }
+
+    IEnumerator DelayQuit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        yield return new WaitForEndOfFrame();
+
         Application.Quit();
     }
 
@@ -118,7 +132,6 @@ public class Menu : MonoBehaviour
 
         SceneManager.LoadScene("Level01-Terrain", LoadSceneMode.Additive);
         introAudio.volume = 1;
-        
     }
 
     public void AudioFade()

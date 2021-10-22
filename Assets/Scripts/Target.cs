@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    public static Target Instance;
+
     public float health = 100f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void TakeDamage(int damageAmount)
     {
@@ -18,8 +25,17 @@ public class Target : MonoBehaviour
 
     void Die()
     {
-        //Destroy(gameObject);
-        gameObject.SetActive(false);
+        if (CompareTag("WhackEm"))
+        {
+            //Call method to throwable object
+            WhackEmEnemy.Instance.SpawnHead();
+
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 }

@@ -29,7 +29,7 @@ public class PickUp : MonoBehaviour
     {
         distanceToPlayer = holdDest.position - transform.position;
 
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isHolding)
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isHolding && !WeaponEquip.Instance.isEquipped)
         {
             Grab();
         }

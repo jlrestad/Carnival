@@ -21,10 +21,6 @@ public class Gun : MonoBehaviour
         shootAudio = GetComponent<AudioSource>();
     }
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))

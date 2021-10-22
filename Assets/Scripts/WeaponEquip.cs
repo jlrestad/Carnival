@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class WeaponEquip : MonoBehaviour
 {
+    public static WeaponEquip Instance;
+
     [Space(15)]
     public GameObject gun;
     public GameObject mallet;
+
     [Space(15)]
     [SerializeField] public List<GameObject> weaponList;
+
     [Space(15)]
     public int weaponNumber = 0;
+
     [Space(15)]
     [SerializeField] bool inInventory;
-    [SerializeField] bool isEquipped;
+    public bool isEquipped;
+
     [Space(15)]
     [SerializeField] private GameObject closestWeapon = null;
     [SerializeField] float pickUpRange = 1f;
@@ -24,23 +30,38 @@ public class WeaponEquip : MonoBehaviour
     private GameObject currentWeapon = null;
     private Weapon newWeapon;
     [SerializeField]private bool haveGun, haveMallet;
+    public Canvas crossHair;
+    public Menu menu;
+    public GameObject actionPrompt;
 
     private void Awake()
     {
-        //Instance = this;
+        Instance = this;
     }
 
     private void Start()
     {
-       
+        //To make the action prompt appear
+        menu = FindObjectOfType<Menu>();
+        //actionPrompt = menu.ePrompt; //Turned off while working in level scene
     }
 
     void Update()
     {
         FindClosestWeapon();
-        ChangeWeapon();
+        //ChangeWeapon();
 
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("Fire1") && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("Fire1") && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
+        if (isEquipped)
+        {
+            crossHair.enabled = true;
+        }
+        else
+        {
+            crossHair.enabled = false;
+        }
+
+        
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
         {
             PickUpWeapon();
         }
@@ -52,6 +73,33 @@ public class WeaponEquip : MonoBehaviour
         {
             ShowWeapon();
         }
+
+        //Show action prompt if within pickup range
+        //if (distanceToPlayer.magnitude <= pickUpRange)
+        //{
+        //    //If within pickup range and nothing is equipped show the prompt.
+        //    if (!isEquipped)
+        //    {
+        //        actionPrompt.SetActive(true);
+        //    }
+        //    if (haveGun)
+        //    {
+        //        //If have gun and closest weapon is a gun don't show the prompt.
+        //        if (closestWeapon.CompareTag("Gun"))
+        //        {
+        //            actionPrompt.SetActive(false);
+        //        }
+        //        //If have gun but closest weapon is not a gun show the prompt.
+        //        else
+        //        {
+        //            actionPrompt.SetActive(true);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    actionPrompt.SetActive(false);
+        //}
     }
 
     // Find the weapon that is closest to the player
