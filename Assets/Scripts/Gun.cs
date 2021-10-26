@@ -10,27 +10,52 @@ public class Gun : MonoBehaviour
 
     public Camera fpsCam;
     //public GameObject firePoint;
-    public ParticleSystem muzzleFlash;
-    public GameObject muzzleLight;
-    public GameObject impactEffect;
+    [SerializeField] ParticleSystem muzzleFlash;
+    [SerializeField] GameObject muzzleLight;
+    [SerializeField] GameObject impactEffect;
+    [SerializeField] float burstAmount = 3f;
+    [SerializeField] float delayFire = 1f;
+    [SerializeField] float rateOfFire = 125f;
+    [SerializeField] float coolDown = 0.1f;
+
+    [SerializeField] bool canShoot = true;
 
     public AudioSource shootAudio;
 
     private void Awake()
     {
         shootAudio = GetComponent<AudioSource>();
+        canShoot = true;
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && canShoot == true)
         {
-            Shoot();
+            StartCoroutine(BurstFire()); //cooldown isn't working
         }
+
         if (Input.GetButtonUp("Fire1"))
         {
             muzzleLight.GetComponent<Light>().enabled = false;
         }
+    }
+
+    IEnumerator BurstFire()
+    {
+        delayFire = 60 / rateOfFire;
+
+        //Create a burst of fire
+        for (int i = 0; i < burstAmount; i++)
+        {
+            Shoot();
+            yield return new WaitForSeconds(delayFire); //amount of time between bullet fire
+        }
+        canShoot = false;
+        yield return new WaitForSeconds(coolDown); //don't allow firing of gun for a cool down period
+
+        canShoot = true;
+        yield return null;
     }
 
     // Turn off the light if the fire button is held down.

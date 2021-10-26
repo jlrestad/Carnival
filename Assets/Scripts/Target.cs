@@ -5,6 +5,7 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public static Target Instance;
+    public WhackEmEnemy spawnHead;
 
     public float health = 100f;
 
@@ -28,7 +29,7 @@ public class Target : MonoBehaviour
         if (CompareTag("WhackEm"))
         {
             //Call method to throwable object
-            WhackEmEnemy.Instance.SpawnHead();
+            spawnHead.SpawnHead();
 
             this.gameObject.SetActive(false);
         }

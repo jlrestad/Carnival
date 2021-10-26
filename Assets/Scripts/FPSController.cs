@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityStandardAssets.Effects;
 
 [RequireComponent(typeof(CharacterController))]
 
@@ -150,11 +150,15 @@ public class FPSController : MonoBehaviour
             StartCoroutine(Slide());
             slidingAllowed = false;
         }
-        if (Input.GetKeyUp(KeyCode.R))
+
+        if (Input.GetKeyUp(KeyCode.R) && !slidingAllowed)
         {
-            // allow for sliding again
-            slidingAllowed = true;
+            StartCoroutine(CanSlide());
         }
+        //if (Input.GetKeyUp(KeyCode.R) && !slidingAllowed)
+        //{
+        //    slidingAllowed = true;
+        //}
 
         // Crouching
         if (crouch && isUp)
@@ -165,6 +169,12 @@ public class FPSController : MonoBehaviour
         {
             StandUp();
         }
+    }
+
+    IEnumerator CanSlide() 
+    {
+        yield return new WaitForSeconds(2f);        
+       slidingAllowed = true;
     }
 
     // PUSHES RIDIDBODIES THAT PLAYER RUNS INTO
@@ -184,6 +194,8 @@ public class FPSController : MonoBehaviour
             return;
         }
 
+        //Stop moving if running into a static object
+        // I think need to use colliders -- if collider enter belongs to static.... will try it later
         if (hit.gameObject.isStatic == true)
         {
             characterController.Move(moveDirection * Time.deltaTime * 0);
@@ -216,35 +228,20 @@ public class FPSController : MonoBehaviour
 
         yield return new WaitForFixedUpdate();
 
-        characterController.height = slideHeight;
-        characterController.Move(moveDirection * Time.deltaTime * slideSpeed);
-        capsule = transform;
+        characterController.height = slideHeight; //being character height down to immitate sliding
+        characterController.Move(moveDirection * Time.deltaTime * slideSpeed); //move in the direction player slid at slide speed
+        capsule = transform; //get the transform of the capsule in FPSPlayer object
 
         //Tilt to the side during slide
-        //capsule.transform.Rotate(0f, 0f, 8f, Space.Self); //works...
+        //capsule.transform.Rotate(0f, 0f, 10f, Space.Self); //works...
 
         yield return new WaitForSeconds(slideTime);
       
         isUp = true;
 
         //Return to upright position after slide
-        //capsule.transform.Rotate(0f, 0f, 0f, Space.Self); //not working....
+        //capsule.transform.Rotate(0f, 0f, transform.rotation.z - 10f, Space.Self); //not working....
 
-        characterController.height = originalHeight;
-        
-
-        //StartCoroutine(DoneSliding());
+        characterController.height = originalHeight; //set character height back to normal
     }
-
-    //IEnumerator DoneSliding()
-    //{
-    //    yield return new WaitForSeconds(slideTime);
-
-    //    isUp = true;
-
-    //    characterController.height = originalHeight;
-
-    //    //Return to upright position after slide
-    //    characterController.transform.rotation = Quaternion.Euler(moveDirection.x, moveDirection.y, moveDirection.z * 0);
-    //}
 }

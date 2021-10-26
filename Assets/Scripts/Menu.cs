@@ -35,7 +35,8 @@ public class Menu : MonoBehaviour
     public GameObject pauseMenu;
 
     [Header("LEVEL LOAD")]
-    public float delayTime = 3f;
+    public string levelName;
+    [SerializeField] float delayTime = 3f;
 
     int counter = 0; //Used to handle pause.
     public GameObject ePrompt;
@@ -130,8 +131,15 @@ public class Menu : MonoBehaviour
         titleScreen.SetActive(false);
         titleCamera.SetActive(false);
 
-        SceneManager.LoadScene("Level01-Terrain", LoadSceneMode.Additive);
+        SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         introAudio.volume = 1;
+    }
+
+    public void ChangeLevel(string name)
+    {
+        SceneManager.LoadScene(name, LoadSceneMode.Additive);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void AudioFade()
