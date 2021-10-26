@@ -33,6 +33,7 @@ public class WeaponEquip : MonoBehaviour
     public Canvas crossHair;
     public Menu menu;
     public GameObject actionPrompt;
+    public string levelName;
 
     private void Awake()
     {
@@ -61,9 +62,15 @@ public class WeaponEquip : MonoBehaviour
         }
 
         
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !haveMallet && closestWeapon.tag == "Mallet")
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !haveMallet && closestWeapon.tag == "Mallet")
         {
+            //If there is already a weapon equipped, hide it.
+            if (isEquipped)
+            {
+                currentWeapon.SetActive(false);
+            }
             PickUpWeapon();
+            menu.ChangeLevel(levelName);
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
@@ -192,7 +199,6 @@ public class WeaponEquip : MonoBehaviour
     public void PickUpWeapon()
     {
         isEquipped = true;
-
         weaponNumber++; //increase by 1
 
         //Check which weapon it is and get the tag.
@@ -212,9 +218,9 @@ public class WeaponEquip : MonoBehaviour
         Debug.Log("Got " + closestWeapon.tag + "!");
         Debug.Log("Current weapon is " + currentWeapon);
 
-        closestWeapon.SetActive(false); //hide this object
+        closestWeapon.SetActive(false); //deactivate this to show it has been picked up
 
-        ShowWeapon();                        
+        ShowWeapon();
     }
 
     // Put weapon in inventory:
