@@ -14,7 +14,7 @@ public class PickUp : MonoBehaviour
 
     [HideInInspector] public Vector3 distanceToPlayer;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public new Collider collider;
+    [HideInInspector] public Collider collider;
 
     public void Start()
     {

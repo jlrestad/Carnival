@@ -27,7 +27,7 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] float pickUpRange = 1f;
     Vector3 distanceToPlayer;
 
-    private GameObject currentWeapon = null;
+    [SerializeField] private GameObject currentWeapon = null;
     private Weapon newWeapon;
     [SerializeField]private bool haveGun, haveMallet;
     public Canvas crossHair;
@@ -49,7 +49,7 @@ public class WeaponEquip : MonoBehaviour
     void Update()
     {
         FindClosestWeapon();
-        //ChangeWeapon();
+        ChangeWeapon();
 
         if (isEquipped)
         {
@@ -74,17 +74,28 @@ public class WeaponEquip : MonoBehaviour
             ShowWeapon();
         }
 
-        //Show action prompt if within pickup range
+        //SHOW ACTION/INTERACT PROMPT
         if (distanceToPlayer.magnitude <= pickUpRange)
         {
-            //If within pickup range and nothing is equipped show the prompt.
-            if (!isEquipped)
+            //If within pickup range show the prompt.
+            actionPrompt.SetActive(true);
+            
+            //Even if weapon is equipped, hide it and pick up new weapon.
+            if (Input.GetKey(KeyCode.E) && !haveGun)
             {
-                actionPrompt.SetActive(true);
+                currentWeapon.SetActive(false);
+                PickUpWeapon();
             }
+
+            //If have gun and closest weapon is a gun don't show the prompt.
             if (haveGun)
             {
-                //If have gun and closest weapon is a gun don't show the prompt.
+                if (Input.GetKey(KeyCode.E))
+                {
+                    currentWeapon.SetActive(false);
+                    PickUpWeapon();
+                }
+    
                 if (closestWeapon.CompareTag("Gun"))
                 {
                     actionPrompt.SetActive(false);
@@ -102,7 +113,7 @@ public class WeaponEquip : MonoBehaviour
         }
     }
 
-    // Find the weapon that is closest to the player
+    // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
     public GameObject FindClosestWeapon()
     {
         float distanceToClosestWeapon = Mathf.Infinity;
@@ -126,7 +137,7 @@ public class WeaponEquip : MonoBehaviour
             }
         }
 
-        return closestWeapon;
+        return closestWeapon; //returns the closest weapon game object
     }
 
     // Use the mouse-wheel to scroll through the weapon list:
@@ -138,61 +149,43 @@ public class WeaponEquip : MonoBehaviour
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
         {
             //If there is already a weapon equipped, hide it.
-            if (currentWeapon != null) //weapon equipped and there is a weapon in the list
+            if (isEquipped && weaponList.Count > 1) //weapon equipped and there is a weapon in the list
             {
                 currentWeapon.SetActive(false);
 
                 weaponNumber++; //move to next list weapon
 
                 //Check bounds.
-                if (weaponNumber > weaponList.Count)
+                if (weaponNumber > weaponList.Count - 1)
                 {
-                    weaponNumber = 1;
+                    weaponNumber = 0;
                 }
 
                 currentWeapon = weaponList[weaponNumber]; //change current weapon to the new scrolled weapon
                 currentWeapon.SetActive(true); //show the weapon
             }
-            else
+        }
+        
+        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+        {
+            if (isEquipped && weaponList.Count > 1)
             {
+                currentWeapon.SetActive(false);
 
+                weaponNumber--;
+
+                if (weaponNumber < 0)
+                {
+                    weaponNumber = weaponList.Count -1;
+                }
+
+                currentWeapon = weaponList[weaponNumber];
+
+                currentWeapon.SetActive(true);
             }
-
-
-            //else if (currentWeapon == null && hasWeapon) //no weapon equipped but there is a weapon in the list
-            //{
-            //    weaponNumber++;
-            //    currentWeapon = weapons[weaponNumber];
-            //    currentWeapon.SetActive(true);
-            //}
-
-
-
-            //Roll scroll wheel back
-            //if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
-            //{
-            //    //If there is already a weapon equipped, hide it.
-            //    if (currentWeapon != null && weapons.Count > 0)
-            //    {
-            //        currentWeapon.SetActive(false);
-            //        weaponNumber--; //move to the previous list weapon
-            //        currentWeapon = weapons[weaponNumber]; //set current weapon to the index number
-            //        currentWeapon.SetActive(false); //show the weapon
-            //    }
-            //    else if (weapons.Count > 0)
-            //    {
-            //        weaponNumber++;
-            //        currentWeapon = weapons[weaponNumber];
-            //        currentWeapon.SetActive(true);
-            //    }
-
-            //    //Set the bounds.        
-            //    if (weaponNumber < 0)
-            //    {
-            //        weaponNumber = 0;
-            //    }
         }
     }
+
 
     /// ...EQUIP WEAPONS SECTION... ///
 
@@ -200,27 +193,26 @@ public class WeaponEquip : MonoBehaviour
     {
         isEquipped = true;
 
-        weaponList.Add(closestWeapon); //add new weapon to the list
-        int index = weaponList.IndexOf(closestWeapon);
-
         weaponNumber++; //increase by 1
 
         //Check which weapon it is and get the tag.
-        if (weaponList[index].tag == "Gun" && !haveGun)
+        if (closestWeapon.tag == "Gun" && !haveGun)
         {
             currentWeapon = gunHold;
+            weaponList.Add(currentWeapon);
             haveGun = true;
         }
-        if (weaponList[index].tag == "Mallet" && !haveMallet)
+        if (closestWeapon.tag == "Mallet" && !haveMallet)
         {
             currentWeapon = malletHold;
+            weaponList.Add(malletHold);
             haveMallet = true;
         }
 
         Debug.Log("Got " + closestWeapon.tag + "!");
         Debug.Log("Current weapon is " + currentWeapon);
 
-        weaponList[index].SetActive(false); //hide this object
+        closestWeapon.SetActive(false); //hide this object
 
         ShowWeapon();                        
     }
