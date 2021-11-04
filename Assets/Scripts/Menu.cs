@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -33,12 +34,14 @@ public class Menu : MonoBehaviour
 
     [Header("MENUS")]
     public GameObject pauseMenu;
+    [SerializeField] GameObject firstButton;
+    bool isPaused;
 
     [Header("LEVEL LOAD")]
     public string levelName;
     [SerializeField] float delayTime = 3f;
 
-    int counter = 0; //Used to handle pause.
+    int counter = -1; //Used to handle pause.
     public GameObject ePrompt;
 
     private void Awake()
@@ -54,11 +57,11 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && counter == 0)
+        if (Input.GetButtonDown("Menu") && counter == 0)
         {
             PauseGame();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && counter == 1)
+        else if (Input.GetButtonDown("Menu") && counter == 1)
         {
             pauseSound.Play();
 
@@ -79,16 +82,26 @@ public class Menu : MonoBehaviour
 
     public void PauseGame()
     {
+        isPaused = true;
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         counter = 1;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
+
+        //Clear
+        EventSystem.current.SetSelectedGameObject(null);
+        //Set
+        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     public void UnpauseGame()
     {
+        isPaused = false;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -128,6 +141,7 @@ public class Menu : MonoBehaviour
 
     public void LoadLevel()
     {
+        counter = 0;
         titleScreen.SetActive(false);
         titleCamera.SetActive(false);
 
@@ -137,13 +151,21 @@ public class Menu : MonoBehaviour
 
     public void ChangeLevel(string name)
     {
+        //Clear button selected
+        EventSystem.current.SetSelectedGameObject(null);
+
         SceneManager.LoadScene(name, LoadSceneMode.Additive);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        //Find first button in scene
+        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        //Set button
+        EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     public void AudioFade()
     {
-        StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 3, 0));
+        StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 2.5f, 0));
     }
 }

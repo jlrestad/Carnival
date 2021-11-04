@@ -62,7 +62,7 @@ public class WeaponEquip : MonoBehaviour
         }
 
         
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !haveMallet && closestWeapon.tag == "Mallet")
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
         {
             //If there is already a weapon equipped, hide it.
             if (isEquipped)
@@ -82,38 +82,38 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //SHOW ACTION/INTERACT PROMPT
-        if (distanceToPlayer.magnitude <= pickUpRange)
-        {
-            //If within pickup range show the prompt.
-            actionPrompt.SetActive(true);
-            
-            //Even if weapon is equipped, hide it and pick up new weapon.
-            if (Input.GetKey(KeyCode.E) && !haveGun)
-            {
-                currentWeapon.SetActive(false);
-                PickUpWeapon();
-            }
+        //if (distanceToPlayer.magnitude <= pickUpRange)
+        //{
+        //    //If within pickup range show the prompt.
+        //    actionPrompt.SetActive(true);
 
-            //If have gun and closest weapon is a gun don't show the prompt.
-            //if (haveGun)
-            //{
-            //    if (Input.GetKey(KeyCode.E))
-            //    {
-            //        currentWeapon.SetActive(false);
-            //        PickUpWeapon();
-            //    }
-    
-            //    if (closestWeapon.CompareTag("Gun"))
-            //    {
-            //        actionPrompt.SetActive(false);
-            //    }
-            //    //If have gun but closest weapon is not a gun show the prompt.
-            //    else
-            //    {
-            //        actionPrompt.SetActive(true);
-            //    }
-            //}
-        }
+        //    //Even if weapon is equipped, hide it and pick up new weapon.
+        //    if (Input.GetButton("ActionButton") && !haveGun)
+        //    {
+        //        currentWeapon.SetActive(false);
+        //        PickUpWeapon();
+        //    }
+
+        //    //If have gun and closest weapon is a gun don't show the prompt.
+        //    if (haveGun)
+        //    {
+        //        if (Input.GetButton("ActionButton"))
+        //        {
+        //            currentWeapon.SetActive(false);
+        //            PickUpWeapon();
+        //        }
+
+        //        if (closestWeapon.CompareTag("Gun"))
+        //        {
+        //            actionPrompt.SetActive(false);
+        //        }
+        //        //If have gun but closest weapon is not a gun show the prompt.
+        //        else
+        //        {
+        //            actionPrompt.SetActive(true);
+        //        }
+        //    }
+        //}
         //else
         //{
         //    actionPrompt.SetActive(false);
@@ -215,8 +215,8 @@ public class WeaponEquip : MonoBehaviour
             haveMallet = true;
         }
 
-        Debug.Log("Got " + closestWeapon.tag + "!");
-        Debug.Log("Current weapon is " + currentWeapon);
+        //Debug.Log("Got " + closestWeapon.tag + "!");
+        //Debug.Log("Current weapon is " + currentWeapon);
 
         closestWeapon.SetActive(false); //deactivate this to show it has been picked up
 

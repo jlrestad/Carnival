@@ -75,7 +75,7 @@ public class FPSController : MonoBehaviour
     void Update()
     {
         //Controls
-        run = Input.GetButton("Run");
+        run = Input.GetAxis("LtTrigger") > 0 || Input.GetButton("Run");
         jump = Input.GetButtonDown("Jump");
         slide = Input.GetButtonDown("Slide");
         crouch = Input.GetButtonDown("Crouch");
@@ -152,11 +152,11 @@ public class FPSController : MonoBehaviour
             StartCoroutine(Slide());
         }
 
-        if (Input.GetKeyUp(KeyCode.R) && !slidingAllowed)
+        if (Input.GetButtonUp("Slide") && !slidingAllowed)
         {
             StartCoroutine(Slide());
         }
-        if (Input.GetKeyUp(KeyCode.R) && !slidingAllowed)
+        if (Input.GetButtonUp("Slide") && !slidingAllowed)
         {
             slidingAllowed = true;
         }
