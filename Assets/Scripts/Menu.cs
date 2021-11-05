@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.TerrainAPI;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -20,6 +21,8 @@ using UnityEditor.PackageManager;
 
 public class Menu : MonoBehaviour
 {
+    public static Menu Instance;
+
     GameManager GM;
 
     [Header("AUDIO")]
@@ -29,8 +32,10 @@ public class Menu : MonoBehaviour
     public string exposedParam;
 
     [Header("OBJECTS")]
-    public GameObject titleScreen;
-    public GameObject titleCamera;
+    [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject titleCamera;
+    public GameObject levelOne;
+    public GameObject player;
 
     [Header("MENUS")]
     public GameObject pauseMenu;
@@ -38,14 +43,16 @@ public class Menu : MonoBehaviour
     bool isPaused;
 
     [Header("LEVEL LOAD")]
-    public string levelName;
-    [SerializeField] float delayTime = 3f;
+    [SerializeField] private string levelName;
+    //[SerializeField] float delayTime = 3f;
 
     int counter = -1; //Used to handle pause.
     public GameObject ePrompt;
 
     private void Awake()
     {
+        Instance = this; 
+
         GM = GameManager.Instance;
         GM.OnStateChange += HandleOnStateChange;
     }
@@ -57,6 +64,9 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        levelOne = GameObject.FindGameObjectWithTag("LevelObjects");
+        player = GameObject.FindGameObjectWithTag("Player");
+
         if (Input.GetButtonDown("Menu") && counter == 0)
         {
             PauseGame();
@@ -74,8 +84,8 @@ public class Menu : MonoBehaviour
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
 
-        Invoke("LoadLevel", delayTime);
-        //LoadLevel();
+        //Invoke("LoadLevel", delayTime);
+        LoadLevel();
 
         Debug.Log(GM.GameState);
     }
@@ -146,6 +156,7 @@ public class Menu : MonoBehaviour
         titleCamera.SetActive(false);
 
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+
         introAudio.volume = 1;
     }
 
@@ -158,10 +169,19 @@ public class Menu : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
+        StartCoroutine(DelayDeactivation());
+
         //Find first button in scene
         firstButton = GameObject.FindGameObjectWithTag("FirstButton");
         //Set button
         EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
+    IEnumerator DelayDeactivation()
+    {
+        yield return new WaitForSeconds(0.5f);
+        levelOne.SetActive(false);
+        player.SetActive(false);
     }
 
     public void AudioFade()

@@ -23,17 +23,17 @@ public class WeaponEquip : MonoBehaviour
     public bool isEquipped;
 
     [Space(15)]
-    [SerializeField] private GameObject closestWeapon = null;
+    public GameObject closestWeapon = null;
     [SerializeField] float pickUpRange = 1f;
     Vector3 distanceToPlayer;
 
-    [SerializeField] private GameObject currentWeapon = null;
+    public GameObject currentWeapon = null;
     private Weapon newWeapon;
-    [SerializeField]private bool haveGun, haveMallet;
+    [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
-    public Menu menu;
+    private Menu menu;
     public GameObject actionPrompt;
-    public string levelName;
+    private string levelName;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class WeaponEquip : MonoBehaviour
     {
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
-        //actionPrompt = menu.ePrompt; //Turned off while working in level scene
+        actionPrompt = menu.ePrompt; //Turned off while working in level scene
     }
 
     void Update()
@@ -69,6 +69,8 @@ public class WeaponEquip : MonoBehaviour
             {
                 currentWeapon.SetActive(false);
             }
+
+            //After picking up weapon go into the game level.
             PickUpWeapon();
             menu.ChangeLevel(levelName);
         }
@@ -82,42 +84,42 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //SHOW ACTION/INTERACT PROMPT
-        //if (distanceToPlayer.magnitude <= pickUpRange)
-        //{
-        //    //If within pickup range show the prompt.
-        //    actionPrompt.SetActive(true);
+        if (distanceToPlayer.magnitude <= pickUpRange)
+        {
+            //If within pickup range show the prompt.
+            actionPrompt.SetActive(true);
 
-        //    //Even if weapon is equipped, hide it and pick up new weapon.
-        //    if (Input.GetButton("ActionButton") && !haveGun)
-        //    {
-        //        currentWeapon.SetActive(false);
-        //        PickUpWeapon();
-        //    }
+            //Even if weapon is equipped, hide it and pick up new weapon.
+            if (Input.GetButton("ActionButton") && !haveGun)
+            {
+                //currentWeapon.SetActive(false);
+                PickUpWeapon();
+            }
 
-        //    //If have gun and closest weapon is a gun don't show the prompt.
-        //    if (haveGun)
-        //    {
-        //        if (Input.GetButton("ActionButton"))
-        //        {
-        //            currentWeapon.SetActive(false);
-        //            PickUpWeapon();
-        //        }
+            //If have gun and closest weapon is a gun don't show the prompt.
+            if (haveGun)
+            {
+                if (Input.GetButton("ActionButton"))
+                {
+                    currentWeapon.SetActive(false);
+                    PickUpWeapon();
+                }
 
-        //        if (closestWeapon.CompareTag("Gun"))
-        //        {
-        //            actionPrompt.SetActive(false);
-        //        }
-        //        //If have gun but closest weapon is not a gun show the prompt.
-        //        else
-        //        {
-        //            actionPrompt.SetActive(true);
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    actionPrompt.SetActive(false);
-        //}
+                if (closestWeapon.CompareTag("Gun"))
+                {
+                    actionPrompt.SetActive(false);
+                }
+                //If have gun but closest weapon is not a gun show the prompt.
+                else
+                {
+                    actionPrompt.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            actionPrompt.SetActive(false);
+        }
     }
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
@@ -141,6 +143,10 @@ public class WeaponEquip : MonoBehaviour
                 closestWeapon = GameObject.Find(weaponName); //use the name of the weapon to get the game object that is attached so it can be returned
 
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //use the distance to restrict how far a player can grab weapon
+
+                //Get the name of the layer -- which is the name of the game level
+                int layerNumber = closestWeapon.layer;
+                levelName = LayerMask.LayerToName(layerNumber);
             }
         }
 

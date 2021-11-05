@@ -6,18 +6,42 @@ using Random = UnityEngine.Random;
 
 public class MovingTarget : MonoBehaviour
 {
+    public static MovingTarget Instance;
+
     public float moveSpeed;
     public GameObject point01, point02;
     Vector3 pos;
     public bool movedUp;
+    [SerializeField] double angleToMove;
+    [SerializeField] double radius;
 
+    float timeCounter = 0f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         pos = transform.position;
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
+    {
+        //Target move around a cirle
+        //timeCounter += Time.deltaTime;
+
+        //float x = Mathf.Cos(timeCounter);
+        //float y = Mathf.Sin(timeCounter);
+        //float z = 0;
+
+        //transform.position = new Vector3(x, y, z);
+
+        Movement();
+    }
+
+    public void Movement()
     {
         StartCoroutine(Move());
     }
@@ -38,7 +62,7 @@ public class MovingTarget : MonoBehaviour
         movedUp = false;
     }
 
-    IEnumerator Move()
+    public IEnumerator Move()
     {
         if (!movedUp)
         {

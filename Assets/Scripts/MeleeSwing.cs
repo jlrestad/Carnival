@@ -15,7 +15,7 @@ public class MeleeSwing : MonoBehaviour
 
     private void Start()
     {
-        target = Target.Instance;
+        //target = Target.Instance;
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
     }
 

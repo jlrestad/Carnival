@@ -18,6 +18,8 @@ public class Gun : MonoBehaviour
     [SerializeField] float rateOfFire = 125f;
     [SerializeField] float coolDown = 0.1f;
 
+    public RaycastHit hit;
+
     [SerializeField] bool canShoot = true;
 
     public AudioSource shootAudio;
@@ -74,7 +76,6 @@ public class Gun : MonoBehaviour
         shootAudio.pitch = Random.Range(0.8f, 1.3f);
         shootAudio.Play();
 
-        RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
