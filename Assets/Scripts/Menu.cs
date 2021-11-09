@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.Experimental.TerrainAPI;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -19,6 +21,8 @@ using UnityEditor.PackageManager;
 
 public class Menu : MonoBehaviour
 {
+    public static Menu Instance;
+
     GameManager GM;
 
     [Header("AUDIO")]
@@ -28,21 +32,27 @@ public class Menu : MonoBehaviour
     public string exposedParam;
 
     [Header("OBJECTS")]
-    public GameObject titleScreen;
-    public GameObject titleCamera;
+    [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject titleCamera;
+    public GameObject levelOne;
+    public GameObject player;
 
     [Header("MENUS")]
     public GameObject pauseMenu;
+    [SerializeField] GameObject firstButton;
+    bool isPaused;
 
     [Header("LEVEL LOAD")]
-    public string levelName;
-    [SerializeField] float delayTime = 3f;
+    [SerializeField] private string levelName;
+    //[SerializeField] float delayTime = 3f;
 
-    int counter = 0; //Used to handle pause.
+    int counter = -1; //Used to handle pause.
     public GameObject ePrompt;
 
     private void Awake()
     {
+        Instance = this; 
+
         GM = GameManager.Instance;
         GM.OnStateChange += HandleOnStateChange;
     }
@@ -54,11 +64,14 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && counter == 0)
+        levelOne = GameObject.FindGameObjectWithTag("LevelObjects");
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (Input.GetButtonDown("Menu") && counter == 0)
         {
             PauseGame();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && counter == 1)
+        else if (Input.GetButtonDown("Menu") && counter == 1)
         {
             pauseSound.Play();
 
@@ -71,24 +84,34 @@ public class Menu : MonoBehaviour
         // Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
 
-        Invoke("LoadLevel", delayTime);
-        //LoadLevel();
+        //Invoke("LoadLevel", delayTime);
+        LoadLevel();
 
         Debug.Log(GM.GameState);
     }
 
     public void PauseGame()
     {
+        isPaused = true;
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         counter = 1;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
+
+        //Clear
+        EventSystem.current.SetSelectedGameObject(null);
+        //Set
+        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     public void UnpauseGame()
     {
+        isPaused = false;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -128,22 +151,41 @@ public class Menu : MonoBehaviour
 
     public void LoadLevel()
     {
+        counter = 0;
         titleScreen.SetActive(false);
         titleCamera.SetActive(false);
 
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+
         introAudio.volume = 1;
     }
 
     public void ChangeLevel(string name)
     {
+        //Clear button selected
+        EventSystem.current.SetSelectedGameObject(null);
+
         SceneManager.LoadScene(name, LoadSceneMode.Additive);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        StartCoroutine(DelayDeactivation());
+
+        //Find first button in scene
+        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        //Set button
+        EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
+    IEnumerator DelayDeactivation()
+    {
+        yield return new WaitForSeconds(0.5f);
+        levelOne.SetActive(false);
+        player.SetActive(false);
     }
 
     public void AudioFade()
     {
-        StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 3, 0));
+        StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 2.5f, 0));
     }
 }

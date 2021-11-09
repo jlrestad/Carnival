@@ -18,6 +18,8 @@ public class Gun : MonoBehaviour
     [SerializeField] float rateOfFire = 125f;
     [SerializeField] float coolDown = 0.1f;
 
+    public RaycastHit hit;
+
     [SerializeField] bool canShoot = true;
 
     public AudioSource shootAudio;
@@ -30,12 +32,12 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot == true)
+        if (Input.GetButtonDown("Fire1") && canShoot == true || Input.GetAxis("RtTrigger") > 0 && canShoot == true)
         {
             StartCoroutine(BurstFire()); //cooldown isn't working
         }
 
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") < 1 && canShoot == true)
         {
             muzzleLight.GetComponent<Light>().enabled = false;
         }
@@ -74,7 +76,6 @@ public class Gun : MonoBehaviour
         shootAudio.pitch = Random.Range(0.8f, 1.3f);
         shootAudio.Play();
 
-        RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);

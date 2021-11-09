@@ -75,17 +75,17 @@ public class FPSController : MonoBehaviour
     void Update()
     {
         //Controls
-        run = Input.GetKey(KeyCode.LeftShift);
+        run = Input.GetAxis("LtTrigger") > 0 || Input.GetButton("Run");
         jump = Input.GetButtonDown("Jump");
-        slide = Input.GetKey(KeyCode.R);
-        crouch = Input.GetKeyDown(KeyCode.LeftControl);
+        slide = Input.GetButtonDown("Slide");
+        crouch = Input.GetButtonDown("Crouch");
 
         //States
         isGrounded = characterController.isGrounded;
         isJumping = jump && characterController.isGrounded;
         isRunning = run && !isJumping && characterController.isGrounded;
         isSliding = slide && isRunning;
-        isCrouching = crouch && !isUp;
+        isCrouching = crouch && isUp;
     }
 
     void FixedUpdate()
@@ -95,14 +95,14 @@ public class FPSController : MonoBehaviour
         Vector3 right = transform.TransformDirection(Vector3.right);
         
         // If canMove is true and isRunning is true, then speed is runSpeed, else speed is walkSpeed.
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxisRaw("Vertical") : 0;
+        float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxisRaw("Horizontal") : 0;
 
         // Change the speed if player is sliding.
         if (isSliding)
         {
-            curSpeedX = slideSpeed * Input.GetAxis("Vertical");
-            curSpeedZ = slideSpeed * Input.GetAxis("Horizontal");
+            curSpeedX = slideSpeed * Input.GetAxisRaw("Vertical");
+            curSpeedZ = slideSpeed * Input.GetAxisRaw("Horizontal");
         }
 
         float moveDirectionY = moveDirection.y;
@@ -136,45 +136,47 @@ public class FPSController : MonoBehaviour
         if (canMove)
         {
             //rotate at the lookSpeed
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed;
+            rotationX += Input.GetAxisRaw("LookUpAndDown") * lookSpeed;
             //stop rotate at the min and max degree limit
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             //have camera follow the rotation
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("LookLeftAndRight") * lookSpeed, 0);
         }
 
         // Sliding
         if (slidingAllowed && isSliding)
         {
             StartCoroutine(Slide());
-            slidingAllowed = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.R) && !slidingAllowed)
+        if (Input.GetButtonUp("Slide") && !slidingAllowed)
         {
-            StartCoroutine(CanSlide());
+            StartCoroutine(Slide());
         }
-        //if (Input.GetKeyUp(KeyCode.R) && !slidingAllowed)
-        //{
-        //    slidingAllowed = true;
-        //}
+        if (Input.GetButtonUp("Slide") && !slidingAllowed)
+        {
+            slidingAllowed = true;
+        }
 
         // Crouching
-        if (crouch && isUp)
+        if (isCrouching)
         {
             Crouch();
         }
-        else if (isCrouching)
+        else if (crouch && !isUp)
         {
             StandUp();
         }
     }
 
+    // Limit the amount of time until slide is allowed
     IEnumerator CanSlide() 
     {
         yield return new WaitForSeconds(2f);        
-       slidingAllowed = true;
+        slidingAllowed = true;
     }
 
     // PUSHES RIDIDBODIES THAT PLAYER RUNS INTO

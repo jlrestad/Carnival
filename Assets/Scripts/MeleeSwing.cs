@@ -15,7 +15,7 @@ public class MeleeSwing : MonoBehaviour
 
     private void Start()
     {
-        target = Target.Instance;
+        //target = Target.Instance;
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
     }
 
@@ -23,11 +23,11 @@ public class MeleeSwing : MonoBehaviour
     {
         //FindClosestWhackEm();
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0)
         {
             MeleeAttack();
         }    
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
         {
             Return();
         }

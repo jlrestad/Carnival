@@ -23,17 +23,17 @@ public class WeaponEquip : MonoBehaviour
     public bool isEquipped;
 
     [Space(15)]
-    [SerializeField] private GameObject closestWeapon = null;
+    public GameObject closestWeapon = null;
     [SerializeField] float pickUpRange = 1f;
     Vector3 distanceToPlayer;
 
-    [SerializeField] private GameObject currentWeapon = null;
+    public GameObject currentWeapon = null;
     private Weapon newWeapon;
-    [SerializeField]private bool haveGun, haveMallet;
+    [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
-    public Menu menu;
+    private Menu menu;
     public GameObject actionPrompt;
-    public string levelName;
+    private string levelName;
 
     private void Awake()
     {
@@ -62,13 +62,15 @@ public class WeaponEquip : MonoBehaviour
         }
 
         
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(KeyCode.E) && !haveMallet && closestWeapon.tag == "Mallet")
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
         {
             //If there is already a weapon equipped, hide it.
             if (isEquipped)
             {
                 currentWeapon.SetActive(false);
             }
+
+            //After picking up weapon go into the game level.
             PickUpWeapon();
             menu.ChangeLevel(levelName);
         }
@@ -86,23 +88,23 @@ public class WeaponEquip : MonoBehaviour
         {
             //If within pickup range show the prompt.
             actionPrompt.SetActive(true);
-            
+
             //Even if weapon is equipped, hide it and pick up new weapon.
-            if (Input.GetKey(KeyCode.E) && !haveGun)
+            if (Input.GetButton("ActionButton") && !haveGun)
             {
-                currentWeapon.SetActive(false);
+                //currentWeapon.SetActive(false);
                 PickUpWeapon();
             }
 
             //If have gun and closest weapon is a gun don't show the prompt.
             if (haveGun)
             {
-                if (Input.GetKey(KeyCode.E))
+                if (Input.GetButton("ActionButton"))
                 {
                     currentWeapon.SetActive(false);
                     PickUpWeapon();
                 }
-    
+
                 if (closestWeapon.CompareTag("Gun"))
                 {
                     actionPrompt.SetActive(false);
@@ -141,6 +143,10 @@ public class WeaponEquip : MonoBehaviour
                 closestWeapon = GameObject.Find(weaponName); //use the name of the weapon to get the game object that is attached so it can be returned
 
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //use the distance to restrict how far a player can grab weapon
+
+                //Get the name of the layer -- which is the name of the game level
+                int layerNumber = closestWeapon.layer;
+                levelName = LayerMask.LayerToName(layerNumber);
             }
         }
 
@@ -215,8 +221,8 @@ public class WeaponEquip : MonoBehaviour
             haveMallet = true;
         }
 
-        Debug.Log("Got " + closestWeapon.tag + "!");
-        Debug.Log("Current weapon is " + currentWeapon);
+        //Debug.Log("Got " + closestWeapon.tag + "!");
+        //Debug.Log("Current weapon is " + currentWeapon);
 
         closestWeapon.SetActive(false); //deactivate this to show it has been picked up
 

@@ -273,7 +273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dc568d57887c5cf45bb9357ac679b038, type: 2}
+  - {fileID: 2100000, guid: b9288e3c33304b645b64c7a456efecaa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -361,8 +361,8 @@ MonoBehaviour:
   holdDest: {fileID: 0}
   player: {fileID: 0}
   isHolding: 0
-  pickUpRange: 2
-  throwSpeed: 12
+  pickUpRange: 1.5
+  throwSpeed: 15
   distanceToPlayer: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   collider: {fileID: 0}
