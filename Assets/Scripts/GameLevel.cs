@@ -11,6 +11,8 @@ public class GameLevel : MonoBehaviour
     [SerializeField] int buildIndex; //get the build index to be able to unload scene
     public GameObject[] targetArray;
     public List<GameObject> targetList;
+    [SerializeField] string levelName;
+    GameObject levelOne, player;
     Menu menu;
     Gun gun;
 
@@ -26,24 +28,21 @@ public class GameLevel : MonoBehaviour
 
         targetArray = GameObject.FindGameObjectsWithTag("MovingTarget");
         targetList.AddRange(targetArray);
-        buildIndex = SceneManager.sceneCount;
-    }
+        buildIndex = SceneManager.GetActiveScene().buildIndex;
 
-    private void Update()
-    {
-        //If player shoots target, return to main level
-        //if (gun.hit.transform.name == "Target")
-        //{
-        //    Return();
-        //}
+        levelName = "GameLevel"; //Find a way to set level name based on which game is played.
+
+        levelOne = Menu.Instance.levelOne;
+        player = Menu.Instance.player;
     }
 
     public void Return()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        SceneManager.UnloadSceneAsync(buildIndex, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+        SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 
-        //TO-DO: Turn FPSplayer and Level Object back on
+        levelOne.SetActive(true);
+        player.SetActive(true);
     }
 }
