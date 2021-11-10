@@ -33,7 +33,7 @@ public class WeaponEquip : MonoBehaviour
     public Canvas crossHair;
     private Menu menu;
     public GameObject actionPrompt;
-    private string levelName;
+    public string levelName;
 
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class WeaponEquip : MonoBehaviour
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
         actionPrompt = menu.ePrompt; //Turned off while working in level scene
+        levelName = "GameLevel";
     }
 
     void Update()
@@ -73,6 +74,11 @@ public class WeaponEquip : MonoBehaviour
             //After picking up weapon go into the game level.
             PickUpWeapon();
             menu.ChangeLevel(levelName);
+
+            if (haveMallet && !haveGun)
+            {
+                levelName = "GameLevel";
+            }
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
