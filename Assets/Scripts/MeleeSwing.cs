@@ -46,9 +46,9 @@ public class MeleeSwing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "WhackEm" || other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Critter" || other.gameObject.tag == "Enemy")
         {
-            target.TakeDamage(damage);
+            //target.TakeDamage(damage);
 
             Debug.Log("Smashed enemy!");
         }

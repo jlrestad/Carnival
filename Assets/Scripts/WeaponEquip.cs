@@ -32,7 +32,7 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
     private Menu menu;
-    public GameObject actionPrompt;
+    public GameObject actionPrompt, gameBooth;
     public string levelName;
 
     private void Awake()
@@ -45,13 +45,13 @@ public class WeaponEquip : MonoBehaviour
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
         actionPrompt = menu.ePrompt; //Turned off while working in level scene
-        levelName = "GameLevel";
     }
 
     void Update()
     {
         FindClosestWeapon();
         ChangeWeapon();
+
 
         if (isEquipped)
         {
@@ -65,6 +65,8 @@ public class WeaponEquip : MonoBehaviour
         
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
         {
+            gameBooth = GameObject.FindGameObjectWithTag(levelName);
+
             //If there is already a weapon equipped, hide it.
             if (isEquipped)
             {
@@ -74,11 +76,7 @@ public class WeaponEquip : MonoBehaviour
             //After picking up weapon go into the game level.
             PickUpWeapon();
             menu.ChangeLevel(levelName);
-
-            if (haveMallet && !haveGun)
-            {
-                levelName = "GameLevel";
-            }
+            gameBooth.SetActive(false);
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
@@ -153,6 +151,8 @@ public class WeaponEquip : MonoBehaviour
                 //Get the name of the layer -- which is the name of the game level
                 int layerNumber = closestWeapon.layer;
                 levelName = LayerMask.LayerToName(layerNumber);
+
+                gameBooth = GameObject.FindGameObjectWithTag(levelName);
             }
         }
 

@@ -10,13 +10,17 @@ TagManager:
   - Gun
   - Mallet
   - EquippedGun
-  - WhackEm
   - Head
   - actionPrompt
   - FirstButton
   - EventSystem
   - LevelObjects
   - MovingTarget
+  - Critter
+  - ShootingGame
+  - ThrowingGame
+  - MeleeGame
+  - WhackEm
   layers:
   - Default
   - TransparentFX
@@ -27,8 +31,8 @@ TagManager:
   - Enemy
   - Volume
   - ShootingGame
-  - GameLevel
-  - 
+  - MeleeGame
+  - ThrowingGame
   - 
   - 
   - 

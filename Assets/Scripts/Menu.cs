@@ -81,7 +81,7 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
-        // Start game scene
+        //Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
 
         //Invoke("LoadLevel", delayTime);
@@ -156,6 +156,9 @@ public class Menu : MonoBehaviour
         titleCamera.SetActive(false);
 
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+        
+        //Clear level name on start
+        levelName = "";
 
         introAudio.volume = 1;
     }
@@ -169,12 +172,12 @@ public class Menu : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        StartCoroutine(DelayDeactivation());
+        //StartCoroutine(DelayDeactivation());
 
         //Find first button in scene
-        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        //firstButton = GameObject.FindGameObjectWithTag("FirstButton");
         //Set button
-        EventSystem.current.SetSelectedGameObject(firstButton);
+        //EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     IEnumerator DelayDeactivation()

@@ -38,7 +38,7 @@ public class Target : MonoBehaviour
 
     void Die()
     {
-        if (CompareTag("WhackEm"))
+        if (CompareTag("Critter"))
         {
             //Call method to throwable object
             spawnHead.SpawnHead();
