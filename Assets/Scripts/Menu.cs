@@ -6,6 +6,8 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.TerrainAPI;
+using System;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -40,14 +42,15 @@ public class Menu : MonoBehaviour
     [Header("MENUS")]
     public GameObject pauseMenu;
     [SerializeField] GameObject firstButton;
-    bool isPaused;
+    public string[] controllerArray = null;
+
+    public bool usingJoystick;
 
     [Header("LEVEL LOAD")]
     [SerializeField] private string levelName;
-    //[SerializeField] float delayTime = 3f;
 
     int counter = -1; //Used to handle pause.
-    public GameObject ePrompt;
+    public GameObject controllerPrompt, keyboardPrompt;
 
     private void Awake()
     {
@@ -55,6 +58,12 @@ public class Menu : MonoBehaviour
 
         GM = GameManager.Instance;
         GM.OnStateChange += HandleOnStateChange;
+
+        controllerArray = Input.GetJoystickNames();
+    }
+
+    private void Start()
+    {
     }
 
     public void HandleOnStateChange()
@@ -64,6 +73,17 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        if (controllerArray[0] != "")
+        {
+            usingJoystick = true;
+        }
+        else
+        {
+            usingJoystick = false;
+        }
+         
+        controllerArray = Input.GetJoystickNames();
+
         levelOne = GameObject.FindGameObjectWithTag("LevelObjects");
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -92,8 +112,6 @@ public class Menu : MonoBehaviour
 
     public void PauseGame()
     {
-        isPaused = true;
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -110,8 +128,6 @@ public class Menu : MonoBehaviour
 
     public void UnpauseGame()
     {
-        isPaused = false;
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 

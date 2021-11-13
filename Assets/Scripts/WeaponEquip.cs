@@ -44,7 +44,15 @@ public class WeaponEquip : MonoBehaviour
     {
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
-        actionPrompt = menu.ePrompt; //Turned off while working in level scene
+
+        if (menu.usingJoystick)
+        {
+            actionPrompt = menu.controllerPrompt; //If a controller is detected show prompt for controller
+        }
+        else
+        {
+            actionPrompt = menu.keyboardPrompt; //If controller not detected show prompt for keyboard
+        }
     }
 
     void Update()
