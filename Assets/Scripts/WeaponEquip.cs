@@ -34,6 +34,7 @@ public class WeaponEquip : MonoBehaviour
     private Menu menu;
     public GameObject actionPrompt, gameBooth;
     public string levelName;
+    [SerializeField] GameObject hubBooth;
 
     private void Awake()
     {
@@ -83,6 +84,7 @@ public class WeaponEquip : MonoBehaviour
 
             //After picking up weapon go into the game level.
             PickUpWeapon();
+            HubBooth(); //Get the hub booth game object so it can be turned back on. Used in GameplayBoundary.LeaveGame().
             menu.ChangeLevel(levelName);
             gameBooth.SetActive(false); //Turn off hub level booth
         }
@@ -118,13 +120,6 @@ public class WeaponEquip : MonoBehaviour
                 else
                 {
                     actionPrompt.SetActive(true);
-                }
-
-                //
-                if (Input.GetButton("ActionButton"))
-                {
-                    currentWeapon.SetActive(false);
-                    PickUpWeapon();
                 }
             }
         }
@@ -165,6 +160,13 @@ public class WeaponEquip : MonoBehaviour
         }
 
         return closestWeapon; //returns the closest weapon game object
+    }
+
+    public GameObject HubBooth()
+    {
+        hubBooth = gameBooth;
+
+        return hubBooth;
     }
 
     // Use the mouse-wheel to scroll through the weapon list:
@@ -239,19 +241,9 @@ public class WeaponEquip : MonoBehaviour
         //Debug.Log("Current weapon is " + currentWeapon);
 
         closestWeapon.SetActive(false); //hide the picked up weapon
-        actionPrompt.SetActive(false); //hide action prompt
+        //actionPrompt.SetActive(false); //hide action prompt
 
         EquipWeapon(); //picked up weapon is equipped
-    }
-
-    // Put weapon in inventory:
-    public void UnequipWeapon()
-    {
-        Debug.Log("Unequip!");
-
-        inInventory = true;
-        isEquipped = false;
-        currentWeapon.SetActive(false);
     }
 
     // Bring weapon out of inventory:
@@ -261,6 +253,16 @@ public class WeaponEquip : MonoBehaviour
 
         inInventory = false;
         isEquipped = true;
-        currentWeapon.SetActive(true);
+        currentWeapon.SetActive(true); //show held weapon 
+    }
+
+    // Put weapon in inventory:
+    public void UnequipWeapon()
+    {
+        Debug.Log("Unequip!");
+
+        inInventory = true;
+        isEquipped = false;
+        currentWeapon.SetActive(false); //hide held weapon
     }
 }

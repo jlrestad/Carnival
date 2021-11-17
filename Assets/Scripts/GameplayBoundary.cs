@@ -6,15 +6,19 @@ using UnityEngine.SceneManagement;
 public class GameplayBoundary : MonoBehaviour
 {
     [SerializeField] GameObject leaveGameMessage;
-    WeaponEquip WE;
     [SerializeField] string levelName;
+    [SerializeField] GameObject gameBooth;
+    [SerializeField] GameObject hubBooth;
+    WeaponEquip WE;
     //Scene theScene;
     //[SerializeField] int sceneIndex;
 
     private void Awake()
     {
-        WE = FindObjectOfType<WeaponEquip>();
         levelName = WeaponEquip.Instance.levelName;
+        hubBooth = WeaponEquip.Instance.HubBooth();
+        //WE = GetComponent<WeaponEquip>();
+        //gameBooth = WE.gameBooth;
         //theScene = SceneManager.GetSceneByName(levelName);
     }
 
@@ -40,7 +44,7 @@ public class GameplayBoundary : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        hubBooth.SetActive(true);
         SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
-
     }
 }
