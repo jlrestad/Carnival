@@ -32,8 +32,9 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
     private Menu menu;
-    public GameObject actionPrompt;
+    public GameObject actionPrompt, gameBooth;
     public string levelName;
+    [SerializeField] GameObject hubBooth;
 
     private void Awake()
     {
@@ -44,14 +45,22 @@ public class WeaponEquip : MonoBehaviour
     {
         //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
-        actionPrompt = menu.ePrompt; //Turned off while working in level scene
-        levelName = "GameLevel";
+
+        if (menu.usingJoystick)
+        {
+            actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+        }
+        else
+        {
+            actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+        }
     }
 
     void Update()
     {
         FindClosestWeapon();
         ChangeWeapon();
+
 
         if (isEquipped)
         {
@@ -65,6 +74,8 @@ public class WeaponEquip : MonoBehaviour
         
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
         {
+            gameBooth = GameObject.FindGameObjectWithTag(levelName);
+
             //If there is already a weapon equipped, hide it.
             if (isEquipped)
             {
@@ -73,20 +84,17 @@ public class WeaponEquip : MonoBehaviour
 
             //After picking up weapon go into the game level.
             PickUpWeapon();
+            HubBooth(); //Get the hub booth game object so it can be turned back on. Used in GameplayBoundary.LeaveGame().
             menu.ChangeLevel(levelName);
-
-            if (haveMallet && !haveGun)
-            {
-                levelName = "GameLevel";
-            }
+            gameBooth.SetActive(false); //Turn off hub level booth
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
-            HideWeapon();
+            UnequipWeapon();
         }
         else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
         {
-            ShowWeapon();
+            EquipWeapon();
         }
 
         //SHOW ACTION/INTERACT PROMPT
@@ -98,19 +106,12 @@ public class WeaponEquip : MonoBehaviour
             //Even if weapon is equipped, hide it and pick up new weapon.
             if (Input.GetButton("ActionButton") && !haveGun)
             {
-                //currentWeapon.SetActive(false);
                 PickUpWeapon();
             }
 
             //If have gun and closest weapon is a gun don't show the prompt.
             if (haveGun)
             {
-                if (Input.GetButton("ActionButton"))
-                {
-                    currentWeapon.SetActive(false);
-                    PickUpWeapon();
-                }
-
                 if (closestWeapon.CompareTag("Gun"))
                 {
                     actionPrompt.SetActive(false);
@@ -153,10 +154,19 @@ public class WeaponEquip : MonoBehaviour
                 //Get the name of the layer -- which is the name of the game level
                 int layerNumber = closestWeapon.layer;
                 levelName = LayerMask.LayerToName(layerNumber);
+
+                gameBooth = GameObject.FindGameObjectWithTag(levelName);
             }
         }
 
         return closestWeapon; //returns the closest weapon game object
+    }
+
+    public GameObject HubBooth()
+    {
+        hubBooth = gameBooth;
+
+        return hubBooth;
     }
 
     // Use the mouse-wheel to scroll through the weapon list:
@@ -230,28 +240,29 @@ public class WeaponEquip : MonoBehaviour
         //Debug.Log("Got " + closestWeapon.tag + "!");
         //Debug.Log("Current weapon is " + currentWeapon);
 
-        closestWeapon.SetActive(false); //deactivate this to show it has been picked up
+        closestWeapon.SetActive(false); //hide the picked up weapon
+        //actionPrompt.SetActive(false); //hide action prompt
 
-        ShowWeapon();
-    }
-
-    // Put weapon in inventory:
-    public void HideWeapon()
-    {
-        Debug.Log("Unequip!");
-
-        inInventory = true;
-        isEquipped = false;
-        currentWeapon.SetActive(false);
+        EquipWeapon(); //picked up weapon is equipped
     }
 
     // Bring weapon out of inventory:
-    void ShowWeapon()
+    void EquipWeapon()
     {
         Debug.Log("Equip!");
 
         inInventory = false;
         isEquipped = true;
-        currentWeapon.SetActive(true);
+        currentWeapon.SetActive(true); //show held weapon 
+    }
+
+    // Put weapon in inventory:
+    public void UnequipWeapon()
+    {
+        Debug.Log("Unequip!");
+
+        inInventory = true;
+        isEquipped = false;
+        currentWeapon.SetActive(false); //hide held weapon
     }
 }

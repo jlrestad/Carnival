@@ -40,9 +40,11 @@ public class FPSController : MonoBehaviour
     //[HideInInspector]
     public bool canMove = true;
 
-    bool run, jump, slide, crouch;
-    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp;
+    bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
+    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, isFlashlightOn;
     public bool slidingAllowed = true;
+
+    [SerializeField] GameObject flashlightHold;
 
     Transform capsule;
 
@@ -79,6 +81,9 @@ public class FPSController : MonoBehaviour
         jump = Input.GetButtonDown("Jump");
         slide = Input.GetButtonDown("Slide");
         crouch = Input.GetButtonDown("Crouch");
+        useFlashlight = Input.GetAxis("Flashlight1") > 0 && !isFlashlightOn || Input.GetButtonDown("Flashlight2") && !isFlashlightOn;
+        dontUseFlashlight = Input.GetAxis("Flashlight1") > 0 && isFlashlightOn || Input.GetButtonDown("Flashlight2") && isFlashlightOn;
+
 
         //States
         isGrounded = characterController.isGrounded;
@@ -107,6 +112,20 @@ public class FPSController : MonoBehaviour
 
         float moveDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
+
+
+        //Flashlight
+        if (useFlashlight)
+        {
+            flashlightHold.SetActive(true);
+            isFlashlightOn = true;
+        }
+        //If holding the flashlight and button is pressed again put the flashlight away
+        if (dontUseFlashlight)
+        {
+            flashlightHold.SetActive(false);
+            isFlashlightOn = false;
+        }
 
         // Jumping
         if (isJumping)
