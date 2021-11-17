@@ -7,19 +7,27 @@ public class GameplayBoundary : MonoBehaviour
 {
     [SerializeField] GameObject leaveGameMessage;
     WeaponEquip WE;
-    string sceneName;
+    [SerializeField] string levelName;
+    //Scene theScene;
+    //[SerializeField] int sceneIndex;
 
     private void Awake()
     {
         WE = FindObjectOfType<WeaponEquip>();
-        sceneName = WE.levelName;
+        levelName = WeaponEquip.Instance.levelName;
+        //theScene = SceneManager.GetSceneByName(levelName);
     }
+
+    //private void Update()
+    //{
+    //    sceneIndex = theScene.buildIndex;
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //activate game level menu
+            //Activate game level menu
             leaveGameMessage.SetActive(true);
 
             Cursor.visible = true;
@@ -31,7 +39,8 @@ public class GameplayBoundary : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        SceneManager.UnloadSceneAsync(sceneName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+
+        SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 
     }
 }

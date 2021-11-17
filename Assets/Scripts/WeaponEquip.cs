@@ -47,11 +47,11 @@ public class WeaponEquip : MonoBehaviour
 
         if (menu.usingJoystick)
         {
-            actionPrompt = menu.controllerPrompt; //If a controller is detected show prompt for controller
+            actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
         }
         else
         {
-            actionPrompt = menu.keyboardPrompt; //If controller not detected show prompt for keyboard
+            actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
         }
     }
 
@@ -84,15 +84,15 @@ public class WeaponEquip : MonoBehaviour
             //After picking up weapon go into the game level.
             PickUpWeapon();
             menu.ChangeLevel(levelName);
-            gameBooth.SetActive(false);
+            gameBooth.SetActive(false); //Turn off hub level booth
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
-            HideWeapon();
+            UnequipWeapon();
         }
         else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
         {
-            ShowWeapon();
+            EquipWeapon();
         }
 
         //SHOW ACTION/INTERACT PROMPT
@@ -104,19 +104,12 @@ public class WeaponEquip : MonoBehaviour
             //Even if weapon is equipped, hide it and pick up new weapon.
             if (Input.GetButton("ActionButton") && !haveGun)
             {
-                //currentWeapon.SetActive(false);
                 PickUpWeapon();
             }
 
             //If have gun and closest weapon is a gun don't show the prompt.
             if (haveGun)
             {
-                if (Input.GetButton("ActionButton"))
-                {
-                    currentWeapon.SetActive(false);
-                    PickUpWeapon();
-                }
-
                 if (closestWeapon.CompareTag("Gun"))
                 {
                     actionPrompt.SetActive(false);
@@ -125,6 +118,13 @@ public class WeaponEquip : MonoBehaviour
                 else
                 {
                     actionPrompt.SetActive(true);
+                }
+
+                //
+                if (Input.GetButton("ActionButton"))
+                {
+                    currentWeapon.SetActive(false);
+                    PickUpWeapon();
                 }
             }
         }
@@ -238,13 +238,14 @@ public class WeaponEquip : MonoBehaviour
         //Debug.Log("Got " + closestWeapon.tag + "!");
         //Debug.Log("Current weapon is " + currentWeapon);
 
-        closestWeapon.SetActive(false); //deactivate this to show it has been picked up
+        closestWeapon.SetActive(false); //hide the picked up weapon
+        actionPrompt.SetActive(false); //hide action prompt
 
-        ShowWeapon();
+        EquipWeapon(); //picked up weapon is equipped
     }
 
     // Put weapon in inventory:
-    public void HideWeapon()
+    public void UnequipWeapon()
     {
         Debug.Log("Unequip!");
 
@@ -254,7 +255,7 @@ public class WeaponEquip : MonoBehaviour
     }
 
     // Bring weapon out of inventory:
-    void ShowWeapon()
+    void EquipWeapon()
     {
         Debug.Log("Equip!");
 

@@ -11,10 +11,10 @@ public class GameLevel : MonoBehaviour
     [SerializeField] int buildIndex; //get the build index to be able to unload scene
     public GameObject[] targetArray;
     public List<GameObject> targetList;
-    [SerializeField] GameObject gameBooth, player;
-    WeaponEquip WE;
-    Menu menu;
-    Gun gun;
+    [SerializeField] GameObject gameBooth;
+    //WeaponEquip WE;
+    //Menu menu;
+    //Gun gun;
 
     private void Awake()
     {
@@ -23,31 +23,30 @@ public class GameLevel : MonoBehaviour
 
     private void Start()
     {
-        menu = FindObjectOfType<Menu>();
-        gun = FindObjectOfType<Gun>();
-        WE = FindObjectOfType<WeaponEquip>();
+        //menu = FindObjectOfType<Menu>();
+        //gun = FindObjectOfType<Gun>();
+        //WE = FindObjectOfType<WeaponEquip>();
 
         targetArray = GameObject.FindGameObjectsWithTag("MovingTarget");
         targetList.AddRange(targetArray);
         buildIndex = SceneManager.GetActiveScene().buildIndex;
-
-
-        player = Menu.Instance.player;
     }
 
     public void Return(string levelName)
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        
+        //Remove game booth scene from hierarchy
         SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 
+        //Unhide the hub level booth
         gameBooth.SetActive(true);
-        player.SetActive(true);
     }
 
     public void LoadGame()
     {
-        //player.SetActive(false);
+        //Hide the hub level booth
         gameBooth.SetActive(false);
     }
 }

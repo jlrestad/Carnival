@@ -73,13 +73,13 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        if (controllerArray[0] != "")
-        {
-            usingJoystick = true;
-        }
-        else
+        if (controllerArray == null)
         {
             usingJoystick = false;
+        }
+        else if (controllerArray.Length > 0 && controllerArray[0] != "")
+        {
+            usingJoystick = true;
         }
          
         controllerArray = Input.GetJoystickNames();
@@ -185,8 +185,8 @@ public class Menu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         SceneManager.LoadScene(name, LoadSceneMode.Additive);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         //StartCoroutine(DelayDeactivation());
 

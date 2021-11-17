@@ -425,6 +425,8 @@ MonoBehaviour:
   point01: {fileID: 6567293124131085646}
   point02: {fileID: 6567293124114286494}
   movedUp: 0
+  angleToMove: 0
+  radius: 0
 --- !u!114 &6567293123653840204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +439,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeaf403785efce43a75f53137c05584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnHead: {fileID: 0}
   health: 10
+  score: 1
+  targets: []
 --- !u!1 &6567293123659864926
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,6 +805,8 @@ MonoBehaviour:
   point01: {fileID: 6567293123550869517}
   point02: {fileID: 6567293125516026559}
   movedUp: 0
+  angleToMove: 0
+  radius: 0
 --- !u!114 &6567293123659864924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -812,7 +819,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeaf403785efce43a75f53137c05584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnHead: {fileID: 0}
   health: 10
+  score: 1
+  targets: []
 --- !u!1 &6567293124114286494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,6 +1275,8 @@ MonoBehaviour:
   point01: {fileID: 6567293124906812476}
   point02: {fileID: 6567293124996053669}
   movedUp: 0
+  angleToMove: 0
+  radius: 0
 --- !u!114 &6567293124455214501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,7 +1289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeaf403785efce43a75f53137c05584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnHead: {fileID: 0}
   health: 10
+  score: 1
+  targets: []
 --- !u!1 &6567293124756570835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,6 +1844,8 @@ MonoBehaviour:
   point01: {fileID: 6567293124383275459}
   point02: {fileID: 6567293124987892163}
   movedUp: 0
+  angleToMove: 0
+  radius: 0
 --- !u!114 &6567293125051757747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,7 +1858,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeaf403785efce43a75f53137c05584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnHead: {fileID: 0}
   health: 10
+  score: 1
+  targets: []
 --- !u!1 &6567293125442873490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,7 +1886,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6567293125442873490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.09, y: 1.81, z: 41.3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6567293124994275924}
