@@ -3,36 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Target : MonoBehaviour
 {
     public static Target Instance;
 
     Menu menu;
+    Target target;
+    MovingTarget movingTarget;
 
     [HideInInspector] public WhackEmEnemy spawnHead;
-
     [SerializeField] float health = 100f;
-    [SerializeField] int score = 1;
-    [SerializeField] List<Target> targets;
-    int targetAmount;
+    
+    [SerializeField] bool targetHit;
 
     private void Awake()
     {
         Instance = this;
+    }
 
-        menu = GetComponent<Menu>();
-
-        targets.Add(GetComponent<Target>());
+    private void Start()
+    {
+        movingTarget = GetComponentInParent<MovingTarget>();
     }
 
     public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
 
-        if (health <= 0f)
+        if (health < 0f)
         {
+            health = 0f;
             Die();
+        }
+    }
+
+    public void HitTarget()
+    {
+        //Flip target back after being hit
+        transform.rotation = Quaternion.Euler(2f, 0, 0);
+
+        targetHit = true;
+        //Keep from scoring multiple points
+        if (targetHit)
+        {
+            //Add game object to Moving Target array
+            movingTarget.targetsList.Add(this.gameObject);
         }
     }
 
@@ -45,18 +62,5 @@ public class Target : MonoBehaviour
 
             this.gameObject.SetActive(false);
         }
-        else
-        {
-            //gameObject.SetActive(false);
-            //GameLevel.Instance.targetList.RemoveAt(0);
-
-            //Disable the movement
-            MovingTarget mt = gameObject.GetComponent<MovingTarget>();
-            mt.enabled = false;
-
-            //Flip target back after being hit
-            transform.rotation = Quaternion.Euler(90f, 0, 0);
-        }
     }
-
 }

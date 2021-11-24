@@ -5,21 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class GameplayBoundary : MonoBehaviour
 {
-    [SerializeField] GameObject leaveGameMessage;
+    //[SerializeField] GameObject leaveGameMessage;
     [SerializeField] string levelName;
-    [SerializeField] GameObject gameBooth;
-    [SerializeField] GameObject hubBooth;
-    WeaponEquip WE;
+    //[SerializeField] GameObject gameBooth;
+    //[SerializeField] GameObject hubBooth;
+    public GameObject[] gamesArray;
+    [SerializeField] GameObject player;
     //Scene theScene;
     //[SerializeField] int sceneIndex;
 
     private void Awake()
     {
-        levelName = WeaponEquip.Instance.levelName;
-        hubBooth = WeaponEquip.Instance.HubBooth();
-        //WE = GetComponent<WeaponEquip>();
+        player = GameObject.FindGameObjectWithTag("Player");
         //gameBooth = WE.gameBooth;
         //theScene = SceneManager.GetSceneByName(levelName);
+    }
+
+    private void Update()
+    {
+        levelName = player.GetComponent<WeaponEquip>().levelName;
     }
 
     //private void Update()
@@ -31,20 +35,35 @@ public class GameplayBoundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //Activate game level menu
-            leaveGameMessage.SetActive(true);
+            //Start the game
+            for (int i = 0; i < gamesArray.Length; i++)
+            {
+                //Get layer name of the game
+                int layerNumber = gamesArray[i].layer;
+                string layerName = LayerMask.LayerToName(layerNumber);
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+                //If layer name matches level name, activate the game
+                if (layerName == levelName)
+                {
+                    gamesArray[i].SetActive(true);
+                }
+            }
+
+            // Old code when in loaded scene
+            //Activate game level menu
+            //leaveGameMessage.SetActive(true);
+
+            //Cursor.visible = true;
+            //Cursor.lockState = CursorLockMode.None;
         }
     }
     
-    public void LeaveGame()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+    //public void LeaveGame()
+    //{
+    //    Cursor.visible = false;
+    //    Cursor.lockState = CursorLockMode.Locked;
 
-        hubBooth.SetActive(true);
-        SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
-    }
+    //    hubBooth.SetActive(true);
+    //    SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+    //}
 }

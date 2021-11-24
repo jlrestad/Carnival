@@ -82,9 +82,14 @@ public class Gun : MonoBehaviour
 
             Target target = hit.transform.GetComponent<Target>();
 
-            if(target != null)
+            //if(target != null)
+            //{
+            //    target.TakeDamage(damage);
+            //}
+
+            if (target != null && target.CompareTag("MovingTarget"))
             {
-                target.TakeDamage(damage);
+                target.HitTarget();
             }
 
             StartCoroutine(TurnOffMuzzleLight());
