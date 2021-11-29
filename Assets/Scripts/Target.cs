@@ -9,23 +9,27 @@ public class Target : MonoBehaviour
 {
     public static Target Instance;
 
-    Menu menu;
-    Target target;
-    MovingTarget movingTarget;
+    BezierFollow moveAlongCurve;
+    GameCardManager cardManager;
 
     [HideInInspector] public WhackEmEnemy spawnHead;
     [SerializeField] float health = 100f;
+
+    public Transform startPos;
     
-    [SerializeField] bool targetHit;
+    public bool targetHit;
 
     private void Awake()
     {
         Instance = this;
+
+        startPos = transform; //save starting position
     }
 
     private void Start()
     {
-        movingTarget = GetComponentInParent<MovingTarget>();
+        cardManager = GetComponentInParent<GameCardManager>();
+        moveAlongCurve = GetComponent<BezierFollow>();
     }
 
     public void TakeDamage(int damageAmount)
@@ -35,34 +39,37 @@ public class Target : MonoBehaviour
         if (health < 0f)
         {
             health = 0f;
-            Die();
+
+            if (CompareTag("Critter"))
+            {
+                SmashCritter();
+            }
         }
     }
 
     public void HitTarget()
     {
         //Flip target back after being hit
-        transform.rotation = Quaternion.Euler(2f, 0, 0);
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
         targetHit = true;
         //Keep from scoring multiple points
         if (targetHit)
         {
-            //Add game object to Moving Target array
-            movingTarget.targetsList.Add(this.gameObject);
-        }
+            //Add game object to Moving Target array.
+            cardManager.targetsList.Add(this.gameObject);
 
-        transform.position = transform.position;
+            //Stop the target from moving after it's shot.
+            moveAlongCurve.speedModifier = 0f;
+        }
     }
 
-    void Die()
+    void SmashCritter()
     {
-        if (CompareTag("Critter"))
-        {
-            //Call method to throwable object
-            spawnHead.SpawnHead();
+        //Spawn the head
+        spawnHead.SpawnHead();
 
-            this.gameObject.SetActive(false);
-        }
+        //Hide the critter
+        this.gameObject.SetActive(false);
     }
 }

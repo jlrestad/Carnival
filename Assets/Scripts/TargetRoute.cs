@@ -23,7 +23,7 @@ public class TargetRoute : MonoBehaviour
                 Mathf.Pow(t, 2) * controlPoints[2].position +
                 Mathf.Pow(t, 3) * controlPoints[3].position;
 
-            Gizmos.DrawSphere(gizmosPosition, 15f);
+            //Gizmos.DrawSphere(gizmosPosition, 15f);
         }
 
         Gizmos.DrawLine(new Vector3(controlPoints[0].position.x, controlPoints[0].position.y, controlPoints[0].position.z),

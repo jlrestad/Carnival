@@ -9,7 +9,7 @@ public class BezierFollow : MonoBehaviour
     private int routeToGo;
     private float tParam;
     private Vector3 targetPos;
-    private float speedModifier;
+    public float speedModifier;
     private bool coroutineAllowed;
 
     private void Start()

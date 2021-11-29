@@ -87,7 +87,7 @@ public class Gun : MonoBehaviour
             //    target.TakeDamage(damage);
             //}
 
-            if (target != null && target.CompareTag("MovingTarget"))
+            if (target != null && target.CompareTag("MovingTarget") && !target.targetHit)
             {
                 target.HitTarget();
             }
@@ -97,6 +97,5 @@ public class Gun : MonoBehaviour
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impact, 1f);
         }
-
     }
 }
