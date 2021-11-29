@@ -15,17 +15,14 @@ public class MovingTarget : MonoBehaviour
 
     Vector3 pos;
 
-    public int score;
     public float moveSpeed;
     public bool movedUp;
-
-    [SerializeField] float randX, randY, randNum;
-    [SerializeField] float xMinBoundary, yMinBoundary;
-    [SerializeField] float xMaxBoundary, yMaxBoundary;
 
     [Space(15)]
     public GameObject[] targetsArray;
     public List<GameObject> targetsList;
+
+    [SerializeField] private Transform[] routes;
 
     private void Awake()
     {
@@ -37,8 +34,6 @@ public class MovingTarget : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         WE = player.GetComponent<WeaponEquip>();
         pos = transform.position;
-        xMinBoundary = transform.position.x;
-        yMinBoundary = transform.position.y;
     }
 
     private void Update()
@@ -78,11 +73,6 @@ public class MovingTarget : MonoBehaviour
 
     void MoveUp()
     {
-        randX = Random.Range(xMinBoundary, xMaxBoundary);
-        randY = Random.Range(yMinBoundary, yMaxBoundary);
-
-        pos += new Vector3(0f, randY,0f);
-
         for (int i = 0; i < targetsList.Count; i++)
         {
             targetsList[i].transform.position = Vector3.MoveTowards(targetsList[i].transform.position, pos, moveSpeed);
@@ -92,9 +82,6 @@ public class MovingTarget : MonoBehaviour
 
     void MoveDown()
     {
-        //randomNum = Random.Range(0f, 1f);
-        pos += new Vector3(0f, yMinBoundary, 0f);
-
         for (int i = 0; i < targetsList.Count; i++)
         {
             targetsList[i].transform.position = Vector3.MoveTowards(targetsList[i].transform.position, pos, moveSpeed);

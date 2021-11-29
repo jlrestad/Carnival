@@ -51,6 +51,8 @@ public class Target : MonoBehaviour
             //Add game object to Moving Target array
             movingTarget.targetsList.Add(this.gameObject);
         }
+
+        transform.position = transform.position;
     }
 
     void Die()

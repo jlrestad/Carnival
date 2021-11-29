@@ -89,7 +89,9 @@ public class PickUp : MonoBehaviour
         collider.enabled = true;
 
         // Throw
-        rb.AddForce(player.transform.forward * throwSpeed, ForceMode.Impulse);
+        rb.velocity = holdDest.transform.forward * throwSpeed; //Throws with an arc
+
+        //rb.AddForce(player.transform.forward * throwSpeed, ForceMode.Impulse);
         //rb.velocity = player.transform.forward * throwSpeed; //Another way to move an object.
 
         isHolding = false;
