@@ -21,8 +21,6 @@ public class MeleeSwing : MonoBehaviour
 
     private void Update()
     {
-        //FindClosestWhackEm();
-
         if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0)
         {
             MeleeAttack();
@@ -32,7 +30,7 @@ public class MeleeSwing : MonoBehaviour
             Return();
         }
 
-
+        //FindClosestWhackEm();
         foreach (WhackEmEnemy whackEm in whackEmEnemy)
         {
             distanceToPlayer = transform.position - whackEm.transform.position;
@@ -48,7 +46,7 @@ public class MeleeSwing : MonoBehaviour
     {
         if (other.gameObject.tag == "Critter" || other.gameObject.tag == "Enemy")
         {
-            //target.TakeDamage(damage);
+            target.TakeDamage(damage);
 
             Debug.Log("Smashed enemy!");
         }

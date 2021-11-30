@@ -9,9 +9,12 @@ public class WeaponEquip : MonoBehaviour
     public static WeaponEquip Instance;
 
     [Space(15)]
-    public GameObject gunHold;
-    public GameObject malletHold;
-
+    [SerializeField] GameObject gunHold;
+    [SerializeField] GameObject malletHold;
+    [SerializeField] GameObject hubBooth;
+    public GameObject[] gameCards;
+    public GameObject actionPrompt, gameBooth;
+    
     [Space(15)]
     [SerializeField] public List<GameObject> weaponList;
 
@@ -28,13 +31,11 @@ public class WeaponEquip : MonoBehaviour
     Vector3 distanceToPlayer;
 
     public GameObject currentWeapon = null;
-    private Weapon newWeapon;
     [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
-    private Menu menu;
-    public GameObject actionPrompt, gameBooth;
+    [HideInInspector] public Menu menu;
+    private Weapon newWeapon;
     public string levelName;
-    [SerializeField] GameObject hubBooth;
 
     private void Awake()
     {
@@ -85,8 +86,10 @@ public class WeaponEquip : MonoBehaviour
             //After picking up weapon go into the game level.
             PickUpWeapon();
             HubBooth(); //Get the hub booth game object so it can be turned back on. Used in GameplayBoundary.LeaveGame().
-            menu.ChangeLevel(levelName);
-            gameBooth.SetActive(false); //Turn off hub level booth
+            
+            //Loads game level
+            //menu.ChangeLevel(levelName);
+            //gameBooth.SetActive(false); //Turn off hub level booth
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
@@ -116,9 +119,14 @@ public class WeaponEquip : MonoBehaviour
                 {
                     actionPrompt.SetActive(false);
                 }
+                //if (haveMallet)
+                //{
+                //    actionPrompt.SetActive(false);
+                //}
                 //If have gun but closest weapon is not a gun show the prompt.
                 else
                 {
+                    
                     actionPrompt.SetActive(true);
                 }
             }

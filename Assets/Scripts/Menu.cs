@@ -29,8 +29,8 @@ public class Menu : MonoBehaviour
 
     [Header("AUDIO")]
     public AudioMixer audioMixer;
-    public AudioSource introAudio;
-    public AudioSource pauseSound;
+    //public AudioSource introAudio;
+    //public AudioSource pauseSound;
     public string exposedParam;
 
     [Header("OBJECTS")]
@@ -41,6 +41,7 @@ public class Menu : MonoBehaviour
 
     [Header("MENUS")]
     public GameObject pauseMenu;
+    public GameObject[] gameCardSlots;
     [SerializeField] GameObject firstButton;
     public string[] controllerArray = null;
 
@@ -93,7 +94,7 @@ public class Menu : MonoBehaviour
         }
         else if (Input.GetButtonDown("Menu") && counter == 1)
         {
-            pauseSound.Play();
+            //pauseSound.Play();
 
             UnpauseGame();
         }
@@ -176,7 +177,7 @@ public class Menu : MonoBehaviour
         //Clear level name on start
         levelName = "";
 
-        introAudio.volume = 1;
+        //introAudio.volume = 1;
     }
 
     public void ChangeLevel(string name)
@@ -206,5 +207,24 @@ public class Menu : MonoBehaviour
     public void AudioFade()
     {
         StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 2.5f, 0));
+    }
+
+    public void DisplayGameCard(GameObject gameCard)
+    {
+        if (gameCardSlots[0] == null)
+        {
+            gameCard.transform.parent = gameCardSlots[0].transform;
+            gameCard.SetActive(true);
+        }
+        else if (gameCardSlots[1] == null)
+        {
+            gameCard.transform.parent = gameCardSlots[1].transform;
+            gameCard.SetActive(true);
+        }
+        else
+        {
+            gameCard.transform.parent = gameCardSlots[2].transform;
+            gameCard.SetActive(true);
+        }
     }
 }

@@ -82,9 +82,14 @@ public class Gun : MonoBehaviour
 
             Target target = hit.transform.GetComponent<Target>();
 
-            if(target != null)
+            //if(target != null)
+            //{
+            //    target.TakeDamage(damage);
+            //}
+
+            if (target != null && target.CompareTag("MovingTarget") && !target.targetHit)
             {
-                target.TakeDamage(damage);
+                target.HitTarget();
             }
 
             StartCoroutine(TurnOffMuzzleLight());
@@ -92,6 +97,5 @@ public class Gun : MonoBehaviour
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impact, 1f);
         }
-
     }
 }

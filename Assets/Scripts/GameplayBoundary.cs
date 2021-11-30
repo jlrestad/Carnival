@@ -5,46 +5,57 @@ using UnityEngine.SceneManagement;
 
 public class GameplayBoundary : MonoBehaviour
 {
-    [SerializeField] GameObject leaveGameMessage;
-    [SerializeField] string levelName;
-    [SerializeField] GameObject gameBooth;
-    [SerializeField] GameObject hubBooth;
+    //[SerializeField] string levelName;
+  
+    [SerializeField] GameObject player;
+    //[SerializeField] GameCardManager cardManager;
+
+    GameObject game;
+    [SerializeField] GameObject gamePrefab;
+    [SerializeField] GameObject gameSpawn;
     WeaponEquip WE;
-    //Scene theScene;
-    //[SerializeField] int sceneIndex;
 
     private void Awake()
     {
-        levelName = WeaponEquip.Instance.levelName;
-        hubBooth = WeaponEquip.Instance.HubBooth();
-        //WE = GetComponent<WeaponEquip>();
-        //gameBooth = WE.gameBooth;
-        //theScene = SceneManager.GetSceneByName(levelName);
+        player = GameObject.FindGameObjectWithTag("Player");
+        WE = player.GetComponent<WeaponEquip>();
     }
 
-    //private void Update()
-    //{
-    //    sceneIndex = theScene.buildIndex;
-    //}
+    private void Update()
+    {
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //Activate game level menu
-            leaveGameMessage.SetActive(true);
+            game = Instantiate(gamePrefab, gameSpawn.transform);
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            game.SetActive(true);
         }
     }
-    
-    public void LeaveGame()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
 
-        hubBooth.SetActive(true);
-        SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            game.SetActive(false);
+
+            //RestartTargetsPosition();
+        }
+    }
+
+    public void RestartTargetsPosition()
+    {
+
+        //for (int i = 0; i < cardManager.targetsArray.Length; i++)
+        //{
+        //    Debug.Log("Targets: " + cardManager.targetsArray.Length);
+        //    Vector3 startPos = cardManager.targetsArray[i].GetComponent<Target>().startPos.position;
+
+        //    Debug.Log("Target Position: " + startPos);
+        //    cardManager.targetsArray[i].transform.position = startPos;
+        //    cardManager.targetsArray[i].transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        //}
     }
 }

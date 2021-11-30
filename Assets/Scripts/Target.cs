@@ -3,60 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Target : MonoBehaviour
 {
     public static Target Instance;
 
-    Menu menu;
+    BezierFollow moveAlongCurve;
+    GameCardManager cardManager;
 
     [HideInInspector] public WhackEmEnemy spawnHead;
-
     [SerializeField] float health = 100f;
-    [SerializeField] int score = 1;
-    [SerializeField] List<Target> targets;
-    int targetAmount;
+
+    public Transform startPos;
+    
+    public bool targetHit;
 
     private void Awake()
     {
         Instance = this;
 
-        menu = GetComponent<Menu>();
+        startPos = transform; //save starting position
+    }
 
-        targets.Add(GetComponent<Target>());
+    private void Start()
+    {
+        cardManager = GetComponentInParent<GameCardManager>();
+        moveAlongCurve = GetComponent<BezierFollow>();
     }
 
     public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
 
-        if (health <= 0f)
+        if (health < 0f)
         {
-            Die();
+            health = 0f;
+
+            if (CompareTag("Critter"))
+            {
+                SmashCritter();
+            }
+
+            //Add game object to Moving Target array.
+            cardManager.targetsList.Add(this.gameObject);
         }
     }
 
-    void Die()
+    public void HitTarget()
     {
-        if (CompareTag("Critter"))
+        //Flip target back after being hit
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+        targetHit = true;
+        //Keep from scoring multiple points
+        if (targetHit)
         {
-            //Call method to throwable object
-            spawnHead.SpawnHead();
+            //Add game object to Moving Target array.
+            cardManager.targetsList.Add(this.gameObject);
 
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            //gameObject.SetActive(false);
-            //GameLevel.Instance.targetList.RemoveAt(0);
-
-            //Disable the movement
-            MovingTarget mt = gameObject.GetComponent<MovingTarget>();
-            mt.enabled = false;
-
-            //Flip target back after being hit
-            transform.rotation = Quaternion.Euler(90f, 0, 0);
+            //Stop the target from moving after it's shot.
+            moveAlongCurve.speedModifier = 0f;
         }
     }
 
+    void SmashCritter()
+    {
+        //Spawn the head
+        spawnHead.SpawnHead();
+
+        //Hide the critter
+        this.gameObject.SetActive(false);
+    }
 }

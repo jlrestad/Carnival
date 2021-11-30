@@ -23,8 +23,9 @@ public class FPSController : MonoBehaviour
     //public float slideTimeCounter;
 
     [Header("HEIGHT")]
-    public float slideHeight;
-    public float crouchHeight;
+    [SerializeField] float slideHeight;
+    [SerializeField] float crouchHeight;
+    [SerializeField] float slideAngle = 20f;
     float originalHeight;
     float heightPos;
 
@@ -251,17 +252,21 @@ public class FPSController : MonoBehaviour
 
         characterController.height = slideHeight; //being character height down to immitate sliding
         characterController.Move(moveDirection * Time.deltaTime * slideSpeed); //move in the direction player slid at slide speed
-        capsule = transform; //get the transform of the capsule in FPSPlayer object
+        //capsule = transform; //get the transform of FPSPlayer object
 
+        Transform faceForward = capsule.transform;
         //Tilt to the side during slide
-        //capsule.transform.Rotate(0f, 0f, 10f, Space.Self); //works...
+        capsule.transform.Rotate(0f, 0f, slideAngle, Space.Self); //works...
 
         yield return new WaitForSeconds(slideTime);
       
         isUp = true;
 
         //Return to upright position after slide
-        //capsule.transform.Rotate(0f, 0f, transform.rotation.z - 10f, Space.Self); //not working....
+        //capsule.transform.rotation = Quaternion.LookRotation(moveDirection, Vector3.up); //not working....
+
+        //capsule.transform.Rotate(0f, 0f, transform.rotation.z - 10f, Space.Self); //not working well....
+        capsule.transform.Rotate(0f, 0f, -slideAngle, Space.Self); 
 
         characterController.height = originalHeight; //set character height back to normal
     }
