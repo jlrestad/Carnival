@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameplayBoundary : MonoBehaviour
 {
-    [SerializeField] string levelName;
+    //[SerializeField] string levelName;
   
     [SerializeField] GameObject player;
-    [SerializeField] GameCardManager cardManager;
+    //[SerializeField] GameCardManager cardManager;
 
     GameObject game;
     [SerializeField] GameObject gamePrefab;

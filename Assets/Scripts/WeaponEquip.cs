@@ -119,9 +119,14 @@ public class WeaponEquip : MonoBehaviour
                 {
                     actionPrompt.SetActive(false);
                 }
+                //if (haveMallet)
+                //{
+                //    actionPrompt.SetActive(false);
+                //}
                 //If have gun but closest weapon is not a gun show the prompt.
                 else
                 {
+                    
                     actionPrompt.SetActive(true);
                 }
             }
