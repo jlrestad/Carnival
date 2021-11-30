@@ -44,6 +44,9 @@ public class Target : MonoBehaviour
             {
                 SmashCritter();
             }
+
+            //Add game object to Moving Target array.
+            cardManager.targetsList.Add(this.gameObject);
         }
     }
 

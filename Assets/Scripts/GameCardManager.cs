@@ -32,20 +32,20 @@ public class GameCardManager : MonoBehaviour
 
     private void Update()
     {
-        DisplayGameCard();
+        if (targetsList.Count == targetsArray.Length)
+        {
+            DisplayGameCard();
+        }
     }
 
     public void DisplayGameCard()
     {
-        if (targetsList.Count == targetsArray.Length)
+        for (int i = 0; i < WE.gameCards.Length; i++)
         {
-            for (int i = 0; i < WE.gameCards.Length; i++)
+            if (WE.gameCards[i].name == WE.levelName)
             {
-                if (WE.gameCards[i].name == WE.levelName)
-                {
-                    WE.gameCards[i].SetActive(true);
-                    //menu.DisplayGameCard(WE.gameCards[i]); //card not displaying under parented object
-                }
+                WE.gameCards[i].SetActive(true);
+                //menu.DisplayGameCard(WE.gameCards[i]); //card not displaying under parented object
             }
         }
     }

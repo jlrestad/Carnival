@@ -10,12 +10,10 @@ public class GameplayBoundary : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameCardManager cardManager;
 
-    [SerializeField] GameObject game;
-    [SerializeField] GameObject targetPrefab;
-    [SerializeField] GameObject targetSpawn;
+    GameObject game;
+    [SerializeField] GameObject gamePrefab;
+    [SerializeField] GameObject gameSpawn;
     WeaponEquip WE;
-
-    //public bool ShootingCard, MeleeCard, ThrowingCard;
 
     private void Awake()
     {
@@ -31,8 +29,7 @@ public class GameplayBoundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            game = Instantiate(targetPrefab, targetSpawn.transform);
-            //game = Instantiate(targetPrefab, targetSpawn.transform.position, Quaternion.Euler(0f, 90f, 0f));
+            game = Instantiate(gamePrefab, gameSpawn.transform);
 
             game.SetActive(true);
         }
