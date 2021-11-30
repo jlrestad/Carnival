@@ -33,7 +33,7 @@ public class WeaponEquip : MonoBehaviour
     public GameObject currentWeapon = null;
     [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
-    private Menu menu;
+    [HideInInspector] public Menu menu;
     private Weapon newWeapon;
     public string levelName;
 

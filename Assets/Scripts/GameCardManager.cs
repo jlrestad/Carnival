@@ -8,6 +8,7 @@ public class GameCardManager : MonoBehaviour
 
     GameObject player;
     [SerializeField] WeaponEquip WE;
+    [SerializeField] Menu menu;
 
     Vector3 pos;
     public float moveSpeed = 0.1f;
@@ -25,6 +26,7 @@ public class GameCardManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         WE = player.GetComponent<WeaponEquip>();
+        menu = WE.menu;
         pos = transform.position;
     }
 
@@ -42,6 +44,7 @@ public class GameCardManager : MonoBehaviour
                 if (WE.gameCards[i].name == WE.levelName)
                 {
                     WE.gameCards[i].SetActive(true);
+                    //menu.DisplayGameCard(WE.gameCards[i]); //card not displaying under parented object
                 }
             }
         }
