@@ -11,12 +11,14 @@ public class WeaponEquip : MonoBehaviour
     [Space(15)]
     [SerializeField] GameObject gunHold;
     [SerializeField] GameObject malletHold;
-    [SerializeField] GameObject hubBooth;
-    public GameObject[] gameCards;
+    //[SerializeField] GameObject hubBooth;
+    public GameObject[] gameCards; //Holds the winning cards
     public GameObject actionPrompt, gameBooth;
     
     [Space(15)]
-    [SerializeField] public List<GameObject> weaponList;
+    public List<List<GameObject>> inventoryList; //Holds throwables
+    public List<GameObject> weaponList;
+    public List<GameObject> skullList; //Holds throwables
 
     [Space(15)]
     public int weaponNumber = 0;
@@ -37,6 +39,7 @@ public class WeaponEquip : MonoBehaviour
     private Weapon newWeapon;
     public string levelName;
 
+
     private void Awake()
     {
         Instance = this;
@@ -55,6 +58,9 @@ public class WeaponEquip : MonoBehaviour
         {
             actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
         }
+
+        inventoryList.AddRange((IEnumerable<List<GameObject>>)weaponList);
+        inventoryList.AddRange((IEnumerable<List<GameObject>>)skullList);
     }
 
     void Update()
@@ -71,9 +77,9 @@ public class WeaponEquip : MonoBehaviour
         {
             crossHair.enabled = false;
         }
-
         
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && 
+            Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
         {
             gameBooth = GameObject.FindGameObjectWithTag(levelName);
 
@@ -85,12 +91,9 @@ public class WeaponEquip : MonoBehaviour
 
             //After picking up weapon go into the game level.
             PickUpWeapon();
-            HubBooth(); //Get the hub booth game object so it can be turned back on. Used in GameplayBoundary.LeaveGame().
-            
-            //Loads game level
-            //menu.ChangeLevel(levelName);
-            //gameBooth.SetActive(false); //Turn off hub level booth
+            //HubBooth(); //Get the hub booth game object so it can be turned back on. Used in GameplayBoundary.LeaveGame().
         }
+
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
             UnequipWeapon();
@@ -170,12 +173,12 @@ public class WeaponEquip : MonoBehaviour
         return closestWeapon; //returns the closest weapon game object
     }
 
-    public GameObject HubBooth()
-    {
-        hubBooth = gameBooth;
+    //public GameObject HubBooth()
+    //{
+    //    hubBooth = gameBooth;
 
-        return hubBooth;
-    }
+    //    return hubBooth;
+    //}
 
     // Use the mouse-wheel to scroll through the weapon list:
     public void ChangeWeapon()

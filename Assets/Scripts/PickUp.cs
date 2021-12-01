@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     public Transform holdDest;
+    public Transform skullHold;
     public GameObject player;
     new AudioSource audio;
     
@@ -20,9 +21,11 @@ public class PickUp : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
+        audio = GetComponent<AudioSource>();
+
         player = GameObject.FindGameObjectWithTag("Player");
         holdDest = GameObject.Find("ObjectHold").transform;
-        audio = GetComponent<AudioSource>();
+        skullHold = GameObject.Find("SkullHold").transform;
     }
 
     public void Update()
@@ -50,25 +53,50 @@ public class PickUp : MonoBehaviour
     // Parents the object to the Player at specified location.
     void Grab()
     {
-        Debug.Log("Grab!");
-
-        collider.enabled = false;
-        rb.isKinematic = true;
-         
-        // Only allow one item to be picked up at a time.
-        if (holdDest.childCount == 0)
+        if (CompareTag("Head"))
         {
-            this.transform.position = holdDest.position;
-            this.transform.parent = GameObject.Find("ObjectHold").transform;
-        }
+            //Allow only 6 skulls to be held.
+            if (skullHold.childCount < 6)
+            {
+                //Put skulls into a list
+                player.GetComponent<WeaponEquip>().skullList.Add(gameObject);
+                
+                //Hide skull in scene
+                gameObject.SetActive(false);
+            }
+
+            collider.enabled = false;
+            rb.isKinematic = true;
+         
+            //Add skull to the hold position on FPSPlayer
+            this.transform.position = skullHold.position;
+            this.transform.parent = skullHold.transform;
 
         isHolding = true;
+        }
+       else
+       {
+            //Debug.Log("Grab!");
+
+            collider.enabled = false;
+            rb.isKinematic = true;
+         
+            // Only allow one item to be picked up at a time.
+            if (holdDest.childCount == 0)
+            {
+                this.transform.position = holdDest.position;
+                this.transform.parent = holdDest.transform;
+            }
+
+            isHolding = true;
+       }
+
     }
 
     // Unparents the object from the Player.
     void Drop()
     {
-        Debug.Log("Dropped!");
+        //Debug.Log("Dropped!");
 
         this.transform.parent = null;
 
@@ -81,7 +109,7 @@ public class PickUp : MonoBehaviour
     // Adds  force to the object being thrown.
     void Throw()
     {
-        Debug.Log("Throw!");
+        //Debug.Log("Throw!");
 
         this.transform.parent = null;
 
