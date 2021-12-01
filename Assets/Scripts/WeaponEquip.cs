@@ -16,9 +16,9 @@ public class WeaponEquip : MonoBehaviour
     public GameObject actionPrompt, gameBooth;
     
     [Space(15)]
-    public List<List<GameObject>> inventoryList; //Holds throwables
-    public List<GameObject> weaponList;
-    public List<GameObject> skullList; //Holds throwables
+    //public List<List<GameObject>> inventoryList = new List<List<GameObject>>(); //Holds throwables
+    public List<GameObject> weaponList = new List<GameObject>(); //Holds weapons
+    //public List<GameObject> skullList = new List<GameObject>(); //Holds throwables
 
     [Space(15)]
     public int weaponNumber = 0;
@@ -32,12 +32,14 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] float pickUpRange = 1f;
     Vector3 distanceToPlayer;
 
-    public GameObject currentWeapon = null;
     [SerializeField] private bool haveGun, haveMallet;
     public Canvas crossHair;
-    [HideInInspector] public Menu menu;
-    private Weapon newWeapon;
     public string levelName;
+    public GameObject currentWeapon = null;
+    private Weapon newWeapon;
+    Transform skullHold;
+
+    [HideInInspector] public Menu menu;
 
 
     private void Awake()
@@ -47,9 +49,10 @@ public class WeaponEquip : MonoBehaviour
 
     private void Start()
     {
-        //To make the action prompt appear
         menu = FindObjectOfType<Menu>();
+        skullHold = GameObject.Find("SkullHold").transform;
 
+        //Detect if joystick or keyboard is used an display correct prompt.
         if (menu.usingJoystick)
         {
             actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
@@ -58,9 +61,6 @@ public class WeaponEquip : MonoBehaviour
         {
             actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
         }
-
-        inventoryList.AddRange((IEnumerable<List<GameObject>>)weaponList);
-        inventoryList.AddRange((IEnumerable<List<GameObject>>)skullList);
     }
 
     void Update()
@@ -68,8 +68,8 @@ public class WeaponEquip : MonoBehaviour
         FindClosestWeapon();
         ChangeWeapon();
 
-
-        if (isEquipped)
+        //Show crosshair only if weapon is equipped.
+        if (isEquipped/* || skullHold.childCount > 0*/)
         {
             crossHair.enabled = true;
         }
@@ -78,6 +78,7 @@ public class WeaponEquip : MonoBehaviour
             crossHair.enabled = false;
         }
         
+        //Player input
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && 
             Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
         {
@@ -89,11 +90,8 @@ public class WeaponEquip : MonoBehaviour
                 currentWeapon.SetActive(false);
             }
 
-            //After picking up weapon go into the game level.
             PickUpWeapon();
-            //HubBooth(); //Get the hub booth game object so it can be turned back on. Used in GameplayBoundary.LeaveGame().
         }
-
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
             UnequipWeapon();

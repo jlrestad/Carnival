@@ -74,6 +74,7 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        //Detect if joystick is used.
         if (controllerArray == null)
         {
             usingJoystick = false;

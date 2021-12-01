@@ -44,7 +44,7 @@ public class MeleeSwing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Critter" || other.gameObject.tag == "Enemy")
+        if (other.CompareTag("Critter") || other.CompareTag("Enemy"))
         {
             target.TakeDamage(damage);
 

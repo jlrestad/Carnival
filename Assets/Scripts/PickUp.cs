@@ -59,20 +59,23 @@ public class PickUp : MonoBehaviour
             if (skullHold.childCount < 6)
             {
                 //Put skulls into a list
-                player.GetComponent<WeaponEquip>().skullList.Add(gameObject);
+                //player.GetComponent<WeaponEquip>().skullList.Add(gameObject);
                 
                 //Hide skull in scene
                 gameObject.SetActive(false);
+
+                collider.enabled = false;
+                rb.isKinematic = true;
+
+                //Add skull to the hold position on FPSPlayer
+                this.transform.position = skullHold.position;
+                this.transform.parent = skullHold.transform;
             }
 
-            collider.enabled = false;
-            rb.isKinematic = true;
-         
-            //Add skull to the hold position on FPSPlayer
-            this.transform.position = skullHold.position;
-            this.transform.parent = skullHold.transform;
+            //Show first skull in count
+            skullHold.GetChild(0).gameObject.SetActive(true);
 
-        isHolding = true;
+            isHolding = true;
         }
        else
        {
@@ -97,13 +100,20 @@ public class PickUp : MonoBehaviour
     void Drop()
     {
         //Debug.Log("Dropped!");
+        
+        if (CompareTag("Head"))
+        {
+            return;
+        }
+        else
+        {
+            this.transform.parent = null;
 
-        this.transform.parent = null;
+            rb.isKinematic = false;
+            collider.enabled = true;
 
-        rb.isKinematic = false;
-        collider.enabled = true;
-
-        isHolding = false;
+            isHolding = false;
+        }
     }
 
     // Adds  force to the object being thrown.
@@ -119,8 +129,11 @@ public class PickUp : MonoBehaviour
         // Throw
         rb.velocity = holdDest.transform.forward * throwSpeed; //Throws with an arc
 
-        //rb.AddForce(player.transform.forward * throwSpeed, ForceMode.Impulse);
-        //rb.velocity = player.transform.forward * throwSpeed; //Another way to move an object.
+        //Show first skull in count
+        if (skullHold.childCount != 0)
+        {
+            skullHold.GetChild(0).gameObject.SetActive(true);
+        }
 
         isHolding = false;
     }
