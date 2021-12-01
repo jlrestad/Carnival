@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     public Transform holdDest;
+    public Transform skullHold;
     public GameObject player;
     new AudioSource audio;
     
@@ -20,9 +21,11 @@ public class PickUp : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
+        audio = GetComponent<AudioSource>();
+
         player = GameObject.FindGameObjectWithTag("Player");
         holdDest = GameObject.Find("ObjectHold").transform;
-        audio = GetComponent<AudioSource>();
+        skullHold = GameObject.Find("SkullHold").transform;
     }
 
     public void Update()
@@ -50,38 +53,73 @@ public class PickUp : MonoBehaviour
     // Parents the object to the Player at specified location.
     void Grab()
     {
-        Debug.Log("Grab!");
-
-        collider.enabled = false;
-        rb.isKinematic = true;
-         
-        // Only allow one item to be picked up at a time.
-        if (holdDest.childCount == 0)
+        if (CompareTag("Head"))
         {
-            this.transform.position = holdDest.position;
-            this.transform.parent = GameObject.Find("ObjectHold").transform;
-        }
+            //Allow only 6 skulls to be held.
+            if (skullHold.childCount < 6)
+            {
+                //Put skulls into a list
+                //player.GetComponent<WeaponEquip>().skullList.Add(gameObject);
+                
+                //Hide skull in scene
+                gameObject.SetActive(false);
 
-        isHolding = true;
+                collider.enabled = false;
+                rb.isKinematic = true;
+
+                //Add skull to the hold position on FPSPlayer
+                this.transform.position = skullHold.position;
+                this.transform.parent = skullHold.transform;
+            }
+
+            //Show first skull in count
+            skullHold.GetChild(0).gameObject.SetActive(true);
+
+            isHolding = true;
+        }
+       else
+       {
+            //Debug.Log("Grab!");
+
+            collider.enabled = false;
+            rb.isKinematic = true;
+         
+            // Only allow one item to be picked up at a time.
+            if (holdDest.childCount == 0)
+            {
+                this.transform.position = holdDest.position;
+                this.transform.parent = holdDest.transform;
+            }
+
+            isHolding = true;
+       }
+
     }
 
     // Unparents the object from the Player.
     void Drop()
     {
-        Debug.Log("Dropped!");
+        //Debug.Log("Dropped!");
+        
+        if (CompareTag("Head"))
+        {
+            return;
+        }
+        else
+        {
+            this.transform.parent = null;
 
-        this.transform.parent = null;
+            rb.isKinematic = false;
+            collider.enabled = true;
 
-        rb.isKinematic = false;
-        collider.enabled = true;
-
-        isHolding = false;
+            isHolding = false;
+        }
     }
 
     // Adds  force to the object being thrown.
     void Throw()
     {
-        Debug.Log("Throw!");
+        //Debug.Log("Throw!");
 
         this.transform.parent = null;
 
@@ -91,8 +129,11 @@ public class PickUp : MonoBehaviour
         // Throw
         rb.velocity = holdDest.transform.forward * throwSpeed; //Throws with an arc
 
-        //rb.AddForce(player.transform.forward * throwSpeed, ForceMode.Impulse);
-        //rb.velocity = player.transform.forward * throwSpeed; //Another way to move an object.
+        //Show first skull in count
+        if (skullHold.childCount != 0)
+        {
+            skullHold.GetChild(0).gameObject.SetActive(true);
+        }
 
         isHolding = false;
     }
