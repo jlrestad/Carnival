@@ -32,6 +32,7 @@ public class GameCardManager : MonoBehaviour
 
     private void Update()
     {
+        //Better optimized if this method is called from somewhere else...
         if (targetsList.Count == targetsArray.Length)
         {
             DisplayGameCard();
@@ -44,7 +45,11 @@ public class GameCardManager : MonoBehaviour
         {
             if (WE.gameCards[i].name == WE.levelName)
             {
+                //Display the card that was won
                 WE.gameCards[i].SetActive(true);
+
+                GameCard[] gameCards = GameObject.FindObjectsOfType<GameCard>();
+
                 //menu.DisplayGameCard(WE.gameCards[i]); //card not displaying under parented object
             }
         }

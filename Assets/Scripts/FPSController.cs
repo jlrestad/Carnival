@@ -44,6 +44,7 @@ public class FPSController : MonoBehaviour
     bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, isFlashlightOn;
     public bool slidingAllowed = true;
+    [HideInInspector] public int cardCount; //Used to verify that 3 cards have been won before boss can be fought.
 
     [SerializeField] GameObject flashlightHold;
 
