@@ -50,14 +50,6 @@ public class Target : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Head"))
-    //    {
-    //        cardManager.targetsList.Add(this.gameObject);
-    //    }
-    //}
-
     public void HitTarget()
     {
         //Flip target back after being hit
@@ -83,12 +75,4 @@ public class Target : MonoBehaviour
         //Hide the critter
         this.gameObject.SetActive(false);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Head"))
-    //    {
-    //        cardManager.targetsList.Add(this.gameObject);
-    //    }
-    //}
 }
