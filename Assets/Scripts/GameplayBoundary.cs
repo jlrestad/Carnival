@@ -40,22 +40,7 @@ public class GameplayBoundary : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             game.SetActive(false);
-
-            //RestartTargetsPosition();
+            //Destroy(game);
         }
-    }
-
-    public void RestartTargetsPosition()
-    {
-
-        //for (int i = 0; i < cardManager.targetsArray.Length; i++)
-        //{
-        //    Debug.Log("Targets: " + cardManager.targetsArray.Length);
-        //    Vector3 startPos = cardManager.targetsArray[i].GetComponent<Target>().startPos.position;
-
-        //    Debug.Log("Target Position: " + startPos);
-        //    cardManager.targetsArray[i].transform.position = startPos;
-        //    cardManager.targetsArray[i].transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        //}
     }
 }

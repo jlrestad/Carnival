@@ -6,9 +6,12 @@ using UnityEngine;
 public class MeleeSwing : MonoBehaviour
 {
     public Target target;
+    GameCardManager cardManager;
     //[SerializeField] WhackEmEnemy newWhackEm;
     //[SerializeField] GameObject closestWhackEm;
     [SerializeField] WhackEmEnemy[] whackEmEnemy;
+    [SerializeField] GameObject headPrefab;
+    [SerializeField] Rigidbody rb;
     Vector3 distanceToPlayer;
     [SerializeField] float meleeRange = 2f;
     [SerializeField] int damage = 50;
@@ -38,18 +41,42 @@ public class MeleeSwing : MonoBehaviour
             if (distanceToPlayer.magnitude <= meleeRange)
             {
                 target = whackEm.GetComponent<Target>();
+                rb = whackEm.GetComponent<Rigidbody>();
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Critter") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Critter"))
         {
-            target.TakeDamage(damage);
+            cardManager = other.GetComponentInParent<GameCardManager>();
+
+            target.health -= damage; 
+
+            if (target.health <= 0f)
+            {
+                target.health = 0f;
+
+                //Add game object to Moving Target array.
+                cardManager.targetsList.Add(other.gameObject);
+
+                //Spawn the head used as throwing object
+                SpawnHead();
+                //Turn off critter
+                other.gameObject.SetActive(false);
+            }
 
             Debug.Log("Smashed enemy!");
         }
+    }
+
+    public void SpawnHead()
+    {
+        //rb.isKinematic = false;
+
+        //Spawn the head used as throwing object
+        Instantiate(headPrefab, rb.transform.position, Quaternion.identity);
     }
 
     // Find the enemy that is closest to the player

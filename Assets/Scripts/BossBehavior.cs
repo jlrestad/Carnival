@@ -1,24 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BossBehavior : MonoBehaviour
 {
-    public GameObject tent;
-    public Animator animator;
-
     GameObject player;
+    NavMeshAgent agent;
+    Vector3 distanceFromPlayer;
+    Vector3 destination;
+    [SerializeField] float maxDistance = 30f; //distance to begin chasing player
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        if (player.GetComponent<FPSController>().cardCount == 3)
+        //Calculate distance to the player
+        distanceFromPlayer = transform.position - player.transform.position;
+
+
+        if (distanceFromPlayer.magnitude <= maxDistance)
         {
-            tent.SetActive(false);
+            //Chase player
+            agent.SetDestination(player.transform.position);
         }
     }
 

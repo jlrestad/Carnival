@@ -13,7 +13,8 @@ public class Target : MonoBehaviour
     GameCardManager cardManager;
 
     [HideInInspector] public WhackEmEnemy spawnHead;
-    [SerializeField] float health = 100f;
+
+    public float health = 100f;
 
     public Transform startPos;
     
@@ -32,23 +33,23 @@ public class Target : MonoBehaviour
         moveAlongCurve = GetComponent<BezierFollow>();
     }
 
-    public void TakeDamage(int damageAmount)
-    {
-        health -= damageAmount;
+    //public void TakeDamage(int damageAmount)
+    //{
+    //    health -= damageAmount;
 
-        if (health < 0f)
-        {
-            health = 0f;
+    //    if (health <= 0f)
+    //    {
+    //        health = 0f;
 
-            if (CompareTag("Critter"))
-            {
-                SmashCritter();
-            }
+    //        if (CompareTag("Critter"))
+    //        {
+    //            SmashCritter();
+    //        }
 
-            //Add game object to Moving Target array.
-            cardManager.targetsList.Add(this.gameObject);
-        }
-    }
+    //        //Add game object to Moving Target array.
+    //        cardManager.targetsList.Add(this.gameObject);
+    //    }
+    //}
 
     public void HitTarget()
     {
@@ -67,12 +68,12 @@ public class Target : MonoBehaviour
         }
     }
 
-    public void SmashCritter()
-    {
-        //Spawn the head
-        spawnHead.SpawnHead();
+    //public void SmashCritter()
+    //{
+    //    //Spawn the head
+    //    spawnHead.SpawnHead();
 
-        //Hide the critter
-        this.gameObject.SetActive(false);
-    }
+    //    //Hide the critter
+    //    this.gameObject.SetActive(false);
+    //}
 }

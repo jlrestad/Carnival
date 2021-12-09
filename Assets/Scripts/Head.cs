@@ -14,5 +14,9 @@ public class Head : MonoBehaviour
 
             this.gameObject.SetActive(false);
         }
+        else
+        {
+            return;
+        }
     }
 }

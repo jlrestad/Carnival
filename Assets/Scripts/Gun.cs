@@ -5,7 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
 
-    [SerializeField] int damage = 10;
+    //[SerializeField] int damage = 10;
     [SerializeField] float range = 100f;
 
     public Camera fpsCam;
@@ -81,11 +81,6 @@ public class Gun : MonoBehaviour
             Debug.Log(hit.transform.name);
 
             Target target = hit.transform.GetComponent<Target>();
-
-            //if(target != null)
-            //{
-            //    target.TakeDamage(damage);
-            //}
 
             if (target != null && target.CompareTag("MovingTarget") && !target.targetHit)
             {

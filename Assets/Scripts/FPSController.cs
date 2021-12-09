@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Effects;
+//using UnityStandardAssets.Effects;
 
 [RequireComponent(typeof(CharacterController))]
 
@@ -44,8 +44,13 @@ public class FPSController : MonoBehaviour
     bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, isFlashlightOn;
     public bool slidingAllowed = true;
-    [HideInInspector] public int cardCount; //Used to verify that 3 cards have been won before boss can be fought.
 
+    [Header("BOSS COMPONENTS")]
+    public GameObject tent;
+    public GameObject boss;
+    public int cardCount; //Used to verify that 3 cards have been won before boss can be fought.
+
+    [Space(15)]
     [SerializeField] GameObject flashlightHold;
 
     Transform capsule;
@@ -78,6 +83,13 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
+        //Activate the boss
+        if (cardCount == 3)
+        {
+            tent.SetActive(false);
+            boss.SetActive(true);
+        }
+
         //Controls
         run = Input.GetAxis("LtTrigger") > 0 || Input.GetButton("Run");
         jump = Input.GetButtonDown("Jump");

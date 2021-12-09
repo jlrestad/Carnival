@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameCardManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class GameCardManager : MonoBehaviour
     [Space(15)]
     public GameObject[] targetsArray;
     public List<GameObject> targetsList;
+    [SerializeField] GameObject cardDisplay;
+    [SerializeField] GameObject cardWon;
+
 
     private void Awake()
     {
@@ -37,9 +41,17 @@ public class GameCardManager : MonoBehaviour
         {
             DisplayGameCard();
         }
+
+        //Activate boss
+        //if (player.GetComponent<FPSController>().cardCount == 3)
+        //{
+        //    player.GetComponent<FPSController>().tent.SetActive(false);
+        //    player.GetComponent<FPSController>().boss.SetActive(true);
+        //}
     }
 
-    public void DisplayGameCard()
+    // RETURNS THE GAME OBJECT THAT HOLDS THE CARD
+    public GameObject DisplayGameCard()
     {
         for (int i = 0; i < WE.gameCards.Length; i++)
         {
@@ -47,11 +59,29 @@ public class GameCardManager : MonoBehaviour
             {
                 //Display the card that was won
                 WE.gameCards[i].SetActive(true);
+                //Set the gameObject for method return
+                cardDisplay = WE.gameCards[i];
+                //Set the gameObject to display card
+                cardWon = cardDisplay.GetComponentInChildren<GameCard>().gameObject;
 
-                GameCard[] gameCards = GameObject.FindObjectsOfType<GameCard>();
-
-                //menu.DisplayGameCard(WE.gameCards[i]); //card not displaying under parented object
+                //Transition from card display back to game display
+                StartCoroutine(DisplayTransition());
             }
         }
+
+        return cardDisplay;
+    }
+
+    // TRANSITION FROM CARD DISPLAY SCREEN BACK TO GAME DISPLAY
+    IEnumerator DisplayTransition()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (cardDisplay.GetComponentInChildren<Image>().enabled == true)
+        {
+            cardDisplay.GetComponentInChildren<Image>().enabled = false;
+            cardWon.GetComponent<Image>().enabled = true;
+        }
+        
     }
 }
