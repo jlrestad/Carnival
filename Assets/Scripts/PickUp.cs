@@ -5,7 +5,8 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     public Transform holdDest;
-    public Transform skullHold;
+    //public GameObject skullHold;
+    //public Transform skullHoldChild;
     public GameObject player;
     new AudioSource audio;
     
@@ -25,7 +26,8 @@ public class PickUp : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         holdDest = GameObject.Find("ObjectHold").transform;
-        skullHold = GameObject.Find("SkullHold").transform;
+        //skullHold = GameObject.Find("SkullHold");
+        //skullHoldChild = GameObject.Find("Skulls").transform;
     }
 
     public void Update()
@@ -53,32 +55,32 @@ public class PickUp : MonoBehaviour
     // Parents the object to the Player at specified location.
     void Grab()
     {
-        if (CompareTag("Head"))
-        {
-            //Allow only 6 skulls to be held.
-            if (skullHold.childCount < 6)
-            {
-                //Put skulls into a list
-                //player.GetComponent<WeaponEquip>().skullList.Add(gameObject);
-                
-                //Hide skull in scene
-                gameObject.SetActive(false);
+        //if (CompareTag("Head"))
+        //{
+        //    //Allow only 6 skulls to be held.
+        //    if (skullHoldChild.childCount < 6)
+        //    {
+        //        //Put skulls into a list
+        //        //player.GetComponent<WeaponEquip>().skullList.Add(gameObject);
 
-                collider.enabled = false;
-                rb.isKinematic = true;
+        //        //Hide skull in scene
+        //        gameObject.SetActive(false);
 
-                //Add skull to the hold position on FPSPlayer
-                this.transform.position = skullHold.position;
-                this.transform.parent = skullHold.transform;
-            }
+        //        collider.enabled = false;
+        //        rb.isKinematic = true;
 
-            //Show first skull in count
-            skullHold.GetChild(0).gameObject.SetActive(true);
+        //        //Add skull to the hold position on FPSPlayer
+        //        this.transform.position = skullHoldChild.position;
+        //        this.transform.parent = skullHoldChild.transform;
+        //    }
 
-            isHolding = true;
-        }
-       else
-       {
+        //    //Show first skull in count
+        //    skullHoldChild.GetChild(0).gameObject.SetActive(true);
+
+        //    isHolding = true;
+        //}
+       //else
+       //{
             //Debug.Log("Grab!");
 
             collider.enabled = false;
@@ -92,7 +94,7 @@ public class PickUp : MonoBehaviour
             }
 
             isHolding = true;
-       }
+       //}
 
     }
 
@@ -125,17 +127,6 @@ public class PickUp : MonoBehaviour
 
         rb.isKinematic = false;
         collider.enabled = true;
-
-        // Throw
-        rb.velocity = holdDest.transform.forward * throwSpeed; //Throws with an arc
-
-        //Show first skull in count
-        if (skullHold.childCount != 0)
-        {
-            skullHold.GetChild(0).gameObject.SetActive(true);
-        }
-
-        isHolding = false;
     }
     
     // Randomizes and plays audio when object is thrown.
@@ -143,6 +134,7 @@ public class PickUp : MonoBehaviour
     {
         if(other.tag != "Player" && !isHolding && rb.velocity.magnitude >= 0.7f)
         {
+            //Use when sound is available.
             //if (rb.velocity.magnitude >= 0.3f || rb.velocity.magnitude < 0.7f)
             //{
             //    Debug.Log("LOOP AUDIO");

@@ -42,7 +42,7 @@ public class FPSController : MonoBehaviour
     public bool canMove = true;
 
     bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
-    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, isFlashlightOn;
+    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn;
     public bool slidingAllowed = true;
 
     [Header("BOSS COMPONENTS")]
@@ -51,7 +51,7 @@ public class FPSController : MonoBehaviour
     public int cardCount; //Used to verify that 3 cards have been won before boss can be fought.
 
     [Space(15)]
-    [SerializeField] GameObject flashlightHold;
+    [HideInInspector] public GameObject flashlightHold;
 
     Transform capsule;
 
@@ -90,21 +90,37 @@ public class FPSController : MonoBehaviour
             boss.SetActive(true);
         }
 
+        //
         //Controls
         run = Input.GetAxis("LtTrigger") > 0 || Input.GetButton("Run");
         jump = Input.GetButtonDown("Jump");
         slide = Input.GetButtonDown("Slide");
         crouch = Input.GetButtonDown("Crouch");
-        useFlashlight = Input.GetAxis("Flashlight1") > 0 && !isFlashlightOn || Input.GetButtonDown("Flashlight2") && !isFlashlightOn;
-        dontUseFlashlight = Input.GetAxis("Flashlight1") > 0 && isFlashlightOn || Input.GetButtonDown("Flashlight2") && isFlashlightOn;
+        useFlashlight = Input.GetAxis("Flashlight1") > 0 && !flashlightOn && !GetComponent<WeaponEquip>().isEquipped || Input.GetButtonDown("Flashlight2") && !flashlightOn && !GetComponent<WeaponEquip>().isEquipped;
+        dontUseFlashlight = Input.GetAxis("Flashlight1") > 0 && flashlightOn || Input.GetButtonDown("Flashlight2") && flashlightOn;
 
-
+        //
         //States
         isGrounded = characterController.isGrounded;
         isJumping = jump && characterController.isGrounded;
         isRunning = run && !isJumping && characterController.isGrounded;
         isSliding = slide && isRunning;
         isCrouching = crouch && isUp;
+
+        //
+        //Flashlight
+        if (useFlashlight)
+        {
+            flashlightHold.SetActive(true);
+            flashlightOn = true;
+        }
+        //If holding the flashlight and button is pressed again put the flashlight away
+        if (dontUseFlashlight)
+        {
+            flashlightHold.SetActive(false);
+            flashlightOn = false;
+        }
+
     }
 
     void FixedUpdate()
@@ -126,20 +142,6 @@ public class FPSController : MonoBehaviour
 
         float moveDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
-
-
-        //Flashlight
-        if (useFlashlight)
-        {
-            flashlightHold.SetActive(true);
-            isFlashlightOn = true;
-        }
-        //If holding the flashlight and button is pressed again put the flashlight away
-        if (dontUseFlashlight)
-        {
-            flashlightHold.SetActive(false);
-            isFlashlightOn = false;
-        }
 
         // Jumping
         if (isJumping)
