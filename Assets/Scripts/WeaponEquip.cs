@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Dynamic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +12,13 @@ public class WeaponEquip : MonoBehaviour
     [Space(15)]
     [SerializeField] GameObject gunHold;
     [SerializeField] GameObject malletHold;
+    public GameObject skullsParent;
+    public GameObject skullHold;
     //[SerializeField] GameObject hubBooth;
     public GameObject[] gameCards; //Holds the winning cards
-    public GameObject actionPrompt, gameBooth;
-    
+    public GameObject actionPrompt;
+    //public GameObject gameBooth;
+
     [Space(15)]
     //public List<List<GameObject>> inventoryList = new List<List<GameObject>>(); //Holds throwables
     public List<GameObject> weaponList = new List<GameObject>(); //Holds weapons
@@ -24,20 +28,23 @@ public class WeaponEquip : MonoBehaviour
     public int weaponNumber = 0;
 
     [Space(15)]
-    [SerializeField] bool inInventory;
+    public bool inInventory;
     public bool isEquipped;
 
     [Space(15)]
     public GameObject closestWeapon = null;
-    [SerializeField] float pickUpRange = 1f;
+    [SerializeField] float pickUpRange = 1.5f;
     Vector3 distanceToPlayer;
 
-    [SerializeField] private bool haveGun, haveMallet;
+    public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
     public Canvas crossHair;
     public string levelName;
     public GameObject currentWeapon = null;
     private Weapon newWeapon;
-    Transform skullHold;
+    [SerializeField] GameObject skull;
+    [SerializeField] Collider skullCollider;
+    [SerializeField] Rigidbody skullRB;
+    //Transform skullHold;
 
     [HideInInspector] public Menu menu;
 
@@ -50,7 +57,7 @@ public class WeaponEquip : MonoBehaviour
     private void Start()
     {
         menu = FindObjectOfType<Menu>();
-        skullHold = GameObject.Find("SkullHold").transform;
+        skullHold = GameObject.Find("SkullHold");
 
         //Detect if joystick or keyboard is used an display correct prompt.
         if (menu.usingJoystick)
@@ -68,28 +75,84 @@ public class WeaponEquip : MonoBehaviour
         FindClosestWeapon();
         ChangeWeapon();
 
-        //Show crosshair only if weapon is equipped.
-        if (isEquipped/* || skullHold.childCount > 0*/)
+        //Check if the flashlight is being used
+        //usingFlashlight = GetComponent<FPSController>().flashlightOn;
+
+        //
+        if (closestWeapon.CompareTag("Head")) 
         {
+            skull = closestWeapon;
+
+            skullCollider = skull.GetComponent<Collider>();
+            skullRB = skull.GetComponent<Rigidbody>();
+
+            //
+            if (!weaponList.Contains(skullsParent))
+            {
+                weaponList.Add(skullsParent);
+            }
+        }
+
+        // * *
+        //Check if skull parent is empty
+        if (skullsParent.transform.childCount == 0 && weaponList.Contains(skullsParent))
+        {
+            //Remove the weapon from the list
+            weaponList.Remove(skullsParent);
+
+            //Out of skulls but have other weapons.
+            if (haveMallet || haveGun)
+            {
+                //inInventory = true;
+                //Set the current weapon to the first in the list.
+                currentWeapon = weaponList[0];
+                // IDEA: Should the currentWeapon be visible after last skull thrown, or keep it in inventory?
+            }
+
+            //isEquipped = false; //Nothing in hand
+            haveSkull = false; //Out of skulls
+            holdingSkull = false; //Not holding skull
+        }
+
+        // If a weapon is equipped:
+        if (isEquipped)
+        {
+            //Show crosshair only if weapon is equipped.
             crossHair.enabled = true;
+
+            //If input for flashlight, put the weapon away and use flashlight.
+            if (GetComponent<FPSController>().useFlashlight)
+            {
+                Debug.Log("this is the current weapon: " + currentWeapon.name);
+
+                currentWeapon.SetActive(false);
+
+                GetComponent<FPSController>().flashlightHold.SetActive(true);
+                GetComponent<FPSController>().flashlightOn = true;
+
+                isEquipped = false;
+                inInventory = true;
+            }
+
         }
         else
         {
             crossHair.enabled = false;
         }
-        
-        //Player input
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.tag == "Gun" || distanceToPlayer.magnitude <= pickUpRange && 
-            Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.tag == "Mallet")
-        {
-            gameBooth = GameObject.FindGameObjectWithTag(levelName);
 
+        //
+        //Player input
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
+            distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
+            distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
+        {
             //If there is already a weapon equipped, hide it.
             if (isEquipped)
             {
                 currentWeapon.SetActive(false);
             }
 
+            //Pick up and equip weapon.
             PickUpWeapon();
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
@@ -101,42 +164,84 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        //SHOW ACTION/INTERACT PROMPT
-        if (distanceToPlayer.magnitude <= pickUpRange)
-        {
-            //If within pickup range show the prompt.
-            actionPrompt.SetActive(true);
 
-            //Even if weapon is equipped, hide it and pick up new weapon.
-            if (Input.GetButton("ActionButton") && !haveGun)
-            {
-                PickUpWeapon();
-            }
-
-            //If have gun and closest weapon is a gun don't show the prompt.
-            if (haveGun)
-            {
-                if (closestWeapon.CompareTag("Gun"))
-                {
-                    actionPrompt.SetActive(false);
-                }
-                //if (haveMallet)
-                //{
-                //    actionPrompt.SetActive(false);
-                //}
-                //If have gun but closest weapon is not a gun show the prompt.
-                else
-                {
-                    
-                    actionPrompt.SetActive(true);
-                }
-            }
-        }
-        else
+        if (!closestWeapon.CompareTag("Head"))
         {
-            actionPrompt.SetActive(false);
+            //SHOW ACTION/INTERACT PROMPT
+            if (distanceToPlayer.magnitude <= pickUpRange)
+            {
+                //If within pickup range show the prompt.
+                actionPrompt.SetActive(true);
+
+                //Even if weapon is equipped, hide it and pick up new weapon.
+                if (Input.GetButton("ActionButton") && !haveGun)
+                {
+                    PickUpWeapon();
+                }
+
+                //If have gun and closest weapon is a gun don't show the prompt.
+                if (haveGun)
+                {
+                    if (closestWeapon.CompareTag("Gun"))
+                    {
+                        actionPrompt.SetActive(false);
+                    }
+                    //If have gun but closest weapon is not a gun show the prompt.
+                    else
+                    {
+                        actionPrompt.SetActive(true);
+                    }
+                }
+            }
+            else
+            {
+                actionPrompt.SetActive(false);
+            }
         }
     }
+
+    //public void SkullInventoryManager()
+    //{
+    //    //Allow only 6 skulls to be held.
+    //    if (skullParent.transform.childCount < 6)
+    //    {
+    //        //Hide the skull from in the scene.
+    //        skullParent.gameObject.SetActive(true);
+
+    //        skullCollider.enabled = false;
+    //        skullRB.isKinematic = true;
+
+    //        //Add skull to the skull hold position on FPSPlayer.
+    //        skull.transform.position = skullParent.transform.position;
+    //        skull.transform.parent = skullParent.transform;
+    //    }
+
+    //    //Show only the first child skull object.
+    //    //skullsParent.GetChild(0).gameObject.SetActive(true);
+
+    //    //Show first skull in count
+    //    if (skullParent.transform.childCount != 0)
+    //    {
+    //        skullParent.transform.GetChild(0).gameObject.SetActive(true);
+    //    }
+
+    //    if (skullParent.transform.childCount == 0)
+    //    {
+    //        //Out of skulls but still have weapon in inventory.
+    //        if (haveMallet && !isEquipped || haveGun && !isEquipped)
+    //        {
+    //            inInventory = true;
+    //        }
+
+    //        //playerWeapon.isEquipped = false; //Nothing in hand
+    //        haveSkull = false; //Out of skulls
+    //        holdingSkull = false; //Not holding skull
+
+    //        //Remove the weapon from the list
+    //        weaponList.Remove(skullParent);
+    //    }
+    //}
+
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
     public GameObject FindClosestWeapon()
@@ -148,40 +253,58 @@ public class WeaponEquip : MonoBehaviour
         // Move through the list of weapons to find the closest
         foreach (Weapon currWeapon in allWeapons)
         {
+            //Find the distance of all weapons
             float distanceToWeapon = (currWeapon.transform.position - this.transform.position).sqrMagnitude;
 
+            //Compare distance of weapon to previously closest weapon
             if (distanceToWeapon < distanceToClosestWeapon)
             {
                 distanceToClosestWeapon = distanceToWeapon; //update the closest weapon
                 newWeapon = currWeapon; //set the closest weapon
-                string weaponName = newWeapon.gameObject.name.ToString(); //get the name of the closest weapon
+                string weaponName = newWeapon.gameObject.name.ToString(); //get the string name of the closest weapon
 
-                closestWeapon = GameObject.Find(weaponName); //use the name of the weapon to get the game object that is attached so it can be returned
+                closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-                distanceToPlayer = transform.position - closestWeapon.transform.position; //use the distance to restrict how far a player can grab weapon
+                distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
                 //Get the name of the layer -- which is the name of the game level
-                int layerNumber = closestWeapon.layer;
-                levelName = LayerMask.LayerToName(layerNumber);
+                //int layerNumber = closestWeapon.layer;
+                //levelName = LayerMask.LayerToName(layerNumber);
 
-                gameBooth = GameObject.FindGameObjectWithTag(levelName);
+                //gameBooth = GameObject.FindGameObjectWithTag(levelName);
             }
         }
 
         return closestWeapon; //returns the closest weapon game object
     }
 
-    //public GameObject HubBooth()
-    //{
-    //    hubBooth = gameBooth;
-
-    //    return hubBooth;
-    //}
-
     // Use the mouse-wheel to scroll through the weapon list:
     public void ChangeWeapon()
     {
-        //Debug.Log("List amount: " + weapons.Count);
+        //Check if skull parent is empty
+        //if (skullsParent.transform.childCount == 0)
+        //{
+        //    //Out of skulls but still have weapon in inventory.
+        //    if (haveMallet && !isEquipped || haveGun && !isEquipped)
+        //    {
+        //        inInventory = true;
+        //        Debug.Log("THIS IS RUNNING EVERY UPDATE");
+        //    }
+
+        //    isEquipped = false; //Nothing in hand
+        //    haveSkull = false; //Out of skulls
+        //    holdingSkull = false; //Not holding skull
+
+        //    //Remove the weapon from the list
+        //    weaponList.Remove(skullsParent.gameObject);
+        //}
+
+        //If all skulls have been thrown, change the current weapon to the first item in the weapon list.
+        //if (!weaponList.Contains(skullsParent) && inInventory)
+        //{
+        //    currentWeapon = weaponList[0];
+        //}
+
 
         //Roll scroll wheel forward
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
@@ -201,6 +324,15 @@ public class WeaponEquip : MonoBehaviour
 
                 currentWeapon = weaponList[weaponNumber]; //change current weapon to the new scrolled weapon
                 currentWeapon.SetActive(true); //show the weapon
+
+                if (currentWeapon == skullsParent)
+                {
+                    //Make the parent group visible.
+                    skullsParent.SetActive(true);
+
+                    //Make the first skull visible.
+                    //skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+                }
             }
         }
         
@@ -245,12 +377,34 @@ public class WeaponEquip : MonoBehaviour
             weaponList.Add(malletHold);
             haveMallet = true;
         }
+        if (closestWeapon.tag == "Head")
+        {
+            //currentWeapon.SetActive(false);
 
-        //Debug.Log("Got " + closestWeapon.tag + "!");
-        //Debug.Log("Current weapon is " + currentWeapon);
+            currentWeapon = skullsParent;
 
-        closestWeapon.SetActive(false); //hide the picked up weapon
-        //actionPrompt.SetActive(false); //hide action prompt
+            //Allow only 6 skulls to be held.
+            if (skullsParent.transform.childCount < 6)
+            {
+                skull.SetActive(true);
+
+                skullCollider.enabled = false;
+                skullRB.isKinematic = true;
+
+                //Add skull to the skull hold position on FPSPlayer.
+                skull.transform.position = skullsParent.transform.position;
+                skull.transform.parent = skullsParent.transform;
+            }
+
+            haveSkull = true;
+            holdingSkull = true;
+        }
+
+        if (!CompareTag("Head"))
+        {
+            //Hide the weapon object in scene.
+            closestWeapon.SetActive(false); //hide the picked up weapon
+        }
 
         EquipWeapon(); //picked up weapon is equipped
     }
@@ -258,20 +412,51 @@ public class WeaponEquip : MonoBehaviour
     // Bring weapon out of inventory:
     void EquipWeapon()
     {
-        Debug.Log("Equip!");
+        //Debug.Log("Equip!");
+
+        //Hide flashlight if holding
+        if (GetComponent<FPSController>().flashlightOn)
+        {
+            GetComponent<FPSController>().flashlightHold.SetActive(false);
+            GetComponent<FPSController>().flashlightOn = false;
+            usingFlashlight = false;
+        }
 
         inInventory = false;
         isEquipped = true;
-        currentWeapon.SetActive(true); //show held weapon 
+
+        if (currentWeapon != skullsParent)
+        {
+            currentWeapon.SetActive(true); //show held weapon 
+        }
+        else
+        {
+            if (skullsParent.transform.childCount != 0)
+            {
+                skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+            }
+
+            holdingSkull = true;
+        }
     }
 
     // Put weapon in inventory:
     public void UnequipWeapon()
     {
-        Debug.Log("Unequip!");
+        //Debug.Log("Unequip!");
 
         inInventory = true;
         isEquipped = false;
-        currentWeapon.SetActive(false); //hide held weapon
+
+        if (!currentWeapon.CompareTag("SkullHolder"))
+        {
+            currentWeapon.SetActive(false); //hide held weapon
+        }
+        else
+        {
+            skullsParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
+            holdingSkull = false;
+        }
+
     }
 }
