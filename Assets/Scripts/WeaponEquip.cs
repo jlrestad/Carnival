@@ -76,7 +76,7 @@ public class WeaponEquip : MonoBehaviour
         ChangeWeapon();
 
         //Check if the flashlight is being used
-        usingFlashlight = GetComponent<FPSController>().flashlightOn;
+        //usingFlashlight = GetComponent<FPSController>().flashlightOn;
 
         //
         if (closestWeapon.CompareTag("Head")) 
@@ -114,11 +114,26 @@ public class WeaponEquip : MonoBehaviour
             holdingSkull = false; //Not holding skull
         }
 
-        //
-        //Show crosshair only if weapon is equipped.
+        // If a weapon is equipped:
         if (isEquipped)
         {
+            //Show crosshair only if weapon is equipped.
             crossHair.enabled = true;
+
+            //If input for flashlight, put the weapon away and use flashlight.
+            if (GetComponent<FPSController>().useFlashlight)
+            {
+                Debug.Log("this is the current weapon: " + currentWeapon.name);
+
+                currentWeapon.SetActive(false);
+
+                GetComponent<FPSController>().flashlightHold.SetActive(true);
+                GetComponent<FPSController>().flashlightOn = true;
+
+                isEquipped = false;
+                inInventory = true;
+            }
+
         }
         else
         {
@@ -137,13 +152,6 @@ public class WeaponEquip : MonoBehaviour
                 currentWeapon.SetActive(false);
             }
 
-            //Turn off flashlight before picking up weapon.
-            if (usingFlashlight)
-            {
-                GetComponent<FPSController>().flashlightHold.SetActive(false);
-                GetComponent<FPSController>().flashlightOn = false;
-            }
-
             //Pick up and equip weapon.
             PickUpWeapon();
         }
@@ -155,6 +163,7 @@ public class WeaponEquip : MonoBehaviour
         {
             EquipWeapon();
         }
+
 
         if (!closestWeapon.CompareTag("Head"))
         {
@@ -406,9 +415,11 @@ public class WeaponEquip : MonoBehaviour
         //Debug.Log("Equip!");
 
         //Hide flashlight if holding
-        if (usingFlashlight)
+        if (GetComponent<FPSController>().flashlightOn)
         {
             GetComponent<FPSController>().flashlightHold.SetActive(false);
+            GetComponent<FPSController>().flashlightOn = false;
+            usingFlashlight = false;
         }
 
         inInventory = false;
@@ -446,5 +457,6 @@ public class WeaponEquip : MonoBehaviour
             skullsParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
             holdingSkull = false;
         }
+
     }
 }

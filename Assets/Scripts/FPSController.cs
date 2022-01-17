@@ -9,6 +9,8 @@ public class FPSController : MonoBehaviour
 {
     CharacterController characterController;
 
+    public WeaponEquip weaponEquip;
+
     [Header("SPEEDS")]
     public float walkSpeed = 7.0f;
     public float runSpeed = 10.0f;
@@ -41,7 +43,7 @@ public class FPSController : MonoBehaviour
     //[HideInInspector]
     public bool canMove = true;
 
-    bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
+    [HideInInspector] public bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn;
     public bool slidingAllowed = true;
 
@@ -62,9 +64,7 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Original Camera Height: " + originalCamHeight);
-        Debug.Log("Player Y Position: " + heightPos);
-
+        weaponEquip = GetComponent<WeaponEquip>(); 
         characterController = GetComponent<CharacterController>();
         capsule = GetComponentInChildren<Transform>();
 
@@ -96,7 +96,7 @@ public class FPSController : MonoBehaviour
         jump = Input.GetButtonDown("Jump");
         slide = Input.GetButtonDown("Slide");
         crouch = Input.GetButtonDown("Crouch");
-        useFlashlight = Input.GetAxis("Flashlight1") > 0 && !flashlightOn && !GetComponent<WeaponEquip>().isEquipped || Input.GetButtonDown("Flashlight2") && !flashlightOn && !GetComponent<WeaponEquip>().isEquipped;
+        useFlashlight = Input.GetAxis("Flashlight1") > 0 && !flashlightOn || Input.GetButtonDown("Flashlight2") && !flashlightOn;
         dontUseFlashlight = Input.GetAxis("Flashlight1") > 0 && flashlightOn || Input.GetButtonDown("Flashlight2") && flashlightOn;
 
         //
@@ -114,6 +114,7 @@ public class FPSController : MonoBehaviour
             flashlightHold.SetActive(true);
             flashlightOn = true;
         }
+
         //If holding the flashlight and button is pressed again put the flashlight away
         if (dontUseFlashlight)
         {
