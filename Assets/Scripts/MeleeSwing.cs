@@ -15,26 +15,25 @@ public class MeleeSwing : MonoBehaviour
     Vector3 distanceToPlayer;
     [SerializeField] float meleeRange = 2f;
     [SerializeField] int damage = 50;
+    [SerializeField] bool canSwing;
 
     private void Start()
     {
         //target = Target.Instance;
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
+        canSwing = true;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0 && Input.GetAxis("RtTrigger") < 0.9)
+        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
-            MeleeAttack();
-        }    
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") == 0.9)
-        {
-            Return();
+            StartCoroutine(MeleeAttack());
+            //GetTriggerUse();
         }
-        else 
+        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
         {
-            return;
+            //Return();
         }
 
         //Find ClosestWhackEm script
@@ -48,6 +47,19 @@ public class MeleeSwing : MonoBehaviour
                 target = whackEm.GetComponent<Target>();
                 rb = whackEm.GetComponent<Rigidbody>();
             }
+        }
+    }
+
+    //Used to control Joystick trigger from the ability to spam attack.
+    void GetTriggerUse()
+    {
+        if (Input.GetAxis("RtTrigger") > 0)
+        {
+            canSwing = false;
+        }
+        else
+        {
+            canSwing = true;
         }
     }
 
@@ -113,14 +125,24 @@ public class MeleeSwing : MonoBehaviour
     //    return closestWhackEm;
     //}
 
-    public void MeleeAttack()
+
+    //public void MeleeAttack()
+    //{
+    //    transform.Rotate(Vector3.right, 90f);
+    //}
+
+    //public void Return()
+    //{
+    //    transform.Rotate(Vector3.right, 30f);
+    //}
+
+    IEnumerator MeleeAttack()
     {
         transform.Rotate(Vector3.right, 90f);
-    }
-
-    public void Return()
-    {
+        canSwing = false;
+        yield return new WaitForSeconds(0.5f);
         transform.Rotate(Vector3.right, 30f);
+        canSwing = true;
     }
 
     protected void LateUpdate()

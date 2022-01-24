@@ -32,7 +32,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot == true || Input.GetAxis("RtTrigger") > 0 && canShoot == true)
+        if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
         {
             StartCoroutine(BurstFire()); //cooldown isn't working
             GetTriggerUse();
