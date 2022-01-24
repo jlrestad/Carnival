@@ -68,8 +68,13 @@ public class Head : MonoBehaviour
         }
         else
         {
+            //Out of skulls
             playerWeapon.isEquipped = false;
 
+            //Turn off the skull hold count UI
+            Menu.Instance.skullCountUI.SetActive(false);
+
+            //Check if there are weapons in inventory.
             if (playerWeapon.weaponList.Count > 1)
             {
                 playerWeapon.inInventory = true;
