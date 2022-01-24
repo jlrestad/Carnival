@@ -24,16 +24,21 @@ public class MeleeSwing : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0)
+        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0 && Input.GetAxis("RtTrigger") < 0.9)
         {
             MeleeAttack();
         }    
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
+        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") == 0.9)
         {
             Return();
         }
+        else 
+        {
+            return;
+        }
 
-        //FindClosestWhackEm();
+        //Find ClosestWhackEm script
+        //Doesn't update when player moves -- need to fix!
         foreach (WhackEmEnemy whackEm in whackEmEnemy)
         {
             distanceToPlayer = transform.position - whackEm.transform.position;
