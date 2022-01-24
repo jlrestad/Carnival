@@ -23,6 +23,8 @@ public class Head : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull|| Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull)
         {
             ThrowSkull();
+            playerWeapon.addToCount = playerWeapon.skullsParent.transform.childCount;
+            Menu.Instance.skullCountText.text = playerWeapon.addToCount.ToString();
         }
     }
 
@@ -47,7 +49,8 @@ public class Head : MonoBehaviour
         playerWeapon.skullsParent.SetActive(true);
         skullsParent = GameObject.Find("Skulls").transform;
 
-        playerWeapon.weaponList.Remove(this.gameObject);
+
+        //playerWeapon.weaponList.Remove(this.gameObject);
         this.transform.parent = null;
 
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -55,9 +58,28 @@ public class Head : MonoBehaviour
 
         GetComponent<Collider>().enabled = true;
 
-        //
         // Throw
         rb.velocity = transform.forward * throwSpeed; //Throws with an arc
+
+        //If there are more skulls, make the next skull visible.
+        if (skullsParent.transform.childCount != 0)
+        {
+            skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else
+        {
+            //Out of skulls
+            playerWeapon.isEquipped = false;
+
+            //Turn off the skull hold count UI
+            Menu.Instance.skullCountUI.SetActive(false);
+
+            //Check if there are weapons in inventory.
+            if (playerWeapon.weaponList.Count > 1)
+            {
+                playerWeapon.inInventory = true;
+            }
+        }
 
         //
         //Check if skull parent is empty

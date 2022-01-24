@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Experimental.TerrainAPI;
 using System;
 using System.Linq;
+using TMPro;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -41,8 +42,13 @@ public class Menu : MonoBehaviour
 
     [Header("MENUS")]
     public GameObject pauseMenu;
-    public GameObject[] gameCardSlots;
+    public GameObject skullCountUI;
+    public TextMeshProUGUI skullCountText;
     [SerializeField] GameObject firstButton;
+    
+    [Space(10)]
+    public GameObject[] gameCardSlots;
+    [Space(10)]
     public string[] controllerArray = null;
 
     public bool usingJoystick;
@@ -61,10 +67,6 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
-    }
-
-    private void Start()
-    {
     }
 
     public void HandleOnStateChange()
