@@ -285,7 +285,7 @@ public class WeaponEquip : MonoBehaviour
     public void ChangeWeapon()
     {
         //Roll scroll wheel forward
-        if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+        if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 || Input.GetButtonDown("WeaponScroll+"))
         {
             //If there is already a weapon equipped, hide it.
             if (isEquipped && weaponList.Count > 1) //weapon equipped and there is a weapon in the list
@@ -315,7 +315,7 @@ public class WeaponEquip : MonoBehaviour
         }
         
         //Roll scroll wheel backward
-        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 || Input.GetButtonDown("WeaponScroll-"))
         {
             if (isEquipped && weaponList.Count > 1)
             {
