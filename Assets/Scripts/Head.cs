@@ -7,10 +7,13 @@ public class Head : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] WeaponEquip playerWeapon;
     [SerializeField] int throwSpeed = 5;
+    [SerializeField] bool canThrow;
     public Transform skullsParent; //parent of skull being held
 
     private void Start()
     {
+        canThrow = true;
+
         player = GameObject.FindGameObjectWithTag("Player");
         playerWeapon = player.GetComponent<WeaponEquip>();
 
@@ -20,11 +23,30 @@ public class Head : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull|| Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull)
+        //if (Input.GetAxis("RtTrigger") > 0)
+        //{
+        //    canThrow = false;
+        //}
+        //else
+        //{
+        //    canThrow = true;
+        //}
+
+        if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull && canThrow)
         {
             ThrowSkull();
+            canThrow = false;
+            
             playerWeapon.addToCount = playerWeapon.skullsParent.transform.childCount;
             Menu.Instance.skullCountText.text = playerWeapon.addToCount.ToString();
+        }
+        if (Input.GetButtonUp("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") == 0 && playerWeapon.holdingSkull)
+        {
+            NextSkull();
+        }
+        else
+        {
+            canThrow = true;
         }
     }
 
@@ -49,37 +71,15 @@ public class Head : MonoBehaviour
         playerWeapon.skullsParent.SetActive(true);
         skullsParent = GameObject.Find("Skulls").transform;
 
-
-        //playerWeapon.weaponList.Remove(this.gameObject);
         this.transform.parent = null;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
+        Rigidbody rb = this.GetComponent<Rigidbody>();
         rb.isKinematic = false;
 
-        GetComponent<Collider>().enabled = true;
+        this.GetComponent<Collider>().enabled = true;
 
         // Throw
-        rb.velocity = transform.forward * throwSpeed; //Throws with an arc
-
-        //If there are more skulls, make the next skull visible.
-        if (skullsParent.transform.childCount != 0)
-        {
-            skullsParent.transform.GetChild(0).gameObject.SetActive(true);
-        }
-        else
-        {
-            //Out of skulls
-            playerWeapon.isEquipped = false;
-
-            //Turn off the skull hold count UI
-            Menu.Instance.skullCountUI.SetActive(false);
-
-            //Check if there are weapons in inventory.
-            if (playerWeapon.weaponList.Count > 1)
-            {
-                playerWeapon.inInventory = true;
-            }
-        }
+        rb.velocity = -this.transform.forward * throwSpeed; //Throws with an arc
 
         //
         //Check if skull parent is empty
@@ -105,5 +105,28 @@ public class Head : MonoBehaviour
         //{
         //    skullsParent.transform.GetChild(0).gameObject.SetActive(true);
         //}
+    }
+
+    void NextSkull()
+    {
+        //If there are more skulls, make the next skull visible.
+        if (skullsParent.transform.childCount != 0)
+        {
+            skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else
+        {
+            //Out of skulls
+            playerWeapon.isEquipped = false;
+
+            //Turn off the skull hold count UI
+            Menu.Instance.skullCountUI.SetActive(false);
+
+            //Check if there are weapons in inventory.
+            if (playerWeapon.weaponList.Count > 1)
+            {
+                playerWeapon.inInventory = true;
+            }
+        }
     }
 }

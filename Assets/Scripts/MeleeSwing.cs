@@ -29,11 +29,6 @@ public class MeleeSwing : MonoBehaviour
         if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
             StartCoroutine(MeleeAttack());
-            //GetTriggerUse();
-        }
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
-        {
-            //Return();
         }
 
         //Find ClosestWhackEm script
@@ -47,19 +42,6 @@ public class MeleeSwing : MonoBehaviour
                 target = whackEm.GetComponent<Target>();
                 rb = whackEm.GetComponent<Rigidbody>();
             }
-        }
-    }
-
-    //Used to control Joystick trigger from the ability to spam attack.
-    void GetTriggerUse()
-    {
-        if (Input.GetAxis("RtTrigger") > 0)
-        {
-            canSwing = false;
-        }
-        else
-        {
-            canSwing = true;
         }
     }
 
@@ -140,7 +122,9 @@ public class MeleeSwing : MonoBehaviour
     {
         transform.Rotate(Vector3.right, 90f);
         canSwing = false;
+
         yield return new WaitForSeconds(0.5f);
+
         transform.Rotate(Vector3.right, 30f);
         canSwing = true;
     }
