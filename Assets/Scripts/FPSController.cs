@@ -242,7 +242,7 @@ public class FPSController : MonoBehaviour
         }
 
         //Stop moving if running into a static object
-        // I think need to use colliders -- if collider enter belongs to static.... will try it later
+        // (for sliding) I think need to use colliders -- if collider enter belongs to static.... will try it later
         if (hit.gameObject.isStatic == true)
         {
             characterController.Move(moveDirection * Time.deltaTime * 0);
