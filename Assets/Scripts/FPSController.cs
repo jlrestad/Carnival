@@ -44,8 +44,8 @@ public class FPSController : MonoBehaviour
     public bool canMove = true;
 
     [HideInInspector] public bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
-    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn;
-    public bool slidingAllowed = true;
+    [HideInInspector] public bool slidingAllowed = true;
+    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn, canThrow = true;
 
     [Header("BOSS COMPONENTS")]
     public GameObject tent;
@@ -98,7 +98,7 @@ public class FPSController : MonoBehaviour
         crouch = Input.GetButtonDown("Crouch");
         useFlashlight = Input.GetAxis("Flashlight1") > 0 && !flashlightOn || Input.GetButtonDown("Flashlight2") && !flashlightOn;
         dontUseFlashlight = Input.GetAxis("Flashlight1") > 0 && flashlightOn || Input.GetButtonDown("Flashlight2") && flashlightOn;
-
+ 
         //
         //States
         isGrounded = characterController.isGrounded;
@@ -122,10 +122,6 @@ public class FPSController : MonoBehaviour
             flashlightOn = false;
         }
 
-    }
-
-    void FixedUpdate()
-    {
         // Player is grounded -- recalculate the move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -213,6 +209,19 @@ public class FPSController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);        
         slidingAllowed = true;
+    }
+
+    //Used to control Joystick trigger from the ability to spam fire.
+    void GetTriggerUse()
+    {
+        if (Input.GetAxis("RtTrigger") > 0)
+        {
+            canThrow = false;
+        }
+        else
+        {
+            canThrow = true;
+        }
     }
 
     // PUSHES RIDIDBODIES THAT PLAYER RUNS INTO
