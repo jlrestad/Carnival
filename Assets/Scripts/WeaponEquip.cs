@@ -24,7 +24,7 @@ public class WeaponEquip : MonoBehaviour
     public List<GameObject> weaponList = new List<GameObject>(); //Holds weapons
 
     [Space(15)]
-    public int weaponNumber = 0;
+    public int weaponNumber;
 
     [Space(15)]
     public bool inInventory;
@@ -32,6 +32,7 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject closestWeapon = null;
+    public GameObject closestSkull = null;
     [SerializeField] float pickUpRange = 1.5f;
     Vector3 distanceToPlayer;
 
@@ -56,7 +57,6 @@ public class WeaponEquip : MonoBehaviour
     {
         menu = FindObjectOfType<Menu>();
         skullHold = GameObject.Find("SkullHold");
-        weaponNumber = 0;
 
         //Detect if joystick or keyboard is used an display correct prompt.
         if (menu.usingJoystick)
@@ -72,10 +72,13 @@ public class WeaponEquip : MonoBehaviour
     void Update()
     {
         FindClosestWeapon();
+        FindClosestSkull();
         ChangeWeapon();
 
+
         //FOR SKULL PICKUP
-        if (closestWeapon.CompareTag("Head")) 
+        if (closestWeapon.CompareTag("Head"))
+        //if (closestSkull != null) 
         {
             skull = closestWeapon;
 
@@ -284,6 +287,23 @@ public class WeaponEquip : MonoBehaviour
         return closestWeapon; //returns the closest weapon game object
     }
 
+    public GameObject FindClosestSkull()
+    {
+        Head[] newSkull = GameObject.FindObjectsOfType<Head>();
+
+        foreach (Head head in newSkull)
+        {
+            distanceToPlayer = transform.position - head.transform.position;
+
+            if (distanceToPlayer.magnitude <= pickUpRange)
+            {
+            closestSkull = head.GetComponent<Head>().gameObject;
+            //rb = head.GetComponent<Rigidbody>();
+            }
+        }
+        return skull;
+    }
+
     // Use the mouse-wheel to scroll through the weapon list:
     public void ChangeWeapon()
     {
@@ -395,6 +415,7 @@ public class WeaponEquip : MonoBehaviour
             haveMallet = true;
         }
         if (closestWeapon.tag == "Head")
+        //if (closestSkull != null)
         {
             currentWeapon = skullsParent;
 
