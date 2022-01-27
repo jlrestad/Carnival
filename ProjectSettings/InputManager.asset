@@ -58,7 +58,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick button 9
+    positiveButton: left alt
     altNegativeButton: 
     altPositiveButton: mouse 1
     gravity: 1000
@@ -438,7 +438,6 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-<<<<<<< .merge_file_a12528
     m_Name: Enable Debug Button 1
     descriptiveName: 
     descriptiveNegativeName: 
@@ -577,25 +576,12 @@ InputManager:
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
-=======
-    m_Name: WeaponScroll+
-    descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: joystick button 5
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.001
-    sensitivity: 1
->>>>>>> .merge_file_a31136
     snap: 0
     invert: 0
     type: 0
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-<<<<<<< .merge_file_a12528
     m_Name: Debug Vertical
     descriptiveName: 
     descriptiveNegativeName: 
@@ -606,24 +592,11 @@ InputManager:
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
-=======
-    m_Name: WeaponScroll-
-    descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: joystick button 4
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.001
-    sensitivity: 1
->>>>>>> .merge_file_a31136
     snap: 0
     invert: 0
     type: 0
     axis: 0
     joyNum: 0
-<<<<<<< .merge_file_a12528
   - serializedVersion: 3
     m_Name: Debug Vertical
     descriptiveName: 
@@ -656,5 +629,3 @@ InputManager:
     type: 2
     axis: 5
     joyNum: 0
-=======
->>>>>>> .merge_file_a31136
