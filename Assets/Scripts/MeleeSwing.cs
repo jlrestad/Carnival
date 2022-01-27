@@ -15,25 +15,24 @@ public class MeleeSwing : MonoBehaviour
     Vector3 distanceToPlayer;
     [SerializeField] float meleeRange = 2f;
     [SerializeField] int damage = 50;
+    [SerializeField] bool canSwing;
 
     private void Start()
     {
         //target = Target.Instance;
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
+        canSwing = true;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0)
+        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
-            MeleeAttack();
-        }    
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
-        {
-            Return();
+            StartCoroutine(MeleeAttack());
         }
 
-        //FindClosestWhackEm();
+        //Find ClosestWhackEm script
+        //Doesn't update when player moves -- need to fix!
         foreach (WhackEmEnemy whackEm in whackEmEnemy)
         {
             distanceToPlayer = transform.position - whackEm.transform.position;
@@ -108,14 +107,26 @@ public class MeleeSwing : MonoBehaviour
     //    return closestWhackEm;
     //}
 
-    public void MeleeAttack()
+
+    //public void MeleeAttack()
+    //{
+    //    transform.Rotate(Vector3.right, 90f);
+    //}
+
+    //public void Return()
+    //{
+    //    transform.Rotate(Vector3.right, 30f);
+    //}
+
+    IEnumerator MeleeAttack()
     {
         transform.Rotate(Vector3.right, 90f);
-    }
+        canSwing = false;
 
-    public void Return()
-    {
+        yield return new WaitForSeconds(0.5f);
+
         transform.Rotate(Vector3.right, 30f);
+        canSwing = true;
     }
 
     protected void LateUpdate()

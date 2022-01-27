@@ -15,8 +15,8 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject impactEffect;
     [SerializeField] float burstAmount = 3f;
     [SerializeField] float delayFire = 1f;
-    [SerializeField] float rateOfFire = 125f;
-    [SerializeField] float coolDown = 0.1f;
+    [SerializeField] float rateOfFire = 666f;
+    [SerializeField] float coolDown = 0.3f;
 
     public RaycastHit hit;
 
@@ -32,14 +32,32 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot == true || Input.GetAxis("RtTrigger") > 0 && canShoot == true)
+        if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
         {
             StartCoroutine(BurstFire()); //cooldown isn't working
+            GetTriggerUse();
         }
 
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") < 1 && canShoot == true)
+        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
         {
             muzzleLight.GetComponent<Light>().enabled = false;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    //Used to control Joystick trigger from the ability to spam fire.
+    void GetTriggerUse()
+    {
+        if (Input.GetAxis("RtTrigger") > 0)
+        {
+            canShoot = false;
+        }
+        else
+        {
+            canShoot = true;
         }
     }
 
@@ -70,12 +88,14 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
+        //Turn on the light effect
         muzzleLight.GetComponent<Light>().enabled = true;
         muzzleFlash.Play();
-
+        //Play the sound effect
         shootAudio.pitch = Random.Range(0.8f, 1.3f);
         shootAudio.Play();
 
+        //Get raycast hit information and use it to calculate damage
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
@@ -89,8 +109,9 @@ public class Gun : MonoBehaviour
 
             StartCoroutine(TurnOffMuzzleLight());
 
+            //Instantiate the particle effect
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 1f);
+            Destroy(impact, 1f); //Should this be turned off instead of destroyed for optimization?
         }
     }
 }
