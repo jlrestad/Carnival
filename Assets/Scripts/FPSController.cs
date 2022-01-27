@@ -122,10 +122,6 @@ public class FPSController : MonoBehaviour
             flashlightOn = false;
         }
 
-    }
-
-    void FixedUpdate()
-    {
         // Player is grounded -- recalculate the move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -233,7 +229,7 @@ public class FPSController : MonoBehaviour
         }
 
         //Stop moving if running into a static object
-        // I think need to use colliders -- if collider enter belongs to static.... will try it later
+        // (for sliding) I think need to use colliders -- if collider enter belongs to static.... will try it later
         if (hit.gameObject.isStatic == true)
         {
             characterController.Move(moveDirection * Time.deltaTime * 0);
