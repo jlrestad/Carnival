@@ -18,7 +18,10 @@ public class Head : MonoBehaviour
         playerWeapon = player.GetComponent<WeaponEquip>();
 
         if (!playerWeapon.haveSkull)
+        {
             skullsParent = GameObject.Find("Skulls").transform;
+        }
+      
     }
 
     private void Update()
@@ -68,7 +71,7 @@ public class Head : MonoBehaviour
     public void ThrowSkull()
     {
         //If skulls were unequipped then make visible again.
-        playerWeapon.skullsParent.SetActive(true);
+        playerWeapon.skullsParent.SetActive(true); // ****
         skullsParent = GameObject.Find("Skulls").transform;
 
         this.transform.parent = null;

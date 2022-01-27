@@ -122,23 +122,6 @@ public class FPSController : MonoBehaviour
             flashlightOn = false;
         }
 
-    }
-
-    //Used to control Joystick trigger from the ability to spam fire.
-    void GetTriggerUse()
-    {
-        if (Input.GetAxis("RtTrigger") > 0)
-        {
-            canThrow = false;
-        }
-        else
-        {
-            canThrow = true;
-        }
-    }
-
-    void FixedUpdate()
-    {
         // Player is grounded -- recalculate the move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -226,6 +209,19 @@ public class FPSController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);        
         slidingAllowed = true;
+    }
+
+    //Used to control Joystick trigger from the ability to spam fire.
+    void GetTriggerUse()
+    {
+        if (Input.GetAxis("RtTrigger") > 0)
+        {
+            canThrow = false;
+        }
+        else
+        {
+            canThrow = true;
+        }
     }
 
     // PUSHES RIDIDBODIES THAT PLAYER RUNS INTO
