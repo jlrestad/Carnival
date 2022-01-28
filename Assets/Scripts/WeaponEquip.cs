@@ -58,7 +58,7 @@ public class WeaponEquip : MonoBehaviour
         menu = FindObjectOfType<Menu>();
         skullHold = GameObject.Find("SkullHold");
 
-        //Detect if joystick or keyboard is used an display correct prompt.
+        //Detect if joystick or keyboard is used and display correct prompt.
         if (menu.usingJoystick)
         {
             actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
@@ -71,6 +71,20 @@ public class WeaponEquip : MonoBehaviour
 
     void Update()
     {
+        // *****************************************
+        // JOYSTICK / KEYBOARD DETECTION
+        // *****************************************
+        if (menu.usingJoystick)
+        {
+            actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+        }
+        else
+        {
+            actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+        }
+        // ******************************************
+
+
         FindClosestWeapon();
         FindClosestSkull();
         ChangeWeapon();
