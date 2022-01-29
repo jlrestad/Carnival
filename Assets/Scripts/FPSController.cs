@@ -165,7 +165,7 @@ public class FPSController : MonoBehaviour
         }
 
         // Player and camera rotation
-        if (canMove)
+        if (canMove && Time.timeScale != 0)
         {
             //rotate at the lookSpeed
             rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed;
