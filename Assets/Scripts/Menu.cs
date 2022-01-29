@@ -76,6 +76,11 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        controllerArray = Input.GetJoystickNames();
+
+        levelOne = GameObject.FindGameObjectWithTag("LevelObjects");
+        player = GameObject.FindGameObjectWithTag("Player");
+
         //Detect if joystick is used.
         if (controllerArray == null)
         {
@@ -85,11 +90,6 @@ public class Menu : MonoBehaviour
         {
             usingJoystick = true;
         }
-         
-        controllerArray = Input.GetJoystickNames();
-
-        levelOne = GameObject.FindGameObjectWithTag("LevelObjects");
-        player = GameObject.FindGameObjectWithTag("Player");
 
         if (Input.GetButtonDown("Menu") && counter == 0)
         {

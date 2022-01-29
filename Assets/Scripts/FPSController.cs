@@ -15,7 +15,7 @@ public class FPSController : MonoBehaviour
     public float walkSpeed = 7.0f;
     public float runSpeed = 10.0f;
     public float jumpSpeed = 8.0f;
-    public float lookSpeed = 2.5f;
+    public float lookSpeed = 2.0f;
     public float gravity = 20.0f;
     public float slideSpeed = 2.0f;
     public float pushPower = 10.0f;
@@ -169,13 +169,13 @@ public class FPSController : MonoBehaviour
         {
             //rotate at the lookSpeed
             rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed;
-            rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
+            //rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
             //stop rotate at the min and max degree limit
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             //have camera follow the rotation
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
+            //transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
         }
 
         // Sliding
