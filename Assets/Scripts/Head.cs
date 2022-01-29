@@ -17,7 +17,7 @@ public class Head : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerWeapon = player.GetComponent<WeaponEquip>();
 
-        if (!playerWeapon.haveSkull)
+        if (!playerWeapon.holdingSkull)
         {
             skullsParent = GameObject.Find("Skulls").transform;
         }
