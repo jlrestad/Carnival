@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class WeaponEquip : MonoBehaviour
 {
+    [TextArea]
+    [SerializeField] string notes;
+
     public static WeaponEquip Instance;
 
     [Space(15)]
@@ -36,14 +39,18 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] float pickUpRange = 1.5f;
     Vector3 distanceToPlayer;
 
+    [Space(15)]
+    [SerializeField] GameObject skull;
+    [SerializeField] Collider skullCollider;
+    [SerializeField] Rigidbody skullRB;
+    [SerializeField] GameObject throwArms;
+
     public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
     public Canvas crossHair;
     [HideInInspector] public string levelName;
     public GameObject currentWeapon = null;
     private Weapon newWeapon;
-    [SerializeField] GameObject skull;
-    [SerializeField] Collider skullCollider;
-    [SerializeField] Rigidbody skullRB;
+   
 
     [HideInInspector] public Menu menu;
 
@@ -163,6 +170,7 @@ public class WeaponEquip : MonoBehaviour
                 {
                     skullsParent.transform.GetChild(0).gameObject.SetActive(false);
                     holdingSkull = false;
+                    throwArms.SetActive(false);
                 }
                 else
                 {
@@ -333,6 +341,7 @@ public class WeaponEquip : MonoBehaviour
                 //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
                 skullsParent.transform.GetChild(0).gameObject.SetActive(false);
                 holdingSkull = false;
+                throwArms.SetActive(false);
             }
 
             //Move to the next weapon in the list.
@@ -354,12 +363,14 @@ public class WeaponEquip : MonoBehaviour
                 //Equip skull
                 skullsParent.transform.GetChild(0).gameObject.SetActive(true);
                 holdingSkull = true;
+                throwArms.SetActive(true);
             }
             else
             {
                 //Equip other weapon
                 currentWeapon.SetActive(true); //show the weapon
                 holdingSkull = false;
+                throwArms.SetActive(false);
             }
         }
 
@@ -377,6 +388,7 @@ public class WeaponEquip : MonoBehaviour
                 //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
                 skullsParent.transform.GetChild(0).gameObject.SetActive(false);
                 holdingSkull = false;
+                throwArms.SetActive(false);
             }
 
             //Move to the previous weapon in the list.
@@ -398,12 +410,14 @@ public class WeaponEquip : MonoBehaviour
                 //Equip skull
                 skullsParent.transform.GetChild(0).gameObject.SetActive(true);
                 holdingSkull = true;
+                throwArms.SetActive(true);
             }
             else
             {
                 //Equip other weapon
                 currentWeapon.SetActive(true);
                 holdingSkull = false;
+                throwArms.SetActive(false);
             }
             
         }
@@ -479,6 +493,8 @@ public class WeaponEquip : MonoBehaviour
         //Equip weapon (except for skull)
         if (currentWeapon != skullsParent && holdingSkull)
         {
+            throwArms.SetActive(false);
+
             holdingSkull = false;
 
             //Put away skulls before equiping weapon.
@@ -530,6 +546,7 @@ public class WeaponEquip : MonoBehaviour
         {
             skullsParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
             holdingSkull = false;
+            throwArms.SetActive(false);
         }
 
     }
