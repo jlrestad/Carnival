@@ -125,7 +125,7 @@ public class MeleeSwing : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        transform.Rotate(Vector3.right, 30f);
+        transform.Rotate(Vector3.right, -20f);
         canSwing = true;
     }
 
