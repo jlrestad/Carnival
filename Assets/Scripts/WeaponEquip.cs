@@ -35,7 +35,8 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject closestWeapon = null;
-    public GameObject closestSkull = null;
+    public GameObject currentWeapon = null;
+    [HideInInspector] public GameObject closestSkull = null;
     [SerializeField] float pickUpRange = 1.5f;
     Vector3 distanceToPlayer;
 
@@ -45,10 +46,12 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] Rigidbody skullRB;
     [SerializeField] GameObject throwArms;
 
+    [Space(5)]
     public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
+
+    [Space(15)]
     public Canvas crossHair;
     [HideInInspector] public string levelName;
-    public GameObject currentWeapon = null;
     private Weapon newWeapon;
    
 
@@ -109,12 +112,17 @@ public class WeaponEquip : MonoBehaviour
         //Check if skull parent is empty
         if (skullsParent.transform.childCount <= 0 && weaponList.Contains(skullsParent))
         {
+            haveSkull = false; //Out of skulls
+            holdingSkull = false; //Not holding skull
+
             //Reset the hold count UI
             addToCount = 0;
             menu.skullCountText.text = skullsParent.transform.childCount.ToString();
 
             //Remove the weapon from the list
             weaponList.Remove(skullsParent);
+            //Turn off arms in throw position
+            throwArms.SetActive(false);
 
             //Out of skulls but have other weapons.
             if (haveMallet && !isEquipped || haveGun && !isEquipped)
@@ -123,9 +131,6 @@ public class WeaponEquip : MonoBehaviour
                 currentWeapon = weaponList[0];
                 inInventory = true;
             }
-
-            haveSkull = false; //Out of skulls
-            holdingSkull = false; //Not holding skull
         }
         // * * * END SKULL PICKUP
 
@@ -164,20 +169,16 @@ public class WeaponEquip : MonoBehaviour
             distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
         {
             //If there is already a weapon equipped, hide it.
-            if (isEquipped)
-            {
-                if (holdingSkull)
+            if (isEquipped && holdingSkull)
                 {
                     skullsParent.transform.GetChild(0).gameObject.SetActive(false);
                     holdingSkull = false;
                     throwArms.SetActive(false);
                 }
-                else
-                {
-                    currentWeapon.SetActive(false);
-                }
+            else if (isEquipped)
+            {
+                currentWeapon.SetActive(false);
             }
-            
 
             //Pick up and equip weapon.
             PickUpWeapon();
@@ -189,7 +190,7 @@ public class WeaponEquip : MonoBehaviour
         }
         else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
         {
-            //Eqip weapon from inventory.
+            //Equip weapon from inventory.
             EquipWeapon();
         }
 
@@ -430,7 +431,7 @@ public class WeaponEquip : MonoBehaviour
     {
         isEquipped = true;
 
-        //Check which weapon it is and get the tag.
+        // Check which weapon it is and set it to the current weapon.
 
         //GUN
         if (closestWeapon.tag == "Gun" && !haveGun)
@@ -466,13 +467,14 @@ public class WeaponEquip : MonoBehaviour
             }
         }
 
-        //Hides mallet and gun from scene (equipped gun and mallet are part of the player character).
+        //Hides mallet or gun from scene (equipped gun and mallet are part of the player character).
         if (!CompareTag("Head"))
         {
             //Hide the weapon object in scene.
             closestWeapon.SetActive(false); //hide the picked up weapon
         }
 
+        //After picking up the weapon, equip it.
         EquipWeapon(); //picked up weapon is equipped
     }
 
@@ -481,6 +483,7 @@ public class WeaponEquip : MonoBehaviour
     {
         inInventory = false;
         isEquipped = true;
+        weaponNumber++;
 
         //Hide flashlight if holding
         if (GetComponent<FPSController>().flashlightOn)
@@ -493,9 +496,8 @@ public class WeaponEquip : MonoBehaviour
         //Equip weapon (except for skull)
         if (currentWeapon != skullsParent && holdingSkull)
         {
-            throwArms.SetActive(false);
-
             holdingSkull = false;
+            throwArms.SetActive(false);
 
             //Put away skulls before equiping weapon.
             skullsParent.transform.GetChild(0).gameObject.SetActive(false);
@@ -518,6 +520,8 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = true; // ******
                 haveSkull = true;
 
+                throwArms.SetActive(true);
+
                 //Show the skull count menu.
                 menu.skullCountUI.SetActive(true);
                 menu.skullCountText.text = addToCount.ToString();
@@ -526,6 +530,7 @@ public class WeaponEquip : MonoBehaviour
             {
                 holdingSkull = false;
                 haveSkull = false;
+                throwArms.SetActive(false);
             }
         }
     }
