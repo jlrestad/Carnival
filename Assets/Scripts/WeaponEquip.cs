@@ -41,7 +41,7 @@ public class WeaponEquip : MonoBehaviour
     Vector3 distanceToPlayer;
 
     [Space(15)]
-    [SerializeField] GameObject skull;
+    public GameObject skull;
     [SerializeField] Collider skullCollider;
     [SerializeField] Rigidbody skullRB;
     [SerializeField] GameObject throwArms;
@@ -194,11 +194,12 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        if (!closestWeapon.CompareTag("Head"))
+        if (!closestWeapon.CompareTag("Head") && !closestWeapon.CompareTag("Untagged"))
         {
             //SHOW ACTION/INTERACT PROMPT
             if (distanceToPlayer.magnitude <= pickUpRange)
             {
+                Debug.Log("action prompt on");
                 //If within pickup range show the prompt.
                 actionPrompt.SetActive(true);
 
@@ -295,7 +296,7 @@ public class WeaponEquip : MonoBehaviour
 
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-                distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
+                distanceToPlayer = this.transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
                 //Get the name of the layer -- which is the name of the game level
                 //int layerNumber = closestWeapon.layer;
@@ -452,8 +453,8 @@ public class WeaponEquip : MonoBehaviour
         //if (closestSkull != null)
         {
             currentWeapon = skullsParent;
-
-            //Allow only 6 skulls to be held.
+            //Allow only 6 skulls
+            //to be held.
             if (skullsParent.transform.childCount < 6)
             {
                 skull.SetActive(true);
@@ -512,14 +513,20 @@ public class WeaponEquip : MonoBehaviour
         //Equip skull
         if (currentWeapon == skullsParent)
         {
-            skullsParent.transform.GetChild(0).gameObject.SetActive(true);
-
             //Only show the first child at a time.
+            skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+            //Turn off Weapon script while holding so it won't be detected by FindClosestWeapon.
+            for (int i = 0; i < skullsParent.transform.childCount; i++)
+            {
+                skullsParent.transform.GetChild(i).GetComponent<Weapon>().enabled = false;
+            }
+            skull.tag = "Untagged";
+
             if (skullsParent.transform.childCount != 0)
             {
                 holdingSkull = true; // ******
                 haveSkull = true;
-
+                
                 throwArms.SetActive(true);
 
                 //Show the skull count menu.

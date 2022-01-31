@@ -74,6 +74,10 @@ public class Head : MonoBehaviour
         playerWeapon.skullsParent.SetActive(true); // ****
         skullsParent = GameObject.Find("Skulls").transform;
 
+        //Turn on weapon script so that it can be found again.
+        skullsParent.transform.GetChild(0).gameObject.GetComponent<Weapon>().enabled = true;
+        playerWeapon.skull.tag = "Head";
+
         this.transform.parent = null;
 
         Rigidbody rb = this.GetComponent<Rigidbody>();

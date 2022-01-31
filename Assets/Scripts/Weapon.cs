@@ -10,4 +10,9 @@ public class Weapon : MonoBehaviour
     {
         Instance = this;
     }
+
+    private void Start()
+    {
+        
+    }
 }

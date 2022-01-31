@@ -131,6 +131,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerWeapon: {fileID: 0}
   throwSpeed: 5
+  canThrow: 0
   skullsParent: {fileID: 0}
 --- !u!114 &5732682731010343861
 MonoBehaviour:
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  num: 0
 --- !u!82 &594462070351438474
 AudioSource:
   m_ObjectHideFlags: 0
