@@ -15,7 +15,7 @@ public class FPSController : MonoBehaviour
     public float walkSpeed = 7.0f;
     public float runSpeed = 10.0f;
     public float jumpSpeed = 8.0f;
-    public float lookSpeed = 2.0f;
+    public float lookSpeed = 0.6f;
     public float gravity = 20.0f;
     public float slideSpeed = 2.0f;
     public float pushPower = 10.0f;
@@ -34,9 +34,9 @@ public class FPSController : MonoBehaviour
     [Header("CAMERA")]
     public Camera playerCamera;
     float originalCamHeight;
-    public float lookXLimit = 45.0f;
+    public float lookXLimit = 55.0f;
     
-    Vector3 moveDirection = Vector3.zero; //set to 0
+    public Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
 
     [Header("BOOLS")]
@@ -113,6 +113,7 @@ public class FPSController : MonoBehaviour
         {
             flashlightHold.SetActive(true);
             flashlightOn = true;
+            weaponEquip.throwArms.SetActive(false);
         }
 
         //If holding the flashlight and button is pressed again put the flashlight away
@@ -121,6 +122,8 @@ public class FPSController : MonoBehaviour
             flashlightHold.SetActive(false);
             flashlightOn = false;
         }
+
+        weaponEquip.usingFlashlight = flashlightOn;
 
         // Player is grounded -- recalculate the move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);

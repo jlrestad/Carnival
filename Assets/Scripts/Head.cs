@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class Head : MonoBehaviour
 {
+    public static Head Instance;
+
     [SerializeField] GameObject player;
     [SerializeField] WeaponEquip playerWeapon;
+    [SerializeField] Menu menu;
     [SerializeField] int throwSpeed = 5;
-    [SerializeField] bool canThrow;
-    public Transform skullsParent; //parent of skull being held
+    public bool canThrow;
 
     private void Start()
     {
-        canThrow = true;
+        Instance = this;
 
+        canThrow = true;
+        menu = GameObject.Find("GameManager").GetComponent<Menu>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerWeapon = player.GetComponent<WeaponEquip>();
-
-        if (!playerWeapon.holdingSkull)
-        {
-            skullsParent = GameObject.Find("Skulls").transform;
-        }
-      
     }
 
     private void Update()
@@ -41,16 +39,16 @@ public class Head : MonoBehaviour
             canThrow = false;
             
             playerWeapon.addToCount = playerWeapon.skullsParent.transform.childCount;
-            Menu.Instance.skullCountText.text = playerWeapon.addToCount.ToString();
+            menu.skullCountText.text = playerWeapon.addToCount.ToString();
         }
         if (Input.GetButtonUp("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") == 0 && playerWeapon.holdingSkull)
         {
             NextSkull();
         }
-        else
-        {
-            canThrow = true;
-        }
+        //else
+        //{
+        //    canThrow = true;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,7 +58,8 @@ public class Head : MonoBehaviour
             Debug.Log("Head trigger working");
             other.GetComponentInParent<GameCardManager>().targetsList.Add(other.transform.gameObject);
 
-            this.gameObject.SetActive(false);
+            //If skull hits the bucket then hide it from the scene.
+            playerWeapon.skull.SetActive(false);
         }
         else
         {
@@ -72,54 +71,32 @@ public class Head : MonoBehaviour
     {
         //If skulls were unequipped then make visible again.
         playerWeapon.skullsParent.SetActive(true); // ****
-        skullsParent = GameObject.Find("Skulls").transform;
 
         //Turn on weapon script so that it can be found again.
-        skullsParent.transform.GetChild(0).gameObject.GetComponent<Weapon>().enabled = true;
+        playerWeapon.skullsParent.transform.GetChild(0).gameObject.GetComponent<Weapon>().enabled = true;
         playerWeapon.skull.tag = "Head";
 
-        this.transform.parent = null;
+        transform.parent = null;
 
-        Rigidbody rb = this.GetComponent<Rigidbody>();
+        Rigidbody rb = playerWeapon.skull.GetComponent<Rigidbody>();
         rb.isKinematic = false;
 
-        this.GetComponent<Collider>().enabled = true;
+        Collider collider = playerWeapon.skull.GetComponent<Collider>();
+        collider.enabled = true;
 
         // Throw
-        rb.velocity = -this.transform.forward * throwSpeed; //Throws with an arc
+        rb.velocity = -transform.forward * throwSpeed; //Throws with an arc
 
-        //
-        //Check if skull parent is empty
-        //if (skullsParent.transform.childCount == 0)
-        //{
-        //    //After last skull is thrown, player has nothing equipped.
-        //    playerWeapon.isEquipped = false;
-
-        //    //Out of skulls but still have weapon in inventory.
-        //    if (playerWeapon.haveMallet && !playerWeapon.isEquipped || playerWeapon.haveGun && !playerWeapon.isEquipped)
-        //    {
-        //        playerWeapon.inInventory = true;
-        //    }
-
-        //    playerWeapon.isEquipped = false; //Nothing in hand
-        //    playerWeapon.haveSkull = false; //Out of skulls
-        //    playerWeapon.holdingSkull = false; //Not holding skull
-
-        //    //Remove the weapon from the list
-        //    playerWeapon.weaponList.Remove(skullsParent.gameObject);
-        //}
-        //else
-        //{
-        //    skullsParent.transform.GetChild(0).gameObject.SetActive(true);
-        //}
+        StartCoroutine(TurnOffGameObject());
     }
 
+    // Had to break split the ThrowSkull method into two parts in order for the Xbox controller trigger to work properly.
     void NextSkull()
     {
         //If there are more skulls, make the next skull visible.
-        if (skullsParent.transform.childCount != 0)
+        if (playerWeapon.skullsParent.transform.childCount != 0)
         {
-            skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+            playerWeapon.skullsParent.transform.GetChild(0).gameObject.SetActive(true);
         }
         else
         {
@@ -127,7 +104,7 @@ public class Head : MonoBehaviour
             playerWeapon.isEquipped = false;
 
             //Turn off the skull hold count UI
-            Menu.Instance.skullCountUI.SetActive(false);
+            menu.skullCountUI.SetActive(false);
 
             //Check if there are weapons in inventory.
             if (playerWeapon.weaponList.Count > 1)
@@ -135,5 +112,11 @@ public class Head : MonoBehaviour
                 playerWeapon.inInventory = true;
             }
         }
+    }
+
+    IEnumerator TurnOffGameObject()
+    {
+        yield return new WaitForSeconds(3f);
+        playerWeapon.skull.SetActive(false);
     }
 }
