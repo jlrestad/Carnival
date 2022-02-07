@@ -54,7 +54,8 @@ public class WeaponEquip : MonoBehaviour
     public Canvas crossHair;
     [HideInInspector] public string levelName;
     private Weapon newWeapon;
-    public Head[] newSkull;
+    private Head newSkull;
+    public Head[] headSkull;
    
 
     [HideInInspector] public Menu menu;
@@ -67,6 +68,8 @@ public class WeaponEquip : MonoBehaviour
 
     private void Start()
     {
+        closestSkull = null;
+
         menu = FindObjectOfType<Menu>();
         skullHold = GameObject.Find("SkullHold");
 
@@ -83,27 +86,25 @@ public class WeaponEquip : MonoBehaviour
 
     void Update()
     {
-        newSkull = FindObjectsOfType<Head>();
-
         FindClosestWeapon();
         ChangeWeapon();
 
 
         //FOR SKULL PICKUP * * *
-        if (holdingSkull)
-        {
-            //Add skulls to weapon list.
-            if (!weaponList.Contains(skullsParent))
-            {
-                weaponList.Add(skullsParent);
-            }
-        }
-
         if (currentWeapon == skullsParent)
         {
             //Update amount of skulls being held.
             addToCount = skullsParent.transform.childCount;
             menu.skullCountText.text = addToCount.ToString();
+
+            if (holdingSkull)
+            {
+                //Add skulls to weapon list.
+                if (!weaponList.Contains(skullsParent))
+                {
+                    weaponList.Add(skullsParent);
+                }
+            }
         }
 
         //Check if skull parent is empty
@@ -129,7 +130,6 @@ public class WeaponEquip : MonoBehaviour
                 inInventory = true;
             }
         }
-
 
         // * * *
         //RETICLE DISPLAY
@@ -170,16 +170,16 @@ public class WeaponEquip : MonoBehaviour
         //PLAYER INPUT
         if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
             distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
-            distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestSkull != null)
+            distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
         {
             //If there is already a weapon equipped, hide it.
             if (isEquipped && holdingSkull)
-                {
-                    skullsParent.transform.GetChild(0).gameObject.SetActive(false);
-                    holdingSkull = false;
-                    throwArms.SetActive(false);
-                }
-            if (isEquipped)
+            {
+                skullsParent.transform.GetChild(0).gameObject.SetActive(false);
+                holdingSkull = false;
+                throwArms.SetActive(false);
+            }
+            else if (isEquipped)
             {
                 currentWeapon.SetActive(false);
             }
@@ -198,8 +198,8 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        if (!closestWeapon.CompareTag("Head") && !closestWeapon.CompareTag("Untagged"))
-        {
+        //if (!closestWeapon.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
+        //{
             //SHOW ACTION/INTERACT PROMPT
             if (distanceToPlayer.magnitude <= pickUpRange)
             {
@@ -231,7 +231,7 @@ public class WeaponEquip : MonoBehaviour
             {
                 actionPrompt.SetActive(false);
             }
-        }
+        //}
     }
 
     //public void SkullInventoryManager()
@@ -301,15 +301,17 @@ public class WeaponEquip : MonoBehaviour
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
                 distanceToPlayer = this.transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
-                if (closestWeapon.CompareTag("Head"))
-                {
-                    closestWeapon = FindNearestSkull();
-                    skull = closestWeapon;
+                //If the closest weapon is a skull, then get the collider and rigidbody of that skull.
+                //if (closestWeapon.CompareTag("Head"))
+                //{
+                //    closestWeapon = FindNearestSkull();
+                //    closestSkull = closestWeapon;
+                //    return closestWeapon;
+                //    //skullCollider = skull.GetComponent<Collider>();
+                //    //skullRB = skull.GetComponent<Rigidbody>();
+                //}
 
-                    //Get the collider and rigidbody of the skull.
-                    skullCollider = skull.GetComponent<Collider>();
-                    skullRB = skull.GetComponent<Rigidbody>();
-                }
+                //* This was used for loading scenes, which we aren't using now, but kept it incase... Can delete at the end of project.
                 //Get the name of the layer -- which is the name of the game level
                 //int layerNumber = closestWeapon.layer;
                 //levelName = LayerMask.LayerToName(layerNumber);
@@ -320,7 +322,7 @@ public class WeaponEquip : MonoBehaviour
         return closestWeapon; //returns the closest weapon game object
     }
 
-    // Use the mouse-wheel to scroll through the weapon list:
+    //WEAPON SCROLL MANAGER
     public void ChangeWeapon()
     {
         //SCROLL WHEEL FORWARD
@@ -428,14 +430,14 @@ public class WeaponEquip : MonoBehaviour
         // Check which weapon it is and set it to the current weapon.
 
         //GUN
-        if (closestWeapon.tag == "Gun" && !haveGun)
+        if (closestWeapon.CompareTag("Gun") && !haveGun)
         {
             currentWeapon = gunHold;
             weaponList.Add(currentWeapon);
             haveGun = true;
         }
         //MALLET
-        if (closestWeapon.tag == "Mallet" && !haveMallet)
+        if (closestWeapon.CompareTag("Mallet") && !haveMallet)
         {
             currentWeapon = malletHold;
             weaponList.Add(malletHold);
@@ -443,15 +445,17 @@ public class WeaponEquip : MonoBehaviour
         }
         //SKULL
         //* Finding the closest skull, but not equipping the closest....
-        if (closestWeapon.tag == "Head")
+        if (closestWeapon.CompareTag("Head"))
         {
-            closestWeapon = closestSkull;
+            skull = closestWeapon;
             currentWeapon = skullsParent;
             haveSkull = true;
+            skullCollider = skull.GetComponent<Collider>();
+            skullRB = skull.GetComponent<Rigidbody>();
         }
 
         //Hides mallet or gun from scene (equipped gun and mallet are part of the player character).
-        if (!CompareTag("Head"))
+        if (!closestWeapon.CompareTag("Head"))
         {
             //Hide the weapon object in scene.
             closestWeapon.SetActive(false); //hide the picked up weapon
@@ -478,7 +482,7 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //Equip weapon (except for skull)
-        if (currentWeapon != closestSkull && holdingSkull)
+        if (currentWeapon != skullsParent && holdingSkull)
         //if (currentWeapon != skullsParent && holdingSkull)
         {
             holdingSkull = false;
@@ -489,8 +493,7 @@ public class WeaponEquip : MonoBehaviour
 
             currentWeapon.SetActive(true); //show held weapon 
         }
-        else if (currentWeapon != closestSkull)
-        //else if (currentWeapon != skullsParent)
+        else if (currentWeapon != skullsParent)
         {
             currentWeapon.SetActive(true); //show held weapon 
         }
@@ -498,6 +501,7 @@ public class WeaponEquip : MonoBehaviour
         //Equip skull
         if (currentWeapon == skullsParent)
         {
+            Debug.Log("This compare tag works");
             //Allow only 6 skulls
             //to be held.
             if (skullsParent.transform.childCount < 6)
@@ -527,10 +531,6 @@ public class WeaponEquip : MonoBehaviour
             //*Turn off Weapon script while holding so it won't be detected by FindClosestWeapon.
             for (int i = 0; i < skullsParent.transform.childCount; i++)
             {
-                //turn newskull array into a list and remove picked up skull
-                //newSkull.ToList().Remove(skullsParent.transform.GetChild(i).GetComponent<Head>()); //*
-                
-                //skullsParent.transform.GetChild(i).GetComponent<Head>().canThrow = true;
                 skullsParent.transform.GetChild(i).GetComponent<Weapon>().enabled = false;
             }
             skull.tag = "Untagged"; //temp set untagged so it wont be found as the closest weapon
@@ -538,10 +538,6 @@ public class WeaponEquip : MonoBehaviour
 
             if (skullsParent.transform.childCount != 0)
             {
-                //* Unneccessary?
-                holdingSkull = true;
-                haveSkull = true;
-
                 //Turn on test arms
                 throwArms.SetActive(true);
 
@@ -576,21 +572,27 @@ public class WeaponEquip : MonoBehaviour
             holdingSkull = false;
             throwArms.SetActive(false);
         }
-
     }
 
     GameObject FindNearestSkull()
     {
-        foreach (Head skull in newSkull)
+        foreach (Head thisSkull in headSkull)
         {
-            distanceToPlayer = transform.position - skull.transform.position;
+            float currentDist;
+            float closestDist = Mathf.Infinity;
+            currentDist = (transform.position - thisSkull.transform.position).sqrMagnitude;
+            distanceToPlayer = transform.position - thisSkull.transform.position;
 
-            if (distanceToPlayer.magnitude <= pickUpRange)
+            if (currentDist < closestDist)
             {
-                closestSkull = skull.GetComponent<Head>().gameObject;
-                //skullRB = skull.GetComponent<Rigidbody>();
+                closestDist = currentDist;
+                newSkull = thisSkull;
+                closestSkull = newSkull.gameObject;
+                skullRB = newSkull.GetComponent<Rigidbody>();
             }
+            return closestSkull;
         }
+        Debug.Log("Closest skull is " + closestSkull);
         return closestSkull;
     }
 }

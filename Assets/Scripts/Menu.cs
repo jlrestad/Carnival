@@ -133,6 +133,7 @@ public class Menu : MonoBehaviour
     public void UnpauseGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
         counter = 0;
