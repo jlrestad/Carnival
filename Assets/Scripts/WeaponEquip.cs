@@ -68,8 +68,6 @@ public class WeaponEquip : MonoBehaviour
 
     private void Start()
     {
-        closestSkull = null;
-
         menu = FindObjectOfType<Menu>();
         skullHold = GameObject.Find("SkullHold");
 
@@ -91,8 +89,10 @@ public class WeaponEquip : MonoBehaviour
 
 
         //FOR SKULL PICKUP * * *
-        if (currentWeapon == skullsParent)
+        if (currentWeapon == skullsParent && skullsParent.transform.childCount > 0)
         {
+            skull = skullsParent.transform.GetChild(0).gameObject;
+
             //Update amount of skulls being held.
             addToCount = skullsParent.transform.childCount;
             menu.skullCountText.text = addToCount.ToString();
@@ -198,8 +198,8 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        //if (!closestWeapon.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
-        //{
+        if (!closestWeapon.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
+        {
             //SHOW ACTION/INTERACT PROMPT
             if (distanceToPlayer.magnitude <= pickUpRange)
             {
@@ -231,51 +231,8 @@ public class WeaponEquip : MonoBehaviour
             {
                 actionPrompt.SetActive(false);
             }
-        //}
+        }
     }
-
-    //public void SkullInventoryManager()
-    //{
-    //    //Allow only 6 skulls to be held.
-    //    if (skullParent.transform.childCount < 6)
-    //    {
-    //        //Hide the skull from in the scene.
-    //        skullParent.gameObject.SetActive(true);
-
-    //        skullCollider.enabled = false;
-    //        skullRB.isKinematic = true;
-
-    //        //Add skull to the skull hold position on FPSPlayer.
-    //        skull.transform.position = skullParent.transform.position;
-    //        skull.transform.parent = skullParent.transform;
-    //    }
-
-    //    //Show only the first child skull object.
-    //    //skullsParent.GetChild(0).gameObject.SetActive(true);
-
-    //    //Show first skull in count
-    //    if (skullParent.transform.childCount != 0)
-    //    {
-    //        skullParent.transform.GetChild(0).gameObject.SetActive(true);
-    //    }
-
-    //    if (skullParent.transform.childCount == 0)
-    //    {
-    //        //Out of skulls but still have weapon in inventory.
-    //        if (haveMallet && !isEquipped || haveGun && !isEquipped)
-    //        {
-    //            inInventory = true;
-    //        }
-
-    //        //playerWeapon.isEquipped = false; //Nothing in hand
-    //        haveSkull = false; //Out of skulls
-    //        holdingSkull = false; //Not holding skull
-
-    //        //Remove the weapon from the list
-    //        weaponList.Remove(skullParent);
-    //    }
-    //}
-
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
     public GameObject FindClosestWeapon()
@@ -288,7 +245,7 @@ public class WeaponEquip : MonoBehaviour
         foreach (Weapon currWeapon in allWeapons)
         {
             //Find the distance of each weapon
-            float distanceToWeapon = (currWeapon.transform.position - this.transform.position).sqrMagnitude;
+            float distanceToWeapon = (currWeapon.transform.position - transform.position).sqrMagnitude;
 
             //Compare distance of weapon to previously closest weapon
             if (distanceToWeapon < distanceToClosestWeapon)
@@ -299,17 +256,16 @@ public class WeaponEquip : MonoBehaviour
                 string weaponName = newWeapon.gameObject.name.ToString(); //get the name of the closest weapon
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
-                distanceToPlayer = this.transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
+                distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
                 //If the closest weapon is a skull, then get the collider and rigidbody of that skull.
-                //if (closestWeapon.CompareTag("Head"))
-                //{
-                //    closestWeapon = FindNearestSkull();
-                //    closestSkull = closestWeapon;
-                //    return closestWeapon;
-                //    //skullCollider = skull.GetComponent<Collider>();
-                //    //skullRB = skull.GetComponent<Rigidbody>();
-                //}
+                if (closestWeapon.CompareTag("Head"))
+                {
+                    skull = closestWeapon;
+                    
+                    skullCollider = skull.GetComponent<Collider>();
+                    skullRB = skull.GetComponent<Rigidbody>();
+                }
 
                 //* This was used for loading scenes, which we aren't using now, but kept it incase... Can delete at the end of project.
                 //Get the name of the layer -- which is the name of the game level
@@ -450,8 +406,6 @@ public class WeaponEquip : MonoBehaviour
             skull = closestWeapon;
             currentWeapon = skullsParent;
             haveSkull = true;
-            skullCollider = skull.GetComponent<Collider>();
-            skullRB = skull.GetComponent<Rigidbody>();
         }
 
         //Hides mallet or gun from scene (equipped gun and mallet are part of the player character).
@@ -508,6 +462,10 @@ public class WeaponEquip : MonoBehaviour
             {
                 holdingSkull = true;
 
+                //Get the collider and rigidbody of the skull being held.
+                skullCollider = skull.GetComponent<Collider>();
+                skullRB = skull.GetComponent<Rigidbody>();
+
                 //* This is set in FindClosestWeapon.
                 //Disable collider and set rigidbody to kinematic so it can be pick up and thrown
                 skullCollider.enabled = false;
@@ -519,7 +477,7 @@ public class WeaponEquip : MonoBehaviour
 
                 //Show only the skull that is being held
                 skullsParent.transform.GetChild(0).gameObject.SetActive(true);
-
+ 
                 //Put skull in inventory (hide it from scene)
                 for (int i = 1; i < skullsParent.transform.childCount; i++)
                 {

@@ -11,6 +11,9 @@ public class Head : MonoBehaviour
     [SerializeField] Menu menu;
     [SerializeField] int throwSpeed = 5;
     public bool canThrow;
+    Rigidbody rb;
+    Collider collider;
+    GameObject skull;
 
     private void Start()
     {
@@ -32,6 +35,10 @@ public class Head : MonoBehaviour
         //{
         //    canThrow = true;
         //}
+
+        skull = playerWeapon.skull;
+        rb = playerWeapon.skull.GetComponent<Rigidbody>();
+        collider = playerWeapon.skull.GetComponent<Collider>();
 
         if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull && canThrow)
         {
@@ -77,11 +84,7 @@ public class Head : MonoBehaviour
         playerWeapon.skull.tag = "Head";
 
         transform.parent = null;
-
-        Rigidbody rb = playerWeapon.skull.GetComponent<Rigidbody>();
         rb.isKinematic = false;
-
-        Collider collider = playerWeapon.skull.GetComponent<Collider>();
         collider.enabled = true;
 
         // Throw
