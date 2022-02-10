@@ -10,4 +10,6 @@ public class WhackEmEnemy : MonoBehaviour
     {
         Instance = this;
     }
+
+
 }
