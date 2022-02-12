@@ -12,11 +12,11 @@ public class GameCardManager : MonoBehaviour
     [SerializeField] Menu menu;
 
     Vector3 pos;
-    public float moveSpeed = 0.1f;
+    //public float moveSpeed = 0.1f;
 
     [Space(15)]
-    public GameObject[] targetsArray;
-    public List<GameObject> targetsList;
+    public GameObject[] critterArray;
+    public List<GameObject> critterList;
     [SerializeField] GameObject cardDisplay;
     [SerializeField] GameObject cardWon;
 
@@ -30,6 +30,7 @@ public class GameCardManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         WE = player.GetComponent<WeaponEquip>();
+        critterArray = GetComponent<WhackEmGameManager>().critters;
         menu = WE.menu;
         pos = transform.position;
     }
@@ -37,17 +38,17 @@ public class GameCardManager : MonoBehaviour
     private void Update()
     {
         //Better optimized if this method is called from somewhere else...
-        if (targetsList.Count == targetsArray.Length)
+        if (critterList.Count == critterArray.Length)
         {
             DisplayGameCard();
         }
 
         //Activate boss
-        //if (player.GetComponent<FPSController>().cardCount == 3)
-        //{
-        //    player.GetComponent<FPSController>().tent.SetActive(false);
-        //    player.GetComponent<FPSController>().boss.SetActive(true);
-        //}
+        if (player.GetComponent<FPSController>().cardCount == 3)
+        {
+            player.GetComponent<FPSController>().tent.SetActive(false);
+            player.GetComponent<FPSController>().boss.SetActive(true);
+        }
     }
 
     // RETURNS THE GAME OBJECT THAT HOLDS THE CARD

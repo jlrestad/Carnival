@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class MeleeSwing : MonoBehaviour
 {
-    public Target target;
+    public int health;
     GameCardManager cardManager;
+    public Transform spawnTransform;
     //[SerializeField] WhackEmEnemy newWhackEm;
     //[SerializeField] GameObject closestWhackEm;
     [SerializeField] WhackEmEnemy[] whackEmEnemy;
+    [SerializeField] WhackEmGameManager[] whackEmGM;
     [SerializeField] GameObject headPrefab;
-    [SerializeField] Rigidbody rb;
     Vector3 distanceToPlayer;
     [SerializeField] float meleeRange = 2f;
     [SerializeField] int damage = 50;
@@ -21,6 +22,8 @@ public class MeleeSwing : MonoBehaviour
     {
         //target = Target.Instance;
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
+        whackEmGM = FindObjectsOfType<WhackEmGameManager>();
+        spawnTransform = GetComponentInChildren<Transform>();
         canSwing = true;
     }
 
@@ -39,8 +42,7 @@ public class MeleeSwing : MonoBehaviour
 
             if (distanceToPlayer.magnitude <= meleeRange)
             {
-                target = whackEm.GetComponent<Target>();
-                rb = whackEm.GetComponent<Rigidbody>();
+                health = whackEm.GetComponent<WhackEmEnemy>().health;
             }
         }
     }
@@ -51,14 +53,22 @@ public class MeleeSwing : MonoBehaviour
         {
             cardManager = other.GetComponentInParent<GameCardManager>();
 
-            target.health -= damage; 
-
-            if (target.health <= 0f)
+            //Do random damage
+            damage = Random.Range(50, 100);
+            other.GetComponent<WhackEmEnemy>().health -= damage;
+            
+            if (other.GetComponent<WhackEmEnemy>().hasBeenHit)
             {
-                target.health = 0f;
+                IncreaseSpeed();
+            }
+
+            //
+            if (health <= 0)
+            {
+                health = 0;
 
                 //Add game object to Moving Target array.
-                cardManager.targetsList.Add(other.gameObject);
+                cardManager.critterList.Add(other.gameObject);
 
                 //Spawn the head used as throwing object
                 SpawnHead();
@@ -70,53 +80,21 @@ public class MeleeSwing : MonoBehaviour
         }
     }
 
-    public void SpawnHead()
+    //
+    void IncreaseSpeed()
     {
-        //rb.isKinematic = false;
+        //Do random damage
+        //if (whackEmEnemy.hasBeenHit)
+        //Speed up appear time
+        //
 
-        //Spawn the head used as throwing object
-        Instantiate(headPrefab, rb.transform.position, Quaternion.identity);
     }
 
-    // Find the enemy that is closest to the player
-    //public GameObject FindClosestWhackEm()
-    //{
-    //    float distanceToClosesWhackEm = Mathf.Infinity;
-
-    //    WhackEmEnemy[] allWhackEms = GameObject.FindObjectsOfType<WhackEmEnemy>(); //Array to hold all weapons of the scene
-
-    //    // Move through the list of weapons to find the closest
-    //    foreach (WhackEmEnemy whackEm in allWhackEms)
-    //    {
-    //        float distanceToWhackEm = (whackEm.transform.position - this.transform.position).sqrMagnitude;
-
-    //        if (distanceToWhackEm < distanceToClosesWhackEm)
-    //        {
-    //            distanceToClosesWhackEm = distanceToWhackEm; //update the closest weapon
-    //            newWhackEm = whackEm; //set the closest weapon
-    //            string targetName = newWhackEm.gameObject.name.ToString(); //get the name of the closest weapon
-
-    //            closestWhackEm = GameObject.Find(targetName); //use the name of the weapon to get the game object that is attached so it can be returned
-
-    //            whackEmList.Add(closestWhackEm);
-
-    //            distanceToPlayer = transform.position - closestWhackEm.transform.position;
-    //        }
-    //    }
-
-    //    return closestWhackEm;
-    //}
-
-
-    //public void MeleeAttack()
-    //{
-    //    transform.Rotate(Vector3.right, 90f);
-    //}
-
-    //public void Return()
-    //{
-    //    transform.Rotate(Vector3.right, 30f);
-    //}
+    public void SpawnHead()
+    {
+        //Spawn the head used as throwing object
+        Instantiate(headPrefab, spawnTransform.position, Quaternion.identity);
+    }
 
     IEnumerator MeleeAttack()
     {

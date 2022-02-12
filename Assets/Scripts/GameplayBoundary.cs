@@ -6,32 +6,20 @@ using UnityEngine.SceneManagement;
 public class GameplayBoundary : MonoBehaviour
 {
     //[SerializeField] string levelName;
-  
-    [SerializeField] GameObject player;
     //[SerializeField] GameCardManager cardManager;
-
-    GameObject game;
-    [SerializeField] GameObject gamePrefab;
-    [SerializeField] GameObject gameSpawn;
-    WeaponEquip WE;
-
-    private void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        WE = player.GetComponent<WeaponEquip>();
-    }
-
-    private void Update()
-    {
-    }
+    //GameObject game;
+    //[SerializeField] GameObject gamePrefab;
+    //[SerializeField] GameObject gameSpawn;
+    public WhackEmGameManager whackemGM;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            game = Instantiate(gamePrefab, gameSpawn.transform);
-
-            game.SetActive(true);
+            whackemGM.gameOn = true;
+            whackemGM.tickets = whackemGM.tickets - 1;
+            //game = Instantiate(gamePrefab, gameSpawn.transform);
+            //game.SetActive(true);
         }
     }
 
@@ -39,8 +27,8 @@ public class GameplayBoundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            game.SetActive(false);
-            //Destroy(game);
+            whackemGM.gameOn = false;
+            //game.SetActive(false);
         }
     }
 }

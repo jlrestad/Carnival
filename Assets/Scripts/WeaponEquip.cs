@@ -212,7 +212,7 @@ public class WeaponEquip : MonoBehaviour
                     PickUpWeapon();
                 }
 
-                // ** Because there are multiple guns in scen. If only one then this is uneccessary. **
+                // ** Because there are multiple guns in scene. If only one then this is uneccessary. **
                 //If have gun and closest weapon is a gun don't show the prompt.
                 if (haveGun)
                 {

@@ -63,7 +63,7 @@ public class Head : MonoBehaviour
         if (other.CompareTag("Bucket"))
         {
             Debug.Log("Head trigger working");
-            other.GetComponentInParent<GameCardManager>().targetsList.Add(other.transform.gameObject);
+            other.GetComponentInParent<GameCardManager>().critterList.Add(other.transform.gameObject);
 
             //If skull hits the bucket then hide it from the scene.
             playerWeapon.skull.SetActive(false);

@@ -61,7 +61,7 @@ public class Target : MonoBehaviour
         if (targetHit)
         {
             //Add game object to Moving Target array.
-            cardManager.targetsList.Add(this.gameObject);
+            cardManager.critterList.Add(this.gameObject);
 
             //Stop the target from moving after it's shot.
             moveAlongCurve.speedModifier = 0f;
