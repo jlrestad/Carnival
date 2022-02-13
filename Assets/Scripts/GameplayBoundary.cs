@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameplayBoundary : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class GameplayBoundary : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             whackemGM.gameOn = false;
+            whackemGM.ResetScore();
             //game.SetActive(false);
         }
     }

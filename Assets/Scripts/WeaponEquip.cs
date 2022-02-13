@@ -201,7 +201,7 @@ public class WeaponEquip : MonoBehaviour
         if (!closestWeapon.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
         {
             //SHOW ACTION/INTERACT PROMPT
-            if (distanceToPlayer.magnitude <= pickUpRange)
+            if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon!=skull)
             {
                 //If within pickup range show the prompt.
                 actionPrompt.SetActive(true);

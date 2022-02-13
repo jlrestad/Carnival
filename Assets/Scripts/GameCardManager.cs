@@ -12,7 +12,6 @@ public class GameCardManager : MonoBehaviour
     [SerializeField] Menu menu;
 
     Vector3 pos;
-    //public float moveSpeed = 0.1f;
 
     [Space(15)]
     public GameObject[] critterArray;

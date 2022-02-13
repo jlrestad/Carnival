@@ -11,7 +11,7 @@ public class MeleeSwing : MonoBehaviour
     //[SerializeField] WhackEmEnemy newWhackEm;
     //[SerializeField] GameObject closestWhackEm;
     [SerializeField] WhackEmEnemy[] whackEmEnemy;
-    [SerializeField] WhackEmGameManager[] whackEmGM;
+    [SerializeField] WhackEmGameManager whackemGM;
     [SerializeField] GameObject headPrefab;
     Vector3 distanceToPlayer;
     [SerializeField] float meleeRange = 2f;
@@ -22,7 +22,7 @@ public class MeleeSwing : MonoBehaviour
     {
         //target = Target.Instance;
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
-        whackEmGM = FindObjectsOfType<WhackEmGameManager>();
+        whackemGM = FindObjectOfType<WhackEmGameManager>();
         spawnTransform = GetComponentInChildren<Transform>();
         canSwing = true;
     }
@@ -51,30 +51,34 @@ public class MeleeSwing : MonoBehaviour
     {
         if (other.CompareTag("Critter"))
         {
+            //Get references from this enemy
+            WhackEmEnemy thisEnemy = other.GetComponent<WhackEmEnemy>();
             cardManager = other.GetComponentInParent<GameCardManager>();
 
             //Do random damage
             damage = Random.Range(50, 100);
-            other.GetComponent<WhackEmEnemy>().health -= damage;
-            
-            if (other.GetComponent<WhackEmEnemy>().hasBeenHit)
+            //Minus damage amount from enemy
+            thisEnemy.health -= damage;
+            //Check the health of the enemy
+            thisEnemy.HealthManager();
+
+            if (thisEnemy.hasBeenHit)
             {
                 IncreaseSpeed();
             }
 
-            //
-            if (health <= 0)
+            if (thisEnemy.health <= 0)
             {
-                health = 0;
-
-                //Add game object to Moving Target array.
+                //Add to the score
+                whackemGM.score++;
+                //Add enemy to the list
                 cardManager.critterList.Add(other.gameObject);
 
                 //Spawn the head used as throwing object
                 SpawnHead();
-                //Turn off critter
-                other.gameObject.SetActive(false);
             }
+
+
 
             Debug.Log("Smashed enemy!");
         }
@@ -83,11 +87,9 @@ public class MeleeSwing : MonoBehaviour
     //
     void IncreaseSpeed()
     {
-        //Do random damage
-        //if (whackEmEnemy.hasBeenHit)
-        //Speed up appear time
-        //
-
+        whackemGM.minSpeed /= 1.5f;
+        whackemGM.maxSpeed /= 1.5f;
+        Debug.Log("Speed has increased!");
     }
 
     public void SpawnHead()

@@ -6,6 +6,7 @@ public class WhackEmEnemy : MonoBehaviour
 {
     public static WhackEmEnemy Instance;
 
+    WhackEmGameManager whackemGM;
     public int health;
     public int maxHealth = 100;
     public bool hasBeenHit;
@@ -20,21 +21,21 @@ public class WhackEmEnemy : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        whackemGM = GetComponent<WhackEmGameManager>();
     }
 
-    void HealthManager()
+    public void HealthManager()
     {
         if (health <= 0)
         {
             health = 0;
+            gameObject.SetActive(false);
         }
         else if (health > 0 && health < maxHealth)
         {
+            //Bool used to control the speed in whackemGM
             hasBeenHit = true;
-        }
-        else
-        {
-            hasBeenHit = false;
+            Debug.Log("Hit Once!");
         }
     }
 
