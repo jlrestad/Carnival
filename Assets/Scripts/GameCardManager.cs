@@ -36,7 +36,7 @@ public class GameCardManager : MonoBehaviour
 
     private void Update()
     {
-        //Better optimized if this method is called from somewhere else...
+        //Better optimized if this is checked somewhere else...
         if (critterList.Count == critterArray.Length)
         {
             DisplayGameCard();
@@ -65,7 +65,7 @@ public class GameCardManager : MonoBehaviour
                 cardWon = cardDisplay.GetComponentInChildren<GameCard>().gameObject;
 
                 //Transition from card display back to game display
-                StartCoroutine(DisplayTransition());
+                StartCoroutine(DisplayCardWon());
             }
         }
 
@@ -73,7 +73,7 @@ public class GameCardManager : MonoBehaviour
     }
 
     // TRANSITION FROM CARD DISPLAY SCREEN BACK TO GAME DISPLAY
-    IEnumerator DisplayTransition()
+    public IEnumerator DisplayCardWon()
     {
         yield return new WaitForSeconds(1);
 

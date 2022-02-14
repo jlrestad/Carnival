@@ -29,7 +29,7 @@ public class GameplayBoundary : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             whackemGM.gameOn = false;
-            whackemGM.ResetScore();
+            whackemGM.ResetGame();
             //game.SetActive(false);
         }
     }
