@@ -64,7 +64,7 @@ public class MeleeSwing : MonoBehaviour
 
             if (thisEnemy.hasBeenHit)
             {
-                IncreaseSpeed();
+                whackemGM.IncreaseSpeed();
             }
 
             if (thisEnemy.health <= 0)
@@ -82,14 +82,6 @@ public class MeleeSwing : MonoBehaviour
 
             Debug.Log("Smashed enemy!");
         }
-    }
-
-    //
-    void IncreaseSpeed()
-    {
-        whackemGM.minSpeed /= 1.5f;
-        whackemGM.maxSpeed /= 1.5f;
-        Debug.Log("Speed has increased!");
     }
 
     public void SpawnHead()
