@@ -54,22 +54,20 @@ public class MeleeSwing : MonoBehaviour
                 WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
 
                 enemyCollider = hit.collider;
+                enemy.hasBeenHit = true;
 
-                if (hit.collider.tag == "Critter")
+                if (enemy != null)
                 {
+                    //Show hit VFX to let player know it has been hit.
                     GameObject hitVfx = Instantiate(hitVfxPrefab, enemy.transform.position, Quaternion.identity);
                     Destroy(hitVfx, 0.5f);
 
-                    //Get references from this enemy
-                    WhackEmEnemy thisEnemy = enemyCollider.GetComponent<WhackEmEnemy>();
-                    cardManager = enemyCollider.GetComponentInParent<GameCardManager>();
+                    cardManager = enemy.GetComponentInParent<GameCardManager>();
 
-                    //Increase spead with each hit
-                    if (thisEnemy.hasBeenHit)
-                    {
-                        whackemGM.IncreaseSpeed();
-                        thisEnemy.HealthManager();
-                    }
+                    //Increase speed after each hit
+                    whackemGM.IncreaseSpeed();
+                    //Turn off enemy after hit
+                    enemy.HealthManager();
 
                     //Add to the score
                     if (!whackemGM.isTaunting)
