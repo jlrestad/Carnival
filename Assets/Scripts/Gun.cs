@@ -18,7 +18,7 @@ public class Gun : MonoBehaviour
     [SerializeField] float rateOfFire = 666f;
     [SerializeField] float coolDown = 0.3f;
 
-    public RaycastHit hit;
+    [HideInInspector] public RaycastHit hit;
 
     [SerializeField] bool canShoot = true;
 

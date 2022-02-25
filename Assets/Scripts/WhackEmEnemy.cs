@@ -26,16 +26,9 @@ public class WhackEmEnemy : MonoBehaviour
 
     public void HealthManager()
     {
-        if (health <= 0)
+        if (hasBeenHit)
         {
-            health = 0;
             gameObject.SetActive(false);
-        }
-        else if (health > 0 && health < maxHealth)
-        {
-            //Bool used to control the speed in whackemGM
-            hasBeenHit = true;
-            Debug.Log("Hit Once!");
         }
     }
 

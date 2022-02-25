@@ -43,9 +43,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.6320754, g: 0.52611923, b: 0.23613386, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 2
-  m_SpotAngle: 66.65064
+  m_SpotAngle: 179
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
@@ -55,7 +55,7 @@ Light:
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.02
+    m_NearPlane: 5
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -183,7 +183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: aedb6def85e774f4fae98eb443fb4f09, type: 3}
+  - {fileID: 2100000, guid: dc568d57887c5cf45bb9357ac679b038, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -347,7 +347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5428223693843153427, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_Range
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5428223693843153427, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_Color.b
@@ -383,8 +383,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5428223693843153427, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_Shadows.m_NearPlane
-      value: 0.02
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7759535435186573392, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: dc568d57887c5cf45bb9357ac679b038, type: 2}
     - target: {fileID: 8119871577974485381, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_Name
       value: Lantern

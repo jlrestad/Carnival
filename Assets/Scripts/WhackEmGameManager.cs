@@ -14,10 +14,11 @@ public class WhackEmGameManager : MonoBehaviour
     private float timeLeft; //used to set the amount of time to countdown by
     private float resetTime;
 
-    [HideInInspector] public bool gameOn;
+    public bool gameOn;
     [HideInInspector] public bool popUp;
     [HideInInspector] public bool critterIsVisible;
     [HideInInspector] public bool gameIsRunning;
+    [HideInInspector] public bool isTaunting = false;
     [HideInInspector] public int score; //the player kills
     [SerializeField] int scoreLimit = 3; //the amount needed to win
 
@@ -41,8 +42,11 @@ public class WhackEmGameManager : MonoBehaviour
     float randomPopUpTime;
     float randomStayTime;
     bool levelLoaded;
-    bool stopPopUp;
+    [SerializeField] bool stopPopUp;
+    bool enemyPeak;
     int randomEnemy;
+
+    IEnumerator winloseCoroutine;
 
 
     private void Awake()
@@ -69,8 +73,10 @@ public class WhackEmGameManager : MonoBehaviour
         //Enemy Script
         //whackemScript = whackemEnemy.GetComponent<WhackEmEnemy>();
 
+        winloseCoroutine = WinLoseManager();
 
-        //Coroutine will start but wait until gameOn is true to begin.
+
+        //Coroutines will start but wait until gameOn is true to begin.
         StartCoroutine(EnemyPopUp());
     }
 
@@ -97,7 +103,7 @@ public class WhackEmGameManager : MonoBehaviour
             }
 
             //Display win or lose
-            WinLoseManager();
+            StartCoroutine(WinLoseManager());
 
             //Update ticket count
             ticketsText.text = ("Tickets: " + tickets);
@@ -127,9 +133,6 @@ public class WhackEmGameManager : MonoBehaviour
         //Display the timerUI
         timerUI.SetActive(true);
         //timerText.text = ("00:" + (int)timeCounter);
-
-        //Display win/lose UI
-        winloseUI.SetActive(true);
     }
 
     public void ResetGame()
@@ -153,22 +156,6 @@ public class WhackEmGameManager : MonoBehaviour
         timerText.text = ("00:" + (int)timeLeft);
         timerUI.SetActive(false);
 
-    }
-
-    void WinLoseManager()
-    {
-        if (score >= scoreLimit && timeLeft > 0)
-        {
-            //WIN! Get tickets. Add card to inventory
-            stopPopUp = true;
-
-            winloseText.text = "You have won...";
-        }
-        else if (score < scoreLimit && timeLeft <= 0)
-        {
-            //Lose!
-            winloseText.text = "You have lost...";
-        }
     }
 
     public void IncreaseSpeed()
@@ -196,23 +183,31 @@ public class WhackEmGameManager : MonoBehaviour
         }
     }
 
-    IEnumerator EnemyStuck()
+    //Display the win or lose screen for a short time.
+    IEnumerator WinLoseManager()
     {
-        //Random number [1,2] to see if it takes 1 or 2 hits before the enemy hides.
-        int isStuck = UnityEngine.Random.Range(1, 2); //1 false, 2 true
-        if (isStuck == 1)
-        {
-            stopPopUp = false;
-        }
-        else
+        if (score >= scoreLimit && timeLeft > 0 && !stopPopUp)
         {
             stopPopUp = true;
-            yield return new WaitForSeconds(1);
-            
-            //** Pause EnemyPopUP so enemy is still visible for random time
-            // If enemy is hit, turn off enemy
-            // else if time runs out first, turn off enemy
+            winloseUI.SetActive(true);
+            winloseText.text = "You have won...";
+
+            yield return new WaitForSeconds(2);
+
+            winloseUI.SetActive(false);
         }
+        else if (score < scoreLimit && timeLeft <= 0)
+        {
+            stopPopUp = true;
+            winloseUI.SetActive(true);
+            winloseText.text = "You have lost...";
+
+            yield return new WaitForSeconds(2);
+
+            winloseUI.SetActive(false);
+        }
+
+        yield return null;
     }
 
     //Choose random enemy with random appear times
@@ -221,33 +216,63 @@ public class WhackEmGameManager : MonoBehaviour
         while (levelLoaded) //Allow coroutine to load on Start.
         {
             while (gameOn && !stopPopUp) //But don't do anything until the game is on.
-            {
-                //StartCoroutine(EnemyStuck()); //** Check if enemy needs 2 hit to make it disappear.
-
+            {                
                 //Iterate through the array of enemies and check if it's visible or not.
                 for (int i = 0; i < critters.Length; i++)
                 {
                     //Random enemy
                     randomEnemy = UnityEngine.Random.Range(0, 9);
+                    //Random taunting enemy
+                    int randomTaunt = UnityEngine.Random.Range(0, 9);
+                    //Get the script on the taunt position
+                    TauntPosition position = critters[randomEnemy].GetComponentInChildren<TauntPosition>();
                     //Random speeds
                     randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f);
                     randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando);
-                   
+
                     //Check through each enemy to see if it is visible
                     critterIsVisible = critters[i].GetComponent<WhackEmEnemy>().isVis;
 
                     //Check if the enemy is already visible.
                     if (!critterIsVisible)
                     {
-                        //Random enemy appears at a random time.
-                        yield return new WaitForSeconds(randomPopUpTime);
-                        critters[randomEnemy].SetActive(true);
-                        critterIsVisible = true; //set individual critter's visibility to true
+                        //Check if the enemy is taunting
+                        if (randomTaunt == randomEnemy)
+                        {
+                            Debug.Log("TAUNTING!!");
 
-                        //Visible enemy stays for random time before disappearing.
-                        yield return new WaitForSeconds(randomStayTime);
-                        critterIsVisible = false; //set individual critter's visibility to false
-                        critters[randomEnemy].SetActive(false);
+                            critters[randomEnemy].SetActive(true);
+                            critterIsVisible = true;
+
+                            //Move into the taunt position
+                            critters[randomEnemy].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
+                            isTaunting = true;
+
+                            //** Don't add this hit to the score
+                           
+                            yield return new WaitForSeconds(0.5f);
+
+                            Debug.Log("stopped taunting");
+
+                            //Move back to normal position
+                            critters[randomEnemy].transform.position = new Vector3(position.enemyPosition.position.x, position.enemyPosition.position.y, position.enemyPosition.position.z);
+                           
+                            critterIsVisible = false;
+                            critters[randomEnemy].SetActive(false);
+                            isTaunting = false;
+                        }
+                        else
+                        {
+                            //Random enemy appears at a random time.
+                            yield return new WaitForSeconds(randomPopUpTime);
+                            critters[randomEnemy].SetActive(true);
+                            critterIsVisible = true; //set individual critter's visibility to true
+
+                            //Visible enemy stays for random time before disappearing.
+                            yield return new WaitForSeconds(randomStayTime);
+                            critterIsVisible = false; //set individual critter's visibility to false
+                            critters[randomEnemy].SetActive(false);
+                        }
                     }
                     else
                     {
@@ -260,4 +285,5 @@ public class WhackEmGameManager : MonoBehaviour
             yield return null;
         }
     }   
+
 }
