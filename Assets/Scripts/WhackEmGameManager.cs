@@ -9,7 +9,7 @@ public class WhackEmGameManager : MonoBehaviour
 {
     public GameObject[] critters;
     public GameObject whackemEnemy;
-    public int tickets = 3;
+    //public int tickets = 3;
     [SerializeField] private float timeCounter = 30; //used to count down the time
     private float timeLeft; //used to set the amount of time to countdown by
     private float resetTime;
@@ -20,10 +20,12 @@ public class WhackEmGameManager : MonoBehaviour
     [HideInInspector] public bool gameIsRunning;
     [HideInInspector] public bool isTaunting = false;
     [HideInInspector] public int score; //the player kills
-    [SerializeField] int scoreLimit = 3; //the amount needed to win
+    [SerializeField] int scoreLimit; //the amount needed to win
+    public float gameDelayTime = 1.0f;
+
 
     //bigger nums = slower speed
-    [Header("Enemy Appear speed")]
+    [Header("ENEMY POPUP SPEED")]
     public float minRando; private float minRandoTemp; 
     public float maxRando; private float maxRandoTemp;
     public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
@@ -38,12 +40,12 @@ public class WhackEmGameManager : MonoBehaviour
     [HideInInspector] public TextMeshProUGUI timerText;
     [HideInInspector] public TextMeshProUGUI winloseText;
 
-    //WhackEmEnemy whackemScript;
     float randomPopUpTime;
     float randomStayTime;
     bool levelLoaded;
-    [SerializeField] bool stopPopUp;
-    bool enemyPeak;
+    bool stopPopUp;
+    [HideInInspector] public bool gameWon;
+    [HideInInspector] public bool gameOver;
     int randomEnemy;
 
     IEnumerator winloseCoroutine;
@@ -62,7 +64,7 @@ public class WhackEmGameManager : MonoBehaviour
         timerText = timerUI.GetComponentInChildren<TextMeshProUGUI>();
         winloseText = winloseUI.GetComponentInChildren<TextMeshProUGUI>();
         //Tickets
-        ticketsText.text = ("Tickets: " + tickets);
+        ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
@@ -70,8 +72,6 @@ public class WhackEmGameManager : MonoBehaviour
         //Speeds
         minRandoTemp = minRando;
         maxRandoTemp = maxRando;
-        //Enemy Script
-        //whackemScript = whackemEnemy.GetComponent<WhackEmEnemy>();
 
         winloseCoroutine = WinLoseManager();
 
@@ -106,11 +106,11 @@ public class WhackEmGameManager : MonoBehaviour
             StartCoroutine(WinLoseManager());
 
             //Update ticket count
-            ticketsText.text = ("Tickets: " + tickets);
+            ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
 
-            if (tickets < 0)
+            if (TicketManager.Instance.tickets < 0)
             {
-                tickets = 0;
+                TicketManager.Instance.tickets = 0;
                 ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
@@ -162,7 +162,7 @@ public class WhackEmGameManager : MonoBehaviour
     {
         minRando /= divideSpeedBy;
         maxRando /= divideSpeedBy;
-        Debug.Log("Speed has increased!");
+        //Debug.Log("Speed has increased!");
     }
 
     IEnumerator CountDownTimer()
@@ -186,25 +186,28 @@ public class WhackEmGameManager : MonoBehaviour
     //Display the win or lose screen for a short time.
     IEnumerator WinLoseManager()
     {
-        if (score >= scoreLimit && timeLeft > 0 && !stopPopUp)
+        if (score >= scoreLimit && timeLeft > 0 && !gameOver)
         {
             stopPopUp = true;
             winloseUI.SetActive(true);
             winloseText.text = "You have won...";
+            gameWon = true;
 
             yield return new WaitForSeconds(2);
 
             winloseUI.SetActive(false);
+            gameOver = true;
         }
-        else if (score < scoreLimit && timeLeft <= 0)
+        else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
         {
-            stopPopUp = true;
             winloseUI.SetActive(true);
             winloseText.text = "You have lost...";
+            gameWon = false;
 
             yield return new WaitForSeconds(2);
 
             winloseUI.SetActive(false);
+            gameOver = true;
         }
 
         yield return null;
@@ -239,25 +242,24 @@ public class WhackEmGameManager : MonoBehaviour
                         //Check if the enemy is taunting
                         if (randomTaunt == randomEnemy)
                         {
-                            Debug.Log("TAUNTING!!");
+                            //Debug.Log("TAUNTING!!");
 
+                            //Enemy appears
                             critters[randomEnemy].SetActive(true);
                             critterIsVisible = true;
 
-                            //Move into the taunt position
+                            //Enemy taunt
                             critters[randomEnemy].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
                             isTaunting = true;
 
-                            //** Don't add this hit to the score
-                           
                             yield return new WaitForSeconds(0.5f);
 
-                            Debug.Log("stopped taunting");
+                            //Debug.Log("Stopped taunting");
 
                             //Move back to normal position
                             critters[randomEnemy].transform.position = new Vector3(position.enemyPosition.position.x, position.enemyPosition.position.y, position.enemyPosition.position.z);
-                           
                             critterIsVisible = false;
+
                             critters[randomEnemy].SetActive(false);
                             isTaunting = false;
                         }

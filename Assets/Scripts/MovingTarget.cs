@@ -1,111 +1,67 @@
-//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.SocialPlatforms.Impl;
-//using Random = UnityEngine.Random;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class MovingTarget : MonoBehaviour
-//{
-//    public static MovingTarget Instance;
+public class MovingTarget : MonoBehaviour
+{
+    public static MovingTarget Instance;
 
-//    Target target;
-//    GameObject player;
-//    [SerializeField] WeaponEquip WE;
+    SkillShotGameManager skillshotGM;
 
-//    Vector3 pos;
+    [TextArea]
+    [SerializeField] string notes;
 
-//    public float moveSpeed;
-//    public bool movedUp;
+    [Header("MOVEMENT")]
+    public Transform leftPos;
+    public Transform rightPos;
+    public Transform parentPos;
+    [Space(10)]
+    public float moveSpeed;
+    public float timeBetweenTargets;
+    int direction;
 
-//    [Space(15)]
-//    public GameObject[] targetsArray;
-//    public List<GameObject> targetsList;
+    [Header("BOOLS")]
+    public bool targetFlipped;
+    public bool moveLeft;
+    bool gameOn;
 
-//    [SerializeField] private Transform[] routes;
+    [Header("POOLED OBJECTS")]
+    public GameObject targetPrefab;
+    [Space(10)]
+    public int poolAmount;
+    [Space(10)]
+    public List<GameObject> pooledTargets = new List<GameObject>();
+    Transform targetParent;
 
-//    private void Awake()
-//    {
-//        Instance = this;
-//    }
 
-//    private void Start()
-//    {
-//        player = GameObject.FindGameObjectWithTag("Player");
-//        WE = player.GetComponent<WeaponEquip>();
-//        pos = transform.position;
-//    }
 
-//    private void Update()
-//    {
-//        DisplayGameCard();
-//    }
+    private void Awake()
+    {
+        //Controls the direction of the targets and where they start
+        if (moveLeft) { direction = -1; parentPos = rightPos; }
+        else { direction = 1; parentPos = leftPos; }
+    }
 
-//    public void DisplayGameCard()
-//    {
-//        if (targetsList.Count == targetsArray.Length)
-//        {
-//            for (int i = 0; i < WE.gameCards.Length; i++)
-//            {
-//                if (WE.gameCards[i].name == WE.levelName)
-//                {
-//                    WE.gameCards[i].SetActive(true);
-//                }
-//            }
-//        }
-//    }
+    private void Start()
+    {
+        targetParent = this.transform;
+        skillshotGM = GetComponentInParent<SkillShotGameManager>();
 
-//    public void FixedUpdate()
-//    {
-//        Movement();
-//    }
+        skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, leftPos, rightPos, parentPos, targetParent);
+    }
 
-//    //protected void LateUpdate()
-//    //{
-//    //    //Lock x and z rotation
-//    //    transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
-//    //}
+    void Update()
+    {
+        if (skillshotGM.gameOn)
+        {
+            //Controls the direction of the targets and where they start
+            if (moveLeft) { direction = -1; parentPos = rightPos; }
+            else { direction = 1; parentPos = leftPos; }
+        }
 
-//    public void Movement()
-//    {
-//        StartCoroutine(Move());
-//    }
+        StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
 
-//    void MoveUp()
-//    {
-//        for (int i = 0; i < targetsList.Count; i++)
-//        {
-//            targetsList[i].transform.position = Vector3.MoveTowards(targetsList[i].transform.position, pos, moveSpeed);
-//            movedUp = true;
-//        }
-//    }
+    }
 
-//    void MoveDown()
-//    {
-//        for (int i = 0; i < targetsList.Count; i++)
-//        {
-//            targetsList[i].transform.position = Vector3.MoveTowards(targetsList[i].transform.position, pos, moveSpeed);
-//            movedUp = false;
-//        }
-//    }
-
-//    public IEnumerator Move()
-//    {
-//        if (!movedUp)
-//        {
-//            Debug.Log("MOVING UP");
-
-//            yield return new WaitForSeconds(0.5f);
-//            MoveUp();
-//        }
-//        else
-//        {
-//            Debug.Log("MOVING DOWN");
-
-//            yield return new WaitForSeconds(0.5f);
-//            MoveDown();
-//        }
-
-//    }
-
-//}
+}

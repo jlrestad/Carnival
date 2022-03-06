@@ -123,9 +123,9 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
 
-        //Clear
+        //Clear button selected
         EventSystem.current.SetSelectedGameObject(null);
-        //Set
+        //Set selected button
         firstButton = GameObject.FindGameObjectWithTag("FirstButton");
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
@@ -159,7 +159,8 @@ public class Menu : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1);
 
         Application.Quit();
     }

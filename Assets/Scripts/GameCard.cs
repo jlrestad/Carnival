@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameCard : MonoBehaviour
 {
     GameObject player;
-    public GameObject cardWon;
+    //public GameObject cardWon;
 
     private void Awake()
     {

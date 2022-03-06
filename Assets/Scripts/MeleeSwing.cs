@@ -9,31 +9,36 @@ public class MeleeSwing : MonoBehaviour
     public Transform player;
     [SerializeField] float range = 25f;
 
-
+    CharacterController characterController;
     public int health;
     GameCardManager cardManager;
     public Transform spawnTransform;
+
     //[SerializeField] WhackEmEnemy newWhackEm;
     //[SerializeField] GameObject closestWhackEm;
     [SerializeField] WhackEmEnemy[] whackEmEnemy;
     [SerializeField] WhackEmGameManager whackemGM;
     [SerializeField] GameObject headPrefab;
-    Vector3 distanceToPlayer;
     [SerializeField] float meleeRange = 3.0f;
     [SerializeField] int damage;
     [SerializeField] bool canSwing;
     [HideInInspector] RaycastHit hit;
     [SerializeField] GameObject hitVfxPrefab;
+
+    Vector3 distanceToPlayer;
+    
     private new Collider enemyCollider;
 
 
     private void Start()
     {
-        //target = Target.Instance;
+        //Initialize
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        characterController = player.GetComponent<CharacterController>();
         whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
         whackemGM = FindObjectOfType<WhackEmGameManager>();
         spawnTransform = GetComponentInChildren<Transform>();
+
         canSwing = true;
     }
 
@@ -45,22 +50,24 @@ public class MeleeSwing : MonoBehaviour
 
 
             //Get raycast hit information and use it to calculate damage
+            //Look into spherecast to see if this will be better 
             if (Physics.Raycast(player.position, player.forward, out hit, range))
             {
-                Debug.DrawLine(player.position, player.forward, Color.yellow);
-                Debug.Log(hit.transform.name);
-
+                //Debug.Log(hit.distance);
+                //Debug.DrawLine(player.position, player.forward, Color.yellow);
+                //Debug.Log(hit.transform.name);
+                
                 //Target target = hit.transform.GetComponent<Target>();
                 WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
 
                 enemyCollider = hit.collider;
-                enemy.hasBeenHit = true;
 
                 if (enemy != null)
                 {
                     //Show hit VFX to let player know it has been hit.
                     GameObject hitVfx = Instantiate(hitVfxPrefab, enemy.transform.position, Quaternion.identity);
                     Destroy(hitVfx, 0.5f);
+                    enemy.hasBeenHit = true;
 
                     cardManager = enemy.GetComponentInParent<GameCardManager>();
 

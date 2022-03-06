@@ -9,6 +9,7 @@ public class GameCardManager : MonoBehaviour
 
     GameObject player;
     [SerializeField] WeaponEquip WE;
+    [SerializeField] WhackEmGameManager whackemGM;
     [SerializeField] Menu menu;
 
     Vector3 pos;
@@ -18,6 +19,7 @@ public class GameCardManager : MonoBehaviour
     public List<GameObject> critterList;
     [SerializeField] GameObject cardDisplay;
     [SerializeField] GameObject cardWon;
+    bool gameWon;
 
 
     private void Awake()
@@ -29,6 +31,7 @@ public class GameCardManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         WE = player.GetComponent<WeaponEquip>();
+        whackemGM = GetComponent<WhackEmGameManager>();
         critterArray = GetComponent<WhackEmGameManager>().critters;
         menu = WE.menu;
         pos = transform.position;
@@ -36,9 +39,12 @@ public class GameCardManager : MonoBehaviour
 
     private void Update()
     {
+        gameWon = whackemGM.gameWon;
+
         //Better optimized if this is checked somewhere else...
-        if (critterList.Count == critterArray.Length)
+        if (gameWon)
         {
+            Debug.Log("SHOW CARD");
             DisplayGameCard();
         }
 

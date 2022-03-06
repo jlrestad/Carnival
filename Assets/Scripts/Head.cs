@@ -88,7 +88,7 @@ public class Head : MonoBehaviour
         collider.enabled = true;
 
         // Throw
-        rb.velocity = -transform.forward * throwSpeed; //Throws with an arc
+        rb.velocity = playerWeapon.transform.forward * throwSpeed;
 
         StartCoroutine(TurnOffGameObject());
     }

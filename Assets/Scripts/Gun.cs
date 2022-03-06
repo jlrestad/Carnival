@@ -9,7 +9,6 @@ public class Gun : MonoBehaviour
     [SerializeField] float range = 100f;
 
     public Camera fpsCam;
-    //public GameObject firePoint;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject muzzleLight;
     [SerializeField] GameObject impactEffect;
@@ -91,6 +90,7 @@ public class Gun : MonoBehaviour
         //Turn on the light effect
         muzzleLight.GetComponent<Light>().enabled = true;
         muzzleFlash.Play();
+
         //Play the sound effect
         shootAudio.pitch = Random.Range(0.8f, 1.3f);
         shootAudio.Play();
@@ -100,7 +100,7 @@ public class Gun : MonoBehaviour
         {
             Debug.Log(hit.transform.name);
 
-            Target target = hit.transform.GetComponent<Target>();
+            TargetSetActive target = hit.transform.GetComponent<TargetSetActive>();
 
             if (target != null && target.CompareTag("MovingTarget") && !target.targetHit)
             {

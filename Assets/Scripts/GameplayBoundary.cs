@@ -6,21 +6,14 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameplayBoundary : MonoBehaviour
 {
-    //[SerializeField] string levelName;
-    //[SerializeField] GameCardManager cardManager;
-    //GameObject game;
-    //[SerializeField] GameObject gamePrefab;
-    //[SerializeField] GameObject gameSpawn;
     public WhackEmGameManager whackemGM;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            whackemGM.gameOn = true;
-            whackemGM.tickets = whackemGM.tickets - 1;
-            //game = Instantiate(gamePrefab, gameSpawn.transform);
-            //game.SetActive(true);
+            StartCoroutine(GameStartDelay());
+            TicketManager.Instance.tickets -= 1;
         }
     }
 
@@ -28,9 +21,17 @@ public class GameplayBoundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //Reset bools for a new game;
             whackemGM.gameOn = false;
-            //whackemGM.ResetGame();
-            //game.SetActive(false);
+            whackemGM.gameOver = false;
         }
+    }
+
+    //Gives the player time to prepare for the enemies.
+    //This time could also be used to play a sound that lets the player know the game has started.
+    IEnumerator GameStartDelay()
+    {
+        yield return new WaitForSeconds(whackemGM.gameDelayTime);
+        whackemGM.gameOn = true;
     }
 }
