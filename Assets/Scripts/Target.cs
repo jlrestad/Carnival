@@ -33,24 +33,6 @@ public class Target : MonoBehaviour
         moveAlongCurve = GetComponent<BezierFollow>();
     }
 
-    //public void TakeDamage(int damageAmount)
-    //{
-    //    health -= damageAmount;
-
-    //    if (health <= 0f)
-    //    {
-    //        health = 0f;
-
-    //        if (CompareTag("Critter"))
-    //        {
-    //            SmashCritter();
-    //        }
-
-    //        //Add game object to Moving Target array.
-    //        cardManager.targetsList.Add(this.gameObject);
-    //    }
-    //}
-
     public void HitTarget()
     {
         //Flip target back after being hit
@@ -67,13 +49,4 @@ public class Target : MonoBehaviour
             moveAlongCurve.speedModifier = 0f;
         }
     }
-
-    //public void SmashCritter()
-    //{
-    //    //Spawn the head
-    //    spawnHead.SpawnHead();
-
-    //    //Hide the critter
-    //    this.gameObject.SetActive(false);
-    //}
 }

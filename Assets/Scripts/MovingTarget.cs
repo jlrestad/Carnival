@@ -22,7 +22,6 @@ public class MovingTarget : MonoBehaviour
     int direction;
 
     [Header("BOOLS")]
-    public bool targetFlipped;
     public bool moveLeft;
     bool gameOn;
 
@@ -34,11 +33,8 @@ public class MovingTarget : MonoBehaviour
     public List<GameObject> pooledTargets = new List<GameObject>();
     Transform targetParent;
 
-
-
     private void Awake()
     {
-        //Controls the direction of the targets and where they start
         if (moveLeft) { direction = -1; parentPos = rightPos; }
         else { direction = 1; parentPos = leftPos; }
     }
@@ -47,21 +43,29 @@ public class MovingTarget : MonoBehaviour
     {
         targetParent = this.transform;
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
-
         skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, leftPos, rightPos, parentPos, targetParent);
     }
 
     void Update()
     {
-        if (skillshotGM.gameOn)
+        if (!skillshotGM.gameOver)
         {
-            //Controls the direction of the targets and where they start
-            if (moveLeft) { direction = -1; parentPos = rightPos; }
-            else { direction = 1; parentPos = leftPos; }
+            StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
         }
-
-        StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
-
+        else
+        {
+            //Turn off targets if game is over.
+            for (int i = 0; i < pooledTargets.Count; i++)
+            {
+                //pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
+                //pooledTargets[i].transform.position = parentPos.position;
+                if (skillshotGM.reachedEnd)
+                {
+                    pooledTargets[i].SetActive(false);
+                    //skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, leftPos, rightPos, parentPos, targetParent);
+                }
+            }
+        }
     }
 
 }

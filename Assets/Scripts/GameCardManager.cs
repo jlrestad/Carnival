@@ -33,7 +33,7 @@ public class GameCardManager : MonoBehaviour
         WE = player.GetComponent<WeaponEquip>();
         whackemGM = GetComponent<WhackEmGameManager>();
         critterArray = GetComponent<WhackEmGameManager>().critters;
-        menu = WE.menu;
+        menu = FindObjectOfType<Menu>(); ;
         pos = transform.position;
     }
 

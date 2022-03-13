@@ -47,8 +47,8 @@ public class WeaponEquip : MonoBehaviour
     [SerializeField] Rigidbody skullRB;
     public GameObject throwArms;
 
-    [Space(5)]
-    public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
+    [Space(2)]
+    [HideInInspector] public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
 
     [Space(15)]
     public Canvas crossHair;
@@ -58,7 +58,7 @@ public class WeaponEquip : MonoBehaviour
     public Head[] headSkull;
    
 
-    [HideInInspector] public Menu menu;
+    public Menu menu;
 
 
     private void Awake()

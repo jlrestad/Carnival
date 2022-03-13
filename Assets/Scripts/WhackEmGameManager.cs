@@ -9,6 +9,7 @@ public class WhackEmGameManager : MonoBehaviour
 {
     public GameObject[] critters;
     public GameObject whackemEnemy;
+    WeaponEquip weaponEquip;
     //public int tickets = 3;
     [SerializeField] private float timeCounter = 30; //used to count down the time
     private float timeLeft; //used to set the amount of time to countdown by
@@ -42,13 +43,13 @@ public class WhackEmGameManager : MonoBehaviour
 
     float randomPopUpTime;
     float randomStayTime;
-    bool levelLoaded;
+    public bool levelLoaded;
     bool stopPopUp;
-    [HideInInspector] public bool gameWon;
-    [HideInInspector] public bool gameOver;
+    /*[HideInInspector]*/ public bool gameWon;
+    /*[HideInInspector]*/ public bool gameOver;
     int randomEnemy;
 
-    IEnumerator winloseCoroutine;
+    //IEnumerator winloseCoroutine;
 
 
     private void Awake()
@@ -58,6 +59,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Start()
     {
+        weaponEquip = FindObjectOfType<WeaponEquip>();
         //Text
         ticketsText = ticketsUI.GetComponentInChildren<TextMeshProUGUI>();
         scoreText = scoreUI.GetComponentInChildren<TextMeshProUGUI>();
@@ -73,8 +75,7 @@ public class WhackEmGameManager : MonoBehaviour
         minRandoTemp = minRando;
         maxRandoTemp = maxRando;
 
-        winloseCoroutine = WinLoseManager();
-
+        //winloseCoroutine = WinLoseManager();
 
         //Coroutines will start but wait until gameOn is true to begin.
         StartCoroutine(EnemyPopUp());
@@ -83,7 +84,7 @@ public class WhackEmGameManager : MonoBehaviour
     private void Update()
     {
         //Run this when the WhackEm game is on.
-        if (gameOn)
+        if (gameOn && weaponEquip.haveMallet)
         {
             //Display the game UI
             DisplayUI();
@@ -117,11 +118,11 @@ public class WhackEmGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        else
-        {
-            scoreUI.SetActive(false);
-            ResetGame(); //Reset the variables back to original
-        }
+        //else
+        //{
+        //    scoreUI.SetActive(false);
+        //    ResetGame(); //Reset the variables back to original
+        //}
     }
 
     public void DisplayUI()
@@ -218,7 +219,7 @@ public class WhackEmGameManager : MonoBehaviour
     {
         while (levelLoaded) //Allow coroutine to load on Start.
         {
-            while (gameOn && !stopPopUp) //But don't do anything until the game is on.
+            while (gameOn && !stopPopUp && weaponEquip.haveMallet) //But don't do anything until the game is on.
             {                
                 //Iterate through the array of enemies and check if it's visible or not.
                 for (int i = 0; i < critters.Length; i++)
@@ -242,7 +243,7 @@ public class WhackEmGameManager : MonoBehaviour
                         //Check if the enemy is taunting
                         if (randomTaunt == randomEnemy)
                         {
-                            //Debug.Log("TAUNTING!!");
+                            Debug.Log("TAUNTING!!");
 
                             //Enemy appears
                             critters[randomEnemy].SetActive(true);
@@ -252,7 +253,7 @@ public class WhackEmGameManager : MonoBehaviour
                             critters[randomEnemy].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
                             isTaunting = true;
 
-                            yield return new WaitForSeconds(0.5f);
+                            yield return new WaitForSeconds(0.3f);
 
                             //Debug.Log("Stopped taunting");
 

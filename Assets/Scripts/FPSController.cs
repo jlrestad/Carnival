@@ -45,7 +45,7 @@ public class FPSController : MonoBehaviour
 
     [HideInInspector] public bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     [HideInInspector] public bool slidingAllowed = true;
-    public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn, canThrow = true;
+    [HideInInspector] public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn, canThrow = true;
 
     [Header("BOSS COMPONENTS")]
     public GameObject tent;

@@ -8,7 +8,7 @@ public class BossBehavior : MonoBehaviour
     GameObject player;
     NavMeshAgent agent;
     Vector3 distanceFromPlayer;
-    Vector3 destination;
+    //Vector3 destination;
     [SerializeField] float maxDistance = 30f; //distance to begin chasing player
 
     private void Awake()

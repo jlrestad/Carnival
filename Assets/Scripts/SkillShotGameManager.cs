@@ -6,6 +6,7 @@ using UnityEngine;
 public class SkillShotGameManager : MonoBehaviour
 {
     //public Transform leftPos, rightPos, parentPos;
+    WeaponEquip weaponEquip;
 
     public bool targetFlipped;
     public bool gameOn;
@@ -39,7 +40,6 @@ public class SkillShotGameManager : MonoBehaviour
     [Space(15)]
     //public GameObject targetPrefab;
     public float gameDelayTime = 1.0f;
-    int count;
 
 
     [HideInInspector] public bool gameOver;
@@ -62,12 +62,14 @@ public class SkillShotGameManager : MonoBehaviour
         //Timer
         resetTime = timeCounter; //Store this for the reset
         timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
+
+        weaponEquip = FindObjectOfType<WeaponEquip>();
     }
 
     private void Update()
     {
         //Run this when the WhackEm game is on.
-        if (gameOn)
+        if (gameOn && weaponEquip.haveGun)
         {
             //Display the game UI
             DisplayUI();
@@ -169,7 +171,7 @@ public class SkillShotGameManager : MonoBehaviour
             winloseUI.SetActive(false);
             gameOver = true;
         }
-        else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
+        if (score < scoreLimit && timeLeft <= 0 && !gameOver)
         {
             winloseUI.SetActive(true);
             winloseText.text = "You have lost...";
@@ -201,9 +203,10 @@ public class SkillShotGameManager : MonoBehaviour
         }
     }
 
+    //Move target; give time between each target
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
-        if (gameOn && !reachedEnd)
+        if (gameOn && weaponEquip.haveGun)
         {
             //Start the targets moving
             for (int i = 0; i < pooledTargets.Count; i++)
@@ -213,8 +216,13 @@ public class SkillShotGameManager : MonoBehaviour
                 yield return new WaitForSeconds(timeBetweenTargets);
             }
 
+            //When targets reach the end start over at the parent position.
             for (int i = 0; i < pooledTargets.Count; i++)
             {
+                //Allow target to be hit again.
+                pooledTargets[i].GetComponentInChildren<TargetSetActive>().targetHit = false;
+
+                //Start the loop over
                 if (pooledTargets[i].GetComponent<TargetSetActive>().reachedEnd)
                 {
                     pooledTargets[i].transform.Translate(Vector3.zero);
@@ -229,4 +237,5 @@ public class SkillShotGameManager : MonoBehaviour
             }
         }
     }
+    
 }
