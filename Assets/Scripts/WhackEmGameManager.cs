@@ -225,9 +225,9 @@ public class WhackEmGameManager : MonoBehaviour
                 for (int i = 0; i < critters.Length; i++)
                 {
                     //Random enemy
-                    randomEnemy = UnityEngine.Random.Range(0, 9);
+                    randomEnemy = UnityEngine.Random.Range(0, 5);
                     //Random taunting enemy
-                    int randomTaunt = UnityEngine.Random.Range(0, 9);
+                    int randomTaunt = UnityEngine.Random.Range(0, 5);
                     //Get the script on the taunt position
                     TauntPosition position = critters[randomEnemy].GetComponentInChildren<TauntPosition>();
                     //Random speeds
