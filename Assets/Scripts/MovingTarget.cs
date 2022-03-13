@@ -57,7 +57,7 @@ public class MovingTarget : MonoBehaviour
             //Turn off targets if game is over.
             for (int i = 0; i < pooledTargets.Count; i++)
             {
-                //pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
+                pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
                 //pooledTargets[i].transform.position = parentPos.position;
                 if (skillshotGM.reachedEnd)
                 {

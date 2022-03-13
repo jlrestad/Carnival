@@ -63,7 +63,7 @@ public class TargetSetActive : MonoBehaviour
                 isFlipped = false;
                 meshRenderer.material.color = Color.green; //positive side
             }
-            if (skillshotGM.gameOver)
+            if (skillshotGM.gameOver || !skillshotGM.gameOn)
             {
                 meshRenderer.material.color = Color.red;
             }
