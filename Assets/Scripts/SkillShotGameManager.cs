@@ -100,7 +100,7 @@ public class SkillShotGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        else
+        else if (!gameOn)
         {
             scoreUI.SetActive(false);
             ResetGame(); //Reset the variables back to original

@@ -118,11 +118,11 @@ public class WhackEmGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        //else
-        //{
-        //    scoreUI.SetActive(false);
-        //    ResetGame(); //Reset the variables back to original
-        //}
+        else if (!gameOn)
+        {
+            scoreUI.SetActive(false);
+            ResetGame(); //Reset the variables back to original
+        }
     }
 
     public void DisplayUI()
