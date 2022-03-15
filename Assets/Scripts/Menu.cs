@@ -151,7 +151,7 @@ public class Menu : MonoBehaviour
 
     public void Quit()
     {
-        StartCoroutine("DelayQuit");
+        Application.Quit();
     }
 
     IEnumerator DelayQuit()
@@ -159,8 +159,7 @@ public class Menu : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-        //yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         Application.Quit();
     }

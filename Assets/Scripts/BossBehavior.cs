@@ -26,7 +26,7 @@ public class BossBehavior : MonoBehaviour
         if (distanceFromPlayer.magnitude <= maxDistance)
         {
             //Chase player
-            agent.SetDestination(player.transform.position);
+            agent.destination = (player.transform.position);
         }
     }
 
