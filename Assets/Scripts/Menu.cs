@@ -28,11 +28,11 @@ public class Menu : MonoBehaviour
 
     GameManager GM;
 
-    [Header("AUDIO")]
-    public AudioMixer audioMixer;
+    //[Header("AUDIO")]
+    //public AudioMixer audioMixer;
     //public AudioSource introAudio;
     //public AudioSource pauseSound;
-    public string exposedParam;
+    //public string exposedParam;
 
     [Header("OBJECTS")]
     [SerializeField] private GameObject titleScreen;
@@ -151,6 +151,11 @@ public class Menu : MonoBehaviour
 
     public void Quit()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        StartCoroutine(DelayQuit());
+
         Application.Quit();
     }
 
@@ -208,10 +213,10 @@ public class Menu : MonoBehaviour
         player.SetActive(false);
     }
 
-    public void AudioFade()
-    {
-        StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 2.5f, 0));
-    }
+    //public void AudioFade()
+    //{
+    //    StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 2.5f, 0));
+    //}
 
     public void DisplayGameCard(GameObject gameCard)
     {
