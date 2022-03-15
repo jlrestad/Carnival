@@ -15,31 +15,30 @@ public class SkillShotGameManager : MonoBehaviour
     bool gameWon;
 
     [Header("UI")]
-    public GameObject ticketsUI;
-    public GameObject scoreUI;
-    public GameObject timerUI;
-    public GameObject winloseUI;
-    [HideInInspector] public TextMeshProUGUI ticketsText;
-    [HideInInspector] public TextMeshProUGUI scoreText;
-    [HideInInspector] public TextMeshProUGUI timerText;
-    [HideInInspector] public TextMeshProUGUI winloseText;
+    public GameObject gameUI;
+    //public GameObject scoreUI;
+    //public GameObject timerUI;
+    //public GameObject winloseUI;
+    public TextMeshProUGUI ticketsText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI winloseText;
 
-    [Header("SPEED")]
+    //[Header("SPEED")]
     //public float minRando; private float minRandoTemp;
     //public float maxRando; private float maxRandoTemp;
 
     [Header("SCORE")]
-    [HideInInspector] public int score; //the player kills
     [SerializeField] int scoreLimit; //the amount needed to win
+    [HideInInspector] public int score; //the player kills
 
     [Header("TIMER")]
     [SerializeField] private float timeCounter = 30; //used to count down the time
     private float timeLeft; //used to set the amount of time to countdown by
     private float resetTime;
 
-    [Space(15)]
     //public GameObject targetPrefab;
-    public float gameDelayTime = 1.0f;
+    //public float gameDelayTime = 1.0f;
 
 
     [HideInInspector] public bool gameOver;
@@ -52,10 +51,10 @@ public class SkillShotGameManager : MonoBehaviour
     private void Start()
     {
         //Text
-        ticketsText = ticketsUI.GetComponentInChildren<TextMeshProUGUI>();
-        scoreText = scoreUI.GetComponentInChildren<TextMeshProUGUI>();
-        timerText = timerUI.GetComponentInChildren<TextMeshProUGUI>();
-        winloseText = winloseUI.GetComponentInChildren<TextMeshProUGUI>();
+        //ticketsText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        //scoreText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        //timerText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        //winloseText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
         //Tickets
         ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
         scoreText.text = (score + "/" + scoreLimit);
@@ -102,7 +101,7 @@ public class SkillShotGameManager : MonoBehaviour
         }
         else if (!gameOn)
         {
-            scoreUI.SetActive(false);
+            gameUI.SetActive(false);
             ResetGame(); //Reset the variables back to original
         }
     }
@@ -111,12 +110,11 @@ public class SkillShotGameManager : MonoBehaviour
     public void DisplayUI()
     {
         //Display the scoreUI
-        scoreUI.SetActive(true);
+        gameUI.SetActive(true);
         scoreText.text = (score + "/" + scoreLimit);
 
         //Display the timerUI
-        timerUI.SetActive(true);
-        //timerText.text = ("00:" + (int)timeCounter);
+        timerText.enabled = true; ;
     }
 
     public void ResetGame()
@@ -130,13 +128,12 @@ public class SkillShotGameManager : MonoBehaviour
         //maxRando = maxRandoTemp;
 
         //winloseUI
-        winloseUI.SetActive(false);
-        winloseText.text = (" ");
+        //gameUI.SetActive(false);
 
         //Time
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
-        timerUI.SetActive(false);
+        //gameUI.SetActive(false);
 
     }
 
@@ -162,24 +159,28 @@ public class SkillShotGameManager : MonoBehaviour
     {
         if (score >= scoreLimit && timeLeft > 0 && !gameOver)
         {
-            winloseUI.SetActive(true);
+            //Display win message
+            winloseText.enabled = true;
             winloseText.text = "You have won...";
             gameWon = true;
 
             yield return new WaitForSeconds(2);
 
-            winloseUI.SetActive(false);
+            winloseText.text = (" ");
+            winloseText.enabled = false;
             gameOver = true;
         }
         if (score < scoreLimit && timeLeft <= 0 && !gameOver)
         {
-            winloseUI.SetActive(true);
+            //Display lose message
+            winloseText.enabled = true;
             winloseText.text = "You have lost...";
             gameWon = false;
 
             yield return new WaitForSeconds(2);
 
-            winloseUI.SetActive(false);
+            winloseText.text = (" ");
+            winloseText.enabled = false;
             gameOver = true;
         }
 

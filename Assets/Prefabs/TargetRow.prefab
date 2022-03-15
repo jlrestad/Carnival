@@ -112,15 +112,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3186748124370984465}
-  m_LocalRotation: {x: -0, y: -0.0022284389, z: -0, w: 0.99999756}
-  m_LocalPosition: {x: 0.020947888, y: 0.5880629, z: -0.71389645}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2376496903648352334}
   - {fileID: 2376496903970575385}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -51, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3186748124370984467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +142,6 @@ MonoBehaviour:
   parentPos: {fileID: 0}
   moveSpeed: 1
   timeBetweenTargets: 1.3
-  targetFlipped: 0
   moveLeft: 1
   targetPrefab: {fileID: 4460973617587993853, guid: 0a14ea6215eb25b4fa2b5bfc6a11d117, type: 3}
   poolAmount: 4

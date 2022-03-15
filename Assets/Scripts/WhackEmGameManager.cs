@@ -11,40 +11,42 @@ public class WhackEmGameManager : MonoBehaviour
     public GameObject whackemEnemy;
     WeaponEquip weaponEquip;
     //public int tickets = 3;
-    [SerializeField] private float timeCounter = 30; //used to count down the time
-    private float timeLeft; //used to set the amount of time to countdown by
-    private float resetTime;
 
     public bool gameOn;
     [HideInInspector] public bool popUp;
     [HideInInspector] public bool critterIsVisible;
     [HideInInspector] public bool gameIsRunning;
     [HideInInspector] public bool isTaunting = false;
-    [HideInInspector] public int score; //the player kills
+  
+    [Header("SCORE")]
     [SerializeField] int scoreLimit; //the amount needed to win
-    public float gameDelayTime = 1.0f;
+    [HideInInspector] public int score; //the player kills
 
+    [Header("TIMER")]
+    [SerializeField] private float timeCounter = 30; //used to count down the time
+    private float timeLeft; //used to set the amount of time to countdown by
+    private float resetTime;
 
-    //bigger nums = slower speed
+    //Bigger nums = slower speed
     [Header("ENEMY POPUP SPEED")]
     public float minRando; private float minRandoTemp; 
     public float maxRando; private float maxRandoTemp;
     public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
 
     [Header("UI")]
-    public GameObject ticketsUI;
-    public GameObject scoreUI;
-    public GameObject timerUI;
-    public GameObject winloseUI;
-    [HideInInspector] public TextMeshProUGUI ticketsText;
-    [HideInInspector] public TextMeshProUGUI scoreText;
-    [HideInInspector] public TextMeshProUGUI timerText;
-    [HideInInspector] public TextMeshProUGUI winloseText;
+    public GameObject gameUI;
+    //public GameObject gameUI;
+    //public GameObject gameUI;
+    //public GameObject gameUI;
+    public TextMeshProUGUI ticketsText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI winloseText;
 
     float randomPopUpTime;
     float randomStayTime;
     public bool levelLoaded;
-    bool stopPopUp;
+    [HideInInspector] bool stopPopUp;
     /*[HideInInspector]*/ public bool gameWon;
     /*[HideInInspector]*/ public bool gameOver;
     int randomEnemy;
@@ -61,10 +63,10 @@ public class WhackEmGameManager : MonoBehaviour
     {
         weaponEquip = FindObjectOfType<WeaponEquip>();
         //Text
-        ticketsText = ticketsUI.GetComponentInChildren<TextMeshProUGUI>();
-        scoreText = scoreUI.GetComponentInChildren<TextMeshProUGUI>();
-        timerText = timerUI.GetComponentInChildren<TextMeshProUGUI>();
-        winloseText = winloseUI.GetComponentInChildren<TextMeshProUGUI>();
+        //ticketsText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        //scoreText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        //timerText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        //winloseText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
         //Tickets
         ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
         scoreText.text = (score + "/" + scoreLimit);
@@ -118,9 +120,9 @@ public class WhackEmGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        else if (!gameOn)
+        else 
         {
-            scoreUI.SetActive(false);
+            gameUI.SetActive(false);
             ResetGame(); //Reset the variables back to original
         }
     }
@@ -128,12 +130,11 @@ public class WhackEmGameManager : MonoBehaviour
     public void DisplayUI()
     {
         //Display the scoreUI
-        scoreUI.SetActive(true);
+        gameUI.SetActive(true);
         scoreText.text = (score + "/" + scoreLimit);
 
         //Display the timerUI
-        timerUI.SetActive(true);
-        //timerText.text = ("00:" + (int)timeCounter);
+        timerText.enabled = true;
     }
 
     public void ResetGame()
@@ -148,14 +149,11 @@ public class WhackEmGameManager : MonoBehaviour
         minRando = minRandoTemp;
         maxRando = maxRandoTemp;
 
-        //winloseUI
-        winloseUI.SetActive(false);
-        winloseText.text = (" ");
-
         //Time
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
-        timerUI.SetActive(false);
+
+        gameUI.SetActive(false);
 
     }
 
@@ -163,7 +161,6 @@ public class WhackEmGameManager : MonoBehaviour
     {
         minRando /= divideSpeedBy;
         maxRando /= divideSpeedBy;
-        //Debug.Log("Speed has increased!");
     }
 
     IEnumerator CountDownTimer()
@@ -175,8 +172,8 @@ public class WhackEmGameManager : MonoBehaviour
         if (timeLeft <= 0f)
         {
             timeLeft = 0f;
-            stopPopUp = true; //Controls being able to pause enemypopup coroutine 
             critters[randomEnemy].SetActive(false); //Turn off the remaining enemy when the game is done
+            stopPopUp = true; //Controls being able to pause enemypopup coroutine 
         }
         else
         {
@@ -189,25 +186,32 @@ public class WhackEmGameManager : MonoBehaviour
     {
         if (score >= scoreLimit && timeLeft > 0 && !gameOver)
         {
-            stopPopUp = true;
-            winloseUI.SetActive(true);
+            //Display win message
+            winloseText.enabled = true;
             winloseText.text = "You have won...";
             gameWon = true;
+            stopPopUp = true;
 
             yield return new WaitForSeconds(2);
 
-            winloseUI.SetActive(false);
+            //Clear and turn off win message
+            winloseText.text = (" ");
+            winloseText.enabled = false;
             gameOver = true;
         }
         else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
         {
-            winloseUI.SetActive(true);
+            //Display lose message
+            winloseText.enabled = true;
             winloseText.text = "You have lost...";
             gameWon = false;
+            stopPopUp = true;
 
             yield return new WaitForSeconds(2);
 
-            winloseUI.SetActive(false);
+            //Clear and turn off lose message
+            winloseText.text = (" ");
+            winloseText.enabled = false;
             gameOver = true;
         }
 
