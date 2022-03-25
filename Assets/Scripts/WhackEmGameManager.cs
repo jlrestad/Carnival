@@ -7,9 +7,12 @@ using UnityEngine.UI;
 
 public class WhackEmGameManager : MonoBehaviour
 {
+    public static WhackEmGameManager Instance;
+
     public GameObject[] critters;
     public GameObject whackemEnemy;
     WeaponEquip weaponEquip;
+    [SerializeField] GameCardManager cardManager;
     //public int tickets = 3;
 
     public bool gameOn;
@@ -35,38 +38,38 @@ public class WhackEmGameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject gameUI;
-    //public GameObject gameUI;
-    //public GameObject gameUI;
-    //public GameObject gameUI;
     public TextMeshProUGUI ticketsText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI winloseText;
 
+    [Header("TAROT CARD")]
+    public GameObject displayCard;
+    public Sprite cardImage;
+
+    [Space(10)]
+    /*[HideInInspector]*/ public bool gameWon;
+    /*[HideInInspector]*/ public bool gameOver;
     float randomPopUpTime;
     float randomStayTime;
     public bool levelLoaded;
     [HideInInspector] bool stopPopUp;
-    /*[HideInInspector]*/ public bool gameWon;
-    /*[HideInInspector]*/ public bool gameOver;
+   
     int randomEnemy;
-
-    //IEnumerator winloseCoroutine;
-
+    public MonoBehaviour script;
 
     private void Awake()
     {
+        Instance = this;
+        script = Instance;
         levelLoaded = true;
     }
 
     private void Start()
     {
         weaponEquip = FindObjectOfType<WeaponEquip>();
-        //Text
-        //ticketsText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
-        //scoreText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
-        //timerText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
-        //winloseText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        cardImage = displayCard.GetComponent<Image>().sprite;
+        
         //Tickets
         ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
         scoreText.text = (score + "/" + scoreLimit);
@@ -76,8 +79,6 @@ public class WhackEmGameManager : MonoBehaviour
         //Speeds
         minRandoTemp = minRando;
         maxRandoTemp = maxRando;
-
-        //winloseCoroutine = WinLoseManager();
 
         //Coroutines will start but wait until gameOn is true to begin.
         StartCoroutine(EnemyPopUp());
@@ -89,7 +90,7 @@ public class WhackEmGameManager : MonoBehaviour
         if (gameOn && weaponEquip.haveMallet)
         {
             //Display the game UI
-            DisplayUI();
+            DisplayTextUI();
 
             //Begin the game timer
             if (!stopPopUp)
@@ -105,8 +106,16 @@ public class WhackEmGameManager : MonoBehaviour
                 }
             }
 
-            //Display win or lose
-            StartCoroutine(WinLoseManager());
+            //Display Win/Lose
+            if (score >= scoreLimit && timeLeft > 0 && !gameOver)
+            {
+                WinUI();
+            }
+            else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
+            {
+                //Display win or lose
+                StartCoroutine(LoseUI());
+            }
 
             //Update ticket count
             ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
@@ -127,7 +136,7 @@ public class WhackEmGameManager : MonoBehaviour
         }
     }
 
-    public void DisplayUI()
+    public void DisplayTextUI()
     {
         //Display the scoreUI
         gameUI.SetActive(true);
@@ -181,41 +190,29 @@ public class WhackEmGameManager : MonoBehaviour
         }
     }
 
-    //Display the win or lose screen for a short time.
-    IEnumerator WinLoseManager()
+    void WinUI()
     {
-        if (score >= scoreLimit && timeLeft > 0 && !gameOver)
-        {
-            //Display win message
-            winloseText.enabled = true;
-            winloseText.text = "You have won...";
-            gameWon = true;
-            stopPopUp = true;
+        DisplayGameCard();
+        gameWon = true;
+        stopPopUp = true;
+        gameOver = true;
+    }
 
-            yield return new WaitForSeconds(2);
+    //Display the win or lose screen for a short time.
+    IEnumerator LoseUI()
+    {
+        //Display lose message
+        winloseText.enabled = true;
+        winloseText.text = "You have lost...";
+        gameWon = false;
+        stopPopUp = true;
 
-            //Clear and turn off win message
-            winloseText.text = (" ");
-            winloseText.enabled = false;
-            gameOver = true;
-        }
-        else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
-        {
-            //Display lose message
-            winloseText.enabled = true;
-            winloseText.text = "You have lost...";
-            gameWon = false;
-            stopPopUp = true;
+        yield return new WaitForSeconds(2);
 
-            yield return new WaitForSeconds(2);
-
-            //Clear and turn off lose message
-            winloseText.text = (" ");
-            winloseText.enabled = false;
-            gameOver = true;
-        }
-
-        yield return null;
+        //Clear and turn off lose message
+        winloseText.text = (" ");
+        winloseText.enabled = false;
+        gameOver = true;
     }
 
     //Choose random enemy with random appear times
@@ -291,6 +288,28 @@ public class WhackEmGameManager : MonoBehaviour
             }
             yield return null;
         }
-    }   
+    }
+
+    //Show the card that was won
+    public void DisplayGameCard()
+    {
+        //Display the card that was won
+        displayCard.GetComponent<Image>().enabled = true;
+
+        //Transition from card display back to game display
+        StartCoroutine(DisplayCardWon());
+    }
+
+    //Transition from displayed card to weapon indicator card
+    public IEnumerator DisplayCardWon()
+    {
+        yield return new WaitForSeconds(1);
+
+        displayCard.GetComponent<Image>().enabled = false;
+
+        //Display the current weapon card
+        Menu.Instance.DisplayGameCard();
+
+    }
 
 }

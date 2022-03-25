@@ -9,6 +9,7 @@ using UnityEngine.Experimental.TerrainAPI;
 using System;
 using System.Linq;
 using TMPro;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -27,6 +28,9 @@ public class Menu : MonoBehaviour
     public static Menu Instance;
 
     GameManager GM;
+    public WhackEmGameManager whackemGM;
+    public SkillShotGameManager skillshotGM;
+    public WeaponEquip WE;
 
     //[Header("AUDIO")]
     //public AudioMixer audioMixer;
@@ -37,7 +41,6 @@ public class Menu : MonoBehaviour
     [Header("OBJECTS")]
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject titleCamera;
-    public GameObject levelOne;
     public GameObject player;
 
     [Header("MENUS")]
@@ -46,15 +49,20 @@ public class Menu : MonoBehaviour
     public TextMeshProUGUI skullCountText;
     [SerializeField] GameObject firstButton;
     
-    [Space(10)]
+    [Header("TAROT UI")]
     public GameObject[] gameCardSlots;
+    public GameObject gameCard;
+    public GameObject gameCardBG;
+    public Sprite cardImage;
+    public Sprite spriteImage;
+
     [Space(10)]
     public string[] controllerArray = null;
 
     public bool usingJoystick;
 
     [Header("LEVEL LOAD")]
-    [SerializeField] private string levelName;
+    //[SerializeField] private string levelName;
 
     int counter = -1; //Used to handle pause.
     public GameObject controllerPrompt, keyboardPrompt;
@@ -67,6 +75,7 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
+
     }
 
     public void HandleOnStateChange()
@@ -77,8 +86,10 @@ public class Menu : MonoBehaviour
     private void Update()
     {
         controllerArray = Input.GetJoystickNames();
+        whackemGM = FindObjectOfType<WhackEmGameManager>();
+        skillshotGM = FindObjectOfType<SkillShotGameManager>();
+        WE = FindObjectOfType<WeaponEquip>();
 
-        levelOne = GameObject.FindGameObjectWithTag("LevelObjects");
         player = GameObject.FindGameObjectWithTag("Player");
 
         //Detect if joystick is used.
@@ -101,6 +112,24 @@ public class Menu : MonoBehaviour
 
             UnpauseGame();
         }
+
+        //Get the correct tarot card image from the carnival game manager scripts.
+        if (WE != null)
+        {
+            if (WE.gameName == "MeleeGame")
+            {
+                spriteImage = whackemGM.cardImage;
+                cardImage = spriteImage;
+                return;
+            }
+            else if (WE.gameName == "ShootingGame")
+            {
+                spriteImage = skillshotGM.cardImage;
+                cardImage = spriteImage;
+                return;
+            }
+        }
+
     }
 
     public void StartGame()
@@ -181,10 +210,10 @@ public class Menu : MonoBehaviour
         titleScreen.SetActive(false);
         titleCamera.SetActive(false);
 
-        SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(sceneBuildIndex:1, LoadSceneMode.Additive);
         
         //Clear level name on start
-        levelName = "";
+        //levelName = "";
 
         //introAudio.volume = 1;
     }
@@ -206,34 +235,25 @@ public class Menu : MonoBehaviour
         //EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
-    IEnumerator DelayDeactivation()
+    //* fix so that cards will occupy the next available space (bool?)
+    //Displays the card that was just won in the first most available spot, left to right.
+    public void DisplayGameCard()
     {
-        yield return new WaitForSeconds(0.5f);
-        levelOne.SetActive(false);
-        player.SetActive(false);
-    }
+        for (int i = 0; i < gameCardSlots.Length; i++)
+        {
+            //Set the game card UI
+            gameCard = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject;
+            gameCardBG = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
 
-    //public void AudioFade()
-    //{
-    //    StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParam, 2.5f, 0));
-    //}
+            //If the first space is not enabled then enable it
+            if (gameCard.GetComponent<Image>().sprite == null)
+            {
+                gameCard.GetComponent<Image>().enabled = true; //enables the image component
+                gameCard.GetComponent<Image>().sprite = cardImage; //sets the image sprite to the game card that was won
+                gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
 
-    public void DisplayGameCard(GameObject gameCard)
-    {
-        if (gameCardSlots[0] == null)
-        {
-            gameCard.transform.parent = gameCardSlots[0].transform;
-            gameCard.SetActive(true);
-        }
-        else if (gameCardSlots[1] == null)
-        {
-            gameCard.transform.parent = gameCardSlots[1].transform;
-            gameCard.SetActive(true);
-        }
-        else
-        {
-            gameCard.transform.parent = gameCardSlots[2].transform;
-            gameCard.SetActive(true);
+                break; //break out because we've got what we want
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillShotGameManager : MonoBehaviour
 {
@@ -11,14 +12,11 @@ public class SkillShotGameManager : MonoBehaviour
     public bool targetFlipped;
     public bool gameOn;
     public bool reachedEnd;
+    public bool gameWon;
     bool levelLoaded;
-    bool gameWon;
 
     [Header("UI")]
     public GameObject gameUI;
-    //public GameObject scoreUI;
-    //public GameObject timerUI;
-    //public GameObject winloseUI;
     public TextMeshProUGUI ticketsText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
@@ -37,9 +35,9 @@ public class SkillShotGameManager : MonoBehaviour
     private float timeLeft; //used to set the amount of time to countdown by
     private float resetTime;
 
-    //public GameObject targetPrefab;
-    //public float gameDelayTime = 1.0f;
-
+    [Header("TAROT CARD")]
+    public GameObject displayCard;
+    public Sprite cardImage;
 
     [HideInInspector] public bool gameOver;
 
@@ -50,11 +48,8 @@ public class SkillShotGameManager : MonoBehaviour
 
     private void Start()
     {
-        //Text
-        //ticketsText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
-        //scoreText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
-        //timerText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
-        //winloseText = gameUI.GetComponentInChildren<TextMeshProUGUI>();
+        cardImage = displayCard.GetComponent<Image>().sprite;
+
         //Tickets
         ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
         scoreText.text = (score + "/" + scoreLimit);
@@ -71,7 +66,7 @@ public class SkillShotGameManager : MonoBehaviour
         if (gameOn && weaponEquip.haveGun)
         {
             //Display the game UI
-            DisplayUI();
+            DisplayTextUI();
 
             //Begin the game timer
             StartCoroutine(CountDownTimer());
@@ -84,8 +79,16 @@ public class SkillShotGameManager : MonoBehaviour
                 timerText.text = ("00:0" + (int)timeLeft);
             }
 
-            //Display win or lose
-            StartCoroutine(WinLoseManager());
+            //Display Win/Lose
+            if (score >= scoreLimit && timeLeft > 0 && !gameOver)
+            {
+                WinUI();
+            }
+            else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
+            {
+                //Display win or lose
+                StartCoroutine(LoseUI());
+            }
 
             //Update ticket count
             ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
@@ -106,8 +109,8 @@ public class SkillShotGameManager : MonoBehaviour
         }
     }
 
-
-    public void DisplayUI()
+    
+    public void DisplayTextUI()
     {
         //Display the scoreUI
         gameUI.SetActive(true);
@@ -154,37 +157,47 @@ public class SkillShotGameManager : MonoBehaviour
         }
     }
 
-    //Display the win or lose screen for a short time.
-    IEnumerator WinLoseManager()
+    void WinUI()
     {
-        if (score >= scoreLimit && timeLeft > 0 && !gameOver)
-        {
-            //Display win message
-            winloseText.enabled = true;
-            winloseText.text = "You have won...";
-            gameWon = true;
+        DisplayGameCard();
+        gameWon = true;
+        gameOver = true;
+    }
 
-            yield return new WaitForSeconds(2);
+    //Display the win or lose screen for a short time.
+    IEnumerator LoseUI()
+    {
+        //Display lose message
+        winloseText.enabled = true;
+        winloseText.text = "You have lost...";
+        gameWon = false;
 
-            winloseText.text = (" ");
-            winloseText.enabled = false;
-            gameOver = true;
-        }
-        if (score < scoreLimit && timeLeft <= 0 && !gameOver)
-        {
-            //Display lose message
-            winloseText.enabled = true;
-            winloseText.text = "You have lost...";
-            gameWon = false;
+        yield return new WaitForSeconds(2);
 
-            yield return new WaitForSeconds(2);
+        winloseText.text = (" ");
+        winloseText.enabled = false;
+        gameOver = true;
+    }
 
-            winloseText.text = (" ");
-            winloseText.enabled = false;
-            gameOver = true;
-        }
+    public void DisplayGameCard()
+    {
+        //Display the card that was won
+        displayCard.GetComponent<Image>().enabled = true;
 
-        yield return null;
+        //Transition from card display back to game display
+        StartCoroutine(DisplayCardWon());
+    }
+
+    //Transition from displayed card to weapon indicator card
+    public IEnumerator DisplayCardWon()
+    {
+        yield return new WaitForSeconds(1);
+
+        displayCard.GetComponent<Image>().enabled = false;
+
+        //Display the current weapon card
+        Menu.Instance.DisplayGameCard();
+
     }
 
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform leftPos, Transform rightPos, Transform parentPos, Transform targetParent)
