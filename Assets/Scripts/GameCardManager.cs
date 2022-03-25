@@ -7,16 +7,21 @@ public class GameCardManager : MonoBehaviour
 {
     public static GameCardManager Instance;
 
-    GameObject player;
-    [SerializeField] WeaponEquip WE;
-    [SerializeField] WhackEmGameManager whackemGM;
-    [SerializeField] Menu menu;
+    public GameObject player;
+    public WeaponEquip WE;
+    Menu menu;
 
     Vector3 pos;
 
-    [Space(15)]
+    [Header("SKILLSHOT GAME")]
+    [SerializeField] SkillShotGameManager skillshotGM;
+
+    [Header("SMASH GAME")]
+    [SerializeField] WhackEmGameManager whackemGM;
     public GameObject[] critterArray;
     public List<GameObject> critterList;
+
+    [Header("TAROT CARDS")]
     [SerializeField] GameObject cardDisplay;
     [SerializeField] GameObject cardWon;
     bool gameWon;
@@ -29,65 +34,69 @@ public class GameCardManager : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        WE = player.GetComponent<WeaponEquip>();
-        whackemGM = GetComponent<WhackEmGameManager>();
-        critterArray = GetComponent<WhackEmGameManager>().critters;
-        menu = FindObjectOfType<Menu>(); ;
-        pos = transform.position;
+        //player = GameObject.FindGameObjectWithTag("Player");
+        //WE = player.GetComponent<WeaponEquip>();
+        //menu = FindObjectOfType<Menu>(); ;
+        //pos = transform.position;
     }
 
     private void Update()
     {
-        gameWon = whackemGM.gameWon;
 
-        //Better optimized if this is checked somewhere else...
-        if (gameWon)
-        {
-            Debug.Log("SHOW CARD");
-            DisplayGameCard();
-        }
+        //if (WE.gameName == "MeleeGame")
+        //{
+        //    //Debug.Log("level name is melee game");
+        //    whackemGM = FindObjectOfType<WhackEmGameManager>();
+        //    critterArray = whackemGM.critters;
+
+        //    Debug.Log("Carnival Smash won: " + gameWon);
+        //}
+        //else if (WE.levelName.Equals("ShootingGame"))
+        //{
+        //    skillshotGM = FindObjectOfType<SkillShotGameManager>();
+        //    gameWon = skillshotGM.gameWon;
+        //    Debug.Log("Skill Shot won: " + gameWon);
+        //}
 
         //Activate boss
-        if (player.GetComponent<FPSController>().cardCount == 3)
-        {
-            player.GetComponent<FPSController>().tent.SetActive(false);
-            player.GetComponent<FPSController>().boss.SetActive(true);
-        }
+        //if (player.GetComponent<FPSController>().cardCount == 3)
+        //{
+        //    player.GetComponent<FPSController>().tent.SetActive(false);
+        //    player.GetComponent<FPSController>().boss.SetActive(true);
+        //}
     }
 
-    // RETURNS THE GAME OBJECT THAT HOLDS THE CARD
-    public GameObject DisplayGameCard()
-    {
-        for (int i = 0; i < WE.gameCards.Length; i++)
-        {
-            if (WE.gameCards[i].name == WE.levelName)
-            {
-                //Display the card that was won
-                WE.gameCards[i].SetActive(true);
-                //Set the gameObject for method return
-                cardDisplay = WE.gameCards[i];
-                //Set the gameObject to display card
-                cardWon = cardDisplay.GetComponentInChildren<GameCard>().gameObject;
+    //// RETURNS THE GAME OBJECT THAT HOLDS THE CARD
+    //public GameObject DisplayGameCard()
+    //{
+    //    for (int i = 0; i < WE.gameCards.Length; i++)
+    //    {
+    //        if (WE.gameCards[i].name == WE.gameName)
+    //        {
+    //            Debug.Log("TEST is working");
 
-                //Transition from card display back to game display
-                StartCoroutine(DisplayCardWon());
-            }
-        }
+    //            //Display the card that was won
+    //            WE.gameCards[i].SetActive(true);
+    //            //Set the gameObject to be displayed
+    //            cardDisplay = WE.gameCards[i];
+    //            //Set the gameObject to display card
+    //            cardWon = cardDisplay.GetComponent<GameCard>().gameObject;
 
-        return cardDisplay;
-    }
+    //            //Transition from card display back to game display
+    //            StartCoroutine(DisplayCardWon());
+    //        }
+    //    }
 
-    // TRANSITION FROM CARD DISPLAY SCREEN BACK TO GAME DISPLAY
-    public IEnumerator DisplayCardWon()
-    {
-        yield return new WaitForSeconds(1);
+    //    return cardWon;
+    //}
 
-        if (cardDisplay.GetComponentInChildren<Image>().enabled == true)
-        {
-            cardDisplay.GetComponentInChildren<Image>().enabled = false;
-            cardWon.GetComponent<Image>().enabled = true;
-        }
-        
-    }
+    //// TRANSITION FROM CARD DISPLAY SCREEN BACK TO GAME DISPLAY
+    //public IEnumerator DisplayCardWon()
+    //{
+    //    yield return new WaitForSeconds(1);
+
+    //    cardDisplay.GetComponent<Image>().enabled = false;
+    //    cardWon.GetComponent<Image>().enabled = true;
+    //}
+
 }

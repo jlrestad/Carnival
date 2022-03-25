@@ -14,14 +14,17 @@ public class WeaponEquip : MonoBehaviour
 
     public static WeaponEquip Instance;
 
+    [Header("UI")]
+    public Canvas crossHair;
+    public GameObject actionPrompt;
+    GameObject weaponCardBG;
+
     [Space(15)]
     [SerializeField] GameObject gunHold;
     [SerializeField] GameObject malletHold;
     public GameObject skullsParent;
     public GameObject skullHold;
     [HideInInspector] public int addToCount;
-    public GameObject[] gameCards; //Holds the winning cards
-    public GameObject actionPrompt;
     //public int addSkull;
 
     [Space(15)]
@@ -51,8 +54,7 @@ public class WeaponEquip : MonoBehaviour
     [HideInInspector] public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
 
     [Space(15)]
-    public Canvas crossHair;
-    [HideInInspector] public string levelName;
+    public string gameName;
     private Weapon newWeapon;
     private Head newSkull;
     public Head[] headSkull;
@@ -70,6 +72,7 @@ public class WeaponEquip : MonoBehaviour
     {
         menu = FindObjectOfType<Menu>();
         skullHold = GameObject.Find("SkullHold");
+        weaponCardBG = menu.gameCardBG; //Used to highlight which weapon is equipped
 
         //Detect if joystick or keyboard is used and display correct prompt.
         if (menu.usingJoystick)
@@ -269,8 +272,8 @@ public class WeaponEquip : MonoBehaviour
 
                 //* This was used for loading scenes, which we aren't using now, but kept it incase... Can delete at the end of project.
                 //Get the name of the layer -- which is the name of the game level
-                //int layerNumber = closestWeapon.layer;
-                //levelName = LayerMask.LayerToName(layerNumber);
+                int layerNumber = closestWeapon.layer;
+                gameName = LayerMask.LayerToName(layerNumber);
 
                 //gameBooth = GameObject.FindGameObjectWithTag(levelName);
             }
