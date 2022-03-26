@@ -17,7 +17,7 @@ public class WeaponEquip : MonoBehaviour
     [Header("UI")]
     public Canvas crossHair;
     public GameObject actionPrompt;
-    GameObject weaponCardBG;
+    public List<GameObject> weaponCardBG;
 
     [Space(15)]
     [SerializeField] GameObject gunHold;
@@ -72,7 +72,7 @@ public class WeaponEquip : MonoBehaviour
     {
         menu = FindObjectOfType<Menu>();
         skullHold = GameObject.Find("SkullHold");
-        weaponCardBG = menu.gameCardBG; //Used to highlight which weapon is equipped
+        //weaponCardBG = menu.gameCardBG; //Used to highlight which weapon is equipped
 
         //Detect if joystick or keyboard is used and display correct prompt.
         if (menu.usingJoystick)
@@ -429,6 +429,12 @@ public class WeaponEquip : MonoBehaviour
         isEquipped = true;
         weaponNumber++;
         if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
+
+
+        if (menu.cardImage.name.Equals(currentWeapon.tag))
+        {
+            Debug.Log("These are the same name");
+        }
 
         //Hide flashlight if holding
         if (GetComponent<FPSController>().flashlightOn)

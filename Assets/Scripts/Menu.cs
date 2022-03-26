@@ -28,9 +28,9 @@ public class Menu : MonoBehaviour
     public static Menu Instance;
 
     GameManager GM;
-    public WhackEmGameManager whackemGM;
-    public SkillShotGameManager skillshotGM;
-    public WeaponEquip WE;
+    WhackEmGameManager whackemGM;
+    SkillShotGameManager skillshotGM;
+    WeaponEquip WE;
 
     //[Header("AUDIO")]
     //public AudioMixer audioMixer;
@@ -47,14 +47,13 @@ public class Menu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject skullCountUI;
     public TextMeshProUGUI skullCountText;
-    [SerializeField] GameObject firstButton;
+    GameObject firstButton;
     
     [Header("TAROT UI")]
     public GameObject[] gameCardSlots;
-    public GameObject gameCard;
     public GameObject gameCardBG;
+    public GameObject gameCard;
     public Sprite cardImage;
-    public Sprite spriteImage;
 
     [Space(10)]
     public string[] controllerArray = null;
@@ -118,14 +117,12 @@ public class Menu : MonoBehaviour
         {
             if (WE.gameName == "MeleeGame")
             {
-                spriteImage = whackemGM.cardImage;
-                cardImage = spriteImage;
+                cardImage = whackemGM.cardImage;
                 return;
             }
             else if (WE.gameName == "ShootingGame")
             {
-                spriteImage = skillshotGM.cardImage;
-                cardImage = spriteImage;
+                cardImage = skillshotGM.cardImage;
                 return;
             }
         }
@@ -246,14 +243,16 @@ public class Menu : MonoBehaviour
             gameCardBG = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
 
             //If the first space is not enabled then enable it
-            if (gameCard.GetComponent<Image>().sprite == null)
+            if (gameCard.GetComponent<Image>().sprite == null )
             {
                 gameCard.GetComponent<Image>().enabled = true; //enables the image component
                 gameCard.GetComponent<Image>().sprite = cardImage; //sets the image sprite to the game card that was won
                 gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
 
+                WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WE so it can be turned on/off when scrolling through weapons
+
                 break; //break out because we've got what we want
             }
-        }
+        }   
     }
 }
