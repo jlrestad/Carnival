@@ -113,50 +113,6 @@ public class MeleeSwing : MonoBehaviour
 
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Critter"))
-    //    {
-    //        //Get references from this enemy
-    //        WhackEmEnemy thisEnemy = other.GetComponent<WhackEmEnemy>();
-    //        cardManager = other.GetComponentInParent<GameCardManager>();
-
-    //        //Do random damage
-    //        damage = Random.Range(50, 100);
-    //        //Minus damage amount from enemy
-    //        thisEnemy.health -= damage;
-    //        //Check the health of the enemy
-    //        thisEnemy.HealthManager();
-
-    //        if (thisEnemy.hasBeenHit)
-    //        {
-    //            whackemGM.IncreaseSpeed();
-    //        }
-
-    //        //Only add to the score if health went to 0.
-    //        if (thisEnemy.health <= 0)
-    //        {
-    //            //Add to the score
-    //            if (!whackemGM.isTaunting)
-    //            {
-    //                whackemGM.score++;
-    //            }
-    //            else
-    //            {
-    //                Debug.Log("HAHA ~ No point!");
-    //            }
-
-    //            //Add enemy to the list
-    //            cardManager.critterList.Add(other.gameObject);
-
-    //            //Spawn the head used as throwing object
-    //            SpawnHead();
-    //        }
-
-    //        Debug.Log("Smashed enemy!");
-    //    }
-    //}
-
     public void SpawnHead()
     {
         //Spawn the head used as throwing object

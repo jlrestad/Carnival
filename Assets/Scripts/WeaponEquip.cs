@@ -1,11 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using System.Data.Common;
-using System.Dynamic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
 
 public class WeaponEquip : MonoBehaviour
 {
@@ -39,6 +33,7 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject closestWeapon = null;
+    public GameObject _closestWeapon = null;
     public GameObject currentWeapon = null;
     public GameObject closestSkull = null;
     [SerializeField] float pickUpRange = 1.5f;
@@ -89,7 +84,6 @@ public class WeaponEquip : MonoBehaviour
     {
         FindClosestWeapon();
         ChangeWeapon();
-
 
         //FOR SKULL PICKUP * * *
         if (currentWeapon == skullsParent && skullsParent.transform.childCount > 0)
@@ -259,6 +253,12 @@ public class WeaponEquip : MonoBehaviour
                 string weaponName = newWeapon.gameObject.name.ToString(); //get the name of the closest weapon
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
+
+                if (_closestWeapon == null)
+                {
+                    _closestWeapon = closestWeapon;
+                }
+
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
                 //If the closest weapon is a skull, then get the collider and rigidbody of that skull.
@@ -403,7 +403,7 @@ public class WeaponEquip : MonoBehaviour
             haveMallet = true;
         }
         //SKULL
-        //* Finding the closest skull, but not equipping the closest....
+        //* Finds the closest skull, but can't equip the closest -- not updating.
         if (closestWeapon.CompareTag("Head"))
         {
             skull = closestWeapon;
@@ -430,7 +430,7 @@ public class WeaponEquip : MonoBehaviour
         weaponNumber++;
         if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
 
-
+        //For BG of weapon card
         if (menu.cardImage.name.Equals(currentWeapon.tag))
         {
             Debug.Log("These are the same name");
@@ -495,13 +495,12 @@ public class WeaponEquip : MonoBehaviour
                 }
             }
 
-            //*Turn off Weapon script while holding so it won't be detected by FindClosestWeapon.
+            //*Turn off Weapon script while holding so it won't be detected by FindClosestWeapon().
             for (int i = 0; i < skullsParent.transform.childCount; i++)
             {
                 skullsParent.transform.GetChild(i).GetComponent<Weapon>().enabled = false;
             }
-            skull.tag = "Untagged"; //temp set untagged so it wont be found as the closest weapon
-            //*
+            skull.tag = "Untagged"; //* temp set untagged so it wont be found as the closest weapon
 
             if (skullsParent.transform.childCount != 0)
             {
@@ -528,7 +527,7 @@ public class WeaponEquip : MonoBehaviour
         isEquipped = false;
         weaponNumber--;
         if (weaponNumber < 0) { weaponNumber = 0;  }
-
+        
         if (currentWeapon != skullsParent)
         {
             currentWeapon.SetActive(false); //hide held weapon

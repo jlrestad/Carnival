@@ -115,6 +115,11 @@ public class WhackEmGameManager : MonoBehaviour
             {
                 //Display win or lose
                 StartCoroutine(LoseUI());
+
+                //* Put weapon back
+                weaponEquip.haveMallet = false;
+                weaponEquip.currentWeapon.SetActive(false);
+                weaponEquip._closestWeapon.SetActive(true);
             }
 
             //Update ticket count
