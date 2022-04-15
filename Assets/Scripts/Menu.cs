@@ -234,7 +234,7 @@ public class Menu : MonoBehaviour
 
     //* fix so that cards will occupy the next available space (bool?)
     //Displays the card that was just won in the first most available spot, left to right.
-    public void DisplayGameCard()
+    public void DisplayWeaponCard()
     {
         for (int i = 0; i < gameCardSlots.Length; i++)
         {
@@ -249,7 +249,7 @@ public class Menu : MonoBehaviour
                 gameCard.GetComponent<Image>().sprite = cardImage; //sets the image sprite to the game card that was won
                 gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
 
-                WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WE so it can be turned on/off when scrolling through weapons
+                WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
 
                 break; //break out because we've got what we want
             }

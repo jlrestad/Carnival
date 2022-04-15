@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class FPSController : MonoBehaviour
 {
+    public static FPSController Instance;
+
     CharacterController characterController;
 
     public WeaponEquip weaponEquip;
@@ -60,6 +62,11 @@ public class FPSController : MonoBehaviour
     public void OnValidate()
     {
         characterController = GetComponent<CharacterController>();
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
     void Start()
@@ -178,7 +185,6 @@ public class FPSController : MonoBehaviour
             //have camera follow the rotation
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed, 0);
-            //transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
         }
 
         // Sliding
@@ -205,6 +211,11 @@ public class FPSController : MonoBehaviour
         {
             StandUp();
         }
+    }
+
+    public void LockCamera()
+    {
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
     }
 
     //** Create a method to adjust mouse sensitivity using lookSpeed.

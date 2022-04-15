@@ -29,8 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2709126532294023397}
+  m_Children: []
   m_Father: {fileID: 2709126533079497959}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1938,12 +1937,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2709126531205561604}
-  m_RootOrder: 0
+  m_Father: {fileID: 2709126533079497959}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 55, y: 75}
+  m_AnchoredPosition: {x: 59.999954, y: 79.999985}
   m_SizeDelta: {x: 100, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2709126532294023399
@@ -3751,6 +3750,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2709126531205561604}
+  - {fileID: 2709126532294023397}
   m_Father: {fileID: 2709126533261937477}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4221,24 +4221,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59838b6e1438d804eaef0ba705b19aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whackemGM: {fileID: 0}
-  skillshotGM: {fileID: 0}
-  WE: {fileID: 0}
   titleScreen: {fileID: 2709126532615604692}
   titleCamera: {fileID: 0}
   player: {fileID: 0}
   pauseMenu: {fileID: 2709126532188482653}
   skullCountUI: {fileID: 2709126533327755301}
   skullCountText: {fileID: 2709126532622521079}
-  firstButton: {fileID: 0}
   gameCardSlots:
   - {fileID: 2709126533079497956}
   - {fileID: 2709126532215984511}
   - {fileID: 2709126532321131939}
-  gameCard: {fileID: 0}
   gameCardBG: {fileID: 0}
+  gameCard: {fileID: 0}
   cardImage: {fileID: 0}
-  spriteImage: {fileID: 0}
   controllerArray: []
   usingJoystick: 0
   controllerPrompt: {fileID: 2709126531375558436}

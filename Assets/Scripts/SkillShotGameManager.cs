@@ -165,11 +165,12 @@ public class SkillShotGameManager : MonoBehaviour
     }
 
     //Display the win or lose screen for a short time.
-    IEnumerator LoseUI()
+    private IEnumerator LoseUI()
     {
         //Display lose message
         winloseText.enabled = true;
         winloseText.text = "You have lost...";
+        timerText.text = "";
         gameWon = false;
 
         yield return new WaitForSeconds(2);
@@ -196,7 +197,7 @@ public class SkillShotGameManager : MonoBehaviour
         displayCard.GetComponent<Image>().enabled = false;
 
         //Display the current weapon card
-        Menu.Instance.DisplayGameCard();
+        Menu.Instance.DisplayWeaponCard();
 
     }
 

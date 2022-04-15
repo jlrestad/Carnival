@@ -46,7 +46,7 @@ public class WeaponEquip : MonoBehaviour
     public GameObject throwArms;
 
     [Space(2)]
-    [HideInInspector] public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
+    /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
 
     [Space(15)]
     public string gameName;
@@ -54,7 +54,7 @@ public class WeaponEquip : MonoBehaviour
     private Head newSkull;
     public Head[] headSkull;
    
-
+    [HideInInspector] RaycastHit hit;
     public Menu menu;
 
 
@@ -198,38 +198,44 @@ public class WeaponEquip : MonoBehaviour
         if (!closestWeapon.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
         {
             //SHOW ACTION/INTERACT PROMPT
-            if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon!=skull)
-            {
-                //If within pickup range show the prompt.
-                actionPrompt.SetActive(true);
-
-                //Even if weapon is equipped, hide it and pick up new weapon.
-                if (Input.GetButton("ActionButton") && !haveGun) //Because there are multiple guns in scene. If only one is avail then get rid of the bool. ***
+            //if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon != skull)
+            //{
+                if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
                 {
-                    PickUpWeapon();
-                }
-
-                // ** Because there are multiple guns in scene. If only one then this is uneccessary. **
-                //If have gun and closest weapon is a gun don't show the prompt.
-                if (haveGun)
-                {
-                    if (closestWeapon.CompareTag("Gun"))
+                    if (hit.transform.GetComponent<Weapon>())
                     {
-                        actionPrompt.SetActive(false);
-                    }
-                    //If have gun but closest weapon is not a gun show the prompt.
-                    else
-                    {
+                        //If within pickup range show the prompt.
                         actionPrompt.SetActive(true);
                     }
+
+                    //Even if weapon is equipped, hide it and pick up new weapon.
+                    if (Input.GetButton("ActionButton") && !haveGun) //Because there are multiple guns in scene. If only one is avail then get rid of the bool. ***
+                    {
+                        PickUpWeapon();
+                    }
+
+                    // ** Because there are multiple guns in scene. If only one then this is uneccessary. **
+                    //If have gun and closest weapon is a gun don't show the prompt.
+                    if (haveGun)
+                    {
+                        if (closestWeapon.CompareTag("Gun"))
+                        {
+                            actionPrompt.SetActive(false);
+                        }
+                        //If have gun but closest weapon is not a gun show the prompt.
+                        else
+                        {
+                            actionPrompt.SetActive(true);
+                        }
+                    }
                 }
-            }
-            else
-            {
-                actionPrompt.SetActive(false);
-            }
+                else
+                {
+                    actionPrompt.SetActive(false);
+                }
         }
     }
+    //}
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
     public GameObject FindClosestWeapon()

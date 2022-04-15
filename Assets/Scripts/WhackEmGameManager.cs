@@ -11,7 +11,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     public GameObject[] critters;
     public GameObject whackemEnemy;
-    WeaponEquip weaponEquip;
+    [HideInInspector] public WeaponEquip weaponEquip;
     [SerializeField] GameCardManager cardManager;
     //public int tickets = 3;
 
@@ -69,9 +69,9 @@ public class WhackEmGameManager : MonoBehaviour
     {
         weaponEquip = FindObjectOfType<WeaponEquip>();
         cardImage = displayCard.GetComponent<Image>().sprite;
-        
+
         //Tickets
-        ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
+        TicketManager.Instance.DisplayTicketAmount();
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
@@ -123,7 +123,7 @@ public class WhackEmGameManager : MonoBehaviour
             }
 
             //Update ticket count
-            ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
+            TicketManager.Instance.DisplayTicketAmount();
 
             if (TicketManager.Instance.tickets < 0)
             {
@@ -198,9 +198,9 @@ public class WhackEmGameManager : MonoBehaviour
     void WinUI()
     {
         DisplayGameCard();
-        gameWon = true;
-        stopPopUp = true;
-        gameOver = true;
+        gameWon = true; //Win weapon card and keep weapon in inventory.
+        stopPopUp = true; //Stop the EnemyPopUp coroutine.
+        gameOver = true; //The game has either been won or time has run out.
     }
 
     //Display the win or lose screen for a short time.
@@ -230,36 +230,33 @@ public class WhackEmGameManager : MonoBehaviour
                 //Iterate through the array of enemies and check if it's visible or not.
                 for (int i = 0; i < critters.Length; i++)
                 {
-                    //Random enemy
-                    randomEnemy = UnityEngine.Random.Range(0, 5);
-                    //Random taunting enemy
-                    int randomTaunt = UnityEngine.Random.Range(0, 5);
-                    //Get the script on the taunt position
-                    TauntPosition position = critters[randomEnemy].GetComponentInChildren<TauntPosition>();
-                    //Random speeds
-                    randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f);
-                    randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando);
+                    randomEnemy = UnityEngine.Random.Range(0, 5);  //Choose random enemy to pop-up
+                    int randomTaunt = UnityEngine.Random.Range(0, 5); //Choose random enemy that will taunt
+                    TauntPosition position = critters[randomEnemy].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
+                   
+                    randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
+                    randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
 
                     //Check through each enemy to see if it is visible
                     critterIsVisible = critters[i].GetComponent<WhackEmEnemy>().isVis;
 
-                    //Check if the enemy is already visible.
+                    //Check to see if enemy is not visible.
                     if (!critterIsVisible)
                     {
                         //Check if the enemy is taunting
-                        if (randomTaunt == randomEnemy)
+                        if (randomEnemy == randomTaunt)
                         {
                             Debug.Log("TAUNTING!!");
 
-                            //Enemy appears
+                            //Enemy is active
                             critters[randomEnemy].SetActive(true);
-                            critterIsVisible = true;
+                            critterIsVisible = true; //Set the enemy to visible so that a new random number is called.
 
-                            //Enemy taunt
+                            //Enemy appears at taunt position
                             critters[randomEnemy].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
                             isTaunting = true;
 
-                            yield return new WaitForSeconds(0.3f);
+                            yield return new WaitForSeconds(0.3f); //Amount of time to stay in taunt position
 
                             //Debug.Log("Stopped taunting");
 
@@ -301,7 +298,7 @@ public class WhackEmGameManager : MonoBehaviour
         //Display the card that was won
         displayCard.GetComponent<Image>().enabled = true;
 
-        //Transition from card display back to game display
+        //Transition from card display to weapon card
         StartCoroutine(DisplayCardWon());
     }
 
@@ -313,7 +310,7 @@ public class WhackEmGameManager : MonoBehaviour
         displayCard.GetComponent<Image>().enabled = false;
 
         //Display the current weapon card
-        Menu.Instance.DisplayGameCard();
+        Menu.Instance.DisplayWeaponCard();
 
     }
 
