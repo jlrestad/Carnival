@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 7959965031687855357}
-  m_sendNavigationEvents: 1
+  m_sendNavigationEvents: 0
   m_DragThreshold: 10
 --- !u!4 &709814781
 Transform:
@@ -236,7 +236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1155654099
 AudioListener:
   m_ObjectHideFlags: 0
@@ -382,6 +382,18 @@ PrefabInstance:
     - target: {fileID: 2709126531331366069, guid: 678b1f3411fa4d644aa2ae00383d2cf7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709126531952309985, guid: 678b1f3411fa4d644aa2ae00383d2cf7, type: 3}
+      propertyPath: m_Name
+      value: KeyboardPrompt
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709126531952309985, guid: 678b1f3411fa4d644aa2ae00383d2cf7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709126532615604692, guid: 678b1f3411fa4d644aa2ae00383d2cf7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2709126532668111544, guid: 678b1f3411fa4d644aa2ae00383d2cf7, type: 3}
       propertyPath: m_text

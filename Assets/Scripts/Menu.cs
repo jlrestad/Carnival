@@ -75,6 +75,8 @@ public class Menu : MonoBehaviour
 
         controllerArray = Input.GetJoystickNames();
 
+
+
     }
 
     public void HandleOnStateChange()
@@ -96,16 +98,16 @@ public class Menu : MonoBehaviour
         {
             usingJoystick = false;
         }
-        else if (controllerArray.Length > 0 && controllerArray[0] != "")
+        else if (controllerArray.Length > 0 /*&& controllerArray[0] != ""*/)
         {
             usingJoystick = true;
         }
 
-        if (Input.GetButtonDown("Menu") && counter == 0)
+        if (Input.GetButtonDown("Cancel") && counter == 0)
         {
             PauseGame();
         }
-        else if (Input.GetButtonDown("Menu") && counter == 1)
+        else if (Input.GetButtonDown("Cancel") && counter == 1)
         {
             //pauseSound.Play();
 
