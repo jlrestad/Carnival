@@ -103,11 +103,11 @@ public class Menu : MonoBehaviour
             usingJoystick = true;
         }
 
-        if (Input.GetButtonDown("Cancel") && counter == 0)
+        if (Input.GetButtonDown("Menu") && counter == 0)
         {
             PauseGame();
         }
-        else if (Input.GetButtonDown("Cancel") && counter == 1)
+        else if (Input.GetButtonDown("Menu") && counter == 1)
         {
             //pauseSound.Play();
 

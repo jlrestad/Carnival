@@ -7086,7 +7086,7 @@ GameObject:
   - component: {fileID: 8477729248151646991}
   m_Layer: 0
   m_Name: MalletHold
-  m_TagString: Weapon
+  m_TagString: Mallet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7652,6 +7652,7 @@ MonoBehaviour:
     this script to stop the errors.
   crossHair: {fileID: 0}
   actionPrompt: {fileID: 0}
+  weaponCardBG: []
   gunHold: {fileID: 8477729249810273190}
   malletHold: {fileID: 8477729248151646984}
   skullsParent: {fileID: 421488722864597281}
@@ -7662,6 +7663,7 @@ MonoBehaviour:
   inInventory: 0
   isEquipped: 0
   closestWeapon: {fileID: 0}
+  _closestWeapon: {fileID: 0}
   currentWeapon: {fileID: 0}
   closestSkull: {fileID: 0}
   pickUpRange: 2
