@@ -64,4 +64,17 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //Unlock player camera movement
         FPSController.Instance.canMove = true;
     }
+
+    public void LeaveGame()
+    {
+        //Hide the cursor again
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        //Hide the game rules UI
+        rulesUI.SetActive(false);
+
+        //Unlock player movement
+        FPSController.Instance.canMove = true;
+    }
 }
