@@ -48,6 +48,8 @@ public class WeaponEquip : MonoBehaviour
     [Space(2)]
     /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
 
+    public bool whackEmActive = false;
+
     [Space(15)]
     public string gameName;
     private Weapon newWeapon;
@@ -82,6 +84,7 @@ public class WeaponEquip : MonoBehaviour
 
     void Update()
     {
+
         FindClosestWeapon();
         ChangeWeapon();
 
@@ -400,13 +403,19 @@ public class WeaponEquip : MonoBehaviour
             currentWeapon = gunHold;
             weaponList.Add(currentWeapon);
             haveGun = true;
+            closestWeapon.SetActive(false); //hide the picked up weapon
+            //After picking up the weapon, equip it.
+            EquipWeapon(); //picked up weapon is equipped
         }
         //MALLET
-        if (closestWeapon.CompareTag("Mallet") && !haveMallet)
+        if (closestWeapon.CompareTag("Mallet") && !haveMallet && whackEmActive)
         {
             currentWeapon = malletHold;
             weaponList.Add(malletHold);
             haveMallet = true;
+            closestWeapon.SetActive(false); //hide the picked up weapon
+            //After picking up the weapon, equip it.
+            EquipWeapon(); //picked up weapon is equipped
         }
         //SKULL
         //* Finds the closest skull, but can't equip the closest -- not updating.
@@ -415,17 +424,9 @@ public class WeaponEquip : MonoBehaviour
             skull = closestWeapon;
             currentWeapon = skullsParent;
             haveSkull = true;
+            //After picking up the weapon, equip it.
+            EquipWeapon(); //picked up weapon is equipped
         }
-
-        //Hides mallet or gun from scene (equipped gun and mallet are part of the player character).
-        if (!closestWeapon.CompareTag("Head"))
-        {
-            //Hide the weapon object in scene.
-            closestWeapon.SetActive(false); //hide the picked up weapon
-        }
-
-        //After picking up the weapon, equip it.
-        EquipWeapon(); //picked up weapon is equipped
     }
 
     // Bring weapon out of inventory:

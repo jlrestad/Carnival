@@ -12,24 +12,27 @@ public class CarnivalSmashTrigger : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        //Keep the rulesUI from popping on
-        if (!whackemGM.weaponEquip.haveMallet)
+        if (!whackemGM.gameWon && !whackemGM.gameJustFinished)
         {
-            //* Display game rules screen with play buttons
-            rulesUI.SetActive(true);
-        }
+            //Keep the rulesUI from popping on
+            if (!whackemGM.weaponEquip.haveMallet)
+            {
+                //* Display game rules screen with play buttons
+                rulesUI.SetActive(true);
+            }
 
-        //Lock player camera movement until a button is pressed
-        if (!buttonPressed)
-        {
-            FPSController.Instance.canMove = false;
-        }
+            //Lock player camera movement until a button is pressed
+            if (!buttonPressed)
+            {
+                FPSController.Instance.canMove = false;
+            }
 
-        //If controller type is keyboard give mouse control
-        if (!Menu.Instance.usingJoystick)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            //If controller type is keyboard give mouse control
+            if (!Menu.Instance.usingJoystick)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
         }
     }
 
@@ -40,6 +43,9 @@ public class CarnivalSmashTrigger : MonoBehaviour
             //Reset bools for a new game;
             whackemGM.gameOn = false;
             whackemGM.gameOver = false;
+            whackemGM.gameJustFinished = false;
+            buttonPressed = false;
+            whackemGM.ResetGame();
         }
     }
 
@@ -67,6 +73,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     public void LeaveGame()
     {
+        whackemGM.gameOn = false;
         //Hide the cursor again
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

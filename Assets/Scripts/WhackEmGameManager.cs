@@ -16,6 +16,7 @@ public class WhackEmGameManager : MonoBehaviour
     //public int tickets = 3;
 
     public bool gameOn;
+    public bool gameJustFinished;
     [HideInInspector] public bool popUp;
     [HideInInspector] public bool critterIsVisible;
     [HideInInspector] public bool gameIsRunning;
@@ -86,9 +87,17 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Update()
     {
+        if(gameOn)
+        {
+            // alert weapon equip that the game is active and mallet can be picked up
+            weaponEquip.whackEmActive = true;
+        }
+
         //Run this when the WhackEm game is on.
         if (gameOn && weaponEquip.haveMallet)
         {
+            // fixes bug causing mouse to appear when critter pops up
+            Cursor.lockState = CursorLockMode.Locked;
             //Display the game UI
             DisplayTextUI();
 
@@ -136,8 +145,8 @@ public class WhackEmGameManager : MonoBehaviour
         }
         else 
         {
-            gameUI.SetActive(false);
-            ResetGame(); //Reset the variables back to original
+         //   gameUI.SetActive(false);
+         //   ResetGame(); //Reset the variables back to original
         }
     }
 
@@ -154,6 +163,7 @@ public class WhackEmGameManager : MonoBehaviour
     public void ResetGame()
     {
         stopPopUp = false;
+        weaponEquip.whackEmActive = false;
 
         //Score
         score = 0;
@@ -211,6 +221,11 @@ public class WhackEmGameManager : MonoBehaviour
         winloseText.text = "You have lost...";
         gameWon = false;
         stopPopUp = true;
+        gameOn = false;
+        gameJustFinished = true;
+        weaponEquip.whackEmActive = false;
+        timerText.enabled = false;
+
 
         yield return new WaitForSeconds(2);
 
@@ -218,6 +233,7 @@ public class WhackEmGameManager : MonoBehaviour
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;
+        ResetGame();
     }
 
     //Choose random enemy with random appear times
@@ -226,7 +242,8 @@ public class WhackEmGameManager : MonoBehaviour
         while (levelLoaded) //Allow coroutine to load on Start.
         {
             while (gameOn && !stopPopUp && weaponEquip.haveMallet) //But don't do anything until the game is on.
-            {                
+            {
+                
                 //Iterate through the array of enemies and check if it's visible or not.
                 for (int i = 0; i < critters.Length; i++)
                 {
