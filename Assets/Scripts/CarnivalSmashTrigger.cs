@@ -9,13 +9,25 @@ public class CarnivalSmashTrigger : MonoBehaviour
     [SerializeField] GameObject rulesUI;
     [SerializeField] int ticketCost = 1;
     [SerializeField] bool buttonPressed;
-   
+
+
+    private void Update()
+    {
+        if (buttonPressed)
+        {
+            //Hide cursor again
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
+        }
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        //Keep the rulesUI from popping on
+        //Only show the rules screen if player has not picked up the mallet
         if (!whackemGM.weaponEquip.haveMallet)
         {
-            //* Display game rules screen with play buttons
+            //Display game rules screen with play buttons
             rulesUI.SetActive(true);
         }
 
@@ -28,13 +40,16 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //If controller type is keyboard give mouse control
         if (!Menu.Instance.usingJoystick)
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        //* Set a timer for the player to come back into the trigger and play the game.
+        //* If counter reaches 0, player loses their ticket and will be charged again.
+
         if (other.CompareTag("Player"))
         {
             //Reset bools for a new game;
@@ -48,12 +63,9 @@ public class CarnivalSmashTrigger : MonoBehaviour
     {
         whackemGM.gameOn = true;
         buttonPressed = true;
-        
-        if (buttonPressed)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+
+        //Unlock player camera movement
+        FPSController.Instance.canMove = true;
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);
@@ -61,8 +73,9 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //Spend the required ticket cost for the game
         TicketManager.Instance.SpendTicket(ticketCost);
 
-        //Unlock player camera movement
-        FPSController.Instance.canMove = true;
+        //* When game is played, make mallet appear in player hands.
+        //* If game is lost, mallet disappears.
+        //* If game is won, mallet stays in inventory.
     }
 
     public void LeaveGame()
