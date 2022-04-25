@@ -1,3 +1,5 @@
+/*
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,9 +23,7 @@ public class WhackEmGameManager : MonoBehaviour
     [HideInInspector] public bool critterIsVisible;
     [HideInInspector] public bool gameIsRunning;
     [HideInInspector] public bool isTaunting = false;
-    //for my loop
-    [HideInInspector] public bool tauntCritVisible;
-  
+
     [Header("SCORE")]
     [SerializeField] int scoreLimit; //the amount needed to win
     [HideInInspector] public int score; //the player kills
@@ -35,7 +35,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     //Bigger nums = slower speed
     [Header("ENEMY POPUP SPEED")]
-    public float minRando; private float minRandoTemp; 
+    public float minRando; private float minRandoTemp;
     public float maxRando; private float maxRandoTemp;
     public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
 
@@ -51,13 +51,15 @@ public class WhackEmGameManager : MonoBehaviour
     public Sprite cardImage;
 
     [Space(10)]
-    /*[HideInInspector]*/ public bool gameWon;
-    /*[HideInInspector]*/ public bool gameOver;
+    //[HideInInspector]
+    public bool gameWon;
+    //[HideInInspector]
+    public bool gameOver;
     float randomPopUpTime;
     float randomStayTime;
     public bool levelLoaded;
     [HideInInspector] bool stopPopUp;
-   
+
     int randomEnemy;
     public MonoBehaviour script;
 
@@ -89,7 +91,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Update()
     {
-        if(gameOn)
+        if (gameOn)
         {
             // alert weapon equip that the game is active and mallet can be picked up
             weaponEquip.whackEmActive = true;
@@ -145,10 +147,10 @@ public class WhackEmGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        else 
+        else
         {
-         //   gameUI.SetActive(false);
-         //   ResetGame(); //Reset the variables back to original
+            //   gameUI.SetActive(false);
+            //   ResetGame(); //Reset the variables back to original
         }
     }
 
@@ -245,52 +247,64 @@ public class WhackEmGameManager : MonoBehaviour
         {
             while (gameOn && !stopPopUp && weaponEquip.haveMallet) //But don't do anything until the game is on.
             {
-                // create queue of custom class (params to call)
-                Queue<WhackEmRoutine> whackQueue = new Queue<WhackEmRoutine>();
-
-               for (int i = 0; i < 2; i++)  //add 2 to queue to start
-               {
-                    //Debug.Log("Added-> up " + rout.up + " taunt " + rout.taunt + " bool " + rout.addTaunt);
-                    whackQueue.Enqueue(new WhackEmRoutine());
-               }
-                
-
-                while (gameJustFinished != true && gameWon != true)
+                for (int i = 0; i < critters.Length; i++)
                 {
-                    WhackEmRoutine wr = whackQueue.Dequeue();
-                    int critUp = wr.up, critTaunt = wr.taunt;
-                    bool tauntBool = wr.addTaunt;
-     
-                    critterIsVisible = critters[critUp].GetComponent<WhackEmEnemy>().isVis; //check if current critter is visible
-                    tauntCritVisible = critters[critTaunt].GetComponent<WhackEmEnemy>().isVis; //check if taunt critter is visible
+                    randomEnemy = UnityEngine.Random.Range(0, 5);  //Choose random enemy to pop-up
+                    int randomTaunt = UnityEngine.Random.Range(0, 5); //Choose random enemy that will taunt
+                    TauntPosition position = critters[randomEnemy].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
+                   
                     randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
                     randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
 
-                    //if main creature is not visible
+                    //Check through each enemy to see if it is visible
+                    critterIsVisible = critters[i].GetComponent<WhackEmEnemy>().isVis;
+
+                    //Check to see if enemy is not visible.
                     if (!critterIsVisible)
                     {
-                        //raise main creature
-                        yield return new WaitForSeconds(randomPopUpTime);
-                        critters[critUp].SetActive(true);
-                        critterIsVisible = true;
-                        //check if specified taunt creat bool is on and its not visible already (not main creat)
-                        //TauntPosition needs to be adjusted
-                        if (tauntBool && !tauntCritVisible)
+                        //Check if the enemy is taunting
+                        if (randomEnemy == randomTaunt)
                         {
-                            TauntPosition position = critters[critTaunt].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
-                            critters[critTaunt].SetActive(true);
-                            critters[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
-                            tauntCritVisible = true;
+                            Debug.Log("TAUNTING!!");
+
+                            //Enemy is active
+                            critters[randomEnemy].SetActive(true);
+                            critterIsVisible = true; //Set the enemy to visible so that a new random number is called.
+
+                            //Enemy appears at taunt position
+                            critters[randomEnemy].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
+                            isTaunting = true;
+
+                            yield return new WaitForSeconds(0.3f); //Amount of time to stay in taunt position
+
+                            //Debug.Log("Stopped taunting");
+
+                            //Move back to normal position
+                            critters[randomEnemy].transform.position = new Vector3(position.enemyPosition.position.x, position.enemyPosition.position.y, position.enemyPosition.position.z);
+                            critterIsVisible = false;
+
+                            critters[randomEnemy].SetActive(false);
+                            isTaunting = false;
                         }
-                        //bring both down
-                        yield return new WaitForSeconds(randomStayTime);
-                        critterIsVisible = false;
-                        critters[critUp].SetActive(false);
-                        tauntCritVisible = false;
-                        critters[critTaunt].SetActive(false);
+                        else
+                        {
+                            //Random enemy appears at a random time.
+                            yield return new WaitForSeconds(randomPopUpTime);
+                            critters[randomEnemy].SetActive(true);
+                            critterIsVisible = true; //set individual critter's visibility to true
+
+                            //Visible enemy stays for random time before disappearing.
+                            yield return new WaitForSeconds(randomStayTime);
+                            critterIsVisible = false; //set individual critter's visibility to false
+                            critters[randomEnemy].SetActive(false);
+                        }
                     }
-                    
-                    whackQueue.Enqueue(new WhackEmRoutine());
+                    else
+                    {
+                        //Start the coroutine over. (not sure this is doing anything..)
+                        StartCoroutine(EnemyPopUp());
+                        yield return null;
+                    }
                 }
             }
             yield return null;
@@ -320,3 +334,7 @@ public class WhackEmGameManager : MonoBehaviour
     }
 
 }
+
+
+
+*/
