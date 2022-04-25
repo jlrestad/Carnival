@@ -1961,10 +1961,12 @@ MonoBehaviour:
   weaponEquip: {fileID: 0}
   cardManager: {fileID: 825367243}
   gameOn: 0
+  gameJustFinished: 0
   popUp: 0
   critterIsVisible: 0
   gameIsRunning: 0
   isTaunting: 0
+  tauntCritVisible: 0
   scoreLimit: 5
   score: 0
   timeCounter: 25
@@ -3113,7 +3115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 480878102020010759, guid: ab5482ed6436eb14cb6e2eb216d48b90, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 480878102020010759, guid: ab5482ed6436eb14cb6e2eb216d48b90, type: 3}
       propertyPath: m_TagString
