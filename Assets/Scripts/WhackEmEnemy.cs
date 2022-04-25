@@ -29,6 +29,7 @@ public class WhackEmEnemy : MonoBehaviour
         if (hasBeenHit)
         {
             gameObject.SetActive(false);
+            hasBeenHit = false; //reset bool
         }
     }
 
