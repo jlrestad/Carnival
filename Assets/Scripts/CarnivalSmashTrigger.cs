@@ -60,6 +60,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
     //Pay the cost to play the game
     public void PlayGame()
     {
+        //Hide the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         whackemGM.gameOn = true;
         buttonPressed = true;
 
@@ -72,6 +76,9 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //Spend the required ticket cost for the game
         TicketManager.Instance.SpendTicket(ticketCost);
 
+        WeaponEquip.Instance.whackEmActive = true;
+
+        
         //* When game is played, make mallet appear in player hands.
         //* If game is lost, mallet disappears.
         //* If game is won, mallet stays in inventory.

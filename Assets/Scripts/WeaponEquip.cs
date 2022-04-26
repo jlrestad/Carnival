@@ -33,7 +33,7 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject closestWeapon = null;
-    public GameObject _closestWeapon = null;
+    [HideInInspector] public GameObject _closestWeapon = null;
     public GameObject currentWeapon = null;
     public GameObject closestSkull = null;
     [SerializeField] float pickUpRange = 1.5f;
@@ -261,9 +261,13 @@ public class WeaponEquip : MonoBehaviour
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-                if (_closestWeapon == null)
+                //if (_closestWeapon == null)
+                //{
+                //    _closestWeapon = closestWeapon;
+                //}
+                if (currentWeapon == null)
                 {
-                    _closestWeapon = closestWeapon;
+                    currentWeapon = closestWeapon;
                 }
 
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon

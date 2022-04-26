@@ -89,12 +89,6 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Update()
     {
-        if(gameOn)
-        {
-            // alert weapon equip that the game is active and mallet can be picked up
-            weaponEquip.whackEmActive = true;
-        }
-
         //Run this when the WhackEm game is on.
         if (gameOn && weaponEquip.haveMallet)
         {
@@ -147,8 +141,8 @@ public class WhackEmGameManager : MonoBehaviour
         }
         else 
         {
-         //   gameUI.SetActive(false);
-         //   ResetGame(); //Reset the variables back to original
+            gameUI.SetActive(false);
+            ResetGame(); //Reset the variables back to original
         }
     }
 
@@ -165,7 +159,7 @@ public class WhackEmGameManager : MonoBehaviour
     public void ResetGame()
     {
         stopPopUp = false;
-        weaponEquip.whackEmActive = false;
+        weaponEquip.whackEmActive = gameOn;
 
         //Score
         score = 0;
@@ -179,7 +173,7 @@ public class WhackEmGameManager : MonoBehaviour
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
 
-        gameUI.SetActive(false);
+        //gameUI.SetActive(false);
 
     }
 
@@ -210,9 +204,11 @@ public class WhackEmGameManager : MonoBehaviour
     void WinUI()
     {
         DisplayGameCard();
+        
         gameWon = true; //Win weapon card and keep weapon in inventory.
         stopPopUp = true; //Stop the EnemyPopUp coroutine.
         gameOver = true; //The game has either been won or time has run out.
+        gameOn = false;
     }
 
     //Display the win or lose screen for a short time.
@@ -221,12 +217,11 @@ public class WhackEmGameManager : MonoBehaviour
         //Display lose message
         winloseText.enabled = true;
         winloseText.text = "You have lost...";
+        timerText.enabled = false;
         gameWon = false;
         stopPopUp = true;
-        gameOn = false;
         gameJustFinished = true;
-        weaponEquip.whackEmActive = false;
-        timerText.enabled = false;
+        weaponEquip.whackEmActive = gameOn;
 
 
         yield return new WaitForSeconds(2);
@@ -235,6 +230,8 @@ public class WhackEmGameManager : MonoBehaviour
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;
+        gameOn = false;
+
         ResetGame();
     }
 
