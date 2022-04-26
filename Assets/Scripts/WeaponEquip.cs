@@ -43,10 +43,9 @@ public class WeaponEquip : MonoBehaviour
     public GameObject skull;
     [SerializeField] Collider skullCollider;
     [SerializeField] Rigidbody skullRB;
-    public GameObject throwArms;
 
     [Space(2)]
-    /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull, usingFlashlight;
+    /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull;
 
     public bool whackEmActive = false;
 
@@ -119,8 +118,6 @@ public class WeaponEquip : MonoBehaviour
 
             //Remove the weapon from the list
             weaponList.Remove(skullsParent);
-            //Turn off arms in throw position
-            throwArms.SetActive(false);
 
             //Out of skulls but have other weapons.
             if (haveMallet && !isEquipped || haveGun && !isEquipped)
@@ -143,15 +140,17 @@ public class WeaponEquip : MonoBehaviour
             {
                 Debug.Log("this is the current weapon: " + currentWeapon.name);
 
-                if (currentWeapon != skullsParent)
-                {
-                    currentWeapon.SetActive(false);
-                }
-                else
-                {
-                    skullsParent.transform.GetChild(0).gameObject.SetActive(false);
-                }
+                //Turn off weapon when flashlight is on
+                //if (currentWeapon != skullsParent)
+                //{
+                //    currentWeapon.SetActive(false);
+                //}
+                //else
+                //{
+                //    skullsParent.transform.GetChild(0).gameObject.SetActive(false);
+                //}
 
+                //Turn on the flashlight
                 GetComponent<FPSController>().flashlightHold.SetActive(true);
                 GetComponent<FPSController>().flashlightOn = true;
 
@@ -177,7 +176,6 @@ public class WeaponEquip : MonoBehaviour
             {
                 skullsParent.transform.GetChild(0).gameObject.SetActive(false);
                 holdingSkull = false;
-                throwArms.SetActive(false);
             }
             else if (isEquipped)
             {
@@ -306,7 +304,6 @@ public class WeaponEquip : MonoBehaviour
             {
                 //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
                 skullsParent.transform.GetChild(0).gameObject.SetActive(false);
-                throwArms.SetActive(false);
                 holdingSkull = false;
             }
 
@@ -329,14 +326,12 @@ public class WeaponEquip : MonoBehaviour
                 //Equip skull
                 skullsParent.transform.GetChild(0).gameObject.SetActive(true);
                 holdingSkull = true;
-                throwArms.SetActive(true);
             }
             else
             {
                 //Equip other weapon
                 currentWeapon.SetActive(true); //show the weapon
                 holdingSkull = false;
-                throwArms.SetActive(false);
             }
         }
 
@@ -354,7 +349,6 @@ public class WeaponEquip : MonoBehaviour
                 //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
                 skullsParent.transform.GetChild(0).gameObject.SetActive(false);
                 holdingSkull = false;
-                throwArms.SetActive(false);
             }
 
             //Move to the previous weapon in the list.
@@ -376,14 +370,12 @@ public class WeaponEquip : MonoBehaviour
                 //Equip skull
                 skullsParent.transform.GetChild(0).gameObject.SetActive(true);
                 holdingSkull = true;
-                throwArms.SetActive(true);
             }
             else
             {
                 //Equip other weapon
                 currentWeapon.SetActive(true);
                 holdingSkull = false;
-                throwArms.SetActive(false);
             }
             
         }
@@ -444,19 +436,17 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //Hide flashlight if holding
-        if (GetComponent<FPSController>().flashlightOn)
-        {
-            GetComponent<FPSController>().flashlightHold.SetActive(false);
-            GetComponent<FPSController>().flashlightOn = false;
-            usingFlashlight = false;
-        }
+        //if (GetComponent<FPSController>().flashlightOn)
+        //{
+        //    GetComponent<FPSController>().flashlightHold.SetActive(false);
+        //    GetComponent<FPSController>().flashlightOn = false;
+        //}
 
         //Equip weapon (except for skull)
         if (currentWeapon != skullsParent && holdingSkull)
         //if (currentWeapon != skullsParent && holdingSkull)
         {
             holdingSkull = false;
-            throwArms.SetActive(false);
 
             //Put away skulls before equiping weapon.
             skullsParent.transform.GetChild(0).gameObject.SetActive(false);
@@ -511,9 +501,6 @@ public class WeaponEquip : MonoBehaviour
 
             if (skullsParent.transform.childCount != 0)
             {
-                //Turn on test arms
-                throwArms.SetActive(true);
-
                 //Show the skull count menu.
                 menu.skullCountUI.SetActive(true);
                 menu.skullCountText.text = addToCount.ToString();
@@ -522,7 +509,6 @@ public class WeaponEquip : MonoBehaviour
             {
                 holdingSkull = false;
                 haveSkull = false;
-                throwArms.SetActive(false);
             }
         }
     }
@@ -543,7 +529,6 @@ public class WeaponEquip : MonoBehaviour
         {
             skullsParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
             holdingSkull = false;
-            throwArms.SetActive(false);
         }
     }
 

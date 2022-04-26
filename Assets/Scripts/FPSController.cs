@@ -120,7 +120,6 @@ public class FPSController : MonoBehaviour
         {
             flashlightHold.SetActive(true);
             flashlightOn = true;
-            weaponEquip.throwArms.SetActive(false);
         }
 
         //If holding the flashlight and button is pressed again put the flashlight away
@@ -129,8 +128,6 @@ public class FPSController : MonoBehaviour
             flashlightHold.SetActive(false);
             flashlightOn = false;
         }
-
-        weaponEquip.usingFlashlight = flashlightOn;
 
         // Player is grounded -- recalculate the move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);

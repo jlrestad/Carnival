@@ -625,10 +625,6 @@ PrefabInstance:
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 4858480269730017188}
-    - target: {fileID: 8477729248151646984, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
-      propertyPath: m_TagString
-      value: Mallet
-      objectReference: {fileID: 0}
     - target: {fileID: 8567739266467498280, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: boss
       value: 
@@ -1132,8 +1128,8 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.84528303, g: 1, b: 1, a: 1}
-  m_Intensity: 50
+  m_Color: {r: 0.71960664, g: 0.95841163, b: 0.9716981, a: 1}
+  m_Intensity: 100
   m_Range: 500
   m_SpotAngle: 179
   m_InnerSpotAngle: 106.93883
@@ -1176,8 +1172,8 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.3
-  m_ColorTemperature: 20000
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 4907
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 2.038748e-38, z: 4.5697343e-37, w: 4.1326e-40}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -1433,8 +1429,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.77618265, g: 1, b: 0, a: 1}
-  m_Intensity: 0.2
+  m_Color: {r: 0.740566, g: 0.8928748, b: 1, a: 1}
+  m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
