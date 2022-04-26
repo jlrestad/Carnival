@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SkillShotGameManager : MonoBehaviour
 {
     //public Transform leftPos, rightPos, parentPos;
-    WeaponEquip weaponEquip;
+    [HideInInspector] public WeaponEquip weaponEquip;
 
     public bool targetFlipped;
     public bool gameOn;

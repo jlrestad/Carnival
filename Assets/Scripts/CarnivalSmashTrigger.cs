@@ -19,7 +19,6 @@ public class CarnivalSmashTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
