@@ -44,7 +44,7 @@ public class MeleeSwing : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetAxis("RtTrigger") > 0 && canSwing)
+        if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
             StartCoroutine(MeleeAttack());
 
@@ -121,12 +121,12 @@ public class MeleeSwing : MonoBehaviour
 
     IEnumerator MeleeAttack()
     {
-        transform.Rotate(Vector3.right, 90f);
+        transform.Rotate(Vector3.right, 60f);
         canSwing = false;
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.3f);
 
-        transform.Rotate(Vector3.right, -45f);
+        transform.Rotate(Vector3.right, -60f);
         canSwing = true;
     }
 

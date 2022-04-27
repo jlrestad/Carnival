@@ -9,7 +9,13 @@ public class CarnivalSmashTrigger : MonoBehaviour
     [SerializeField] GameObject rulesUI;
     [SerializeField] int ticketCost = 1;
     [SerializeField] bool buttonPressed;
+    public Transform gameplayPosition;
+    public Transform player;
 
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Update()
     {
@@ -34,6 +40,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
         if (!buttonPressed)
         {
             FPSController.Instance.canMove = false;
+            FPSController.Instance.GetComponent<CharacterController>().enabled = false;
         }
 
         //If controller type is keyboard give mouse control
@@ -46,9 +53,6 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //* Set a timer for the player to come back into the trigger and play the game.
-        //* If counter reaches 0, player loses their ticket and will be charged again.
-
         if (other.CompareTag("Player"))
         {
             //Reset bools for a new game;
@@ -69,6 +73,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
         //Unlock player camera movement
         FPSController.Instance.canMove = true;
+        player.position = gameplayPosition.position;
+
+        //* This will need to be turned back on after the game is over.
+        //FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);
@@ -77,11 +85,6 @@ public class CarnivalSmashTrigger : MonoBehaviour
         TicketManager.Instance.SpendTicket(ticketCost);
 
         WeaponEquip.Instance.whackEmActive = true;
-
-        
-        //* When game is played, make mallet appear in player hands.
-        //* If game is lost, mallet disappears.
-        //* If game is won, mallet stays in inventory.
     }
 
     public void LeaveGame()
