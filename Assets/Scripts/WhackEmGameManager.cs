@@ -120,12 +120,13 @@ public class WhackEmGameManager : MonoBehaviour
             //Display Win/Lose
             if (score >= scoreLimit && timeLeft > 0 && !gameOver)
             {
-                WinUI();
+                gameWon = true;
+                StartCoroutine(WinLoseUI());
             }
             else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
             {
                 //Display win or lose
-                StartCoroutine(LoseUI());
+                StartCoroutine(WinLoseUI());
 
                 //* Put weapon back
                 weaponEquip.haveMallet = false;
@@ -207,26 +208,24 @@ public class WhackEmGameManager : MonoBehaviour
         }
     }
 
-    void WinUI()
-    {
-        DisplayGameCard();
-        gameWon = true; //Win weapon card and keep weapon in inventory.
-        stopPopUp = true; //Stop the EnemyPopUp coroutine.
-        gameOver = true; //The game has either been won or time has run out.
-    }
-
     //Display the win or lose screen for a short time.
-    IEnumerator LoseUI()
+    IEnumerator WinLoseUI()
     {
         //Display lose message
         winloseText.enabled = true;
-        winloseText.text = "You have lost...";
-        gameWon = false;
+        if(gameWon)
+        {
+            winloseText.text = "You have won...";
+        } else
+        {
+            winloseText.text = "You have lost...";
+        }
         stopPopUp = true;
         gameOn = false;
         gameJustFinished = true;
         weaponEquip.whackEmActive = false;
         timerText.enabled = false;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
 
         yield return new WaitForSeconds(2);
@@ -235,7 +234,16 @@ public class WhackEmGameManager : MonoBehaviour
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;
-        ResetGame();
+        gameUI.SetActive(false);
+
+        if (gameWon)
+        {
+            DisplayGameCard();
+        }
+        else
+        {
+            ResetGame();
+        }
     }
 
     //Choose random enemy with random appear times

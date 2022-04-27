@@ -9,6 +9,13 @@ public class CarnivalSmashTrigger : MonoBehaviour
     [SerializeField] GameObject rulesUI;
     [SerializeField] int ticketCost = 1;
     [SerializeField] bool buttonPressed;
+    public Transform gameplayPosition;
+    public Transform player;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
 
     private void Update()
@@ -23,24 +30,27 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Only show the rules screen if player has not picked up the mallet
-        if (!whackemGM.weaponEquip.haveMallet)
+        if(!whackemGM.gameWon)
         {
-            //Display game rules screen with play buttons
-            rulesUI.SetActive(true);
-        }
+            //Only show the rules screen if player has not picked up the mallet
+            if (!whackemGM.weaponEquip.haveMallet && !whackemGM.gameJustFinished)
+            {
+                //Display game rules screen with play buttons
+                rulesUI.SetActive(true);
+            }
 
-        //Lock player camera movement until a button is pressed
-        if (!buttonPressed)
-        {
-            FPSController.Instance.canMove = false;
-        }
+            //Lock player camera movement until a button is pressed
+            if (!buttonPressed)
+            {
+                FPSController.Instance.canMove = false;
+            }
 
-        //If controller type is keyboard give mouse control
-        if (!Menu.Instance.usingJoystick)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
+            //If controller type is keyboard give mouse control
+            if (!Menu.Instance.usingJoystick)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+            }
         }
     }
 
@@ -54,6 +64,8 @@ public class CarnivalSmashTrigger : MonoBehaviour
             //Reset bools for a new game;
             whackemGM.gameOn = false;
             whackemGM.gameOver = false;
+            whackemGM.gameJustFinished = false;
+            buttonPressed = false;
         }
     }
 
@@ -63,14 +75,17 @@ public class CarnivalSmashTrigger : MonoBehaviour
         whackemGM.gameOn = true;
         buttonPressed = true;
 
-        //Unlock player camera movement
+        //Unlock player camera movement, put player in position, lock player body movement
         FPSController.Instance.canMove = true;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+        player.position = gameplayPosition.position;
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);
 
         //Spend the required ticket cost for the game
         TicketManager.Instance.SpendTicket(ticketCost);
+
 
         //* When game is played, make mallet appear in player hands.
         //* If game is lost, mallet disappears.
