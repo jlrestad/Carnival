@@ -13,6 +13,7 @@ public class SkillShotGameManager : MonoBehaviour
     public bool gameOn;
     public bool reachedEnd;
     public bool gameWon;
+    public bool gameJustPlayed;
     bool levelLoaded;
 
     [Header("UI")]
@@ -62,6 +63,11 @@ public class SkillShotGameManager : MonoBehaviour
 
     private void Update()
     {
+        if (gameOn)
+        {
+            // alert weapon equip that the game is active and mallet can be picked up
+            weaponEquip.skillshotActive = true;
+        }
         //Run this when the WhackEm game is on.
         if (gameOn && weaponEquip.haveGun)
         {
@@ -82,17 +88,19 @@ public class SkillShotGameManager : MonoBehaviour
             //Display Win/Lose
             if (score >= scoreLimit && timeLeft > 0 && !gameOver)
             {
-                WinUI();
+                gameWon = true;
+                StartCoroutine(WinLoseUI());
             }
             else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
             {
                 //Display win or lose
-                StartCoroutine(LoseUI());
+                StartCoroutine(WinLoseUI());
 
                 //* Put weapon back
                 weaponEquip.haveGun = false;
                 weaponEquip.currentWeapon.SetActive(false);
                 weaponEquip._closestWeapon.SetActive(true);
+                weaponEquip.prevWeapon.SetActive(true);
             }
 
             //Update ticket count
@@ -109,8 +117,8 @@ public class SkillShotGameManager : MonoBehaviour
         }
         else if (!gameOn)
         {
-            gameUI.SetActive(false);
-            ResetGame(); //Reset the variables back to original
+  //          gameUI.SetActive(false);
+   //         ResetGame(); //Reset the variables back to original
         }
     }
 
@@ -127,6 +135,7 @@ public class SkillShotGameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        weaponEquip.skillshotActive = false;
         //Score
         score = 0;
         scoreText.text = (score + "/" + scoreLimit);
@@ -160,29 +169,41 @@ public class SkillShotGameManager : MonoBehaviour
         }
     }
 
-    void WinUI()
-    {
-        DisplayGameCard();
-        gameWon = true;
-        gameOver = true;
-        gameOn = false;
-    }
-
-    //Display the win or lose screen for a short time.
-    private IEnumerator LoseUI()
+    IEnumerator WinLoseUI()
     {
         //Display lose message
         winloseText.enabled = true;
-        winloseText.text = "You have lost...";
-        timerText.text = "";
-        gameWon = false;
+        if (gameWon)
+        {
+            winloseText.text = "You have won...";
+        }
+        else
+        {
+            winloseText.text = "You have lost...";
+        }
+        gameOn = false;
+        gameJustPlayed = true;
+        weaponEquip.skillshotActive = false;
+        timerText.enabled = false;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+
 
         yield return new WaitForSeconds(2);
 
+        //Clear and turn off lose message
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;
-        gameOn = false;
+        gameUI.SetActive(false);
+
+        if (gameWon)
+        {
+            DisplayGameCard();
+        }
+        else
+        {
+            ResetGame();
+        }
     }
 
     public void DisplayGameCard()

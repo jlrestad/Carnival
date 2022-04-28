@@ -9,6 +9,13 @@ public class SkillShotTrigger : MonoBehaviour
     [SerializeField] GameObject rulesUI;
     [SerializeField] int ticketCost = 1;
     [SerializeField] bool buttonPressed;
+    public Transform gameplayPosition;
+    public Transform player;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Update()
     {
@@ -22,24 +29,27 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Only show the rules screen if player has not picked up the mallet
-        if (!skillshotGM.weaponEquip.haveGun)
+        if(!skillshotGM.gameWon)
         {
-            //Display game rules screen with play buttons
-            rulesUI.SetActive(true);
-        }
+            //Only show the rules screen if player has not picked up the mallet
+            if (!skillshotGM.weaponEquip.haveGun && !skillshotGM.gameJustPlayed)
+            {
+                //Display game rules screen with play buttons
+                rulesUI.SetActive(true);
+            }
 
-        //Lock player camera movement until a button is pressed
-        if (!buttonPressed)
-        {
-            FPSController.Instance.canMove = false;
-        }
+            //Lock player camera movement until a button is pressed
+            if (!buttonPressed)
+            {
+                FPSController.Instance.canMove = false;
+            }
 
-        //If controller type is keyboard give mouse control
-        if (!Menu.Instance.usingJoystick)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
+            //If controller type is keyboard give mouse control
+            if (!Menu.Instance.usingJoystick)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+            }
         }
     }
 
@@ -53,6 +63,8 @@ public class SkillShotTrigger : MonoBehaviour
             //Reset bools for a new game;
             skillshotGM.gameOn = false;
             skillshotGM.gameOver = false;
+            skillshotGM.gameJustPlayed = false;
+            buttonPressed = false;
         }
     }
 
@@ -64,6 +76,8 @@ public class SkillShotTrigger : MonoBehaviour
 
         //Unlock player camera movement
         FPSController.Instance.canMove = true;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+        player.position = gameplayPosition.position;
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);

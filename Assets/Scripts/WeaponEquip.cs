@@ -33,6 +33,7 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject closestWeapon = null;
+    public GameObject prevWeapon = null;
     [HideInInspector] public GameObject _closestWeapon = null;
     public GameObject currentWeapon = null;
     public GameObject closestSkull = null;
@@ -48,6 +49,7 @@ public class WeaponEquip : MonoBehaviour
     /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull;
 
     public bool whackEmActive = false;
+    public bool skillshotActive = false;
 
     [Space(15)]
     public string gameName;
@@ -261,10 +263,10 @@ public class WeaponEquip : MonoBehaviour
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-                if (_closestWeapon == null)
-                {
+            //    if (_closestWeapon == null)
+              //  {
                     _closestWeapon = closestWeapon;
-                }
+                //}
                 //if (currentWeapon == null)
                 //{
                 //    currentWeapon = closestWeapon;
@@ -394,11 +396,12 @@ public class WeaponEquip : MonoBehaviour
         // Check which weapon it is and set it to the current weapon.
 
         //GUN
-        if (closestWeapon.CompareTag("Gun") && !haveGun)
+        if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
         {
             currentWeapon = gunHold;
             weaponList.Add(currentWeapon);
             haveGun = true;
+            prevWeapon = closestWeapon;
             closestWeapon.SetActive(false); //hide the picked up weapon
             //After picking up the weapon, equip it.
             EquipWeapon(); //picked up weapon is equipped
