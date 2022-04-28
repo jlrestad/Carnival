@@ -10,6 +10,7 @@ public class WhackEmGameManager : MonoBehaviour
     public static WhackEmGameManager Instance;
 
     public GameObject[] critters;
+    public GameObject[] taunts;
     public GameObject whackemEnemy;
     [HideInInspector] public WeaponEquip weaponEquip;
     [SerializeField] GameCardManager cardManager;
@@ -54,6 +55,7 @@ public class WhackEmGameManager : MonoBehaviour
     /*[HideInInspector]*/ public bool gameWon;
     /*[HideInInspector]*/ public bool gameOver;
     float randomPopUpTime;
+    float randomTauntTime;
     float randomStayTime;
     public bool levelLoaded;
     [HideInInspector] bool stopPopUp;
@@ -259,8 +261,10 @@ public class WhackEmGameManager : MonoBehaviour
                     bool tauntBool = wr.addTaunt;
      
                     critterIsVisible = critters[critUp].GetComponent<WhackEmEnemy>().isVis; //check if current critter is visible
-                    tauntCritVisible = critters[critTaunt].GetComponent<WhackEmEnemy>().isVis; //check if taunt critter is visible
+                    tauntCritVisible = taunts[critTaunt].GetComponent<WhackEmEnemy>().isVis; //check if taunt critter is visible
+                    
                     randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
+                    randomTauntTime = randomStayTime / 2;
                     randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
 
                     //if main creature is not visible
@@ -271,20 +275,22 @@ public class WhackEmGameManager : MonoBehaviour
                         critters[critUp].SetActive(true);
                         critterIsVisible = true;
                         //check if specified taunt creat bool is on and its not visible already (not main creat)
-                        //TauntPosition needs to be adjusted
+                        
                         if (tauntBool && !tauntCritVisible)
                         {
-                            TauntPosition position = critters[critTaunt].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
-                            critters[critTaunt].SetActive(true);
-                            critters[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
+                            TauntPosition position = taunts[critTaunt].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
+                            taunts[critTaunt].SetActive(true);
+                            taunts[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
                             tauntCritVisible = true;
+                            yield return new WaitForSeconds(randomTauntTime);
+                            tauntCritVisible = false;
+                            taunts[critTaunt].SetActive(false);
                         }
                         //bring both down
                         yield return new WaitForSeconds(randomStayTime);
                         critterIsVisible = false;
                         critters[critUp].SetActive(false);
-                        tauntCritVisible = false;
-                        critters[critTaunt].SetActive(false);
+
                     }
                     
                     whackQueue.Enqueue(new WhackEmRoutine());

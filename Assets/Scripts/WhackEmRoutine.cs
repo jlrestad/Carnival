@@ -15,10 +15,22 @@ public class WhackEmRoutine
 
         // choose random enemy to put in taunt
         taunt = UnityEngine.Random.Range(0, 5);
+        //to make sure they're not the same one
+        if (up == taunt)
+        {
+            if(taunt < 5)
+            {
+                taunt++;
+            }
+            else
+            {
+                taunt--;
+            }
+        }
 
         // choose if taunting or not
         int which = UnityEngine.Random.Range(0, 100);
-        if (which < 50)
+        if (which % 2 == 0)
         {
             addTaunt = true;
         }
