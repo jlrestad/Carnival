@@ -99,7 +99,7 @@ public class FPSController : MonoBehaviour
 
         //
         //Controls
-        run = Input.GetAxis("LtTrigger") > 0 || Input.GetButton("Run");
+        run = Input.GetAxis("LtTrigger") > 0 && !isCrouching || Input.GetButton("Run") && !isCrouching;
         jump = Input.GetButtonDown("Jump");
         slide = Input.GetButtonDown("Slide");
         crouch = Input.GetButtonDown("Crouch");

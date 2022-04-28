@@ -88,6 +88,11 @@ public class SkillShotGameManager : MonoBehaviour
             {
                 //Display win or lose
                 StartCoroutine(LoseUI());
+
+                //* Put weapon back
+                weaponEquip.haveGun = false;
+                weaponEquip.currentWeapon.SetActive(false);
+                weaponEquip._closestWeapon.SetActive(true);
             }
 
             //Update ticket count
@@ -136,8 +141,6 @@ public class SkillShotGameManager : MonoBehaviour
         //Time
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
-        //gameUI.SetActive(false);
-
     }
 
 
@@ -162,6 +165,7 @@ public class SkillShotGameManager : MonoBehaviour
         DisplayGameCard();
         gameWon = true;
         gameOver = true;
+        gameOn = false;
     }
 
     //Display the win or lose screen for a short time.
@@ -178,6 +182,7 @@ public class SkillShotGameManager : MonoBehaviour
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;
+        gameOn = false;
     }
 
     public void DisplayGameCard()

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.TerrainAPI;
 //using UnityEngine.Experimental.GlobalIllumination;
 
 public class Gun : MonoBehaviour
