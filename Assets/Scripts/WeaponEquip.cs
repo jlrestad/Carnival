@@ -261,14 +261,14 @@ public class WeaponEquip : MonoBehaviour
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-                //if (_closestWeapon == null)
-                //{
-                //    _closestWeapon = closestWeapon;
-                //}
-                if (currentWeapon == null)
+                if (_closestWeapon == null)
                 {
-                    currentWeapon = closestWeapon;
+                    _closestWeapon = closestWeapon;
                 }
+                //if (currentWeapon == null)
+                //{
+                //    currentWeapon = closestWeapon;
+                //}
 
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
