@@ -18,7 +18,7 @@ public class WhackEmRoutine
         //to make sure they're not the same one
         if (up == taunt)
         {
-            if(taunt < 5)
+            if(taunt < 4)
             {
                 taunt++;
             }
