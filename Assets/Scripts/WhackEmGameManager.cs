@@ -91,6 +91,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Update()
     {
+        
         if(gameOn)
         {
             // alert weapon equip that the game is active and mallet can be picked up
@@ -122,11 +123,13 @@ public class WhackEmGameManager : MonoBehaviour
             //Display Win/Lose
             if (score >= scoreLimit && timeLeft > 0 && !gameOver)
             {
+                Debug.Log("got into win/lose if");
                 gameWon = true;
                 StartCoroutine(WinLoseUI());
             }
             else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
             {
+                Debug.Log("Update, win/lose else");
                 //Display win or lose
                 StartCoroutine(WinLoseUI());
 
@@ -267,7 +270,7 @@ public class WhackEmGameManager : MonoBehaviour
                }
                 
 
-                while (gameJustFinished != true && gameWon != true)
+                while (!gameJustFinished && !gameWon)
                 {
                     WhackEmRoutine wr = whackQueue.Dequeue();
                     int critUp = wr.up, critTaunt = wr.taunt;
@@ -304,7 +307,7 @@ public class WhackEmGameManager : MonoBehaviour
                         critterIsVisible = false;
                         critters[critUp].SetActive(false);
                     }
-                    
+                    Debug.Log("score = " + score + " game won " + gameWon);
                     whackQueue.Enqueue(new WhackEmRoutine());
                 }
             }
