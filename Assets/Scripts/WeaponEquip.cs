@@ -412,6 +412,7 @@ public class WeaponEquip : MonoBehaviour
             currentWeapon = malletHold;
             weaponList.Add(malletHold);
             haveMallet = true;
+            prevWeapon = closestWeapon;
             closestWeapon.SetActive(false); //hide the picked up weapon
             //After picking up the weapon, equip it.
             EquipWeapon(); //picked up weapon is equipped

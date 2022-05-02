@@ -134,6 +134,7 @@ public class WhackEmGameManager : MonoBehaviour
                 weaponEquip.haveMallet = false;
                 weaponEquip.currentWeapon.SetActive(false);
                 weaponEquip._closestWeapon.SetActive(true);
+                weaponEquip.prevWeapon.SetActive(true);
             }
 
             //Update ticket count
