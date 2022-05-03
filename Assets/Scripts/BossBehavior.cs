@@ -12,8 +12,8 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] float turnSpeed; //turn speed in degrees per second
     [SerializeField] private float timeCounter = 0; //used separate time between taunt / leftswing / rightswing
 
-    bool taunt = true;
-    bool leftSwing, rightSwing, canMove;
+    private int whichHit = 0;               // needs to increment everytime the heart is hit
+    private int patternNumber = 0;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class BossBehavior : MonoBehaviour
         {
             StartCoroutine(AttackPattern());
 
-            RandomizeTimer();
+            RandomizeTimer(1, 4 - whichHit); // randomizes swing / taunt time depending on how many times the heart has been hit
         }
 
         StartCoroutine(CountDownTimer());
@@ -53,7 +53,7 @@ public class BossBehavior : MonoBehaviour
     }
 
     // method that runs the taunt
-    private void Taunt()        // needs to stop movement
+    private void Taunt()
     {
         // need taunt animation to happen when called
 
@@ -70,43 +70,54 @@ public class BossBehavior : MonoBehaviour
     }
     IEnumerator AttackPattern()
     {
-        if (taunt)
+        if (patternNumber == 0)
         {
-            gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+            gameObject.GetComponent<NavMeshAgent>().isStopped = true;           // stops movement
 
             // run the taunt method
             Taunt();
 
-            yield return new WaitForSeconds(3); // give time to stand still
-            // set bools for the next iteration or to pick up where it left off
+            yield return new WaitForSeconds(3 - whichHit); // give time to stand still, but less time depending on how many times the heart has been hit
+      
 
-            gameObject.GetComponent<NavMeshAgent>().isStopped = false;
-            taunt = false;
-            leftSwing = true;
+            gameObject.GetComponent<NavMeshAgent>().isStopped = false;          // resumes movement
+            patternNumber++;            // sets the pattern number depending on how many times the heart has been hit
 
-        } else if (leftSwing)
+        } else if (patternNumber == 1 || patternNumber == 3)
         {
             // have left arm attack
             LeftSwing();
-            // set bools for the next iteration or to pick up where it left off
-            leftSwing = false;
-            rightSwing = true;
+            // sets the pattern number depending on how many times the heart has been hit
 
-        } else if (rightSwing)
+            if(whichHit == 0 || whichHit == 2)
+            {
+                patternNumber++;
+            } else
+            {
+                patternNumber = 0;
+            }
+
+        } else if (patternNumber == 2 || patternNumber == 4)
         {
             // have right arm attack
             RightSwing();
-            // set bools for the next iteration or to pick up where it left off
-            rightSwing = false;
-            taunt = true;
 
+
+            // sets the pattern number depending on how many times the heart has been hit
+            if (whichHit == 1)
+            {
+                patternNumber++;
+            } else
+            {
+                patternNumber = 0;
+            }
         }
     }
 
-    private void RandomizeTimer()
+    private void RandomizeTimer(int min, int max)
     {
         System.Random random = new System.Random();
-        timeCounter = (float)(random.NextDouble() * (4 - 1) + 1);
+        timeCounter = (float)(random.NextDouble() * (max - min) + min);
     }
 
     IEnumerator CountDownTimer()
