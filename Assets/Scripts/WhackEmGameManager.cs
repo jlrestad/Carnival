@@ -231,11 +231,12 @@ public class WhackEmGameManager : MonoBehaviour
         gameJustFinished = true;
         weaponEquip.whackEmActive = false;
         timerText.enabled = false;
-        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
-
-
+        
         yield return new WaitForSeconds(2);
 
+        // lock player here until WinLoseUI done--
+        //if player leaves trigger area before this loop finishes, cannot win replay
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
         //Clear and turn off lose message
         winloseText.text = (" ");
         winloseText.enabled = false;
@@ -261,18 +262,10 @@ public class WhackEmGameManager : MonoBehaviour
             {
                 // create queue of custom class (params to call)
                 Debug.Log("Entered Game");
-                Queue<WhackEmRoutine> whackQueue = new Queue<WhackEmRoutine>();
-
-               for (int i = 0; i < 2; i++)  //add 2 to queue to start
-               {
-                    //Debug.Log("Added-> up " + rout.up + " taunt " + rout.taunt + " bool " + rout.addTaunt);
-                    whackQueue.Enqueue(new WhackEmRoutine());
-               }
-                
 
                 while (!gameJustFinished && !gameWon)
                 {
-                    WhackEmRoutine wr = whackQueue.Dequeue();
+                    WhackEmRoutine wr = new WhackEmRoutine();
                     int critUp = wr.up, critTaunt = wr.taunt;
                     bool tauntBool = wr.addTaunt;
      
@@ -308,7 +301,6 @@ public class WhackEmGameManager : MonoBehaviour
                         critters[critUp].SetActive(false);
                     }
                     Debug.Log("score = " + score + " game won " + gameWon);
-                    whackQueue.Enqueue(new WhackEmRoutine());
                 }
             }
             yield return null;
