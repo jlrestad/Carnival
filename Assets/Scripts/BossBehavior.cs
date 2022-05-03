@@ -75,16 +75,22 @@ public class BossBehavior : MonoBehaviour
     private void LeftSwing()
     {
         // need left swing animation to happen when called
-
+        Attack();
     }
     private void RightSwing()
     {
         // need left swing animation to happen when called
+        Attack();
     }
 
     private void Death()
     {
         // need death animation
+    }
+
+    private void Attack()
+    {
+        // if boss is within a certain distance when this is called, player loses 1 ticket
     }
     IEnumerator AttackPattern()
     {
