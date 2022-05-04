@@ -185,10 +185,12 @@ public class SkillShotGameManager : MonoBehaviour
         gameJustPlayed = true;
         weaponEquip.skillshotActive = false;
         timerText.enabled = false;
-        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
-
-
+      
         yield return new WaitForSeconds(2);
+
+        // lock player here until WinLoseUI done--
+        //if player leaves trigger area before this loop finishes, cannot win replay
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
         //Clear and turn off lose message
         winloseText.text = (" ");
