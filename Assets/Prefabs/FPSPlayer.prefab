@@ -974,6 +974,7 @@ MonoBehaviour:
   inInventory: 0
   isEquipped: 0
   closestWeapon: {fileID: 0}
+  prevWeapon: {fileID: 0}
   _closestWeapon: {fileID: 0}
   currentWeapon: {fileID: 0}
   closestSkull: {fileID: 0}
@@ -986,6 +987,7 @@ MonoBehaviour:
   haveSkull: 0
   holdingSkull: 0
   whackEmActive: 0
+  skillshotActive: 0
   gameName: 
   headSkull: []
   menu: {fileID: 0}
@@ -1469,6 +1471,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5c052421c566929439c472deb7eb7668, type: 3}
   m_PrefabInstance: {fileID: 350842037154223427}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &351747244
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585214139137730578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1826519786555285484, guid: 9c80f7151790d4c4e9438b405bf42f04, type: 3}
 --- !u!114 &421488724317716273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1492,20 +1508,6 @@ MonoBehaviour:
   damage: 100
   canSwing: 0
   hitVfxPrefab: {fileID: 5443168891726632875, guid: 36dc4121c540f55498475e05039a5bc4, type: 3}
---- !u!64 &351747244
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585214139137730578}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1826519786555285484, guid: 9c80f7151790d4c4e9438b405bf42f04, type: 3}
 --- !u!1001 &421488722866503260
 PrefabInstance:
   m_ObjectHideFlags: 0
