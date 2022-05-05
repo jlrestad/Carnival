@@ -264,7 +264,7 @@ public class SkillShotGameManager : MonoBehaviour
                 pooledTargets[i].GetComponentInChildren<TargetSetActive>().targetHit = false;
 
                 //Start the loop over
-                if (pooledTargets[i].GetComponent<TargetSetActive>().reachedEnd)
+                if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
                 {
                     pooledTargets[i].transform.Translate(Vector3.zero);
                     pooledTargets[i].SetActive(false);

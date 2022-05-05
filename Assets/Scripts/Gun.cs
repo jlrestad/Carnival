@@ -101,7 +101,7 @@ public class Gun : MonoBehaviour
         {
             Debug.Log(hit.transform.name);
 
-            TargetSetActive target = hit.transform.GetComponent<TargetSetActive>();
+            TargetSetActive target = hit.transform.GetComponentInChildren<TargetSetActive>();
 
             if (target != null && target.CompareTag("MovingTarget") && !target.targetHit)
             {

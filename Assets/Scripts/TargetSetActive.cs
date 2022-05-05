@@ -96,6 +96,10 @@ public class TargetSetActive : MonoBehaviour
         //Keep from scoring multiple points
         if (targetHit && !isFlipped)
         {
+            skillshotGM.score++;
+        }
+        else if (targetHit && isFlipped)
+        {
             skillshotGM.score--;
 
             //Keep the score from being less than 0.
@@ -103,10 +107,6 @@ public class TargetSetActive : MonoBehaviour
             {
                 skillshotGM.score = 0;
             }
-        }
-        else if (targetHit && isFlipped)
-        {
-            skillshotGM.score++;
         }
     }
 
