@@ -21,11 +21,11 @@ public class TargetSetActive : MonoBehaviour
     public bool targetHit;
     public bool isFlipped;
 
-
-    private void Awake()
-    {
-        Instance = this;
-    }
+    //Unneeded since more than one target uses this script.
+    //private void Awake()
+    //{
+    //    Instance = this;
+    //}
 
     private void Start()
     {
@@ -60,10 +60,7 @@ public class TargetSetActive : MonoBehaviour
             {
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = true;
-                //meshRenderer.material.color = Color.red; //negative side
-
-                //Rotate the target to the positive side.
-                //targetParent.transform.rotation = Quaternion.Euler(0, 180, 0);
+                
                 animator.SetBool("isHit", true);
             }
 
@@ -71,18 +68,14 @@ public class TargetSetActive : MonoBehaviour
             {
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = false;
-                //meshRenderer.material.color = Color.green; //positive side
-
-                //Rotate the target back around
-                //targetParent.transform.rotation = Quaternion.Euler(0, 0, 0);
+               
                 animator.SetBool("isHit", false);
             }
 
-            if (skillshotGM.gameOver || !skillshotGM.gameOn)
-            {
-                //meshRenderer.material.color = Color.red;
-                targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
-            }
+            //if (skillshotGM.gameOver || !skillshotGM.gameOn)
+            //{
+            //    targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
+            //}
             yield return null;
         }
     }

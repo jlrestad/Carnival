@@ -101,11 +101,20 @@ public class Gun : MonoBehaviour
         {
             Debug.Log(hit.transform.name);
 
-            TargetSetActive target = hit.transform.GetComponentInChildren<TargetSetActive>();
+            Transform target = hit.transform.GetComponent<Transform>();
+            TargetSetActive targetScript = hit.transform.GetComponentInChildren<TargetSetActive>();
+            BossTarget bossTargetScript = hit.transform.GetComponentInChildren<BossTarget>();
 
-            if (target != null && target.CompareTag("MovingTarget") && !target.targetHit)
+            //For Skillshot
+            if (target != null && target.CompareTag("MovingTarget") && !targetScript.targetHit)
             {
-                target.HitTarget();
+                targetScript.HitTarget();
+            }
+
+            //For Freakshow Boss
+            if (target != null && target.CompareTag("BossTarget") && !bossTargetScript.targetHit)
+            {
+                bossTargetScript.HitTarget();
             }
 
             StartCoroutine(TurnOffMuzzleLight());
