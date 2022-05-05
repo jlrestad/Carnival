@@ -11,7 +11,7 @@ public class TargetSetActive : MonoBehaviour
     SkillShotGameManager skillshotGM;
     [HideInInspector] public MeshRenderer meshRenderer;
     public Transform hideSpot;
-    public GameObject targetFace;
+    public GameObject targetParent;
     public int flipTime;
     public bool reachedEnd;
     public bool targetHit;
@@ -27,12 +27,13 @@ public class TargetSetActive : MonoBehaviour
     {
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
         movingTarget = GetComponentInParent<MovingTarget>();
-        meshRenderer = targetFace.GetComponent<MeshRenderer>();
+        //meshRenderer = targetFace.GetComponent<MeshRenderer>();
     }
 
     private void Update()
     {
         StartCoroutine(FlipAround());
+
     }
 
     //Controls when to restart the loop
@@ -54,18 +55,28 @@ public class TargetSetActive : MonoBehaviour
             {
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = true;
-                meshRenderer.material.color = Color.red; //negative side
+                //meshRenderer.material.color = Color.red; //negative side
+
+                //Rotate the target to the positive side.
+                targetParent.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 
             if (isFlipped && !skillshotGM.gameOver)
             {
+                movingTarget.direction *= -1; //Move direction opposite because target is flipped.
+
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = false;
-                meshRenderer.material.color = Color.green; //positive side
+                //meshRenderer.material.color = Color.green; //positive side
+
+                //Rotate the target back around
+                targetParent.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
+
             if (skillshotGM.gameOver || !skillshotGM.gameOn)
             {
-                meshRenderer.material.color = Color.red;
+                //meshRenderer.material.color = Color.red;
+                targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
             }
             yield return null;
         }
@@ -81,17 +92,17 @@ public class TargetSetActive : MonoBehaviour
         }
 
         targetHit = true;
+
         //Keep from scoring multiple points
         if (targetHit && !isFlipped)
         {
             skillshotGM.score++;
-
-            //cardManager.critterList.Add(this.gameObject);
         }
         else if (targetHit && isFlipped)
         {
             skillshotGM.score--;
 
+            //Keep the score from being less than 0.
             if (skillshotGM.score < 0)
             {
                 skillshotGM.score = 0;
