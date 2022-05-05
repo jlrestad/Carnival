@@ -19,7 +19,7 @@ public class MovingTarget : MonoBehaviour
     [Space(10)]
     public float moveSpeed;
     public float timeBetweenTargets;
-    int direction;
+    [HideInInspector] public int direction;
 
     [Header("BOOLS")]
     public bool moveLeft;
