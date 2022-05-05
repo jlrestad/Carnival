@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 495474248419347110}
+  - component: {fileID: 3353221435119616516}
   m_Layer: 0
   m_Name: SkillShotTargetGroup
   m_TagString: Untagged
@@ -31,6 +32,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3353221435119616516
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597838525665852201}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8fb99c3350483f34a87d3918b30f04b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &9089182146333520938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,7 +80,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2646982545980495284, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2646982545980495284, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
       propertyPath: m_LocalRotation.y
@@ -68,7 +88,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2646982545980495284, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2646982545980495284, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -88,10 +108,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6460406801838458210, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: -0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1536077475563756037, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
 --- !u!1 &5896174208683866916 stripped
 GameObject:
@@ -120,7 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc043c125ed5ec94b88d030461fd747b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRenderer: {fileID: 0}
   hideSpot: {fileID: 2847606200803094856}
   targetParent: {fileID: 1597838525665852201}
   flipTime: 1

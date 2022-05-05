@@ -9,7 +9,11 @@ public class TargetSetActive : MonoBehaviour
 
     MovingTarget movingTarget;
     SkillShotGameManager skillshotGM;
-    [HideInInspector] public MeshRenderer meshRenderer;
+
+    //[HideInInspector] public MeshRenderer meshRenderer;
+
+    Animator animator;
+
     public Transform hideSpot;
     public GameObject targetParent;
     public int flipTime;
@@ -27,6 +31,7 @@ public class TargetSetActive : MonoBehaviour
     {
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
         movingTarget = GetComponentInParent<MovingTarget>();
+        animator = GetComponentInParent<Animator>();
         //meshRenderer = targetFace.GetComponent<MeshRenderer>();
     }
 
@@ -58,19 +63,19 @@ public class TargetSetActive : MonoBehaviour
                 //meshRenderer.material.color = Color.red; //negative side
 
                 //Rotate the target to the positive side.
-                targetParent.transform.rotation = Quaternion.Euler(0, 180, 0);
+                //targetParent.transform.rotation = Quaternion.Euler(0, 180, 0);
+                animator.SetBool("isHit", true);
             }
 
             if (isFlipped && !skillshotGM.gameOver)
             {
-                movingTarget.direction *= -1; //Move direction opposite because target is flipped.
-
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = false;
                 //meshRenderer.material.color = Color.green; //positive side
 
                 //Rotate the target back around
-                targetParent.transform.rotation = Quaternion.Euler(0, 0, 0);
+                //targetParent.transform.rotation = Quaternion.Euler(0, 0, 0);
+                animator.SetBool("isHit", false);
             }
 
             if (skillshotGM.gameOver || !skillshotGM.gameOn)
@@ -94,11 +99,7 @@ public class TargetSetActive : MonoBehaviour
         targetHit = true;
 
         //Keep from scoring multiple points
-        if (targetHit && !isFlipped)
-        {
-            skillshotGM.score++;
-        }
-        else if (targetHit && isFlipped)
+        if (targetHit && isFlipped)
         {
             skillshotGM.score--;
 
@@ -107,6 +108,10 @@ public class TargetSetActive : MonoBehaviour
             {
                 skillshotGM.score = 0;
             }
+        }
+        else if (targetHit && !isFlipped)
+        {
+            skillshotGM.score++;
         }
     }
 

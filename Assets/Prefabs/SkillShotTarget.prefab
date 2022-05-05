@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3814782278405222107}
   - component: {fileID: 6764409258191976549}
   - component: {fileID: 7256494577852763549}
-  - component: {fileID: 1536077475563756037}
   m_Layer: 0
   m_Name: SkillShotTarget
   m_TagString: MovingTarget
@@ -114,24 +113,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.39373502, y: 0.40424454, z: 0.014879648}
   m_Center: {x: 0.000000029802322, y: 0.6095186, z: -0.00011823699}
---- !u!114 &1536077475563756037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3454305124193914638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc043c125ed5ec94b88d030461fd747b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshRenderer: {fileID: 0}
-  hideSpot: {fileID: 6460406801838458210}
-  flipTime: 1
-  reachedEnd: 0
-  targetHit: 0
-  isFlipped: 0
 --- !u!1 &5143066580311417973
 GameObject:
   m_ObjectHideFlags: 0

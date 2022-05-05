@@ -262,6 +262,9 @@ public class SkillShotGameManager : MonoBehaviour
             //When targets reach the end start over at the parent position.
             for (int i = 0; i < pooledTargets.Count; i++)
             {
+                //Gets the actual target that is a child of the pooledTarget.
+                Transform target = pooledTargets[i].GetComponentInChildren<TargetSetActive>().transform;
+
                 //Allow target to be hit again.
                 pooledTargets[i].GetComponentInChildren<TargetSetActive>().targetHit = false;
 
@@ -271,10 +274,10 @@ public class SkillShotGameManager : MonoBehaviour
                     pooledTargets[i].transform.Translate(Vector3.zero);
                     pooledTargets[i].SetActive(false);
 
-                    pooledTargets[i].transform.position = parentPos.position;
+                    target.position = parentPos.position; //Reset the child target to the parent position.
 
                     yield return new WaitForSeconds(timeBetweenTargets);
-                    pooledTargets[i].GetComponent<TargetSetActive>().reachedEnd = false;
+                    pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd = false;
 
                 }
             }
