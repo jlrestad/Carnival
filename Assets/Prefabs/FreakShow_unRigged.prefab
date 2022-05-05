@@ -1,5 +1,98 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2092507717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092507718}
+  - component: {fileID: 2092507719}
+  m_Layer: 0
+  m_Name: Spot Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2092507718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092507717}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 4.73, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6508223659394891100}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!108 &2092507719
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092507717}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 0
+  m_Shape: 0
+  m_Color: {r: 0.9622642, g: 0.72169816, b: 0.72169816, a: 1}
+  m_Intensity: 50
+  m_Range: 10
+  m_SpotAngle: 64.283325
+  m_InnerSpotAngle: 30.707714
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 1
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &49560023710481332
 GameObject:
   m_ObjectHideFlags: 0
@@ -7854,7 +7947,7 @@ GameObject:
   - component: {fileID: 6763108747903896009}
   m_Layer: 0
   m_Name: FreakShow_unRigged
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7886,6 +7979,7 @@ Transform:
   - {fileID: 4566876092256396503}
   - {fileID: 1756550997590535938}
   - {fileID: 8802045991699646493}
+  - {fileID: 2092507718}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7952,8 +8046,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 4.5
-  m_BaseOffset: 2
+  m_Height: 5
+  m_BaseOffset: 3
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &5899981577758412538
@@ -12789,6 +12883,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8339816458102875897, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+--- !u!4 &2033417349843527668 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3627806531605652792, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+  m_PrefabInstance: {fileID: 3341856327310262988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3283182551050775957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 283900212531703641, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
@@ -12802,11 +12901,6 @@ Transform:
 --- !u!1 &7669621072445091224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4904243133078368084, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
-  m_PrefabInstance: {fileID: 3341856327310262988}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2033417349843527668 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3627806531605652792, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
   m_PrefabInstance: {fileID: 3341856327310262988}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &2806186146252032525

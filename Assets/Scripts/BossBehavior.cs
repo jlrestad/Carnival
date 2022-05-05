@@ -45,7 +45,7 @@ public class BossBehavior : MonoBehaviour
                 agent.destination = (player.transform.position);
 
                 //Look at player
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, turnSpeed * Time.deltaTime);
+                //transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, turnSpeed * Time.deltaTime);
 
             }
 

@@ -60,8 +60,9 @@ public class TargetSetActive : MonoBehaviour
             {
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = true;
-                
-                animator.SetBool("isHit", true);
+
+                animator.SetBool("isPos", false);
+                animator.SetBool("isNeg", true);
             }
 
             if (isFlipped && !skillshotGM.gameOver)
@@ -69,7 +70,8 @@ public class TargetSetActive : MonoBehaviour
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = false;
                
-                animator.SetBool("isHit", false);
+                animator.SetBool("isNeg", false);
+                animator.SetBool("isPos", true);
             }
 
             //if (skillshotGM.gameOver || !skillshotGM.gameOn)

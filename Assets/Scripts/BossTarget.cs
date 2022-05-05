@@ -32,16 +32,19 @@ public class BossTarget : MonoBehaviour
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = true;
 
-                animator.SetBool("isHit", true);
-            }
+                animator.SetBool("isPos", false);
+                animator.SetBool("isNeg", true);
+        }
 
             if (isFlipped)
             {
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = false;
 
-                animator.SetBool("isHit", false);
-            }
+                animator.SetBool("isNeg", false);
+                animator.SetBool("isPos", true);
+
+        }
     }
 
     //Target moves down and hides after being hit, add to the score
