@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class BossBehavior : MonoBehaviour
 {
-    GameObject player; //ref to player character
-    NavMeshAgent agent; //ref to navmeshagent component attached to boss. Allows boss to move along the baked path. (Window > AI > Navigation)
+    public GameObject player; //ref to player character
+    public NavMeshAgent agent; //ref to navmeshagent component attached to boss. Allows boss to move along the baked path. (Window > AI > Navigation)
     Vector3 distanceFromPlayer; //used to check how far the player is from the boss
     [SerializeField] float maxDistance; //distance to begin chasing player (editable in the Inspector)
     [SerializeField] float turnSpeed; //turn speed in degrees per second
@@ -45,7 +45,7 @@ public class BossBehavior : MonoBehaviour
                 agent.destination = (player.transform.position);
 
                 //Look at player
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, turnSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, turnSpeed * Time.deltaTime);
 
             }
 
