@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6849873145766563457}
   - component: {fileID: 3899964933668755519}
   - component: {fileID: 1102054038051843527}
-  - component: {fileID: 8339816458102875897}
+  - component: {fileID: 556970848709171257}
   m_Layer: 0
   m_Name: Target
   m_TagString: MovingTarget
@@ -195,7 +195,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.39373502, y: 0.40424454, z: 0.02916352}
   m_Center: {x: 0.000000029802322, y: 0.6095187, z: -0.007260157}
---- !u!114 &8339816458102875897
+--- !u!114 &556970848709171257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,12 +204,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4904243133078368084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc043c125ed5ec94b88d030461fd747b, type: 3}
+  m_Script: {fileID: 11500000, guid: cc2e4d891d3579c469d4b8f59a23beeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hideSpot: {fileID: 3627806531605652792}
   targetParent: {fileID: 283900212531703641}
   flipTime: 1
-  reachedEnd: 0
+  downTime: 5
   targetHit: 0
   isFlipped: 0

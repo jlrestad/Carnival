@@ -7945,7 +7945,7 @@ GameObject:
   - component: {fileID: 6763108747903896008}
   - component: {fileID: 6763108747903896010}
   - component: {fileID: 6763108747903896009}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FreakShow_unRigged
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -8039,7 +8039,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5843994750213302246}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -12898,6 +12898,30 @@ PrefabInstance:
       propertyPath: m_TagString
       value: BossTarget
       objectReference: {fileID: 0}
+    - target: {fileID: 5711848049575769582, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711848049575769582, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.067
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711848049575769582, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.051
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711848049575769582, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711848049575769582, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711848049575769582, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8339816458102875897, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
@@ -12936,5 +12960,6 @@ MonoBehaviour:
   hideSpot: {fileID: 2033417349843527668}
   targetParent: {fileID: 3283182551050775957}
   flipTime: 1
+  downTime: 0
   targetHit: 0
   isFlipped: 0

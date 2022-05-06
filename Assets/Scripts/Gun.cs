@@ -114,7 +114,7 @@ public class Gun : MonoBehaviour
             //For Freakshow Boss
             if (target != null && target.CompareTag("BossTarget") && !bossTargetScript.targetHit)
             {
-                bossTargetScript.HitTarget();
+                StartCoroutine(bossTargetScript.HitTarget());
             }
 
             StartCoroutine(TurnOffMuzzleLight());

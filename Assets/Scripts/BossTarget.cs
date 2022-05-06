@@ -9,6 +9,7 @@ public class BossTarget : MonoBehaviour
     public Transform hideSpot;
     public GameObject targetParent;
     public int flipTime;
+    public int downTime;  //How long the target will be down.
     public bool targetHit;
     public bool isFlipped;
 
@@ -48,30 +49,20 @@ public class BossTarget : MonoBehaviour
     }
 
     //Target moves down and hides after being hit, add to the score
-    public void HitTarget()
+    public IEnumerator HitTarget()
     {
+        targetHit = true;
+
         //slide down and hide
-        if (!isFlipped)
+        if (isFlipped)
         {
             transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
         }
 
-        targetHit = true;
+        yield return new WaitForSeconds(downTime);
+        
+        targetHit = false;
 
-        ////Keep from scoring multiple points
-        //if (targetHit && isFlipped)
-        //{
-        //    skillshotGM.score--;
-
-        //    //Keep the score from being less than 0.
-        //    if (skillshotGM.score < 0)
-        //    {
-        //        skillshotGM.score = 0;
-        //    }
-        //}
-        //else if (targetHit && !isFlipped)
-        //{
-        //    skillshotGM.score++;
-        //}
+        transform.position = Vector3.Lerp(transform.position, targetParent.transform.position, 1.0f);
     }
 }
