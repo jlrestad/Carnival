@@ -19,7 +19,7 @@ public class Head : MonoBehaviour
     Rigidbody rb;
     Collider collider;
     GameObject skull;
-    Transform skullHold;
+    Transform skullParent;
     
 
     public bool canThrow;
@@ -34,7 +34,7 @@ public class Head : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerWeapon = player.GetComponent<WeaponEquip>();
         collider = GetComponent<Collider>();
-        skullHold = GameObject.Find("SkullHold").transform;
+        skullParent = GameObject.Find("SkullParent").transform;
     }
 
     private void Update()
@@ -93,15 +93,15 @@ public class Head : MonoBehaviour
         //Put skull in SkullHolder on FPSPlayer
         collider.enabled = false;
         rb.isKinematic = true;
-        this.transform.parent = skullHold.transform;
-        this.transform.position = skullHold.position;
+        //this.transform.position = skullParent.position;
+        //this.transform.parent = skullParent.transform;
 
-        // Only allow one item to be picked up at a time.
-        //if (skullHold.childCount == 0)
-        //{
-        //    this.transform.position = skullHold.position;
-        //    this.transform.parent = skullHold.transform;
-        //}
+        //Only allow one item to be picked up at a time.
+        if (skullParent.childCount == 0)
+        {
+            this.transform.position = skullParent.position;
+            this.transform.parent = skullParent.transform;
+        }
 
         playerWeapon.holdingSkull = true;
     }
@@ -154,6 +154,7 @@ public class Head : MonoBehaviour
 
         playerWeapon.holdingSkull = false;
 
+        //Infinite skulls
         StartCoroutine(ReturnSkull());
     }
 
