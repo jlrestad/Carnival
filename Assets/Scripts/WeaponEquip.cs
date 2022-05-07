@@ -56,7 +56,8 @@ public class WeaponEquip : MonoBehaviour
     private Weapon newWeapon;
     private Head newSkull;
     public Head[] headSkull;
-   
+    Head head; //Get the Head script for skull
+
     [HideInInspector] RaycastHit hit;
     public Menu menu;
 
@@ -90,23 +91,29 @@ public class WeaponEquip : MonoBehaviour
         ChangeWeapon();
 
         //FOR SKULL PICKUP * * *
-        if (currentWeapon == skullsParent && skullsParent.transform.childCount > 0)
-        {
-            skull = skullsParent.transform.GetChild(0).gameObject;
+        //if (closestWeapon.CompareTag("Head"))
+        //{
+        //    skull = closestWeapon;
+        //    head = skull.GetComponent<Head>();
+        //}
 
-            //Update amount of skulls being held.
-            addToCount = skullsParent.transform.childCount;
-            menu.skullCountText.text = addToCount.ToString();
+        //if (currentWeapon == skullsParent && skullsParent.transform.childCount > 0)
+        //{
+        //    skull = skullsParent.transform.GetChild(0).gameObject;
 
-            if (holdingSkull)
-            {
-                //Add skulls to weapon list.
-                if (!weaponList.Contains(skullsParent))
-                {
-                    weaponList.Add(skullsParent);
-                }
-            }
-        }
+        //    //Update amount of skulls being held.
+        //    addToCount = skullsParent.transform.childCount;
+        //    menu.skullCountText.text = addToCount.ToString();
+
+        //    if (holdingSkull)
+        //    {
+        //        //Add skulls to weapon list.
+        //        if (!weaponList.Contains(skullsParent))
+        //        {
+        //            weaponList.Add(skullsParent);
+        //        }
+        //    }
+        //}
 
         //Check if skull parent is empty
         if (skullsParent.transform.childCount <= 0 && weaponList.Contains(skullsParent))
@@ -422,9 +429,12 @@ public class WeaponEquip : MonoBehaviour
         if (closestWeapon.CompareTag("Head"))
         {
             skull = closestWeapon;
+            head = skull.GetComponent<Head>();
+
             currentWeapon = skullsParent;
             haveSkull = true;
             //After picking up the weapon, equip it.
+
             EquipWeapon(); //picked up weapon is equipped
         }
     }
@@ -452,7 +462,6 @@ public class WeaponEquip : MonoBehaviour
 
         //Equip weapon (except for skull)
         if (currentWeapon != skullsParent && holdingSkull)
-        //if (currentWeapon != skullsParent && holdingSkull)
         {
             holdingSkull = false;
 
@@ -467,59 +476,64 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //Equip skull
-        if (currentWeapon == skullsParent)
+        //if (currentWeapon == skullsParent)
+        if (closestWeapon.CompareTag("Head"))
         {
-            Debug.Log("This compare tag works");
-            //Allow only 6 skulls
-            //to be held.
-            if (skullsParent.transform.childCount < 6)
-            {
-                holdingSkull = true;
+            head.PickUpSkull();
 
-                //Get the collider and rigidbody of the skull being held.
-                skullCollider = skull.GetComponent<Collider>();
-                skullRB = skull.GetComponent<Rigidbody>();
+            //Debug.Log("This compare tag works");
+            ////Allow only 6 skulls
+            ////to be held.
+            //if (skullsParent.transform.childCount < 6)
+            //{
+            //    holdingSkull = true;
 
-                //* This is set in FindClosestWeapon.
-                //Disable collider and set rigidbody to kinematic so it can be pick up and thrown
-                skullCollider.enabled = false;
-                skullRB.isKinematic = true;
+            //    //Get the collider and rigidbody of the skull being held.
+            //    skullCollider = skull.GetComponent<Collider>();
+            //    skullRB = skull.GetComponent<Rigidbody>();
 
-                //Add skull to the skull hold position on FPSPlayer.
-                skull.transform.position = skullsParent.transform.position;
-                skull.transform.parent = skullsParent.transform;
+            //    //* This is set in FindClosestWeapon.
+            //    //Disable collider and set rigidbody to kinematic so it can be pick up and thrown
+            //    skullCollider.enabled = false;
+            //    skullRB.isKinematic = true;
 
-                //Show only the skull that is being held
-                skullsParent.transform.GetChild(0).gameObject.SetActive(true);
- 
-                //Put skull in inventory (hide it from scene)
-                for (int i = 1; i < skullsParent.transform.childCount; i++)
-                {
-                    //Hide every skull that is not the 0th index
-                    skullsParent.transform.GetChild(i).gameObject.SetActive(false);
-                }
-            }
+            //    //Add skull to the skull hold position on FPSPlayer.
+            //    skull.transform.position = skullsParent.transform.position;
+            //    skull.transform.parent = skullsParent.transform;
+
+            //    //Show only the skull that is being held
+            //    skullsParent.transform.GetChild(0).gameObject.SetActive(true);
+
+            //    //Put skull in inventory (hide it from scene)
+            //    for (int i = 1; i < skullsParent.transform.childCount; i++)
+            //    {
+            //        //Hide every skull that is not the 0th index
+            //        skullsParent.transform.GetChild(i).gameObject.SetActive(false);
+            //    }
+
+            //Put skull in SkullHolder on FPSPlayer
+        }
 
             //*Turn off Weapon script while holding so it won't be detected by FindClosestWeapon().
-            for (int i = 0; i < skullsParent.transform.childCount; i++)
-            {
-                skullsParent.transform.GetChild(i).GetComponent<Weapon>().enabled = false;
-            }
-            skull.tag = "Untagged"; //* temp set untagged so it wont be found as the closest weapon
+            //for (int i = 0; i < skullsParent.transform.childCount; i++)
+            //{
+            //    skullsParent.transform.GetChild(i).GetComponent<Weapon>().enabled = false;
+            //}
+            ////skull.tag = "Untagged"; //* temp set untagged so it wont be found as the closest weapon
 
-            if (skullsParent.transform.childCount != 0)
-            {
-                //Show the skull count menu.
-                menu.skullCountUI.SetActive(true);
-                menu.skullCountText.text = addToCount.ToString();
-            }
-            else
-            {
-                holdingSkull = false;
-                haveSkull = false;
-            }
-        }
+            //if (skullsParent.transform.childCount != 0)
+            //{
+            //    //Show the skull count menu.
+            //    menu.skullCountUI.SetActive(true);
+            //    menu.skullCountText.text = addToCount.ToString();
+            //}
+            //else
+            //{
+            //    holdingSkull = false;
+            //    haveSkull = false;
+            //}
     }
+
 
     //Put weapon in inventory:
     public void UnequipWeapon()
@@ -535,30 +549,30 @@ public class WeaponEquip : MonoBehaviour
         }
         else
         {
-            skullsParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
+            //skullsParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
             holdingSkull = false;
         }
     }
 
-    GameObject FindNearestSkull()
-    {
-        foreach (Head thisSkull in headSkull)
-        {
-            float currentDist;
-            float closestDist = Mathf.Infinity;
-            currentDist = (transform.position - thisSkull.transform.position).sqrMagnitude;
-            distanceToPlayer = transform.position - thisSkull.transform.position;
+    //GameObject FindNearestSkull()
+    //{
+    //    foreach (Head thisSkull in headSkull)
+    //    {
+    //        float currentDist;
+    //        float closestDist = Mathf.Infinity;
+    //        currentDist = (transform.position - thisSkull.transform.position).sqrMagnitude;
+    //        distanceToPlayer = transform.position - thisSkull.transform.position;
 
-            if (currentDist < closestDist)
-            {
-                closestDist = currentDist;
-                newSkull = thisSkull;
-                closestSkull = newSkull.gameObject;
-                skullRB = newSkull.GetComponent<Rigidbody>();
-            }
-            return closestSkull;
-        }
-        Debug.Log("Closest skull is " + closestSkull);
-        return closestSkull;
-    }
+    //        if (currentDist < closestDist)
+    //        {
+    //            closestDist = currentDist;
+    //            newSkull = thisSkull;
+    //            closestSkull = newSkull.gameObject;
+    //            skullRB = newSkull.GetComponent<Rigidbody>();
+    //        }
+    //        return closestSkull;
+    //    }
+    //    Debug.Log("Closest skull is " + closestSkull);
+    //    return closestSkull;
+    //}
 }

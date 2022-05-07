@@ -28,14 +28,16 @@ public class BossTarget : MonoBehaviour
     //Flip target from front to back within the flip time set
     public IEnumerator FlipAround()
     {
-     if (!isFlipped)
+        while (!targetHit)
+        {
+            if (!isFlipped)
             {
                 yield return new WaitForSeconds(flipTime);
                 isFlipped = true;
 
                 animator.SetBool("isPos", false);
                 animator.SetBool("isNeg", true);
-        }
+            }
 
             if (isFlipped)
             {
@@ -45,6 +47,8 @@ public class BossTarget : MonoBehaviour
                 animator.SetBool("isNeg", false);
                 animator.SetBool("isPos", true);
 
+            }
+            yield return null;
         }
     }
 
@@ -52,6 +56,10 @@ public class BossTarget : MonoBehaviour
     public IEnumerator HitTarget()
     {
         targetHit = true;
+
+        //Turn to negative side.
+        animator.SetBool("isPos", false);
+        animator.SetBool("isNeg", true);
 
         //slide down and hide
         if (isFlipped)
@@ -63,6 +71,7 @@ public class BossTarget : MonoBehaviour
         
         targetHit = false;
 
+        //Target returns to parent position after downTime has passed.
         transform.position = Vector3.Lerp(transform.position, targetParent.transform.position, 1.0f);
     }
 }
