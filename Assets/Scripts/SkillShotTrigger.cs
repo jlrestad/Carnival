@@ -29,29 +29,26 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if(!skillshotGM.gameWon && other.CompareTag("Player"))
         {
-            if(!skillshotGM.gameWon)
+            //Only show the rules screen if player has not picked up the mallet
+            if (!skillshotGM.weaponEquip.haveGun && !skillshotGM.gameJustPlayed)
             {
-                //Only show the rules screen if player has not picked up the mallet
-                if (!skillshotGM.weaponEquip.haveGun && !skillshotGM.gameJustPlayed)
-                {
-                    //Display game rules screen with play buttons
-                    rulesUI.SetActive(true);
-                }
+                //Display game rules screen with play buttons
+                rulesUI.SetActive(true);
+            }
 
-                //Lock player camera movement until a button is pressed
-                if (!buttonPressed)
-                {
-                    FPSController.Instance.canMove = false;
-                }
+            //Lock player camera movement until a button is pressed
+            if (!buttonPressed)
+            {
+                FPSController.Instance.canMove = false;
+            }
 
-                //If controller type is keyboard give mouse control
-                if (!Menu.Instance.usingJoystick)
-                {
-                    Cursor.lockState = CursorLockMode.Confined;
-                    Cursor.visible = true;
-                }
+            //If controller type is keyboard give mouse control
+            if (!Menu.Instance.usingJoystick)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
             }
         }
     }

@@ -127,6 +127,8 @@ public class PickUp : MonoBehaviour
 
         rb.isKinematic = false;
         collider.enabled = true;
+
+        rb.velocity = transform.forward * throwSpeed;
     }
     
     // Randomizes and plays audio when object is thrown.

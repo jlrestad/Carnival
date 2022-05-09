@@ -30,7 +30,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!whackemGM.gameWon)
+        if(!whackemGM.gameWon && other.CompareTag("Player"))
         {
             //Only show the rules screen if player has not picked up the mallet
             if (!whackemGM.weaponEquip.haveMallet && !whackemGM.gameJustFinished)

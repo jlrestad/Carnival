@@ -35,6 +35,8 @@ public class Head : MonoBehaviour
         playerWeapon = player.GetComponent<WeaponEquip>();
         collider = GetComponent<Collider>();
         skullParent = GameObject.Find("SkullParent").transform;
+        rb = this.GetComponent<Rigidbody>();
+        collider = this.GetComponent<Collider>();
     }
 
     private void Update()
@@ -49,22 +51,21 @@ public class Head : MonoBehaviour
         //    canThrow = true;
         //}
 
-        skull = playerWeapon.skull;
-        if (playerWeapon.skull != null)
-        {
-            rb = playerWeapon.skull.GetComponent<Rigidbody>();
-            collider = playerWeapon.skull.GetComponent<Collider>();
-        }
+        //skull = playerWeapon.skull;
+        //if (playerWeapon.skull != null)
+        //{
+        //    rb = playerWeapon.skull.GetComponent<Rigidbody>();
+        //    collider = playerWeapon.skull.GetComponent<Collider>();
+        //}
 
         //Get the distance the skull is from the player.
         distanceToPlayer = player.transform.position - transform.position;
 
         //PICKUP SKULL
-        //if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton"))
-        //{
-      
-
-        //}
+        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton"))
+        {
+            PickUpSkull();
+        }
 
         //THROW SKULL
         if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull && canThrow)
@@ -72,8 +73,8 @@ public class Head : MonoBehaviour
             ThrowSkull();
             canThrow = false;
             
-            playerWeapon.addToCount = playerWeapon.skullsParent.transform.childCount;
-            menu.skullCountText.text = playerWeapon.addToCount.ToString();
+            //playerWeapon.addToCount = playerWeapon.skullsParent.transform.childCount;
+            //menu.skullCountText.text = playerWeapon.addToCount.ToString();
         }
 
         //NEXT SKULL IN INVENTORY
@@ -90,18 +91,27 @@ public class Head : MonoBehaviour
 
     public void PickUpSkull() 
     {
+        playerWeapon.haveSkull = true;
+
         //Put skull in SkullHolder on FPSPlayer
         collider.enabled = false;
         rb.isKinematic = true;
+
         //this.transform.position = skullParent.position;
         //this.transform.parent = skullParent.transform;
 
         //Only allow one item to be picked up at a time.
         if (skullParent.childCount == 0)
         {
+            Debug.Log("Test skullParent childcount");
             this.transform.position = skullParent.position;
             this.transform.parent = skullParent.transform;
         }
+        //else
+        //{
+        //    //Make it look like the skull is being picked up -- even though skulls are infinite.
+        //    gameObject.SetActive(false);
+        //}
 
         playerWeapon.holdingSkull = true;
     }
@@ -145,12 +155,13 @@ public class Head : MonoBehaviour
 
     public void ThrowSkull()
     {
-        transform.parent = null;
+        //Using this kewyword because there are multiple skulls in the scene and we only want to affect the skull that is held.
+        this.transform.parent = null;
         rb.isKinematic = false;
         collider.enabled = true;
 
         // Throw
-        rb.velocity = playerWeapon.transform.forward * throwSpeed;
+        rb.velocity = skullParent.transform.forward * throwSpeed;
 
         playerWeapon.holdingSkull = false;
 
