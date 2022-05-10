@@ -9440,7 +9440,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5340342972893873630}
-  - component: {fileID: 758912314468485829}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Untagged
@@ -9477,19 +9476,6 @@ Transform:
   m_Father: {fileID: 6508223659394891100}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -9.299, y: 0, z: 0}
---- !u!65 &758912314468485829
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6795502035067873269}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.55035174, y: 0.41385233, z: 0.22688174}
-  m_Center: {x: -0.007944465, y: -0.107762836, z: 0.21320096}
 --- !u!1 &6820267320011637277
 GameObject:
   m_ObjectHideFlags: 0
