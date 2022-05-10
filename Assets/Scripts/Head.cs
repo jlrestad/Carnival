@@ -34,12 +34,11 @@ public class Head : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerWeapon = player.GetComponent<WeaponEquip>();
         collider = GetComponent<Collider>();
-        skullParent = GameObject.Find("SkullParent").transform;
-        rb = this.GetComponent<Rigidbody>();
-        collider = this.GetComponent<Collider>();
+        skullParent = playerWeapon.skullParent.transform;
+        //skullParent = GameObject.Find("SkullParent").transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // For Controller:
         //if (Input.GetAxis("RtTrigger") > 0)
@@ -51,12 +50,12 @@ public class Head : MonoBehaviour
         //    canThrow = true;
         //}
 
-        //skull = playerWeapon.skull;
-        //if (playerWeapon.skull != null)
-        //{
-        //    rb = playerWeapon.skull.GetComponent<Rigidbody>();
-        //    collider = playerWeapon.skull.GetComponent<Collider>();
-        //}
+        //Get the rigidbody and collider from the player's skull-weapon.
+        if (playerWeapon.skull != null)
+        {
+            rb = playerWeapon.skull.GetComponent<Rigidbody>();
+            collider = playerWeapon.skull.GetComponent<Collider>();
+        }
 
         //Get the distance the skull is from the player.
         distanceToPlayer = player.transform.position - transform.position;
@@ -72,9 +71,6 @@ public class Head : MonoBehaviour
         {
             ThrowSkull();
             canThrow = false;
-            
-            //playerWeapon.addToCount = playerWeapon.skullsParent.transform.childCount;
-            //menu.skullCountText.text = playerWeapon.addToCount.ToString();
         }
 
         //NEXT SKULL IN INVENTORY
@@ -87,33 +83,6 @@ public class Head : MonoBehaviour
         //    //For controller
         //    canThrow = true;
         //}
-    }
-
-    public void PickUpSkull() 
-    {
-        playerWeapon.haveSkull = true;
-
-        //Put skull in SkullHolder on FPSPlayer
-        collider.enabled = false;
-        rb.isKinematic = true;
-
-        //this.transform.position = skullParent.position;
-        //this.transform.parent = skullParent.transform;
-
-        //Only allow one item to be picked up at a time.
-        if (skullParent.childCount == 0)
-        {
-            Debug.Log("Test skullParent childcount");
-            this.transform.position = skullParent.position;
-            this.transform.parent = skullParent.transform;
-        }
-        //else
-        //{
-        //    //Make it look like the skull is being picked up -- even though skulls are infinite.
-        //    gameObject.SetActive(false);
-        //}
-
-        playerWeapon.holdingSkull = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -134,7 +103,7 @@ public class Head : MonoBehaviour
 
             //* Get the mesh renderer of the heart
             heartMR = other.GetComponent<MeshRenderer>();
-
+            //* Change heart color to test that collision works
             StartCoroutine(ChangeHeartColor());
         }
         else
@@ -143,7 +112,57 @@ public class Head : MonoBehaviour
         }
     }
 
-    //Temp method to test skull colliding with heart. Change heart color when hit, then change back.
+    public void PickUpSkull() 
+    {
+        this.gameObject.SetActive(false);  //Turn off skull in scene
+
+        skullParent.gameObject.SetActive(true);  //Turn on player's skullParent
+
+        playerWeapon.currentWeapon = skullParent.gameObject;
+        playerWeapon.skull = skullParent.transform.GetChild(0).gameObject;
+
+        playerWeapon.holdingSkull = true;
+        playerWeapon.inInventory = false;
+
+
+        //Put skull in SkullHolder on FPSPlayer
+        //collider.enabled = false;
+        //rb.isKinematic = true;
+
+        ////Only allow one item to be picked up at a time.
+        //if (skullParent.childCount == 0)
+        //{
+        //    this.transform.position = skullParent.position;
+        //    this.transform.parent = skullParent.transform;
+        //}
+        //else
+        //{
+        //    //Make it look like the skull is being picked up -- even though skulls are infinite.
+        //    gameObject.SetActive(false);
+        //}
+    }
+
+    public void ThrowSkull()
+    {
+        //Using this keyword because there are multiple skulls in the scene and we only want to affect the skull that is held.
+        this.transform.parent = null;
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        collider.enabled = true;
+
+        // Throw
+        rb.velocity = skullParent.transform.forward * throwSpeed;
+
+        playerWeapon.holdingSkull = false;
+        playerWeapon.inInventory = false;
+        playerWeapon.isEquipped = true;
+
+        //Infinite skulls
+        StartCoroutine(ReturnSkull());
+    }
+
+    //* Temp method to test skull colliding with heart. Change heart color when hit, then change back.
     IEnumerator ChangeHeartColor()
     {
         //* Change the color
@@ -153,20 +172,24 @@ public class Head : MonoBehaviour
         heartMR.material.color = Color.gray;
     }
 
-    public void ThrowSkull()
+
+    //Return the skull to the player hands.
+    IEnumerator ReturnSkull()
     {
-        //Using this kewyword because there are multiple skulls in the scene and we only want to affect the skull that is held.
-        this.transform.parent = null;
-        rb.isKinematic = false;
-        collider.enabled = true;
+        yield return new WaitForSeconds(returnSkullTime);
 
-        // Throw
-        rb.velocity = skullParent.transform.forward * throwSpeed;
+        this.transform.parent = skullParent;
 
-        playerWeapon.holdingSkull = false;
+        collider.enabled = false;
+        rb.useGravity = false;
+        rb.isKinematic = true;
 
-        //Infinite skulls
-        StartCoroutine(ReturnSkull());
+        playerWeapon.skull.transform.position = skullParent.position;
+        playerWeapon.skull.transform.parent = skullParent.transform;
+
+        playerWeapon.holdingSkull = true;
+        playerWeapon.isEquipped = true;
+
     }
 
     // Had to break split the ThrowSkull method into two parts in order for the Xbox controller trigger to work properly.
@@ -193,11 +216,4 @@ public class Head : MonoBehaviour
     //    }
     //}
 
-    //Return the skull to the player hands.
-    IEnumerator ReturnSkull()
-    {
-        yield return new WaitForSeconds(returnSkullTime);
-
-        PickUpSkull();
-    }
 }
