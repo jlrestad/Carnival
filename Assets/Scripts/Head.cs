@@ -120,6 +120,7 @@ public class Head : MonoBehaviour
 
         playerWeapon.currentWeapon = skullParent.gameObject;
         playerWeapon.skull = skullParent.transform.GetChild(0).gameObject;
+        playerWeapon.skull.transform.parent = skullParent; //Set the parent of the skull that is held.
 
         playerWeapon.holdingSkull = true;
         playerWeapon.inInventory = false;
@@ -145,7 +146,7 @@ public class Head : MonoBehaviour
     public void ThrowSkull()
     {
         //Using this keyword because there are multiple skulls in the scene and we only want to affect the skull that is held.
-        this.transform.parent = null;
+        playerWeapon.skull.transform.parent = null;
 
         rb.isKinematic = false;
         rb.useGravity = true;
@@ -178,7 +179,7 @@ public class Head : MonoBehaviour
     {
         yield return new WaitForSeconds(returnSkullTime);
 
-        this.transform.parent = skullParent;
+        playerWeapon.skull.transform.parent = skullParent;
 
         collider.enabled = false;
         rb.useGravity = false;
