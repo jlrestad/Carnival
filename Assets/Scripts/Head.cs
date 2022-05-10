@@ -95,11 +95,7 @@ public class Head : MonoBehaviour
         if (other.CompareTag("BossHeart"))
         {
             //Do damage
-
-            //* Get the mesh renderer of the heart
-            heartMR = other.GetComponent<MeshRenderer>();
-            //* Change heart color to test that collision works
-            StartCoroutine(ChangeHeartColor());
+            Debug.Log("Hit the heart!");
         }
         else
         {
@@ -141,17 +137,7 @@ public class Head : MonoBehaviour
         StartCoroutine(ReturnSkull());
     }
 
-    //* Temp method to test skull colliding with heart. Change heart color when hit, then change back.
-    IEnumerator ChangeHeartColor()
-    {
-        //* Change the color
-        heartMR.material.color = Color.red;
-        //* Change back after x time
-        yield return new WaitForSeconds(2);
-        heartMR.material.color = Color.gray;
-    }
-
-
+ 
     //Return the skull to the player hands.
     IEnumerator ReturnSkull()
     {

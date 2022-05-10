@@ -33,7 +33,7 @@ public class BossTarget : MonoBehaviour
             if (!isFlipped)
             {
                 yield return new WaitForSeconds(flipTime);
-                isFlipped = true;
+                isFlipped = true; //Neg side showing
 
                 animator.SetBool("isPos", false);
                 animator.SetBool("isNeg", true);
@@ -42,7 +42,7 @@ public class BossTarget : MonoBehaviour
             if (isFlipped)
             {
                 yield return new WaitForSeconds(flipTime);
-                isFlipped = false;
+                isFlipped = false; //Pos side showing
 
                 animator.SetBool("isNeg", false);
                 animator.SetBool("isPos", true);
@@ -57,14 +57,14 @@ public class BossTarget : MonoBehaviour
     {
         targetHit = true;
 
-        //Turn to negative side.
-        animator.SetBool("isPos", false);
-        animator.SetBool("isNeg", true);
-
         //slide down and hide
-        if (isFlipped)
+        if (!isFlipped)
         {
-            transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
+            //transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
+            transform.position = hideSpot.position;
+            //Turn to negative side.
+            animator.SetBool("isPos", false);
+            animator.SetBool("isNeg", true);
         }
 
         yield return new WaitForSeconds(downTime);
@@ -72,6 +72,11 @@ public class BossTarget : MonoBehaviour
         targetHit = false;
 
         //Target returns to parent position after downTime has passed.
-        transform.position = Vector3.Lerp(transform.position, targetParent.transform.position, 1.0f);
+        //transform.position = Vector3.Lerp(transform.position, targetParent.transform.position, 1.0f);
+        transform.position = targetParent.transform.position;
+
+        //Turn to positive side.
+        animator.SetBool("isPos", true);
+        animator.SetBool("isNeg", false);
     }
 }

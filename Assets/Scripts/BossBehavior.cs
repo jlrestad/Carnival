@@ -7,11 +7,13 @@ public class BossBehavior : MonoBehaviour
 {
     public GameObject player; //ref to player character
     public NavMeshAgent agent; //ref to navmeshagent component attached to boss. Allows boss to move along the baked path. (Window > AI > Navigation)
-    Vector3 distanceFromPlayer; //used to check how far the player is from the boss
+
+    [Space(15)]
     [SerializeField] float maxDistance; //distance to begin chasing player (editable in the Inspector)
     [SerializeField] float turnSpeed; //turn speed in degrees per second
     [SerializeField] private float timeCounter = 0; //used separate time between taunt / leftswing / rightswing
 
+    Vector3 distanceFromPlayer; //used to check how far the player is from the boss
     int whichHit = 0;               // needs to increment everytime the heart is hit
     int patternNumber = 0;
     bool bossAlive = true;
