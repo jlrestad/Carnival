@@ -63,6 +63,12 @@ public class Head : MonoBehaviour
         //PICKUP SKULL
         if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton"))
         {
+            //If holding a weapon, put it away.
+            if (playerWeapon.isEquipped && playerWeapon.currentWeapon != skullParent)
+            {
+                playerWeapon.currentWeapon.SetActive(false);
+            }
+
             PickUpSkull();
         }
 
@@ -72,17 +78,6 @@ public class Head : MonoBehaviour
             ThrowSkull();
             canThrow = false;
         }
-
-        //NEXT SKULL IN INVENTORY
-        //if (Input.GetButtonUp("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") == 0 && playerWeapon.holdingSkull)
-        //{
-        //    NextSkull();
-        //}
-        //else
-        //{
-        //    //For controller
-        //    canThrow = true;
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -124,23 +119,6 @@ public class Head : MonoBehaviour
 
         playerWeapon.holdingSkull = true;
         playerWeapon.inInventory = false;
-
-
-        //Put skull in SkullHolder on FPSPlayer
-        //collider.enabled = false;
-        //rb.isKinematic = true;
-
-        ////Only allow one item to be picked up at a time.
-        //if (skullParent.childCount == 0)
-        //{
-        //    this.transform.position = skullParent.position;
-        //    this.transform.parent = skullParent.transform;
-        //}
-        //else
-        //{
-        //    //Make it look like the skull is being picked up -- even though skulls are infinite.
-        //    gameObject.SetActive(false);
-        //}
     }
 
     public void ThrowSkull()
@@ -192,29 +170,4 @@ public class Head : MonoBehaviour
         playerWeapon.isEquipped = true;
 
     }
-
-    // Had to break split the ThrowSkull method into two parts in order for the Xbox controller trigger to work properly.
-    //void NextSkull()
-    //{
-    //    //If there are more skulls, make the next skull visible.
-    //    if (playerWeapon.skullsParent.transform.childCount != 0)
-    //    {
-    //        playerWeapon.skullsParent.transform.GetChild(0).gameObject.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        //Out of skulls
-    //        playerWeapon.isEquipped = false;
-
-    //        //Turn off the skull hold count UI
-    //        menu.skullCountUI.SetActive(false);
-
-    //        //Check if there are weapons in inventory.
-    //        if (playerWeapon.weaponList.Count > 1)
-    //        {
-    //            playerWeapon.inInventory = true;
-    //        }
-    //    }
-    //}
-
 }
