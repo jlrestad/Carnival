@@ -219,6 +219,34 @@ Transform:
   m_Father: {fileID: 266006951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0.201, z: 0}
+--- !u!1 &74440350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5843994750213302246, guid: 3c99e6985745ee44583c7065df3467fe, type: 3}
+  m_PrefabInstance: {fileID: 850022266010927261}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &74440351 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 6763108747903896009, guid: 3c99e6985745ee44583c7065df3467fe, type: 3}
+  m_PrefabInstance: {fileID: 850022266010927261}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &74440356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74440350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b254a40c33961ab4fbd1c9e39855193b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 30
+  turnSpeed: 1
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
+  whichHit: 0
+  targetHit: 0
+  heartHit: 0
 --- !u!1 &266006950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,6 +1304,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7838586540889540469, guid: 3c99e6985745ee44583c7065df3467fe, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 74440351}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c99e6985745ee44583c7065df3467fe, type: 3}
 --- !u!1001 &5898006623430370452
