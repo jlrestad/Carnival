@@ -93,21 +93,11 @@ public class TargetSetActive : MonoBehaviour
 
         targetHit = true;
 
-        //Keep from scoring multiple points
-        if (targetHit && isFlipped)
-        {
-            skillshotGM.score--;
-
-            //Keep the score from being less than 0.
-            if (skillshotGM.score < 0)
-            {
-                skillshotGM.score = 0;
-            }
-        }
-        else if (targetHit && !isFlipped)
+        if (targetHit && !isFlipped)
         {
             skillshotGM.score++;
         }
+        //remobed isFlipped loop-- was decrementing score after animations were added in.
     }
 
 
