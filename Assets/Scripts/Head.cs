@@ -155,5 +155,10 @@ public class Head : MonoBehaviour
         playerWeapon.holdingSkull = true;
         playerWeapon.isEquipped = true;
 
+        //If the weapon is switched after the skull has been thrown, hide the skull.
+        if (playerWeapon.currentWeapon != playerWeapon.skullParent)
+        {
+            skullParent.transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 }

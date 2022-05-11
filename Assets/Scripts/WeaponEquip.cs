@@ -42,8 +42,8 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject skull;
-    [SerializeField] Collider skullCollider;
-    [SerializeField] Rigidbody skullRB;
+    //[SerializeField] Collider skullCollider;
+    //[SerializeField] Rigidbody skullRB;
 
     [Space(2)]
     /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull;
@@ -54,8 +54,8 @@ public class WeaponEquip : MonoBehaviour
     [Space(15)]
     public string gameName;
     private Weapon newWeapon;
-    private Head newSkull;
-    public Head[] headSkull;
+    //private Head newSkull;
+    //public Head[] headSkull;
     Head head; //Get the Head script for skull
 
     [HideInInspector] RaycastHit hit;
@@ -165,7 +165,7 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        if (!closestWeapon.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
+        if (!gameObject.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
         {
             //SHOW ACTION/INTERACT PROMPT
             //if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon != skull)
@@ -273,7 +273,7 @@ public class WeaponEquip : MonoBehaviour
                 //If there is already a weapon equipped, hide it.
                 currentWeapon.SetActive(false);
             }
-            if (weaponList.Count > 1 && currentWeapon == skullParent)
+            if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
             {
                 //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
                 skullParent.transform.GetChild(0).gameObject.SetActive(false);
@@ -317,7 +317,7 @@ public class WeaponEquip : MonoBehaviour
                 //If there is already a weapon equipped, hide it.
                 currentWeapon.SetActive(false);
             }
-            if (weaponList.Count > 1 && currentWeapon == skullParent)
+            if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
             {
                 //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
                 skullParent.transform.GetChild(0).gameObject.SetActive(false); //Put in inventory.
@@ -440,7 +440,6 @@ public class WeaponEquip : MonoBehaviour
     //Put weapon in inventory:
     public void UnequipWeapon()
     {
-        inInventory = true;
         isEquipped = false;
         weaponNumber--;
         if (weaponNumber < 0) { weaponNumber = 0;  }
@@ -448,11 +447,16 @@ public class WeaponEquip : MonoBehaviour
         if (currentWeapon != skullParent)
         {
             currentWeapon.SetActive(false); //hide held weapon
+            inInventory = true;
         }
         else
         {
-            skullParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
-            holdingSkull = false;
+            if (holdingSkull)
+            {
+                skullParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
+                holdingSkull = false;
+                inInventory = true;
+            }
         }
     }
 
