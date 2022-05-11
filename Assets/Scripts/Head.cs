@@ -38,7 +38,7 @@ public class Head : MonoBehaviour
         //skullParent = GameObject.Find("SkullParent").transform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         // For Controller:
         //if (Input.GetAxis("RtTrigger") > 0)
@@ -141,6 +141,8 @@ public class Head : MonoBehaviour
     //Return the skull to the player hands.
     IEnumerator ReturnSkull()
     {
+        canThrow = true;
+
         yield return new WaitForSeconds(returnSkullTime);
 
         playerWeapon.skull.transform.parent = skullParent;
