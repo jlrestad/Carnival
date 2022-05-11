@@ -186,7 +186,8 @@ public class SkillShotGameManager : MonoBehaviour
         weaponEquip.skillshotActive = false;
         timerText.enabled = false;
       
-        yield return new WaitForSeconds(2);
+        //lock for 1 second longer to allow target reset
+        yield return new WaitForSeconds(3);
 
         // lock player here until WinLoseUI done--
         //if player leaves trigger area before this loop finishes, cannot win replay
