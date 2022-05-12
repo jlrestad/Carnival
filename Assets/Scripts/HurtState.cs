@@ -8,7 +8,7 @@ namespace CH
     {
         private bool hurtRan;
 
-        public IdleState iState;
+        public SearchState sState;
 
         public override State RunCurrentState()
         {
@@ -27,7 +27,7 @@ namespace CH
             {
                 hurtRan = false;
                 agent.isStopped = false;
-                return iState;
+                return sState;
             }
 
             return this;
@@ -35,6 +35,7 @@ namespace CH
 
         public void Hurt()
         {
+            bossAtr.whichHit++;
             // run hurt animation
             Debug.Log("hurt");
         }

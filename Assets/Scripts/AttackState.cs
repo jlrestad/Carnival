@@ -7,22 +7,24 @@ namespace CH
 {
     public class AttackState : State
     {
-        public IdleState iState;
+        public SearchState sState;
         public TauntState tState;
         public DeathState dState;
         public HurtState hState;
+        public ChaseState cState;
 
         public int atkCounter = 0;
 
         public override State RunCurrentState()
         {
             // if player is out of range, move into idle state
-            if (!PlayerDetector())
+            if (!PlayerDetector(bossAtr.maxAtkDistance) && PlayerDetector(bossAtr.maxChaseDistance))
             {
-                return iState;
+                agent.speed = bossAtr.chaseSpeed;
+                return cState;
             }
 
-            if (bossAtr.targetHit && bossAtr.heartHit && bossAtr.whichHit < 2)  // sends to the hurt state under correct conditions
+            if (bossAtr.targetHit && bossAtr.heartHit && bossAtr.whichHit <= 2)  // sends to the hurt state under correct conditions
             {
                 return hState;
             }
@@ -34,8 +36,7 @@ namespace CH
             }
 
             // follow player around and look in direction
-            agent.destination = (player.transform.position);
-            agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, player.transform.rotation, bossAtr.turnSpeed * Time.deltaTime);
+            MoveTowardPlayer();
 
             // left swing, right swing
             // numbers of swings = 2 + number of heart hits
@@ -43,7 +44,7 @@ namespace CH
             {
                 AttackPattern();
 
-                RandomizeTimer(1, 4 - bossAtr.whichHit); // randomizes swing / taunt time depending on how many times the heart has been hit
+                RandomizeTimer(3 - bossAtr.whichHit, 5 - bossAtr.whichHit); // randomizes swing / taunt time depending on how many times the heart has been hit
             }
 
             StartCoroutine(CountDownTimer());

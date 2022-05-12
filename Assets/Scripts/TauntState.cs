@@ -8,9 +8,10 @@ namespace CH
     public class TauntState : State
     {
         public AttackState aState;
-        public IdleState iState;
+        public SearchState sState;
         public DeathState dState;
         public HurtState hState;
+        public ChaseState cState;
 
         private bool tauntRan;
 
@@ -27,7 +28,7 @@ namespace CH
                 agent.isStopped = true;
                 Taunt();
                 tauntRan = true;
-                RandomizeTimer(1, 4 - bossAtr.whichHit);
+                RandomizeTimer(3 - bossAtr.whichHit, 5 - bossAtr.whichHit); // randomizes swing / taunt time depending on how many times the heart has been hit
             }
 
             StartCoroutine(CountDownTimer());
@@ -36,7 +37,7 @@ namespace CH
             {
                 tauntRan = false;       // reset tauntRan for next cycle
                 agent.isStopped = false;
-                return iState;
+                return sState;
             }
 
             if (bossAtr.targetHit && bossAtr.heartHit && bossAtr.whichHit < 2)  // sends to the hurt state under correct conditions
