@@ -6,6 +6,7 @@ public class CritterSpawnerManager : MonoBehaviour
 {
     public GameObject player; //reference player to get position
     public GameObject spawnedCritter;
+    private GameObject spawnDestroy;
     public List<GameObject> critterList;
     public float xPos;
     public float zPos;
@@ -25,31 +26,24 @@ public class CritterSpawnerManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         //move parent game object to player position
         Debug.Log("Spawning");
-        while(critterCount < 6)
+        while(critterCount < 5)
         {
             xPos = Random.Range(player.transform.position.x - 5, player.transform.position.x + 5);
-            yPos = player.transform.position.y;
+            yPos = player.transform.position.y - 2;
             zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
 
-            Instantiate(spawnedCritter, new Vector3(xPos, yPos, zPos), Quaternion.identity);
-            critterList.Add(spawnedCritter);
+            spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, 10, zPos), Quaternion.identity);
+            spawnDestroy.SetActive(true);
+            critterList.Add(spawnDestroy);
             critterCount += 1;
-            yield return null;
         }
-
-    }
-
-    public void DestroyCritters()
-    {
-        new WaitForSeconds(stayUpTime);
-        for(int i = 0; i < critterList.Count; i++)
+        yield return new WaitForSeconds(stayUpTime);
+        foreach (var critter in critterList)
         {
-            critterList[i].SetActive(false);
-            Debug.Log("Hid");
-            Destroy(critterList[i]);
-            Debug.Log("Destroyed");
+            Destroy(critter);
+            Debug.Log("Hiding");
         }
+        critterList = null;
     }
-
 
 }

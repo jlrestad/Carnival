@@ -534,7 +534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &898481788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,7 +554,7 @@ MonoBehaviour:
   zPos: 0
   yPos: 0
   critterCount: 0
-  stayUpTime: 3
+  stayUpTime: 10
 --- !u!4 &898481789
 Transform:
   m_ObjectHideFlags: 0
@@ -1420,5 +1420,9 @@ PrefabInstance:
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 1503913348}
+    - target: {fileID: 4075122671950012881, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
