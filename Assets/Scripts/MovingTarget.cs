@@ -54,7 +54,8 @@ public class MovingTarget : MonoBehaviour
         }
         else
         {
-            //Turn off targets if game is over.
+            //Turn off targets if game is over
+            // **** Need to lock player within gameplay boundary so targets can finish thos loop for replay ****.
             for (int i = 0; i < pooledTargets.Count; i++)
             {
                 pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);

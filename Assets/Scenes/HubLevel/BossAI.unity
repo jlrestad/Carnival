@@ -518,6 +518,57 @@ PrefabInstance:
     - {fileID: 8477729249756985447, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
     - {fileID: 8477729249756985446, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+--- !u!1 &898481787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 898481789}
+  - component: {fileID: 898481788}
+  m_Layer: 0
+  m_Name: CritterSpawnerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &898481788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898481787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cd8589593d4bf42a3b1677acaea104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  spawnedCritter: {fileID: 480878102020010759, guid: ab5482ed6436eb14cb6e2eb216d48b90, type: 3}
+  critterList: []
+  xPos: 0
+  zPos: 0
+  yPos: 0
+  critterCount: 0
+  stayUpTime: 3
+--- !u!4 &898481789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898481787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 223.82605, y: 14.324614, z: 24.237251}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1203860639
 GameObject:
   m_ObjectHideFlags: 0
