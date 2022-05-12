@@ -24,11 +24,11 @@ namespace CH
 
         public abstract State RunCurrentState();
 
-        protected bool PlayerDetector()           // method used to detect the player within the distance
+        protected bool PlayerDetector(float reqDistance)           // method used to detect the player within the distance
         {
             bossAtr.distanceFromPlayer = agent.transform.position - player.transform.position;
 
-            if (bossAtr.distanceFromPlayer.magnitude <= bossAtr.maxDistance)
+            if (bossAtr.distanceFromPlayer.magnitude <= reqDistance)
             {
                 return true;
 
@@ -59,6 +59,12 @@ namespace CH
             {
                 yield return null;
             }
+        }
+
+        protected void MoveTowardPlayer()
+        {
+            agent.destination = (player.transform.position);
+            agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, player.transform.rotation, bossAtr.turnSpeed * Time.deltaTime);
         }
     }
 
