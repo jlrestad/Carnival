@@ -14,6 +14,11 @@ namespace CH
 
         private bool tauntRan;
 
+        public CritterSpawnerManager spawnManager;
+        private void Start()
+        {
+            spawnManager = FindObjectOfType<CritterSpawnerManager>();
+        }
         public override State RunCurrentState()
         {
 
@@ -46,7 +51,7 @@ namespace CH
 
             // stop following the target and taunt
             // critters will spawn
-            CritterSpawn();
+            
             // resumes attack state after taunting
             return this;
         }
@@ -60,6 +65,7 @@ namespace CH
         {
             // method to call taunt animation
             Debug.Log("taunting");
+            StartCoroutine(spawnManager.SpawnCritters());
         }
     }
 }
