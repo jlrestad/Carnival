@@ -13,31 +13,55 @@ public class CritterSpawnerManager : MonoBehaviour
     public float yPos;
     public int critterCount;
     public int stayUpTime = 3;
-
+    public Queue<List<GameObject>> critterQueue = new Queue<List<GameObject>>();
 
     public IEnumerator SpawnCritters()
     {
+        critterCount = 0;
+        critterList = new List<GameObject>();
+
         //get player position and move parent to position
         player = GameObject.FindGameObjectWithTag("Player");
         //move parent game object to player position
-        Debug.Log("Spawning");
-        while(critterCount < 5)
-        {
-            xPos = Random.Range(player.transform.position.x - 5, player.transform.position.x + 5);
-            yPos = player.transform.position.y - 2;
-            zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
-            spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, 10, zPos), Quaternion.identity);
-            spawnDestroy.SetActive(true);
-            critterList.Add(spawnDestroy);
-            critterCount += 1;
-        }
-        yield return new WaitForSeconds(stayUpTime);
 
-        foreach (var critter in critterList)
+
+        Debug.Log("Spawning");
+        //check queue length, no more than 15 on (3 sets) at a time
+        if(critterQueue.Count < 3)
         {
-            Destroy(critter);
-            Debug.Log("Hiding");
-            critterCount -= 1;
+            //spawn 5 critters
+            while (critterList.Count < 5)
+            {
+                //spawn area coordinates
+                xPos = Random.Range(player.transform.position.x - 5, player.transform.position.x + 5);
+                yPos = player.transform.position.y - 2;
+                zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
+
+                //instantiate a critter
+                spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, 10, zPos), Quaternion.identity);
+                spawnDestroy.SetActive(true);
+                critterList.Add(spawnDestroy);
+                critterCount += 1;
+            }
+
+            critterQueue.Enqueue(critterList);
+        }
+        
+        // wait for up time then call destroy on group that's been up the longest
+        yield return new WaitForSeconds(stayUpTime);
+        DestroySpawns();
+    }
+
+
+    public void DestroySpawns()
+    {
+        if(critterQueue != null)
+        {
+            List<GameObject> list = critterQueue.Dequeue();
+            foreach(var critter in list)
+            {
+                Destroy(critter);
+            }
         }
     }
 
