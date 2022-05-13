@@ -14,6 +14,9 @@ public class CritterSpawnerManager : MonoBehaviour
     public int critterCount;
     public int stayUpTime = 3;
     public Queue<List<GameObject>> critterQueue = new Queue<List<GameObject>>();
+    
+    // to turn triggers on
+    private Collider SDCollider;
 
     public IEnumerator SpawnCritters()
     {
@@ -40,6 +43,11 @@ public class CritterSpawnerManager : MonoBehaviour
                 //instantiate a critter
                 spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, 10, zPos), Quaternion.identity);
                 spawnDestroy.SetActive(true);
+
+                //get collider and turn trigger on
+                SDCollider = spawnedCritter.GetComponent<Collider>();
+                SDCollider.isTrigger = true;
+
                 critterList.Add(spawnDestroy);
                 critterCount += 1;
             }
