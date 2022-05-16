@@ -1514,6 +1514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 6763108747903896009}
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
 --- !u!1 &812105224740685085
 GameObject:
   m_ObjectHideFlags: 0
@@ -4233,11 +4234,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 6763108747903896009}
-  iState: {fileID: 7838586540889540469}
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
+  sState: {fileID: 0}
   tState: {fileID: 5429964844018573569}
   dState: {fileID: 6724187067961264023}
+  hState: {fileID: 0}
+  cState: {fileID: 0}
   atkCounter: 0
-  isInAttackRange: 0
 --- !u!1 &3404080783761555214
 GameObject:
   m_ObjectHideFlags: 0
@@ -9082,10 +9085,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 0}
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
   aState: {fileID: 3883471063819966862}
   tState: {fileID: 5429964844018573569}
   dState: {fileID: 6724187067961264023}
-  canSeeThePlayer: 0
+  hState: {fileID: 0}
+  cState: {fileID: 0}
 --- !u!1 &6587982083159638594
 GameObject:
   m_ObjectHideFlags: 0
@@ -10958,9 +10963,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 6763108747903896009}
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
   aState: {fileID: 3883471063819966862}
-  iState: {fileID: 7838586540889540469}
+  sState: {fileID: 0}
   dState: {fileID: 6724187067961264023}
+  hState: {fileID: 0}
+  cState: {fileID: 0}
+  spawnManager: {fileID: 0}
 --- !u!1 &7932457837388602032
 GameObject:
   m_ObjectHideFlags: 0
@@ -13077,7 +13086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1386109390108532438, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.547
+      value: 0.038
       objectReference: {fileID: 0}
     - target: {fileID: 1386109390108532438, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
       propertyPath: m_LocalPosition.z
