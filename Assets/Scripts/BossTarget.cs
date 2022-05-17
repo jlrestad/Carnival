@@ -55,11 +55,10 @@ public class BossTarget : MonoBehaviour
     //Target moves down and hides after being hit, add to the score
     public IEnumerator HitTarget()
     {
-        targetHit = true;
-
         //slide down and hide
         if (!isFlipped)
         {
+            targetHit = true;
             //transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
             transform.position = hideSpot.position;
             //Turn to negative side.

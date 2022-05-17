@@ -11,6 +11,8 @@ namespace CH
         public NavMeshAgent agent; //ref to navmeshagent component attached to boss. Allows boss to move along the baked path. (Window > AI > Navigation)
 
         protected BossAttributes bossAtr;
+        protected FieldOfView fov;
+
         protected float timeCounter = 0;
 
         [SerializeField] public Vector3 distanceFromPlayer;
@@ -20,6 +22,7 @@ namespace CH
             //Initialize variables
             player = GameObject.FindGameObjectWithTag("Player"); //finds the player by searching for the tag (assigned in Inspector)
             bossAtr = agent.GetComponent<BossAttributes>(); // gives access to boss behavior variables
+            fov = agent.GetComponent<FieldOfView>();
         }
 
         public abstract State RunCurrentState();

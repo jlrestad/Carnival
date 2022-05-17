@@ -18,10 +18,16 @@ namespace CH
         public override State RunCurrentState()
         {
             // if player is out of range, move into idle state
-            if (!PlayerDetector(bossAtr.maxAtkDistance) && PlayerDetector(bossAtr.maxChaseDistance))
+            if (!PlayerDetector(bossAtr.maxAtkDistance) && PlayerDetector(bossAtr.maxChaseDistance) && fov.canSeePlayer)
             {
                 agent.speed = bossAtr.chaseSpeed;
                 return cState;
+            }
+
+            if (!fov.canSeePlayer)
+            {
+                agent.destination = (agent.transform.position);
+                return sState;
             }
 
             if (bossAtr.targetHit && bossAtr.heartHit && bossAtr.whichHit <= 2)  // sends to the hurt state under correct conditions

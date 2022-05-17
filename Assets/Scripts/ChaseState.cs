@@ -27,12 +27,13 @@ namespace CH
                 return hState;
             }
 
-            if (PlayerDetector(bossAtr.maxAtkDistance))                 // depending on distance change, start attacking, start searching, or keep chasing
+            if (PlayerDetector(bossAtr.maxAtkDistance) && fov.canSeePlayer)                 // depending on distance change, start attacking, start searching, or keep chasing
             {
                 agent.speed = bossAtr.atkSpeed;
                 return aState;
-            } else if (!PlayerDetector(bossAtr.maxChaseDistance))
+            } else if (!PlayerDetector(bossAtr.maxChaseDistance) || !fov.canSeePlayer)
             {
+                agent.destination = (agent.transform.position);
                 return sState;
             } else
             {
