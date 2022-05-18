@@ -1,5 +1,103 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &262607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 262609}
+  - component: {fileID: 262608}
+  m_Layer: 2
+  m_Name: Chase State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &262609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4475162362702571659}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &262608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2afe7d1e8fd754a9a9a04a76bfa7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  agent: {fileID: 6763108747903896009}
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
+  sState: {fileID: 7838586540889540469}
+  tState: {fileID: 5429964844018573569}
+  dState: {fileID: 6724187067961264023}
+  hState: {fileID: 1752999837}
+  aState: {fileID: 3883471063819966862}
+--- !u!1 &1752999835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1752999836}
+  - component: {fileID: 1752999837}
+  m_Layer: 2
+  m_Name: Hurt State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1752999836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752999835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4475162362702571659}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1752999837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752999835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e85a7623bddbc4281d002dff17bb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  agent: {fileID: 6763108747903896009}
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
+  sState: {fileID: 7838586540889540469}
 --- !u!1 &2092507717
 GameObject:
   m_ObjectHideFlags: 0
@@ -4235,11 +4333,11 @@ MonoBehaviour:
   player: {fileID: 0}
   agent: {fileID: 6763108747903896009}
   distanceFromPlayer: {x: 0, y: 0, z: 0}
-  sState: {fileID: 0}
+  sState: {fileID: 7838586540889540469}
   tState: {fileID: 5429964844018573569}
   dState: {fileID: 6724187067961264023}
-  hState: {fileID: 0}
-  cState: {fileID: 0}
+  hState: {fileID: 1752999837}
+  cState: {fileID: 262608}
   atkCounter: 0
 --- !u!1 &3404080783761555214
 GameObject:
@@ -8043,6 +8141,8 @@ GameObject:
   - component: {fileID: 6763108747903896008}
   - component: {fileID: 6763108747903896009}
   - component: {fileID: 1417422826127781390}
+  - component: {fileID: 74440356}
+  - component: {fileID: 74440357}
   m_Layer: 2
   m_Name: FreakShow_unRigged
   m_TagString: Boss
@@ -8147,6 +8247,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 7838586540889540469}
+--- !u!114 &74440356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843994750213302246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b254a40c33961ab4fbd1c9e39855193b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossHealth: 30
+  target: {fileID: 4861379150529844834}
+  heart: {fileID: 8708715075137997921}
+  maxChaseDistance: 30
+  maxAtkDistance: 15
+  turnSpeed: 1
+  chaseSpeed: 5
+  atkSpeed: 1
+  distanceFromPlayer: {x: 0, y: 0, z: 0}
+  whichHit: 0
+  targetHit: 0
+  heartHit: 0
+--- !u!114 &74440357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843994750213302246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e4b49f09d552ea40966654ab80f0ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 30
+  angle: 100
+  player: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  canSeePlayer: 0
 --- !u!1 &5899981577758412538
 GameObject:
   m_ObjectHideFlags: 0
@@ -9051,7 +9197,7 @@ GameObject:
   - component: {fileID: 5087192110766538174}
   - component: {fileID: 7838586540889540469}
   m_Layer: 2
-  m_Name: Idle State
+  m_Name: Search State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9084,13 +9230,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  agent: {fileID: 0}
+  agent: {fileID: 6763108747903896009}
   distanceFromPlayer: {x: 0, y: 0, z: 0}
   aState: {fileID: 3883471063819966862}
   tState: {fileID: 5429964844018573569}
   dState: {fileID: 6724187067961264023}
-  hState: {fileID: 0}
-  cState: {fileID: 0}
+  hState: {fileID: 1752999837}
+  cState: {fileID: 262608}
 --- !u!1 &6587982083159638594
 GameObject:
   m_ObjectHideFlags: 0
@@ -10965,10 +11111,10 @@ MonoBehaviour:
   agent: {fileID: 6763108747903896009}
   distanceFromPlayer: {x: 0, y: 0, z: 0}
   aState: {fileID: 3883471063819966862}
-  sState: {fileID: 0}
+  sState: {fileID: 7838586540889540469}
   dState: {fileID: 6724187067961264023}
-  hState: {fileID: 0}
-  cState: {fileID: 0}
+  hState: {fileID: 1752999837}
+  cState: {fileID: 262608}
   spawnManager: {fileID: 0}
 --- !u!1 &7932457837388602032
 GameObject:
@@ -11082,6 +11228,8 @@ Transform:
   - {fileID: 2907167214436739667}
   - {fileID: 2539112028840760429}
   - {fileID: 8674448758391013706}
+  - {fileID: 262609}
+  - {fileID: 1752999836}
   m_Father: {fileID: 6508223659394891100}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11895,6 +12043,7 @@ GameObject:
   - component: {fileID: 5179640493142982047}
   - component: {fileID: 6966685916879137523}
   - component: {fileID: 8426040123561751720}
+  - component: {fileID: 605402186}
   m_Layer: 0
   m_Name: Heart_HP:ZBrush
   m_TagString: BossHeart
@@ -11978,6 +12127,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.48151588, y: 0.41385233, z: 0.12827514}
   m_Center: {x: -0.00002193451, y: 5.466263e-10, z: 0.11087506}
+--- !u!114 &605402186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8708715075137997921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6859e6c1e832c34abeab226a08304fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossAttributes: {fileID: 0}
+  bossHealth: 0
+  hitAmount: 0
+  heartHit: 0
 --- !u!1 &8835388495211444139
 GameObject:
   m_ObjectHideFlags: 0
@@ -13125,5 +13290,10 @@ PrefabInstance:
 --- !u!4 &1460356589186328544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1386109390108532438, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
+  m_PrefabInstance: {fileID: 538261183897712950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4861379150529844834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4904243133078368084, guid: cec20184341653640bd06ce35d48ebeb, type: 3}
   m_PrefabInstance: {fileID: 538261183897712950}
   m_PrefabAsset: {fileID: 0}

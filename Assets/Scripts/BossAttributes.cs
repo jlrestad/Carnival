@@ -5,15 +5,20 @@ using UnityEngine.AI;
 
 public class BossAttributes : MonoBehaviour
 {
-                                 /* commented out lines having to do with the heart should plug right in when the script is written */
+    /* commented out lines having to do with the heart should plug right in when the script is written */
+
+    [Header("BOSS HEALTH")]
+    public int bossHealth;
+
+    [Header ("GAME OBJECTS")]
     public GameObject target;
     public GameObject heart;
 
     protected BossTarget bossTrgt;
-    //protected BossHeart bossHrt;
+    protected BossHeart bossHrt;
 
 
-    [Space(15)]
+    [Header("VARIABLES")]
     [SerializeField] public float maxChaseDistance; //distance to begin chasing player (editable in the Inspector)
     [SerializeField] public float maxAtkDistance; //distance to begin attacking player (editable in the Inspector)
     [SerializeField] public float turnSpeed; //turn speed in degrees per second
@@ -25,23 +30,25 @@ public class BossAttributes : MonoBehaviour
 
     public bool targetHit, heartHit;
 
-    private void Awake()
+    private void Start()
     {
         bossTrgt = target.GetComponent<BossTarget>();
-        //bossHrt = heart.GetComponent<BossHeart>();
+        bossHrt = heart.GetComponent<BossHeart>();
+
+        heart = GameObject.FindGameObjectWithTag("BossHeart");
     }
 
     void Update()
     {
         targetHit = bossTrgt.targetHit;
-        //heartHit = bossHrt.heartHit;
+        heartHit = bossHrt.heartHit;
 
-        if(heartHit)
+        if (heartHit)
         {
-            //bossHrt.heartHit = false;
-            heartHit = false;
+            bossHrt.heartHit = false; //Resets the bool
 
-            whichHit++;
+            //heartHit = false;  //Redundant - should update to false because it's called in update.
+            //whichHit++;  //This will be incremented from BossHeart
         }
     }
 }

@@ -11,6 +11,7 @@ public class Head : MonoBehaviour
     [SerializeField] Menu menu;
     [SerializeField] int throwSpeed = 5;
     [SerializeField] int pickUpRange;
+    [SerializeField] int damageAmount;
 
     public float returnSkullTime = 1.0f;
     Vector3 distanceToPlayer;
@@ -95,7 +96,10 @@ public class Head : MonoBehaviour
         if (other.CompareTag("BossHeart"))
         {
             //Do damage
-            Debug.Log("Hit the heart!");
+            Debug.Log("Hit for " + damageAmount + " points");
+
+            BossHeart bossHeart = other.GetComponent<BossHeart>();
+            bossHeart.DoDamage(damageAmount);  //Do damage to the boss
         }
         else
         {

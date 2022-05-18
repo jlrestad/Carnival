@@ -104,7 +104,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.7597219, y: 0.84719485, z: 1, w: 0.20265777}
+    m_Value: {x: 0.7597219, y: 0.84719485, z: 1, w: 1}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 1, y: 0.88726014, z: 0.6037251, w: 0.3322259}
@@ -121,11 +121,11 @@ MonoBehaviour:
     min: 0
   highlightsStart:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.1
     min: 0
   highlightsEnd:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.4
     min: 0
 --- !u!114 &11400000
 MonoBehaviour:
