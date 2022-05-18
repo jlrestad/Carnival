@@ -6,12 +6,12 @@ public class Head : MonoBehaviour
 {
     public static Head Instance;
 
+    BossHeart bossHeart;
     [SerializeField] GameObject player;
     [SerializeField] WeaponEquip playerWeapon;
     [SerializeField] Menu menu;
     [SerializeField] int throwSpeed = 5;
     [SerializeField] int pickUpRange;
-    [SerializeField] int damageAmount;
 
     public float returnSkullTime = 1.0f;
     Vector3 distanceToPlayer;
@@ -96,10 +96,8 @@ public class Head : MonoBehaviour
         if (other.CompareTag("BossHeart"))
         {
             //Do damage
-            Debug.Log("Hit for " + damageAmount + " points");
-
-            BossHeart bossHeart = other.GetComponent<BossHeart>();
-            bossHeart.DoDamage(damageAmount);  //Do damage to the boss
+            bossHeart = other.GetComponent<BossHeart>();
+            bossHeart.HitHeart();
         }
         else
         {
@@ -160,6 +158,12 @@ public class Head : MonoBehaviour
 
         playerWeapon.holdingSkull = true;
         playerWeapon.isEquipped = true;
+        
+        //Used to keep the skull from doing more than 1 hit to the heart
+        if (bossHeart != null) 
+        { 
+            bossHeart.canDamage = true;
+        }
 
         //If the weapon is switched after the skull has been thrown, hide the skull.
         if (playerWeapon.currentWeapon != playerWeapon.skullParent)

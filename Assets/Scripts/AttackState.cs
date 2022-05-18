@@ -36,7 +36,7 @@ namespace CH
             }
 
             // if boss heart has been hit 3 times, enter death state
-            if (bossAtr.whichHit > 2)
+            if (bossAtr.whichHit > 2) 
             {
                 return dState;
             }

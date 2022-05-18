@@ -1288,6 +1288,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74440356, guid: 3c99e6985745ee44583c7065df3467fe, type: 3}
+      propertyPath: bossHealth
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 74440357, guid: 3c99e6985745ee44583c7065df3467fe, type: 3}
       propertyPath: player
       value: 
@@ -1427,6 +1431,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5779198823043124211, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
       propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740113306275289691, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: damageAmount
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6740113306275289691, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}

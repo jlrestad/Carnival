@@ -5,9 +5,9 @@ using UnityEngine;
 public class BossHeart : MonoBehaviour
 {
     public BossAttributes bossAttributes;
-    public int bossHealth;
     public int hitAmount;
     public bool heartHit;
+    public bool canDamage;  //Used to keep skull from doing more than 1 hit if it enters the heart trigger more than once.
 
 
     private void Awake()
@@ -17,24 +17,26 @@ public class BossHeart : MonoBehaviour
 
     private void Start()
     {
-        bossHealth = bossAttributes.bossHealth;
+        canDamage = true;
         hitAmount = bossAttributes.whichHit;
     }
 
     private void Update()
     {
         //Update varables
-        bossAttributes.bossHealth = bossHealth;
         bossAttributes.whichHit = hitAmount;
     }
 
-    //Takes away the damage amount to the boss' health and adds to the hit amount.
-    public void DoDamage(int damageAmount)
+    //Hits heart and adds to the hit amount.
+    public void HitHeart()
     {
-        heartHit = true; 
+        heartHit = true;
 
-        bossHealth -= damageAmount;  //Take away the damage amount from health
-        hitAmount++;  //Increment the hit 
+        if (canDamage)
+        {
+            hitAmount++;  //Increment the hit
+        }
+        canDamage = false; //Keeps the skull from doing more than 1 hit. Set to true in Head script
     }
 
 }

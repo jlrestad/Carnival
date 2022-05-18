@@ -7,8 +7,8 @@ public class BossAttributes : MonoBehaviour
 {
     /* commented out lines having to do with the heart should plug right in when the script is written */
 
-    [Header("BOSS HEALTH")]
-    public int bossHealth;
+    //[Header("BOSS HEALTH")]
+    //public int bossHealth;  //Might be used later to keep track of boss health
 
     [Header ("GAME OBJECTS")]
     public GameObject target;
@@ -41,14 +41,16 @@ public class BossAttributes : MonoBehaviour
     void Update()
     {
         targetHit = bossTrgt.targetHit;
-        heartHit = bossHrt.heartHit;
+        heartHit = bossHrt.heartHit;  //updates heartHit variable 
 
         if (heartHit)
         {
             bossHrt.heartHit = false; //Resets the bool
 
-            //heartHit = false;  //Redundant - should update to false because it's called in update.
-            //whichHit++;  //This will be incremented from BossHeart
+            //whichHit++;  //This will be incremented from BossHeart to keep from counting a throw more than once
+
+            //heartHit = false;  //* Already updates to false because it's called in update.
+
         }
     }
 }
