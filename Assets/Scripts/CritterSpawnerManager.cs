@@ -34,9 +34,17 @@ public class CritterSpawnerManager : MonoBehaviour
             while (critterList.Count < 5)
             {
                 
+                //try to find ground -- needs a little fine tune
+                if(Physics.Raycast(player.transform.position, Vector3.down, out RaycastHit hit))
+                {
+                    yPos = hit.point.y;
+                }
+                else
+                { 
+                    yPos = player.transform.position.y - 1;
+                }
                 //spawn area coordinates
                 xPos = Random.Range(player.transform.position.x - 5, player.transform.position.x + 5);
-                yPos = player.transform.position.y - 1;
                 zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
 
                 // add wait to stagger spawns
