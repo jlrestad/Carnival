@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 5790524164960210601}
   - component: {fileID: 6748194217030220999}
   - component: {fileID: 5659006118406691320}
+  - component: {fileID: 1627808704}
   m_Layer: 0
   m_Name: pCylinder8
   m_TagString: Untagged
@@ -205,6 +206,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &1627808704
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622923699099951687}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2856558851744766913
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,13 +449,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8298258589167585384}
     m_Modifications:
+    - target: {fileID: 743903933, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 479296344043666529, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.118
       objectReference: {fileID: 0}
     - target: {fileID: 4023574401017053576, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5428223693843153427, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_Type
@@ -498,7 +519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8119871577974485381, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927335684214483775, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
       propertyPath: m_RootOrder
@@ -546,8 +567,65 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
+--- !u!1 &8583958038051015995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8119871577974485381, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
+  m_PrefabInstance: {fileID: 544878891309104318}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8965410079835920257 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8927335684214483775, guid: 38cd194af704e9146bdd687d979c867f, type: 3}
   m_PrefabInstance: {fileID: 544878891309104318}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &858172885
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583958038051015995}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!59 &858172884
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583958038051015995}
+  m_ConnectedBody: {fileID: 1627808704}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.21379378, z: 0}
+  m_Axis: {x: 1, y: 0, z: 90}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: -0.17099994, y: 1.2228398, z: 0.0030002682}
+  m_UseSpring: 1
+  m_Spring:
+    spring: 0.5
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 1
+  m_UseLimits: 0
+  m_Limits:
+    min: 0
+    max: 0
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 1
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
