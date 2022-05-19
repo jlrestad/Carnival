@@ -25,8 +25,6 @@ public class CritterSpawnerManager : MonoBehaviour
 
         //get player position and move parent to position
         player = GameObject.FindGameObjectWithTag("Player");
-        //move parent game object to player position
-
 
         Debug.Log("Spawning");
         //check queue length, no more than 15 on (3 sets) at a time
@@ -35,13 +33,17 @@ public class CritterSpawnerManager : MonoBehaviour
             //spawn 5 critters
             while (critterList.Count < 5)
             {
+                
                 //spawn area coordinates
                 xPos = Random.Range(player.transform.position.x - 5, player.transform.position.x + 5);
-                yPos = player.transform.position.y - 2;
+                yPos = player.transform.position.y - 1;
                 zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
 
+                // add wait to stagger spawns
+                yield return new WaitForSeconds(1f);
+
                 //instantiate a critter
-                spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, 10, zPos), Quaternion.identity);
+                spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, yPos, zPos), Quaternion.identity);
                 spawnDestroy.SetActive(true);
 
                 //get collider and turn trigger on
