@@ -165,7 +165,7 @@ public class Head : MonoBehaviour
             bossHeart.canDamage = true;
         }
 
-        //If the weapon is switched after the skull has been thrown, hide the skull.
+        //If the weapon is switched after the skull has been thrown, hide the skull that returns to the players hand.
         if (playerWeapon.currentWeapon != playerWeapon.skullParent)
         {
             skullParent.transform.GetChild(0).gameObject.SetActive(false);
