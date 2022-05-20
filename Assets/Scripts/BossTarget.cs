@@ -60,10 +60,12 @@ public class BossTarget : MonoBehaviour
         {
             targetHit = true;
             //transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
-            transform.position = hideSpot.position;
+            //transform.position = hideSpot.position;
             //Turn to negative side.
-            animator.SetBool("isPos", false);
-            animator.SetBool("isNeg", true);
+            //animator.SetBool("isPos", false);
+            //animator.SetBool("isNeg", true);
+            animator.SetBool("reset", false);
+            animator.SetBool("isHit", true);  //Target is hit, move down
         }
 
         yield return new WaitForSeconds(downTime);
@@ -72,10 +74,12 @@ public class BossTarget : MonoBehaviour
 
         //Target returns to parent position after downTime has passed.
         //transform.position = Vector3.Lerp(transform.position, targetParent.transform.position, 1.0f);
-        transform.position = targetParent.transform.position;
+        //transform.position = targetParent.transform.position;
 
         //Turn to positive side.
-        animator.SetBool("isPos", true);
-        animator.SetBool("isNeg", false);
+        //animator.SetBool("isPos", true);
+        //animator.SetBool("isNeg", false);
+        animator.SetBool("reset", true);  //Target return to regular position
+        animator.SetBool("isHit", false);  //Target has not been hit and is allowed to spin.
     }
 }
