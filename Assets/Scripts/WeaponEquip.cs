@@ -230,32 +230,16 @@ public class WeaponEquip : MonoBehaviour
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-            //    if (_closestWeapon == null)
-              //  {
-                    _closestWeapon = closestWeapon;
-                //}
-                //if (currentWeapon == null)
-                //{
-                //    currentWeapon = closestWeapon;
-                //}
+                _closestWeapon = closestWeapon;
 
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
-                //If the closest weapon is a skull, then get the collider and rigidbody of that skull.
-                //if (closestWeapon.CompareTag("Head"))
-                //{
-                //    skull = closestWeapon;
-                    
-                //    skullCollider = skull.GetComponent<Collider>();
-                //    skullRB = skull.GetComponent<Rigidbody>();
-                //}
-
-                //* This was used for loading scenes, which we aren't using now, but kept it incase... Can delete at the end of project.
-                //Get the name of the layer -- which is the name of the game level
                 int layerNumber = closestWeapon.layer;
                 gameName = LayerMask.LayerToName(layerNumber);
-
-                //gameBooth = GameObject.FindGameObjectWithTag(levelName);
+            }
+            else
+            {
+                closestWeapon = null;  //Keep from throwing an error if there is no closestWeapon in scene.
             }
         }
         return closestWeapon; //returns the closest weapon game object
