@@ -17,6 +17,7 @@ public class CritterSpawnerManager : MonoBehaviour
     
     // to turn triggers on
     private Collider SDCollider;
+    public Vector3 spawnPos;
 
     public IEnumerator SpawnCritters()
     {
@@ -33,25 +34,27 @@ public class CritterSpawnerManager : MonoBehaviour
             //spawn 5 critters
             while (critterList.Count < 5)
             {
-                
-                //try to find ground -- needs a little fine tune
-                if(Physics.Raycast(player.transform.position, Vector3.down, out RaycastHit hit))
-                {
-                    yPos = hit.point.y;
-                }
-                else
-                { 
-                    yPos = player.transform.position.y - 1;
-                }
                 //spawn area coordinates
                 xPos = Random.Range(player.transform.position.x - 5, player.transform.position.x + 5);
                 zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
+                spawnPos = new Vector3(xPos, player.transform.position.y, zPos);
+
+
+                //try to find ground -- needs a little fine tune
+                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit))
+                {
+                    spawnPos.y = hit.point.y;
+                }
+                else
+                {
+                    yPos = player.transform.position.y - 1;
+                }
 
                 // add wait to stagger spawns
                 yield return new WaitForSeconds(1f);
 
                 //instantiate a critter
-                spawnDestroy = Instantiate(spawnedCritter, new Vector3(xPos, yPos, zPos), Quaternion.identity);
+                spawnDestroy = Instantiate(spawnedCritter, spawnPos, Quaternion.identity);
                 spawnDestroy.SetActive(true);
 
                 //get collider and turn trigger on
