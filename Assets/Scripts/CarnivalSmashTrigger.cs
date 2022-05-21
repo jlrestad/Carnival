@@ -12,9 +12,16 @@ public class CarnivalSmashTrigger : MonoBehaviour
     public Transform gameplayPosition;
     public Transform player;
 
+    [SerializeField] public float triggerDistance;
+    public float distanceFromGame;
+    public GameObject prompt;
+    public Menu menu;
+    
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        menu = GameObject.FindObjectOfType<Menu>();
     }
 
 
@@ -26,11 +33,34 @@ public class CarnivalSmashTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;
         }
+
+        //find distance between the player and game booth
+        distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
+
+        if(distanceFromGame <= triggerDistance && player.position != gameplayPosition.position)
+        {
+
+            // pull up button
+            // if button pressed, then bring up UI
+            if (menu.usingJoystick)
+            {
+                prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+            }
+            else
+            {
+                prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+            }
+
+            prompt.SetActive(true);
+            if (Input.GetButton("ActionButton") && !whackemGM.gameWon){
+                ShowGameUI();
+            }
+        } 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void ShowGameUI()
     {
-        if(!whackemGM.gameWon && other.CompareTag("Player"))
+        if (!whackemGM.gameWon)
         {
             //Only show the rules screen if player has not picked up the mallet
             if (!whackemGM.weaponEquip.haveMallet && !whackemGM.gameJustFinished)
