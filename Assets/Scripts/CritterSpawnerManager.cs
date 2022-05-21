@@ -10,7 +10,6 @@ public class CritterSpawnerManager : MonoBehaviour
     public List<GameObject> critterList;
     public float xPos;
     public float zPos;
-    public float yPos;
     public int critterCount;
     public int stayUpTime = 3;
     public Queue<List<GameObject>> critterQueue = new Queue<List<GameObject>>();
@@ -39,15 +38,14 @@ public class CritterSpawnerManager : MonoBehaviour
                 zPos = Random.Range(player.transform.position.z - 5, player.transform.position.z + 5);
                 spawnPos = new Vector3(xPos, player.transform.position.y, zPos);
 
-
-                //try to find ground -- needs a little fine tune
+                //find ground
                 if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit))
                 {
                     spawnPos.y = hit.point.y;
                 }
                 else
                 {
-                    yPos = player.transform.position.y - 1;
+                    spawnPos.y = player.transform.position.y - 1;
                 }
 
                 // add wait to stagger spawns
