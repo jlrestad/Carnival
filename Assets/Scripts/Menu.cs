@@ -39,7 +39,7 @@ public class Menu : MonoBehaviour
     //public string exposedParam;
 
     [Header("OBJECTS")]
-    [SerializeField] private GameObject titleScreen;
+    [SerializeField] public GameObject titleScreen;
     [SerializeField] private GameObject titleCamera;
     public GameObject player;
 
@@ -74,9 +74,6 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
-
-
-
     }
 
     public void HandleOnStateChange()
@@ -137,7 +134,7 @@ public class Menu : MonoBehaviour
         GM.SetGameState(GameState.LEVEL_ONE);
 
         //Invoke("LoadLevel", delayTime);
-        LoadLevel();
+        StartCoroutine(LoadLevel());
 
         Debug.Log(GM.GameState);
     }
@@ -184,7 +181,7 @@ public class Menu : MonoBehaviour
 #endif
         StartCoroutine(DelayQuit());
 
-        Application.Quit();
+        //Application.Quit();
     }
 
     IEnumerator DelayQuit()
@@ -203,8 +200,10 @@ public class Menu : MonoBehaviour
     //    PlayerPrefs.SetString("QuitTime", "The application last closed at: " + System.DateTime.Now);
     //}
 
-    public void LoadLevel()
+    public IEnumerator LoadLevel()
     {
+        yield return new WaitForSeconds(0.3f);
+
         counter = 0;
         titleScreen.SetActive(false);
         titleCamera.SetActive(false);
