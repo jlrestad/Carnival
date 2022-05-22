@@ -155,6 +155,15 @@ public class Menu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
+    public void ClearButton()
+    {
+        //Clear button selected
+        EventSystem.current.SetSelectedGameObject(null);
+        //Set selected button
+        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
     public void UnpauseGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
