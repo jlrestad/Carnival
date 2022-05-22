@@ -36,8 +36,7 @@ public class Head : MonoBehaviour
         playerWeapon = player.GetComponent<WeaponEquip>();
         collider = GetComponent<Collider>();
         skullParent = playerWeapon.skullParent.transform;
-        //skullParent = GameObject.Find("SkullParent").transform;
-    }
+    }   
 
     private void Update()
     {

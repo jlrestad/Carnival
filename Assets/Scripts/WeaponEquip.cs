@@ -237,10 +237,10 @@ public class WeaponEquip : MonoBehaviour
                 int layerNumber = closestWeapon.layer;
                 gameName = LayerMask.LayerToName(layerNumber);
             }
-            else
-            {
-                closestWeapon = null;  //Keep from throwing an error if there is no closestWeapon in scene.
-            }
+            //else
+            //{
+            //    closestWeapon = null;  //Keep from throwing an error if there is no closestWeapon in scene.
+            //}
         }
         return closestWeapon; //returns the closest weapon game object
     }
