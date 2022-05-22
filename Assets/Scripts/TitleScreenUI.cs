@@ -13,13 +13,17 @@ using UnityEngine.PlayerLoop;
 
 public class TitleScreenUI : MonoBehaviour
 {
+    GameObject titleF;
     [SerializeField] CanvasGroup letterF;  //Reference to the text that wil be fading in and out.
+    [SerializeField] Image imageF;
 
     bool playFade;  //Allows the coroutine to loop when called from Awake.
 
     void Awake()
     {
-        letterF = GameObject.FindGameObjectWithTag("LetterF").GetComponent<CanvasGroup>();
+        titleF = GameObject.FindGameObjectWithTag("LetterF");
+        letterF = titleF.GetComponent<CanvasGroup>();
+        imageF = titleF.GetComponent<Image>();
         playFade = true;
 
         StartCoroutine(LetterFade());
@@ -35,8 +39,8 @@ public class TitleScreenUI : MonoBehaviour
     {
         while (playFade)
         {
-            float randAlpha = Random.Range(0.3f, 1.0f);
-            float randWait = Random.Range(0.3f, 0.5f);
+            float randAlpha = Random.Range(0.5f, 1.0f);
+            float randWait = Random.Range(0.5f, 1f);
 
             //yield return new WaitForSeconds(0.1f);
 
@@ -58,6 +62,20 @@ public class TitleScreenUI : MonoBehaviour
 
                 }
             }
+
+            if (letterF.alpha >= 0.8f)
+            {
+                Color32 redColor32 = new Color(255, 0, 0, 255);
+                imageF.color = redColor32;
+                yield return new WaitForSeconds(randWait);
+            }
+            else
+            {
+                Color32 blackColor32 = new Color(0, 0, 0, 255);
+                imageF.color = blackColor32;
+            }
+
+
         }
         yield return null;
     }

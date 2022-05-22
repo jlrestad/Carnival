@@ -146,7 +146,6 @@ MonoBehaviour:
   menu: {fileID: 0}
   throwSpeed: 12
   pickUpRange: 2
-  damageAmount: 1
   returnSkullTime: 3
   canThrow: 0
 --- !u!82 &594462070351438474
@@ -156,7 +155,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887310906049672663}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
