@@ -2683,6 +2683,18 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1093086761}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: set_pitch
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1093086761}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -3103,7 +3115,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8989379882232118736, guid: 70631dae5c5ad724983924f4e4f9e457, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 030515f205b54fc478961cbe39c4e75e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3ebeab641fd212d49a16614da9232264, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 0.5
@@ -5428,6 +5440,18 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1093086761}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: set_pitch
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
