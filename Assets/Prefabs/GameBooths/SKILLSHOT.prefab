@@ -1750,6 +1750,10 @@ MonoBehaviour:
   buttonPressed: 0
   gameplayPosition: {fileID: 1883155276}
   player: {fileID: 0}
+  triggerDistance: 8
+  distanceFromGame: 0
+  prompt: {fileID: 0}
+  menu: {fileID: 0}
 --- !u!1 &964806574575006660
 GameObject:
   m_ObjectHideFlags: 0
@@ -4379,7 +4383,7 @@ MonoBehaviour:
   winloseText: {fileID: 2399873163627105628}
   scoreLimit: 5
   score: 0
-  timeCounter: 20
+  timeCounter: 25
   displayCard: {fileID: 4919458858976694231}
   cardImage: {fileID: 0}
   gameOver: 0

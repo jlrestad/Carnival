@@ -37,9 +37,12 @@ public class FPSController : MonoBehaviour
     public Camera playerCamera;
     float originalCamHeight;
     public float lookXLimit = 55.0f;
-    
-    public Vector3 moveDirection = Vector3.zero; //set to 0
+    [HideInInspector] public Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
+
+
+    [Header("AUDIO")]
+    public AudioSource lightClick;
 
     [Header("BOOLS")]
     //[HideInInspector]
@@ -118,6 +121,7 @@ public class FPSController : MonoBehaviour
         //Flashlight
         if (useFlashlight)
         {
+            lightClick.Play();
             flashlightHold.SetActive(true);
             flashlightOn = true;
 
@@ -128,6 +132,7 @@ public class FPSController : MonoBehaviour
         //If holding the flashlight and button is pressed again put the flashlight away
         if (dontUseFlashlight)
         {
+            lightClick.Play();
             flashlightHold.SetActive(false);
             flashlightOn = false;
 

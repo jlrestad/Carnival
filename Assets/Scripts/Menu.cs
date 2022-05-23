@@ -32,9 +32,9 @@ public class Menu : MonoBehaviour
     SkillShotGameManager skillshotGM;
     WeaponEquip WE;
 
-    //[Header("AUDIO")]
+    [Header("AUDIO")]
     //public AudioMixer audioMixer;
-    //public AudioSource introAudio;
+    public AudioSource introAudio;
     //public AudioSource pauseSound;
     //public string exposedParam;
 
@@ -155,15 +155,6 @@ public class Menu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
-    public void ClearButton()
-    {
-        //Clear button selected
-        EventSystem.current.SetSelectedGameObject(null);
-        //Set selected button
-        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
-        EventSystem.current.SetSelectedGameObject(firstButton);
-    }
-
     public void UnpauseGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -173,6 +164,21 @@ public class Menu : MonoBehaviour
         counter = 0;
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+    }
+
+
+    public void ClearButton()
+    {
+        //Clear button selected
+        EventSystem.current.SetSelectedGameObject(null);
+        //Set selected button
+        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
+    public void StopIntroMusic()
+    {
+        introAudio.enabled = false;
     }
 
     //public void DelayQuit() 
