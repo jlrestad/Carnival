@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using Image = UnityEngine.UI.Image;
 
 
 public class HudManager : MonoBehaviour
@@ -37,6 +36,8 @@ public class HudManager : MonoBehaviour
         //Set the flashlight indicator images
         lightOn = GameObject.FindGameObjectWithTag("FlashlightON");
         lightOff = GameObject.FindGameObjectWithTag("FlashlightOFF");
+
+        DisplayTicketAmount();
     }
 
     //Displays the ticket bars with the current tickets
@@ -69,13 +70,13 @@ public class HudManager : MonoBehaviour
     {
         if (on)
         {
-            lightOff.GetComponent<Image>().enabled = false;
-            lightOn.GetComponent<Image>().enabled = true;
+            lightOff.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            lightOn.GetComponent<UnityEngine.UI.Image>().enabled = true;
         }
         else
         {
-            lightOn.GetComponent<Image>().enabled = false;
-            lightOff.GetComponent<Image>().enabled = true;
+            lightOn.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            lightOff.GetComponent<UnityEngine.UI.Image>().enabled = true;
         }
     }
 

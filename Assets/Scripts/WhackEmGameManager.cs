@@ -76,7 +76,7 @@ public class WhackEmGameManager : MonoBehaviour
         cardImage = displayCard.GetComponent<Image>().sprite;
 
         //Tickets
-        HudManager.Instance.DisplayTicketAmount();
+        //HudManager.Instance.DisplayTicketAmount();
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
