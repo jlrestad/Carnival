@@ -120,6 +120,9 @@ public class FPSController : MonoBehaviour
         {
             flashlightHold.SetActive(true);
             flashlightOn = true;
+
+            //Call the method to change flashlight indicator
+            HudManager.Instance.FlashlightIndicator(flashlightOn);
         }
 
         //If holding the flashlight and button is pressed again put the flashlight away
@@ -127,6 +130,9 @@ public class FPSController : MonoBehaviour
         {
             flashlightHold.SetActive(false);
             flashlightOn = false;
+
+            //Call the method to change flashlight indicator
+            HudManager.Instance.FlashlightIndicator(flashlightOn);
         }
 
         // Player is grounded -- recalculate the move direction based on axes
@@ -290,9 +296,9 @@ public class FPSController : MonoBehaviour
 
         characterController.height = slideHeight; //being character height down to immitate sliding
         characterController.Move(moveDirection * Time.deltaTime * slideSpeed); //move in the direction player slid at slide speed
-        //capsule = transform; //get the transform of FPSPlayer object
 
         Transform faceForward = capsule.transform;
+
         //Tilt to the side during slide
         capsule.transform.Rotate(0f, 0f, slideAngle, Space.Self); //works...
 
@@ -300,10 +306,6 @@ public class FPSController : MonoBehaviour
       
         isUp = true;
 
-        //Return to upright position after slide
-        //capsule.transform.rotation = Quaternion.LookRotation(moveDirection, Vector3.up); //not working....
-
-        //capsule.transform.Rotate(0f, 0f, transform.rotation.z - 10f, Space.Self); //not working well....
         capsule.transform.Rotate(0f, 0f, -slideAngle, Space.Self); 
 
         characterController.height = originalHeight; //set character height back to normal

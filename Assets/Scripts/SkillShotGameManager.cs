@@ -52,7 +52,7 @@ public class SkillShotGameManager : MonoBehaviour
         cardImage = displayCard.GetComponent<Image>().sprite;
 
         //Tickets
-        ticketsText.text = ("Tickets: " + TicketManager.Instance.redTickets);
+        ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
@@ -104,11 +104,11 @@ public class SkillShotGameManager : MonoBehaviour
             }
 
             //Update ticket count
-            ticketsText.text = ("Tickets: " + TicketManager.Instance.redTickets);
+            ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
 
-            if (TicketManager.Instance.redTickets < 0)
+            if (HudManager.Instance.redTickets < 0)
             {
-                TicketManager.Instance.redTickets = 0;
+                HudManager.Instance.redTickets = 0;
                 ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...

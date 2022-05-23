@@ -76,7 +76,7 @@ public class WhackEmGameManager : MonoBehaviour
         cardImage = displayCard.GetComponent<Image>().sprite;
 
         //Tickets
-        TicketManager.Instance.DisplayTicketAmount();
+        HudManager.Instance.DisplayTicketAmount();
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
@@ -141,11 +141,11 @@ public class WhackEmGameManager : MonoBehaviour
             }
 
             //Update ticket count
-            TicketManager.Instance.DisplayTicketAmount();
+            HudManager.Instance.DisplayTicketAmount();
 
-            if (TicketManager.Instance.redTickets < 0)
+            if (HudManager.Instance.redTickets < 0)
             {
-                TicketManager.Instance.redTickets = 0;
+                HudManager.Instance.redTickets = 0;
                 ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...

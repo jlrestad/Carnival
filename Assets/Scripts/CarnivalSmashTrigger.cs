@@ -114,7 +114,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
         rulesUI.SetActive(false);
 
         //Spend the required ticket cost for the game
-        TicketManager.Instance.HealthTicket(ticketCost);
+        HudManager.Instance.HealthTicket(ticketCost);
 
 
         //* When game is played, make mallet appear in player hands.

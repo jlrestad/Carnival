@@ -1078,6 +1078,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8298258589167585384, guid: 8d60348d36a82f8479b91b9d0daa8359, type: 3}
   m_PrefabInstance: {fileID: 1091768518}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1157054365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6638728776276274822, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+  m_PrefabInstance: {fileID: 1845550341}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1157054366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157054365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec7c764285ca574aa7968a942d8495c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redTickets: 5
+  blueTickets: 1
+  redSlider: {fileID: 0}
+  blueSlider: {fileID: 0}
+  lightOn: {fileID: 0}
+  lightOff: {fileID: 0}
 --- !u!1001 &1274650741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1936,6 +1959,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3269722224016973734, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4207289887289328605, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1970,6 +1997,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4207289887289328605, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207289887289328605, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207289887289328605, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207289887289328605, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4207289887289328605, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
@@ -2020,6 +2059,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5508829837940905238, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_TagString
+      value: FlashlightIndicator
+      objectReference: {fileID: 0}
     - target: {fileID: 5794201516401625246, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2040,7 +2083,28 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7129837554475868306, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_TagString
+      value: FlashlightOFF
+      objectReference: {fileID: 0}
+    - target: {fileID: 7308820616841138563, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_TagString
+      value: BlueTickets
+      objectReference: {fileID: 0}
+    - target: {fileID: 8311424010010692187, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_TagString
+      value: RedTickets
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580428257304459731, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580428257304459731, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
+      propertyPath: m_TagString
+      value: FlashlightON
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 108377472, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
 --- !u!1 &1874510726 stripped
 GameObject:
