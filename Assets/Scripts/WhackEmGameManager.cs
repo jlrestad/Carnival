@@ -143,9 +143,9 @@ public class WhackEmGameManager : MonoBehaviour
             //Update ticket count
             TicketManager.Instance.DisplayTicketAmount();
 
-            if (TicketManager.Instance.tickets < 0)
+            if (TicketManager.Instance.redTickets < 0)
             {
-                TicketManager.Instance.tickets = 0;
+                TicketManager.Instance.redTickets = 0;
                 ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
