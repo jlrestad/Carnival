@@ -58,6 +58,9 @@ public class Menu : MonoBehaviour
     [Space(10)]
     public string[] controllerArray = null;
 
+    public Light sceneLight;
+    public float brightnessValue;
+
     public bool usingJoystick;
 
     [Header("LEVEL LOAD")]
@@ -88,6 +91,7 @@ public class Menu : MonoBehaviour
         skillshotGM = FindObjectOfType<SkillShotGameManager>();
         WE = FindObjectOfType<WeaponEquip>();
 
+        //Set Player
         player = GameObject.FindGameObjectWithTag("Player");
 
         //Detect if joystick is used.
@@ -166,6 +170,19 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
+    //Get the main light and set the intensity to the value in Menu
+    public void GetSceneLight()
+    {
+        StartCoroutine(Delay());
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+
+        sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
+        sceneLight.intensity = brightnessValue;
+    }
 
     public void ClearButton()
     {

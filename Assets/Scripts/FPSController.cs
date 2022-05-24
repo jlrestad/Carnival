@@ -65,6 +65,9 @@ public class FPSController : MonoBehaviour
     public void OnValidate()
     {
         characterController = GetComponent<CharacterController>();
+
+        //Set the sensitivity of the mouse
+        lookSpeed = SliderManager.Instance.sensitivityValue;
     }
 
     private void Awake()
