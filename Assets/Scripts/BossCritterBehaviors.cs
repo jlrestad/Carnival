@@ -11,6 +11,8 @@ public class BossCritterBehaviors : MonoBehaviour
 
     public bool hasBeenHit;
 
+    public GameObject head;
+
     private void Start()
     {
         this.hasBeenHit = false;
@@ -42,9 +44,21 @@ public class BossCritterBehaviors : MonoBehaviour
 
     IEnumerator disappear() //this method can be replaced with the animation & skull spawn
     {
+        //save initial position
+        Vector3 spot = transform.position;
+        
         this.gameObject.transform.Translate(-Vector3.up * Time.deltaTime);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         this.gameObject.SetActive(false);
+
+        //This block instantiates a skull @ position. used head as placeholder, but throws errors atm (unsure what needs to be hooked up atm. does pop up tho)
+        // replace head with skull prefab
+        /*
+        head = Instantiate(head, spot, Quaternion.identity);          
+        yield return new WaitForSeconds(2);
+        Destroy(head);
+        */
+
         StopCoroutine(disappear());
     }
 
