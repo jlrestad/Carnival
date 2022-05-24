@@ -9,9 +9,16 @@ public class BossCritterBehaviors : MonoBehaviour
     public Transform target;
     public Quaternion initial;
 
+    public bool hasBeenHit;
+
+    private void Start()
+    {
+        this.hasBeenHit = false;
+    }
+
     private void Update()
     {
-       
+        
         player = GameObject.FindGameObjectWithTag("Player");
         target = player.transform;
 
@@ -20,6 +27,12 @@ public class BossCritterBehaviors : MonoBehaviour
 
         Vector3 newRot = Quaternion.Lerp(this.transform.rotation, rotation, 1).eulerAngles;
         this.transform.rotation = Quaternion.Euler(0f, newRot.y, 0f);
+
+        if (hasBeenHit)
+        {
+            Debug.Log("BossCritter hit! Disappear!");
+            this.gameObject.SetActive(false);
+        }
 
     }
 
