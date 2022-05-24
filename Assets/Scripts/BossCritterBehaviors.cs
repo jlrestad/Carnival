@@ -31,9 +31,21 @@ public class BossCritterBehaviors : MonoBehaviour
         if (hasBeenHit)
         {
             Debug.Log("BossCritter hit! Disappear!");
-            this.gameObject.SetActive(false);
+            
+            //needs code for skull to spawn
+            //need to hook up to tickets system
+            StartCoroutine(disappear());
         }
+        
 
+    }
+
+    IEnumerator disappear() //this method can be replaced with the animation & skull spawn
+    {
+        this.gameObject.transform.Translate(-Vector3.up * Time.deltaTime);
+        yield return new WaitForSeconds(2);
+        this.gameObject.SetActive(false);
+        StopCoroutine(disappear());
     }
 
     // For boss fight. Turned prefabs into triggers to allow
