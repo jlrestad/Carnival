@@ -49,6 +49,8 @@ public class WhackEmGameManager : MonoBehaviour
 
     [Header("TAROT CARD")]
     public GameObject displayCard;
+    public GameObject BGCard;
+    public Sprite BGImage;
     public Sprite cardImage;
 
     [Space(10)]
@@ -73,7 +75,10 @@ public class WhackEmGameManager : MonoBehaviour
     private void Start()
     {
         weaponEquip = FindObjectOfType<WeaponEquip>();
+
+        //Tarot Cards
         cardImage = displayCard.GetComponent<Image>().sprite;
+        BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
         //HudManager.Instance.DisplayTicketAmount();
@@ -307,6 +312,9 @@ public class WhackEmGameManager : MonoBehaviour
         }
     }
 
+    //
+    // TAROT CARD SYSTEM
+    
     //Show the card that was won
     public void DisplayGameCard()
     {

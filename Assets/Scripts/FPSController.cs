@@ -66,8 +66,6 @@ public class FPSController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
 
-        //Set the sensitivity of the mouse
-        lookSpeed = SliderManager.Instance.sensitivityValue;
     }
 
     private void Awake()
@@ -80,6 +78,9 @@ public class FPSController : MonoBehaviour
         weaponEquip = GetComponent<WeaponEquip>(); 
         characterController = GetComponent<CharacterController>();
         capsule = GetComponentInChildren<Transform>();
+
+        //Set the sensitivity of the mouse
+        lookSpeed = PlayerPrefs.GetFloat("sensitivityValue");
 
         //Get and set the original settings of player
         originalHeight = characterController.height;

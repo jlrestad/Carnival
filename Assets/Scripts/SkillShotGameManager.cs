@@ -38,7 +38,9 @@ public class SkillShotGameManager : MonoBehaviour
 
     [Header("TAROT CARD")]
     public GameObject displayCard;
+    public GameObject BGCard;
     public Sprite cardImage;
+    public Sprite BGImage;
 
     [HideInInspector] public bool gameOver;
 
@@ -49,7 +51,9 @@ public class SkillShotGameManager : MonoBehaviour
 
     private void Start()
     {
+        //Tarot Cards
         cardImage = displayCard.GetComponent<Image>().sprite;
+        BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
         ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
@@ -225,6 +229,9 @@ public class SkillShotGameManager : MonoBehaviour
 
         displayCard.GetComponent<Image>().enabled = false;
 
+        
+        //Menu.Instance.GetComponentInChildren<GameCard>().cardWon = displayCard.GetComponent<Image>().gameObject;
+        
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();
 

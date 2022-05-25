@@ -54,6 +54,8 @@ public class Menu : MonoBehaviour
     public GameObject gameCardBG;
     public GameObject gameCard;
     public Sprite cardImage;
+    public Sprite bgImage;
+    public int BGCount;
 
     [Space(10)]
     public string[] controllerArray = null;
@@ -115,17 +117,19 @@ public class Menu : MonoBehaviour
             UnpauseGame();
         }
 
-        //Get the correct tarot card image from the carnival game manager scripts.
+        //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
         if (WE != null)
         {
             if (WE.gameName == "MeleeGame")
             {
                 cardImage = whackemGM.cardImage;
+                bgImage = whackemGM.BGImage;
                 return;
             }
             else if (WE.gameName == "ShootingGame")
             {
                 cardImage = skillshotGM.cardImage;
+                bgImage = skillshotGM.BGImage;
                 return;
             }
         }
@@ -272,18 +276,30 @@ public class Menu : MonoBehaviour
         for (int i = 0; i < gameCardSlots.Length; i++)
         {
             //Set the game card UI
-            gameCard = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject;
+            gameCard = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject; //Get the gamecard Gameobject to be displayed at the bottom
             gameCardBG = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
 
-            //If the first space is not enabled then enable it
-            if (gameCard.GetComponent<Image>().sprite == null )
+            //If the first cardslot space is not enabled then enable it
+            if (gameCard.GetComponent<Image>().sprite == null)
             {
-                gameCard.GetComponent<Image>().enabled = true; //enables the image component
-                gameCard.GetComponent<Image>().sprite = cardImage; //sets the image sprite to the game card that was won
+                //Debug.Log("Sprite is null");
+                gameCard.GetComponent<Image>().enabled = true; //enable the image component
+                gameCard.GetComponent<Image>().sprite = cardImage; //set the image sprite to the game card that was won
                 gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
+                gameCardBG.GetComponent<Image>().sprite = bgImage;
 
+                //If previous bg is on, then turn it off.
+                if (i > 0) { 
+                    if (gameCardSlots[i-1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled == true)
+                    {
+                        gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+                    }
+                }
                 WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
 
+                //* make a counter to hold which card we are highlighting
+                BGCount = i;
+                
                 break; //break out because we've got what we want
             }
         }   

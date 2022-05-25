@@ -51,9 +51,11 @@ public class MeleeSwing : MonoBehaviour
 
     private void Update()
     {
+        //* TEMP COMMENTED OUT
+        //* Add a control statement so this isn't running when it shouldn't
         //continualy find boss critters && find the object hold for bossAI fight
-        bossCritters = FindObjectsOfType<BossCritterBehaviors>();
-        Transform hld = hold.transform;
+        //bossCritters = FindObjectsOfType<BossCritterBehaviors>();
+        //Transform hld = hold.transform;
 
 
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
@@ -111,12 +113,13 @@ public class MeleeSwing : MonoBehaviour
 
             //this part for Boss fight
 
-            if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
-            {
-                Debug.Log("Hit: " + hit.collider.name);
-                BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
-                bossCritter.hasBeenHit = true;
-            }
+            //** TEMP COMMENTED OUT
+            //if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
+            //{
+            //    Debug.Log("Hit: " + hit.collider.name);
+            //    BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
+            //    bossCritter.hasBeenHit = true;
+            //}
         }
 
         //Find ClosestWhackEm script

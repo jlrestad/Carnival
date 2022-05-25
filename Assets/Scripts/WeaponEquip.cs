@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponEquip : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class WeaponEquip : MonoBehaviour
     public Canvas crossHair;
     public GameObject actionPrompt;
     public List<GameObject> weaponCardBG;
+    int BGCount;
 
     [Space(15)]
     [SerializeField] GameObject gunHold;
@@ -70,8 +72,8 @@ public class WeaponEquip : MonoBehaviour
     private void Start()
     {
         menu = FindObjectOfType<Menu>();
-        //skullHold = GameObject.Find("SkullHold");
-        //weaponCardBG = menu.gameCardBG; //Used to highlight which weapon is equipped
+
+        //weaponCardBG.Add(menu.gameCardBG); //Add the won game card bg to the list. Used to highlight which weapon is equipped
 
         //Detect if joystick or keyboard is used and display correct prompt.
         if (menu.usingJoystick)
@@ -132,8 +134,8 @@ public class WeaponEquip : MonoBehaviour
             //Don't display reticle if nothing is equipped.
             crossHair.enabled = false;
         }
-        
 
+        Debug.Log(weaponList.Count);
         // * * *
         //PLAYER INPUT
         if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
@@ -153,6 +155,7 @@ public class WeaponEquip : MonoBehaviour
 
             //Pick up and equip weapon.
             PickUpWeapon();
+            BGCount = menu.BGCount; //get the count from Menu
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
@@ -204,13 +207,18 @@ public class WeaponEquip : MonoBehaviour
                     actionPrompt.SetActive(false);
                 }
         }
+
+        //Turn off the bg for the previous weapon
+        //for (int i = 0; i <= weaponCardBG.Count; i++)
+        //{
+        //    weaponCardBG[BGCount].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+        //} 
     }
-    //}
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
     public GameObject FindClosestWeapon()
     {
-        float distanceToClosestWeapon = Mathf.Infinity;
+        float distanceToClosestWeapon = Mathf.Infinity; 
 
         Weapon[] allWeapons = GameObject.FindObjectsOfType<Weapon>(); //Array to hold all weapons of the scene
 
@@ -256,6 +264,8 @@ public class WeaponEquip : MonoBehaviour
             {
                 //If there is already a weapon equipped, hide it.
                 currentWeapon.SetActive(false);
+                
+                //Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false; //* This turns off 2nd card, leaves 1st card on
             }
             if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
             {
@@ -264,15 +274,47 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = false;
             }
 
-            //Move to the next weapon in the list.
-            weaponNumber++;
+            if (weaponList.Count > 1)
+            {
+                //Move to the next weapon in the list.
+                weaponNumber++;
+            }
+
+            //Background changes only if there is more than 1 card
+            //if (weaponNumber > 1)
+            //{
+            //    //Turn off previous weaponBG
+            //    weaponCardBG[weaponNumber-1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+            //    //Turn on current weaponBG
+            //    weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
+            //}
 
             //Check bounds of weapon number.
-            if (weaponNumber > weaponList.Count - 1)
+            //if (weaponNumber > weaponList.Count - 1)
+            //{
+            //    //Reset back to the beginning of the list.
+            //    weaponNumber = 0;
+            //}
+
+            //Check bounds of weapon number.
+            if (weaponNumber > weaponCardBG.Count)
             {
-                //Reset back to the beginning of the list.
-                weaponNumber = 0;
+                weaponNumber = 0; //go back to the beginning
+
+                //Turn off the last card
+                weaponCardBG[weaponCardBG.Count].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
             }
+            else
+            {
+                //Turn on current weaponBG
+                weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
+            }
+
+            if (weaponList.Count > 1)
+            {
+                weaponNumber--;
+            }
+
 
             //Change current weapon to the next weapon in the list.
             currentWeapon = weaponList[weaponNumber];
@@ -308,15 +350,25 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = false;
             }
 
-            //Move to the previous weapon in the list.
-            weaponNumber--;
-
             //Check bounds of weapon number.
-            if (weaponNumber < 0)
+            if (weaponNumber <= 0)
             {
-                //Set the weapon number to the highest number.
-                weaponNumber = weaponList.Count - 1;
+                weaponNumber = weaponCardBG.Count; //get the length again
+                                                  
+                //Turn off the first index
+                weaponCardBG[0].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
             }
+            else
+            {
+                //Turn on current weaponBG
+                weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
+            }
+
+            if (weaponList.Count > 1)
+            {
+                weaponNumber--;
+            }
+
 
             //Change current weapon to the previous weapon in the list.
             currentWeapon = weaponList[weaponNumber];
