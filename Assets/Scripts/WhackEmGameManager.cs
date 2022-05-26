@@ -48,7 +48,7 @@ public class WhackEmGameManager : MonoBehaviour
     public TextMeshProUGUI winloseText;
 
     [Header("TAROT CARD")]
-    public GameObject displayCard;
+    public GameObject displayPickupScreen;
     public GameObject BGCard;
     public Sprite BGImage;
     public Sprite cardImage;
@@ -77,7 +77,7 @@ public class WhackEmGameManager : MonoBehaviour
         weaponEquip = FindObjectOfType<WeaponEquip>();
 
         //Tarot Cards
-        cardImage = displayCard.GetComponent<Image>().sprite;
+        cardImage = displayPickupScreen.GetComponentInChildren<Image>().sprite;
         BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
@@ -320,7 +320,8 @@ public class WhackEmGameManager : MonoBehaviour
     public void DisplayGameCard()
     {
         //Display the card that was won
-        displayCard.GetComponent<Image>().enabled = true;
+        //displayPickupScreen.GetComponent<Image>().enabled = true;
+        displayPickupScreen.SetActive(true);
 
         //Transition from card display to weapon card
         StartCoroutine(DisplayCardWon());
@@ -329,9 +330,10 @@ public class WhackEmGameManager : MonoBehaviour
     //Transition from displayed card to weapon indicator card
     public IEnumerator DisplayCardWon()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
-        displayCard.GetComponent<Image>().enabled = false;
+        //displayPickupScreen.GetComponent<Image>().enabled = false;
+        displayPickupScreen.SetActive(false);
 
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();

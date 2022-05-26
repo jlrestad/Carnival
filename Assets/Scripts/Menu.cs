@@ -262,11 +262,6 @@ public class Menu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //StartCoroutine(DelayDeactivation());
-
-        //Find first button in scene
-        //firstButton = GameObject.FindGameObjectWithTag("FirstButton");
-        //Set button
-        //EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     

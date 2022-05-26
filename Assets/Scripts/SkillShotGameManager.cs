@@ -39,7 +39,7 @@ public class SkillShotGameManager : MonoBehaviour
     private float resetTime;
 
     [Header("TAROT CARD")]
-    public GameObject displayCard;
+    public GameObject displayPickupScreen;
     public GameObject BGCard;
     public Sprite cardImage;
     public Sprite BGImage;
@@ -56,7 +56,7 @@ public class SkillShotGameManager : MonoBehaviour
     private void Start()
     {
         //Tarot Cards
-        cardImage = displayCard.GetComponent<Image>().sprite;
+        cardImage = displayPickupScreen.GetComponentInChildren<Image>().sprite;  //** need to grab image that holds the card only. Need to do this differently and the children in displaypickupscreen has many images as children
         BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
@@ -220,7 +220,8 @@ public class SkillShotGameManager : MonoBehaviour
     public void DisplayGameCard()
     {
         //Display the card that was won
-        displayCard.GetComponent<Image>().enabled = true;
+        //displayPickupScreen.GetComponent<Image>().enabled = true;
+        displayPickupScreen.SetActive(true);
 
         //Transition from card display back to game display
         StartCoroutine(DisplayCardWon());
@@ -229,13 +230,13 @@ public class SkillShotGameManager : MonoBehaviour
     //Transition from displayed card to weapon indicator card
     public IEnumerator DisplayCardWon()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
-        displayCard.GetComponent<Image>().enabled = false;
+        //displayPickupScreen.GetComponent<Image>().enabled = false;
+        displayPickupScreen.SetActive(false);
 
-        
         //Menu.Instance.GetComponentInChildren<GameCard>().cardWon = displayCard.GetComponent<Image>().gameObject;
-        
+
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();
 
