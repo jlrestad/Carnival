@@ -716,6 +716,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4858480269730017188}
     - target: {fileID: 7589783342074068269, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: weaponNumber
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7589783342074068269, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: weaponCardBG.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -730,6 +734,10 @@ PrefabInstance:
     - target: {fileID: 8477729249810273190, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8477729249810273190, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: m_TagString
+      value: Gun
       objectReference: {fileID: 0}
     - target: {fileID: 8567739266467498283, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_Name
@@ -2546,6 +2554,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 34cca7aea43340d4881e6366d9c94165, type: 3}
+    - target: {fileID: 4919458858976694229, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4919458860083039739, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: cardWon
       value: 

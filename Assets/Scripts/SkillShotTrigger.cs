@@ -38,7 +38,7 @@ public class SkillShotTrigger : MonoBehaviour
 
         if (distanceFromGame <= triggerDistance && player.position != gameplayPosition.position)
         {
-            Debug.Log("Entered skillshot area");
+            //Debug.Log("Entered skillshot area");
             // if button pressed, then bring up UI
             if (menu.usingJoystick)
             {

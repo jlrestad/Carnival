@@ -27,7 +27,7 @@ public class WeaponEquip : MonoBehaviour
     public List<GameObject> weaponList = new List<GameObject>(); //Holds weapons
 
     [Space(15)]
-    public int weaponNumber;
+    public int weaponNumber = -1;
 
     [Space(15)]
     public bool inInventory;
@@ -263,6 +263,9 @@ public class WeaponEquip : MonoBehaviour
         //SCROLL WHEEL FORWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 && isEquipped || Input.GetButtonDown("WeaponScroll+") && isEquipped)
         {
+            //Turn off previous weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+
             //Unequip current weapon.
             if (weaponList.Count > 1 && currentWeapon != skullParent)
             {
@@ -285,19 +288,17 @@ public class WeaponEquip : MonoBehaviour
             }
 
             //Check bounds of weapon number.
-            if (weaponNumber > weaponList.Count)
+            if (weaponNumber > weaponList.Count -1)
             {
                 weaponNumber = 0; //go back to the beginning
-
-                //Turn off the last card
-                weaponCardBG[weaponCardBG.Count].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
             }
-            else
+            if (weaponNumber < 0)
             {
-                //Turn on current weaponBG
-                weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
+                weaponNumber = weaponList.Count;
             }
 
+            //Turn on new weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
 
             //Change current weapon to the next weapon in the list.
             currentWeapon = weaponList[weaponNumber];
@@ -320,6 +321,9 @@ public class WeaponEquip : MonoBehaviour
         //SCROLL WHEEL BACKWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 && isEquipped || Input.GetButtonDown("WeaponScroll-") && isEquipped)
         {
+            //Turn off previous weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+
             //Unequip current weapon.
             if (weaponList.Count > 1 && currentWeapon != skullParent)
             {
@@ -333,25 +337,23 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = false;
             }
 
+            //** WEAPONNUMBER BOUNDS
             //Check bounds of weapon number.
-            if (weaponNumber <= 0)
+            if (weaponNumber > weaponList.Count - 1)
             {
-                weaponNumber = weaponCardBG.Count; //get the length again
-                                                  
-                //Turn off the first index
-                weaponCardBG[0].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+                weaponNumber = 0; //go back to the beginning
+            }
+            else if (weaponNumber <= 0)
+            {
+                weaponNumber = weaponList.Count - 1;
             }
             else
-            {
-                //Turn on current weaponBG
-                weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
-            }
-
-            if (weaponList.Count > 1)
             {
                 weaponNumber--;
             }
 
+            //Turn on previous weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
 
             //Change current weapon to the previous weapon in the list.
             currentWeapon = weaponList[weaponNumber];
@@ -370,9 +372,9 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = false;
             }
         }
-        if (WhackEmGameManager.Instance.gameWon || SkillShotGameManager.Instance.gameWon)
+        //if (WhackEmGameManager.Instance.gameWon || SkillShotGameManager.Instance.gameWon)
 
-            Menu.Instance.CardSelector(); //Change current weapon BG
+        //    Menu.Instance.CardSelector(); //Change current weapon BG
     }
 
 
@@ -462,7 +464,7 @@ public class WeaponEquip : MonoBehaviour
     public void UnequipWeapon()
     {
         isEquipped = false;
-        weaponNumber--;
+        //weaponNumber--;
         if (weaponNumber < 0) { weaponNumber = 0;  }
         
         if (currentWeapon != skullParent)

@@ -294,18 +294,15 @@ public class Menu : MonoBehaviour
                 gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
                 gameCardBG.GetComponent<Image>().sprite = bgImage;
 
-              
-                ////If previous bg is on, then turn it off.
-                //if (i > 0) { 
-                //    if (gameCardSlots[i-1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled == true)
-                //    {
-                //        gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
-                //    }
-                //}
+                //Turn off previous BG
+                if (i > 0)
+                {
+                    if (gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled == true)
+                    {
+                        gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+                    }
+                }
                 WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
-
-                //* make a counter to hold which card we are highlighting
-                BGCount = i;
                 
                 break; //break out because we've got what we want
             }
@@ -317,25 +314,23 @@ public class Menu : MonoBehaviour
     {
         if (gameCardBG != null)
         {
-
-        //* Controls the BG image
-        if (gameCardBG.GetComponent<Image>().sprite.name != WE.currentWeapon.tag.ToString())
-        {
-            Debug.Log("gamecardBG name: " + gameCardBG.GetComponent<Image>().sprite.name + "currentweapon name: " + WE.currentWeapon.tag.ToString());
+            //* Controls the BG image
+            //if (gameCardBG.GetComponent<Image>().sprite.name != WE.currentWeapon.tag.ToString())
+            //{
+            //    //Debug.Log("GamecardBG name: " + gameCardBG.GetComponent<Image>().sprite.name + "  Currentweapon name: " + WE.currentWeapon.tag.ToString());
             
-            gameCardBG.GetComponent<Image>().enabled = false; //enables the background image to show that this weapon is equipped
+            //    gameCardBG.GetComponent<Image>().enabled = false; //enables the background image to show that this weapon is equipped
+            //}
+            //else
+            //{
+            //    Debug.Log("GamecardBG name: " + gameCardBG.GetComponent<Image>().sprite.name + "  Currentweapon name: " + WE.currentWeapon.tag.ToString());
 
-            //Turn on card image (dark)
-            //gameCard.GetComponent<Image>().enabled = true; //enable the image component
-            //gameCard.GetComponent<Image>().sprite = cardImage; //set the image sprite to the game card that was won
+            //    //Turn on cardBG image (light)
+            //    gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
+            //    //gameCardBG.GetComponent<Image>().sprite = bgImage;
+            //}
 
-        }
-        else
-        {
-            //Turn on cardBG image (light)
-            gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
-            //gameCardBG.GetComponent<Image>().sprite = bgImage;
-        }
+         
 
         }
     }
