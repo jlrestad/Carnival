@@ -146,16 +146,6 @@ public class WeaponEquip : MonoBehaviour
             distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
             distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
         {
-            //If holding the skull and picking up a different weapon, hide the skull.
-            //if (isEquipped && holdingSkull && !closestWeapon.CompareTag("Head"))
-            //{
-            //    skullParent.transform.GetChild(0).gameObject.SetActive(false);
-            //    holdingSkull = false;
-            //}
-            //else if (isEquipped)
-            //{
-            //    currentWeapon.SetActive(false);
-            //}
 
             //Pick up and equip weapon.
             PickUpWeapon();
@@ -211,12 +201,6 @@ public class WeaponEquip : MonoBehaviour
                     actionPrompt.SetActive(false);
                 }
         }
-
-        //Turn off the bg for the previous weapon
-        //for (int i = 0; i <= weaponCardBG.Count; i++)
-        //{
-        //    weaponCardBG[BGCount].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
-        //} 
     }
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
@@ -249,10 +233,6 @@ public class WeaponEquip : MonoBehaviour
                 int layerNumber = closestWeapon.layer;
                 gameName = LayerMask.LayerToName(layerNumber);
             }
-            //else
-            //{
-            //    closestWeapon = null;  //Keep from throwing an error if there is no closestWeapon in scene.
-            //}
         }
         return closestWeapon; //returns the closest weapon game object
     }
@@ -389,7 +369,6 @@ public class WeaponEquip : MonoBehaviour
     public void PickUpWeapon()
     {
         //isEquipped = true;
-        // Check which weapon it is and set it to the current weapon.
 
         //GUN
         if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
@@ -399,6 +378,7 @@ public class WeaponEquip : MonoBehaviour
             haveGun = true;
             prevWeapon = closestWeapon;
             closestWeapon.SetActive(false); //hide the picked up weapon
+
             //After picking up the weapon, equip it.
             EquipWeapon(); //picked up weapon is equipped
         }
@@ -410,14 +390,10 @@ public class WeaponEquip : MonoBehaviour
             haveMallet = true;
             prevWeapon = closestWeapon;
             closestWeapon.SetActive(false); //hide the picked up weapon
+
             //After picking up the weapon, equip it.
             EquipWeapon(); //picked up weapon is equipped
         }
-        //SKULL
-        //if (gameObject.CompareTag("Head"))
-        //{
-        //    head.PickUpSkull();
-        //}
     }
 
     // Bring weapon out of inventory:
@@ -427,19 +403,6 @@ public class WeaponEquip : MonoBehaviour
         isEquipped = true;
         weaponNumber++;
         if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
-
-        //For BG of weapon card
-        //if (menu.cardImage.name.Equals(currentWeapon.tag))
-        //{
-        //    Debug.Log("These are the same name");
-        //}
-
-        //Hide flashlight if holding
-        //if (GetComponent<FPSController>().flashlightOn)
-        //{
-        //    GetComponent<FPSController>().flashlightHold.SetActive(false);
-        //    GetComponent<FPSController>().flashlightOn = false;
-        //}
 
         //Equip weapon (except for skull)
         if (currentWeapon != skullParent && holdingSkull)
@@ -462,7 +425,6 @@ public class WeaponEquip : MonoBehaviour
             skullParent.transform.GetChild(0).gameObject.SetActive(true); //Make skull visible
             holdingSkull = true;
         }
-
     }
 
 
@@ -470,7 +432,7 @@ public class WeaponEquip : MonoBehaviour
     public void UnequipWeapon()
     {
         isEquipped = false;
-        //weaponNumber--;
+
         if (weaponNumber < 0) { weaponNumber = 0;  }
         
         if (currentWeapon != skullParent)
@@ -488,26 +450,4 @@ public class WeaponEquip : MonoBehaviour
             }
         }
     }
-
-    //GameObject FindNearestSkull()
-    //{
-    //    foreach (Head thisSkull in headSkull)
-    //    {
-    //        float currentDist;
-    //        float closestDist = Mathf.Infinity;
-    //        currentDist = (transform.position - thisSkull.transform.position).sqrMagnitude;
-    //        distanceToPlayer = transform.position - thisSkull.transform.position;
-
-    //        if (currentDist < closestDist)
-    //        {
-    //            closestDist = currentDist;
-    //            newSkull = thisSkull;
-    //            closestSkull = newSkull.gameObject;
-    //            skullRB = newSkull.GetComponent<Rigidbody>();
-    //        }
-    //        return closestSkull;
-    //    }
-    //    Debug.Log("Closest skull is " + closestSkull);
-    //    return closestSkull;
-    //}
 }
