@@ -279,22 +279,29 @@ public class Menu : MonoBehaviour
             gameCard = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject; //Get the gamecard Gameobject to be displayed at the bottom
             gameCardBG = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
 
+     
+
             //If the first cardslot space is not enabled then enable it
             if (gameCard.GetComponent<Image>().sprite == null)
             {
                 //Debug.Log("Sprite is null");
+
+                //Turn on card image
                 gameCard.GetComponent<Image>().enabled = true; //enable the image component
                 gameCard.GetComponent<Image>().sprite = cardImage; //set the image sprite to the game card that was won
+
+                //Turn on cardBG image
                 gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
                 gameCardBG.GetComponent<Image>().sprite = bgImage;
 
-                //If previous bg is on, then turn it off.
-                if (i > 0) { 
-                    if (gameCardSlots[i-1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled == true)
-                    {
-                        gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
-                    }
-                }
+              
+                ////If previous bg is on, then turn it off.
+                //if (i > 0) { 
+                //    if (gameCardSlots[i-1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled == true)
+                //    {
+                //        gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+                //    }
+                //}
                 WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
 
                 //* make a counter to hold which card we are highlighting
@@ -302,6 +309,34 @@ public class Menu : MonoBehaviour
                 
                 break; //break out because we've got what we want
             }
+
         }   
+    }
+
+    public void CardSelector()
+    {
+        if (gameCardBG != null)
+        {
+
+        //* Controls the BG image
+        if (gameCardBG.GetComponent<Image>().sprite.name != WE.currentWeapon.tag.ToString())
+        {
+            Debug.Log("gamecardBG name: " + gameCardBG.GetComponent<Image>().sprite.name + "currentweapon name: " + WE.currentWeapon.tag.ToString());
+            
+            gameCardBG.GetComponent<Image>().enabled = false; //enables the background image to show that this weapon is equipped
+
+            //Turn on card image (dark)
+            //gameCard.GetComponent<Image>().enabled = true; //enable the image component
+            //gameCard.GetComponent<Image>().sprite = cardImage; //set the image sprite to the game card that was won
+
+        }
+        else
+        {
+            //Turn on cardBG image (light)
+            gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
+            //gameCardBG.GetComponent<Image>().sprite = bgImage;
+        }
+
+        }
     }
 }

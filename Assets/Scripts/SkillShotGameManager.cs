@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SkillShotGameManager : MonoBehaviour
 {
+    public static SkillShotGameManager Instance;
+
     //public Transform leftPos, rightPos, parentPos;
     [HideInInspector] public WeaponEquip weaponEquip;
 
@@ -46,6 +48,8 @@ public class SkillShotGameManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this; 
+
         levelLoaded = true;
     }
 

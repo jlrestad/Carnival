@@ -227,6 +227,7 @@ public class WhackEmGameManager : MonoBehaviour
         if(gameWon)
         {
             winloseText.text = "You have won...";
+            weaponEquip.isEquipped = true;
         } else
         {
             winloseText.text = "You have lost...";

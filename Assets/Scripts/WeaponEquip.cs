@@ -90,7 +90,11 @@ public class WeaponEquip : MonoBehaviour
     {
 
         FindClosestWeapon();
-        ChangeWeapon();
+
+        if (isEquipped || inInventory)
+        {
+            ChangeWeapon();
+        }
 
         //FOR SKULL PICKUP * * *
         if (currentWeapon == skullParent)
@@ -135,7 +139,7 @@ public class WeaponEquip : MonoBehaviour
             crossHair.enabled = false;
         }
 
-        Debug.Log(weaponList.Count);
+        //Debug.Log(weaponList.Count);
         // * * *
         //PLAYER INPUT
         if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
@@ -280,24 +284,8 @@ public class WeaponEquip : MonoBehaviour
                 weaponNumber++;
             }
 
-            //Background changes only if there is more than 1 card
-            //if (weaponNumber > 1)
-            //{
-            //    //Turn off previous weaponBG
-            //    weaponCardBG[weaponNumber-1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
-            //    //Turn on current weaponBG
-            //    weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
-            //}
-
             //Check bounds of weapon number.
-            //if (weaponNumber > weaponList.Count - 1)
-            //{
-            //    //Reset back to the beginning of the list.
-            //    weaponNumber = 0;
-            //}
-
-            //Check bounds of weapon number.
-            if (weaponNumber > weaponCardBG.Count)
+            if (weaponNumber > weaponList.Count)
             {
                 weaponNumber = 0; //go back to the beginning
 
@@ -308,11 +296,6 @@ public class WeaponEquip : MonoBehaviour
             {
                 //Turn on current weaponBG
                 weaponCardBG[weaponNumber].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = true;
-            }
-
-            if (weaponList.Count > 1)
-            {
-                weaponNumber--;
             }
 
 
@@ -386,8 +369,10 @@ public class WeaponEquip : MonoBehaviour
                 currentWeapon.SetActive(true);
                 holdingSkull = false;
             }
-            
         }
+        if (WhackEmGameManager.Instance.gameWon || SkillShotGameManager.Instance.gameWon)
+
+            Menu.Instance.CardSelector(); //Change current weapon BG
     }
 
 
@@ -395,7 +380,7 @@ public class WeaponEquip : MonoBehaviour
 
     public void PickUpWeapon()
     {
-        isEquipped = true;
+        //isEquipped = true;
         // Check which weapon it is and set it to the current weapon.
 
         //GUN
