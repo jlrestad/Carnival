@@ -269,7 +269,7 @@ public class Menu : MonoBehaviour
         //EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
-    //* fix so that cards will occupy the next available space (bool?)
+    
     //Displays the card that was just won in the first most available spot, left to right.
     public void DisplayWeaponCard()
     {
@@ -279,7 +279,6 @@ public class Menu : MonoBehaviour
             gameCard = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject; //Get the gamecard Gameobject to be displayed at the bottom
             gameCardBG = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
 
-     
 
             //If the first cardslot space is not enabled then enable it
             if (gameCard.GetComponent<Image>().sprite == null)
@@ -304,34 +303,10 @@ public class Menu : MonoBehaviour
                 }
                 WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
                 
-                break; //break out because we've got what we want
+                break; //break out because we've done what we want (no need to continue the iteration)
             }
 
         }   
     }
 
-    public void CardSelector()
-    {
-        if (gameCardBG != null)
-        {
-            //* Controls the BG image
-            //if (gameCardBG.GetComponent<Image>().sprite.name != WE.currentWeapon.tag.ToString())
-            //{
-            //    //Debug.Log("GamecardBG name: " + gameCardBG.GetComponent<Image>().sprite.name + "  Currentweapon name: " + WE.currentWeapon.tag.ToString());
-            
-            //    gameCardBG.GetComponent<Image>().enabled = false; //enables the background image to show that this weapon is equipped
-            //}
-            //else
-            //{
-            //    Debug.Log("GamecardBG name: " + gameCardBG.GetComponent<Image>().sprite.name + "  Currentweapon name: " + WE.currentWeapon.tag.ToString());
-
-            //    //Turn on cardBG image (light)
-            //    gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
-            //    //gameCardBG.GetComponent<Image>().sprite = bgImage;
-            //}
-
-         
-
-        }
-    }
 }

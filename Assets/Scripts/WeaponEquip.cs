@@ -263,120 +263,126 @@ public class WeaponEquip : MonoBehaviour
         //SCROLL WHEEL FORWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 && isEquipped || Input.GetButtonDown("WeaponScroll+") && isEquipped)
         {
-            //Turn off previous weapon BG
-            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
-
-            //Unequip current weapon.
-            if (weaponList.Count > 1 && currentWeapon != skullParent)
-            {
-                //If there is already a weapon equipped, hide it.
-                currentWeapon.SetActive(false);
-                
-                //Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false; //* This turns off 2nd card, leaves 1st card on
-            }
-            if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
-            {
-                //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
-                skullParent.transform.GetChild(0).gameObject.SetActive(false);
-                holdingSkull = false;
-            }
-
-            if (weaponList.Count > 1)
-            {
-                //Move to the next weapon in the list.
-                weaponNumber++;
-            }
-
-            //Check bounds of weapon number.
-            if (weaponNumber > weaponList.Count -1)
-            {
-                weaponNumber = 0; //go back to the beginning
-            }
-            if (weaponNumber < 0)
-            {
-                weaponNumber = weaponList.Count;
-            }
-
-            //Turn on new weapon BG
-            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
-
-            //Change current weapon to the next weapon in the list.
-            currentWeapon = weaponList[weaponNumber];
-
-            //Equip the weapon
-            if (currentWeapon == skullParent)
-            {
-                //Equip skull
-                skullParent.transform.GetChild(0).gameObject.SetActive(true); //Put in inventory.
-                holdingSkull = true;
-            }
-            else
-            {
-                //Equip other weapon
-                currentWeapon.SetActive(true); //show the weapon
-                holdingSkull = false;
-            }
+            WeaponScrollPositive();
         }
 
         //SCROLL WHEEL BACKWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 && isEquipped || Input.GetButtonDown("WeaponScroll-") && isEquipped)
         {
-            //Turn off previous weapon BG
-            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
-
-            //Unequip current weapon.
-            if (weaponList.Count > 1 && currentWeapon != skullParent)
-            {
-                //If there is already a weapon equipped, hide it.
-                currentWeapon.SetActive(false);
-            }
-            if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
-            {
-                //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
-                skullParent.transform.GetChild(0).gameObject.SetActive(false); //Put in inventory.
-                holdingSkull = false;
-            }
-
-            //** WEAPONNUMBER BOUNDS
-            //Check bounds of weapon number.
-            if (weaponNumber > weaponList.Count - 1)
-            {
-                weaponNumber = 0; //go back to the beginning
-            }
-            else if (weaponNumber <= 0)
-            {
-                weaponNumber = weaponList.Count - 1;
-            }
-            else
-            {
-                weaponNumber--;
-            }
-
-            //Turn on previous weapon BG
-            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
-
-            //Change current weapon to the previous weapon in the list.
-            currentWeapon = weaponList[weaponNumber];
-
-            //Equip the weapon
-            if (currentWeapon == skullParent)
-            {
-                //Equip skull
-                skullParent.transform.GetChild(0).gameObject.SetActive(true);
-                holdingSkull = true;
-            }
-            else
-            {
-                //Equip other weapon
-                currentWeapon.SetActive(true);
-                holdingSkull = false;
-            }
+            WeaponScrollNegative();
         }
-        //if (WhackEmGameManager.Instance.gameWon || SkillShotGameManager.Instance.gameWon)
-
-        //    Menu.Instance.CardSelector(); //Change current weapon BG
     }
 
+    void WeaponScrollPositive()
+    {
+        //Turn off previous weapon BG
+        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+
+        //Unequip current weapon.
+        if (weaponList.Count > 1 && currentWeapon != skullParent)
+        {
+            //If there is already a weapon equipped, hide it.
+            currentWeapon.SetActive(false);
+
+            //Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false; //* This turns off 2nd card, leaves 1st card on
+        }
+        if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
+        {
+            //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
+            skullParent.transform.GetChild(0).gameObject.SetActive(false);
+            holdingSkull = false;
+        }
+
+        if (weaponList.Count > 1)
+        {
+            //Move to the next weapon in the list.
+            weaponNumber++;
+        }
+
+        //Check bounds of weapon number.
+        if (weaponNumber > weaponList.Count - 1)
+        {
+            weaponNumber = 0; //go back to the beginning
+        }
+        if (weaponNumber < 0)
+        {
+            weaponNumber = weaponList.Count;
+        }
+
+        //Turn on new weapon BG
+        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
+
+        //Change current weapon to the next weapon in the list.
+        currentWeapon = weaponList[weaponNumber];
+
+        //Equip the weapon
+        if (currentWeapon == skullParent)
+        {
+            //Equip skull
+            skullParent.transform.GetChild(0).gameObject.SetActive(true); //Put in inventory.
+            holdingSkull = true;
+        }
+        else
+        {
+            //Equip other weapon
+            currentWeapon.SetActive(true); //show the weapon
+            holdingSkull = false;
+        }
+    }
+
+    void WeaponScrollNegative()
+    {
+        //Turn off previous weapon BG
+        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+
+        //Unequip current weapon.
+        if (weaponList.Count > 1 && currentWeapon != skullParent)
+        {
+            //If there is already a weapon equipped, hide it.
+            currentWeapon.SetActive(false);
+        }
+        if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
+        {
+            //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
+            skullParent.transform.GetChild(0).gameObject.SetActive(false); //Put in inventory.
+            holdingSkull = false;
+        }
+
+        //** WEAPONNUMBER BOUNDS
+        //Check bounds of weapon number.
+        if (weaponNumber > weaponList.Count - 1)
+        {
+            weaponNumber = 0; //go back to the beginning
+        }
+        else if (weaponNumber <= 0)
+        {
+            weaponNumber = weaponList.Count - 1;
+        }
+        else
+        {
+            weaponNumber--;
+        }
+
+        //Turn on previous weapon BG
+        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
+
+        //Change current weapon to the previous weapon in the list.
+        currentWeapon = weaponList[weaponNumber];
+
+        //Equip the weapon
+        if (currentWeapon == skullParent)
+        {
+            //Equip skull
+            skullParent.transform.GetChild(0).gameObject.SetActive(true);
+            holdingSkull = true;
+        }
+        else
+        {
+            //Equip other weapon
+            currentWeapon.SetActive(true);
+            holdingSkull = false;
+        }
+    }
 
     /// ...EQUIP WEAPONS SECTION... ///
 

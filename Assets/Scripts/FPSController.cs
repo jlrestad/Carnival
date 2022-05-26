@@ -190,13 +190,13 @@ public class FPSController : MonoBehaviour
         if (canMove && Time.timeScale != 0)
         {
             //rotate at the lookSpeed
-            rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed;
+            rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed * Time.deltaTime;
             //rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
             //stop rotate at the min and max degree limit
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             //have camera follow the rotation
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed * Time.deltaTime, 0);
         }
 
         // Sliding

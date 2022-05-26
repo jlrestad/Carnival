@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 8477729249810273188}
   m_Layer: 0
   m_Name: GunHold
-  m_TagString: Weapon
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   walkSpeed: 6
   runSpeed: 12
   jumpSpeed: 5
-  lookSpeed: 1
+  lookSpeed: 50
   gravity: 9.8
   slideSpeed: 10
   pushPower: 10
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   skullParent: {fileID: 421488722864597281}
   addToCount: 0
   weaponList: []
-  weaponNumber: 0
+  weaponNumber: -1
   inInventory: 0
   isEquipped: 0
   closestWeapon: {fileID: 0}
@@ -1801,6 +1801,10 @@ MonoBehaviour:
   damage: 100
   canSwing: 0
   hitVfxPrefab: {fileID: 5443168891726632875, guid: 36dc4121c540f55498475e05039a5bc4, type: 3}
+  bossCritters: []
+  spawnerManager: {fileID: 0}
+  hold: {fileID: 0}
+  bossRange: 0
 --- !u!1001 &421488722866503260
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 8132675665202787021}
   m_Layer: 5
   m_Name: FlashlightIndicator
-  m_TagString: Untagged
+  m_TagString: FlashlightIndicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 3354574881277668125}
   - component: {fileID: 7718435332094309663}
   - component: {fileID: 2252656998222353260}
-  - component: {fileID: 108377472}
+  - component: {fileID: 1157054366}
   m_Layer: 5
   m_Name: PlayerHUD
   m_TagString: Untagged
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &108377472
+--- !u!114 &1157054366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,15 +296,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6638728776276274822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 394ad48adccc33645a8ae42d8ef8488f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ec7c764285ca574aa7968a942d8495c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   redTickets: 5
   blueTickets: 1
   redSlider: {fileID: 0}
   blueSlider: {fileID: 0}
-  red: {fileID: 0}
-  blue: {fileID: 0}
+  lightOn: {fileID: 0}
+  lightOff: {fileID: 0}
 --- !u!1 &7129837554475868306
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 1989644475875616683}
   m_Layer: 5
   m_Name: FlashlightOFF
-  m_TagString: Untagged
+  m_TagString: FlashlightOFF
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 7262898401111029902}
   m_Layer: 5
   m_Name: BlueTickets
-  m_TagString: Untagged
+  m_TagString: BlueTickets
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 3
   m_WholeNumbers: 1
-  m_Value: 3
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 6540234627847571567}
   m_Layer: 5
   m_Name: RedTickets
-  m_TagString: Untagged
+  m_TagString: RedTickets
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -644,11 +644,11 @@ GameObject:
   - component: {fileID: 3269722224016973734}
   m_Layer: 5
   m_Name: FlashlightON
-  m_TagString: Untagged
+  m_TagString: FlashlightON
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3171810227961439136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8580428257304459731}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

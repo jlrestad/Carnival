@@ -20,7 +20,7 @@ public class SkillShotGameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject gameUI;
-    public TextMeshProUGUI ticketsText;
+    //public TextMeshProUGUI ticketsText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI winloseText;
@@ -60,7 +60,7 @@ public class SkillShotGameManager : MonoBehaviour
         BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
-        ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
+        //ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
@@ -112,12 +112,12 @@ public class SkillShotGameManager : MonoBehaviour
             }
 
             //Update ticket count
-            ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
+            //ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
 
             if (HudManager.Instance.redTickets < 0)
             {
                 HudManager.Instance.redTickets = 0;
-                ticketsText.text = "NEED TICKETS";
+                //ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
                 gameOn = false;

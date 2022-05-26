@@ -42,7 +42,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject gameUI;
-    public TextMeshProUGUI ticketsText;
+    //public TextMeshProUGUI ticketsText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI winloseText;
@@ -151,7 +151,7 @@ public class WhackEmGameManager : MonoBehaviour
             if (HudManager.Instance.redTickets < 0)
             {
                 HudManager.Instance.redTickets = 0;
-                ticketsText.text = "NEED TICKETS";
+                //ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
                 gameOn = false;
