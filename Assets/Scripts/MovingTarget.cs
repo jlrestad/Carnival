@@ -61,18 +61,14 @@ public class MovingTarget : MonoBehaviour
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
 
         }
-        else
-        {
-            
-            if (skillshotGM.gameOver && !sentHome)
-            {
-                Debug.Log("Send home, if");
-                skillshotGM.SendHome(pooledTargets, parentPos);
-                sentHome = true;
-            }
-            
-        }
-       
     }
 
+    public void ResetTargets()
+    {
+        Debug.Log("left game area, resetting");
+        foreach (GameObject target in pooledTargets)
+        {
+            target.GetComponentInChildren<TargetSetActive>().hasGone = false;
+        }
+    }
 }

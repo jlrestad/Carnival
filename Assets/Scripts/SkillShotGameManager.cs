@@ -199,8 +199,7 @@ public class SkillShotGameManager : MonoBehaviour
         weaponEquip.skillshotActive = false;
         timerText.enabled = false;
       
-        //lock for 1 second longer to allow target reset
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         // lock player here until WinLoseUI done--
         //if player leaves trigger area before this loop finishes, cannot win replay
@@ -250,7 +249,7 @@ public class SkillShotGameManager : MonoBehaviour
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {
         GameObject target;
-        poolAmount = (int)timeCounter - 1;
+        poolAmount = (int)timeCounter - 2;
         //Pool the amount of targets needed and hold them in a list.
         while(pooledTargets.Count < poolAmount)
         {
@@ -264,50 +263,49 @@ public class SkillShotGameManager : MonoBehaviour
         }
     }
 
-    public void SendHome(List<GameObject> pooledTargets, Transform parentPos)
+    public void SendOneHome(GameObject trgt, Transform parentPos)
     {
-        
-        foreach (GameObject target in pooledTargets)
-        {
-            target.SetActive(false);
-            target.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
-            target.transform.position = parentPos.position;
-        }
-    }
-    public bool sentHome;
+        trgt.SetActive(false);
+        trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+        trgt.transform.position = parentPos.position;
+    } 
+
     //Move target; give time between each target
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
-        while(gameOn)
+        int i = 0; //undo to here!
+
+        while(i < pooledTargets.Count)
         {
-            sentHome = false;
-            //Start the targets moving
-            foreach (var trgt in pooledTargets)
+            if(gameOn && weaponEquip.haveGun)
             {
                 //if target at beginning or end, turn off
-                if(trgt.transform.position == parentPos.position || trgt.GetComponentInChildren<TargetSetActive>().reachedEnd)
+                if (pooledTargets[i].transform.position == parentPos.position || pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
                 {
-                    trgt.SetActive(false);
+                    pooledTargets[i].SetActive(false);
                 }
 
                 //call translate while it hasn't reached end
-                if (!trgt.GetComponentInChildren<TargetSetActive>().reachedEnd)
+                if (!pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !pooledTargets[i].GetComponentInChildren<TargetSetActive>().hasGone)
                 {
-                    trgt.SetActive(true);
-                    trgt.transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
+                    pooledTargets[i].SetActive(true);
+                    pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
                 }
 
                 yield return new WaitForSeconds(timeBetweenTargets);
 
+                if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
+                {
+                    SendOneHome(pooledTargets[i], parentPos);
+                }
+                i++;
             }
-
+            else
+            {   
+                SendOneHome(pooledTargets[i], parentPos);
+                i++;
+            }
         }
-
-  
-        //game ended, send targets home
-        SendHome(pooledTargets, parentPos);
-        
-        
     }
     
 

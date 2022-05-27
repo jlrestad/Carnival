@@ -20,6 +20,7 @@ public class TargetSetActive : MonoBehaviour
     public bool reachedEnd;
     public bool targetHit;
     public bool isFlipped;
+    public bool hasGone;
 
     //Unneeded since more than one target uses this script.
     //private void Awake()
@@ -47,6 +48,7 @@ public class TargetSetActive : MonoBehaviour
         if (other.tag == "TargetHome")
         {
             reachedEnd = true;
+            hasGone = true;
         }
     }
 

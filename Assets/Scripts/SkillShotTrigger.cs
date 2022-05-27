@@ -18,6 +18,9 @@ public class SkillShotTrigger : MonoBehaviour
     public GameObject prompt;
     public Menu menu;
 
+
+    private MovingTarget[] mts;
+        
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -26,11 +29,13 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void Update()
     {
+        mts = FindObjectsOfType<MovingTarget>();
         if (buttonPressed)
         {
             //Hide cursor again
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;
+
         }
 
         //find distance between player and gamebooth
@@ -80,6 +85,7 @@ public class SkillShotTrigger : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
+
         }
     }
 
@@ -101,6 +107,7 @@ public class SkillShotTrigger : MonoBehaviour
     //Pay the cost to play the game
     public void PlayGame()
     {
+        //reset targets
         skillshotGM.gameOn = true;
         buttonPressed = true;
 
@@ -114,7 +121,11 @@ public class SkillShotTrigger : MonoBehaviour
 
         //Spend the required ticket cost for the game
         HudManager.Instance.HealthTicket(ticketCost);
-
+        foreach (MovingTarget mt in mts)
+        {
+            Debug.Log("reset");
+            mt.ResetTargets();
+        }
         //* When game is played, make mallet appear in player hands.
         //* If game is lost, mallet disappears.
         //* If game is won, mallet stays in inventory.
