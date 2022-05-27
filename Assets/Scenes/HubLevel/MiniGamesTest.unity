@@ -597,6 +597,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 421488724317716273, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: hold
+      value: 
+      objectReference: {fileID: 2052724933}
     - target: {fileID: 7589783342074068269, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: crossHair
       value: 
@@ -1928,6 +1932,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d60348d36a82f8479b91b9d0daa8359, type: 3}
+--- !u!1 &2052724933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8567739267373293752, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+  m_PrefabInstance: {fileID: 695508083}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2134963443
 GameObject:
   m_ObjectHideFlags: 0
