@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -46,6 +47,8 @@ public class SkillShotGameManager : MonoBehaviour
 
     [HideInInspector] public bool gameOver;
 
+    public MovingTarget[] movingTarget;
+
     private void Awake()
     {
         Instance = this; 
@@ -67,6 +70,8 @@ public class SkillShotGameManager : MonoBehaviour
         timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
 
         weaponEquip = FindObjectOfType<WeaponEquip>();
+
+        movingTarget = FindObjectsOfType<MovingTarget>();
     }
 
     private void Update()
@@ -241,13 +246,13 @@ public class SkillShotGameManager : MonoBehaviour
         Menu.Instance.DisplayWeaponCard();
 
     }
-
-    public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform leftPos, Transform rightPos, Transform parentPos, Transform targetParent)
+    
+    public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {
         GameObject target;
-
+        poolAmount = (int)timeCounter - 1;
         //Pool the amount of targets needed and hold them in a list.
-        for (int i = 0; i < poolAmount; i++)
+        while(pooledTargets.Count < poolAmount)
         {
             target = Instantiate(targetPrefab, parentPos, instantiateInWorldSpace: false) as GameObject;
             target.SetActive(false);
@@ -259,42 +264,51 @@ public class SkillShotGameManager : MonoBehaviour
         }
     }
 
+    public void SendHome(List<GameObject> pooledTargets, Transform parentPos)
+    {
+        
+        foreach (GameObject target in pooledTargets)
+        {
+            target.SetActive(false);
+            target.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+            target.transform.position = parentPos.position;
+        }
+    }
+    public bool sentHome;
     //Move target; give time between each target
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
-        if (gameOn && weaponEquip.haveGun)
+        while(gameOn)
         {
+            sentHome = false;
             //Start the targets moving
-            for (int i = 0; i < pooledTargets.Count; i++)
+            foreach (var trgt in pooledTargets)
             {
-                pooledTargets[i].SetActive(true);
-                pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
-                yield return new WaitForSeconds(timeBetweenTargets);
-            }
-
-            //When targets reach the end start over at the parent position.
-            for (int i = 0; i < pooledTargets.Count; i++)
-            {
-                //Gets the actual target that is a child of the pooledTarget.
-                Transform target = pooledTargets[i].GetComponentInChildren<TargetSetActive>().transform;
-
-                //Allow target to be hit again.
-                pooledTargets[i].GetComponentInChildren<TargetSetActive>().targetHit = false;
-
-                //Start the loop over
-                if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
+                //if target at beginning or end, turn off
+                if(trgt.transform.position == parentPos.position || trgt.GetComponentInChildren<TargetSetActive>().reachedEnd)
                 {
-                    pooledTargets[i].transform.Translate(Vector3.zero);
-                    pooledTargets[i].SetActive(false);
-
-                    target.position = parentPos.position; //Reset the child target to the parent position.
-
-                    yield return new WaitForSeconds(timeBetweenTargets);
-                    pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd = false;
-
+                    trgt.SetActive(false);
                 }
+
+                //call translate while it hasn't reached end
+                if (!trgt.GetComponentInChildren<TargetSetActive>().reachedEnd)
+                {
+                    trgt.SetActive(true);
+                    trgt.transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
+                }
+
+                yield return new WaitForSeconds(timeBetweenTargets);
+
             }
+
         }
+
+  
+        //game ended, send targets home
+        SendHome(pooledTargets, parentPos);
+        
+        
     }
     
+
 }

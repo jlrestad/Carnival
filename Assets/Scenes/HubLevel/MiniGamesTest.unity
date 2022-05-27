@@ -2076,6 +2076,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SKILLSHOT
       objectReference: {fileID: 0}
+    - target: {fileID: 4919458859710642653, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: poolAmount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919458860726518864, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: poolAmount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5225305957612556866, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: gameUI
       value: 
@@ -2089,6 +2097,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 723417986}
     - target: {fileID: 5225305957612556866, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: timeCounter
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225305957612556866, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: winloseText
       value: 
       objectReference: {fileID: 63512092}
@@ -2096,6 +2108,10 @@ PrefabInstance:
       propertyPath: displayPickupScreen
       value: 
       objectReference: {fileID: 1572049920}
+    - target: {fileID: 5226414292463460896, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: poolAmount
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
 --- !u!1001 &4707453108082914402

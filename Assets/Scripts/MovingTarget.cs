@@ -31,6 +31,9 @@ public class MovingTarget : MonoBehaviour
     public int poolAmount;
     [Space(10)]
     public List<GameObject> pooledTargets = new List<GameObject>();
+
+    [HideInInspector] public WeaponEquip weaponEquip;
+
     Transform targetParent;
 
     private void Awake()
@@ -43,30 +46,33 @@ public class MovingTarget : MonoBehaviour
     {
         targetParent = this.transform;
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
-        skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, leftPos, rightPos, parentPos, targetParent);
+        skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, parentPos, targetParent);
+        weaponEquip = FindObjectOfType<WeaponEquip>();
     }
 
+    public bool sentHome = false;
+    
     void Update()
     {
-        if (!skillshotGM.gameOver)
+
+        if (!skillshotGM.gameOver && !skillshotGM.gameWon && weaponEquip.haveGun)
         {
+            
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
+
         }
         else
         {
-            //Turn off targets if game is over
-            // **** Need to lock player within gameplay boundary so targets can finish thos loop for replay ****.
-            for (int i = 0; i < pooledTargets.Count; i++)
+            
+            if (skillshotGM.gameOver && !sentHome)
             {
-                pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
-                //pooledTargets[i].transform.position = parentPos.position;
-                if (skillshotGM.reachedEnd)
-                {
-                    pooledTargets[i].SetActive(false);
-                    //skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, leftPos, rightPos, parentPos, targetParent);
-                }
+                Debug.Log("Send home, if");
+                skillshotGM.SendHome(pooledTargets, parentPos);
+                sentHome = true;
             }
+            
         }
+       
     }
 
 }

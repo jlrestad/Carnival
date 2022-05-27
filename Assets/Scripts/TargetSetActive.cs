@@ -46,7 +46,6 @@ public class TargetSetActive : MonoBehaviour
     {
         if (other.tag == "TargetHome")
         {
-            //Debug.Log("Trigger working");
             reachedEnd = true;
         }
     }
