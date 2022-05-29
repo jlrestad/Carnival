@@ -10,6 +10,7 @@ public class WalkSound : MonoBehaviour
     public AudioSource walk;
     public AudioSource run;
     public AudioSource slide;
+    public AudioSource breath;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class WalkSound : MonoBehaviour
     {
         //Debug.Log("WALKING");
 
-        walk.volume = Random.Range(0.1f, 0.2f);
+        walk.volume = Random.Range(0.4f, 0.6f);
         walk.pitch = Random.Range(1.3f, 1.5f);
         walk.Play();
     }
@@ -52,9 +53,11 @@ public class WalkSound : MonoBehaviour
     {
         //Debug.Log("RUNNING");
 
-        run.volume = Random.Range(0.1f, 0.3f);
-        run.pitch = Random.Range(1.5f, 1.8f);
+        run.volume = Random.Range(0.5f, 0.9f);
+        run.pitch = Random.Range(1.4f, 1.6f);
         run.Play();
+
+        //breath.PlayDelayed(0.3f);        //breath.PlayDelayed(0.3f);
     }
 
     public void PlaySlideSound()

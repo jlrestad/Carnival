@@ -585,9 +585,10 @@ MonoBehaviour:
   critterList: []
   xPos: 0
   zPos: 0
-  yPos: 0
   critterCount: 0
-  stayUpTime: 10
+  stayUpTime: 30
+  maxQueue: 3
+  spawnPos: {x: 0, y: 0, z: 0}
 --- !u!4 &898481789
 Transform:
   m_ObjectHideFlags: 0
@@ -1320,5 +1321,9 @@ PrefabInstance:
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 1503913348}
+    - target: {fileID: 4075122671950012881, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}

@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class GameCardManager : MonoBehaviour
 {
+    //**                                                    **//
+    //** ACTIVATES THE BOSS WHEN THE 3 CARDS HAVE BEEN WON  **//
+    //**                                                    **//
+
     public static GameCardManager Instance;
 
     public GameObject player;
@@ -34,9 +38,9 @@ public class GameCardManager : MonoBehaviour
 
     private void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
-        //WE = player.GetComponent<WeaponEquip>();
-        //menu = FindObjectOfType<Menu>(); ;
+            //player = GameObject.FindGameObjectWithTag("Player");
+            //WE = player.GetComponent<WeaponEquip>();
+            //menu = FindObjectOfType<Menu>(); ;
         //pos = transform.position;
     }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponEquip : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class WeaponEquip : MonoBehaviour
     public Canvas crossHair;
     public GameObject actionPrompt;
     public List<GameObject> weaponCardBG;
+    int BGCount;
 
     [Space(15)]
     [SerializeField] GameObject gunHold;
@@ -25,7 +27,7 @@ public class WeaponEquip : MonoBehaviour
     public List<GameObject> weaponList = new List<GameObject>(); //Holds weapons
 
     [Space(15)]
-    public int weaponNumber;
+    public int weaponNumber = -1;
 
     [Space(15)]
     public bool inInventory;
@@ -70,8 +72,8 @@ public class WeaponEquip : MonoBehaviour
     private void Start()
     {
         menu = FindObjectOfType<Menu>();
-        //skullHold = GameObject.Find("SkullHold");
-        //weaponCardBG = menu.gameCardBG; //Used to highlight which weapon is equipped
+
+        //weaponCardBG.Add(menu.gameCardBG); //Add the won game card bg to the list. Used to highlight which weapon is equipped
 
         //Detect if joystick or keyboard is used and display correct prompt.
         if (menu.usingJoystick)
@@ -88,7 +90,11 @@ public class WeaponEquip : MonoBehaviour
     {
 
         FindClosestWeapon();
-        ChangeWeapon();
+
+        if (isEquipped || inInventory)
+        {
+            ChangeWeapon();
+        }
 
         //FOR SKULL PICKUP * * *
         if (currentWeapon == skullParent)
@@ -132,8 +138,8 @@ public class WeaponEquip : MonoBehaviour
             //Don't display reticle if nothing is equipped.
             crossHair.enabled = false;
         }
-        
 
+        //Debug.Log(weaponList.Count);
         // * * *
         //PLAYER INPUT
         if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
@@ -153,6 +159,7 @@ public class WeaponEquip : MonoBehaviour
 
             //Pick up and equip weapon.
             PickUpWeapon();
+            BGCount = menu.BGCount; //get the count from Menu
         }
         else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
         {
@@ -204,13 +211,18 @@ public class WeaponEquip : MonoBehaviour
                     actionPrompt.SetActive(false);
                 }
         }
+
+        //Turn off the bg for the previous weapon
+        //for (int i = 0; i <= weaponCardBG.Count; i++)
+        //{
+        //    weaponCardBG[BGCount].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+        //} 
     }
-    //}
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
     public GameObject FindClosestWeapon()
     {
-        float distanceToClosestWeapon = Mathf.Infinity;
+        float distanceToClosestWeapon = Mathf.Infinity; 
 
         Weapon[] allWeapons = GameObject.FindObjectsOfType<Weapon>(); //Array to hold all weapons of the scene
 
@@ -230,33 +242,17 @@ public class WeaponEquip : MonoBehaviour
            
                 closestWeapon = GameObject.Find(weaponName); //find game object using the string name
 
-            //    if (_closestWeapon == null)
-              //  {
-                    _closestWeapon = closestWeapon;
-                //}
-                //if (currentWeapon == null)
-                //{
-                //    currentWeapon = closestWeapon;
-                //}
+                _closestWeapon = closestWeapon;
 
                 distanceToPlayer = transform.position - closestWeapon.transform.position; //used later to determine distance to pick up weapon
 
-                //If the closest weapon is a skull, then get the collider and rigidbody of that skull.
-                //if (closestWeapon.CompareTag("Head"))
-                //{
-                //    skull = closestWeapon;
-                    
-                //    skullCollider = skull.GetComponent<Collider>();
-                //    skullRB = skull.GetComponent<Rigidbody>();
-                //}
-
-                //* This was used for loading scenes, which we aren't using now, but kept it incase... Can delete at the end of project.
-                //Get the name of the layer -- which is the name of the game level
                 int layerNumber = closestWeapon.layer;
                 gameName = LayerMask.LayerToName(layerNumber);
-
-                //gameBooth = GameObject.FindGameObjectWithTag(levelName);
             }
+            //else
+            //{
+            //    closestWeapon = null;  //Keep from throwing an error if there is no closestWeapon in scene.
+            //}
         }
         return closestWeapon; //returns the closest weapon game object
     }
@@ -267,11 +263,16 @@ public class WeaponEquip : MonoBehaviour
         //SCROLL WHEEL FORWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 && isEquipped || Input.GetButtonDown("WeaponScroll+") && isEquipped)
         {
+            //Turn off previous weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+
             //Unequip current weapon.
             if (weaponList.Count > 1 && currentWeapon != skullParent)
             {
                 //If there is already a weapon equipped, hide it.
                 currentWeapon.SetActive(false);
+                
+                //Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false; //* This turns off 2nd card, leaves 1st card on
             }
             if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
             {
@@ -280,15 +281,24 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = false;
             }
 
-            //Move to the next weapon in the list.
-            weaponNumber++;
+            if (weaponList.Count > 1)
+            {
+                //Move to the next weapon in the list.
+                weaponNumber++;
+            }
 
             //Check bounds of weapon number.
-            if (weaponNumber > weaponList.Count - 1)
+            if (weaponNumber > weaponList.Count -1)
             {
-                //Reset back to the beginning of the list.
-                weaponNumber = 0;
+                weaponNumber = 0; //go back to the beginning
             }
+            if (weaponNumber < 0)
+            {
+                weaponNumber = weaponList.Count;
+            }
+
+            //Turn on new weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
 
             //Change current weapon to the next weapon in the list.
             currentWeapon = weaponList[weaponNumber];
@@ -311,6 +321,9 @@ public class WeaponEquip : MonoBehaviour
         //SCROLL WHEEL BACKWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 && isEquipped || Input.GetButtonDown("WeaponScroll-") && isEquipped)
         {
+            //Turn off previous weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+
             //Unequip current weapon.
             if (weaponList.Count > 1 && currentWeapon != skullParent)
             {
@@ -324,15 +337,23 @@ public class WeaponEquip : MonoBehaviour
                 holdingSkull = false;
             }
 
-            //Move to the previous weapon in the list.
-            weaponNumber--;
-
+            //** WEAPONNUMBER BOUNDS
             //Check bounds of weapon number.
-            if (weaponNumber < 0)
+            if (weaponNumber > weaponList.Count - 1)
             {
-                //Set the weapon number to the highest number.
+                weaponNumber = 0; //go back to the beginning
+            }
+            else if (weaponNumber <= 0)
+            {
                 weaponNumber = weaponList.Count - 1;
             }
+            else
+            {
+                weaponNumber--;
+            }
+
+            //Turn on previous weapon BG
+            weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
 
             //Change current weapon to the previous weapon in the list.
             currentWeapon = weaponList[weaponNumber];
@@ -350,8 +371,10 @@ public class WeaponEquip : MonoBehaviour
                 currentWeapon.SetActive(true);
                 holdingSkull = false;
             }
-            
         }
+        //if (WhackEmGameManager.Instance.gameWon || SkillShotGameManager.Instance.gameWon)
+
+        //    Menu.Instance.CardSelector(); //Change current weapon BG
     }
 
 
@@ -359,7 +382,7 @@ public class WeaponEquip : MonoBehaviour
 
     public void PickUpWeapon()
     {
-        isEquipped = true;
+        //isEquipped = true;
         // Check which weapon it is and set it to the current weapon.
 
         //GUN
@@ -441,7 +464,7 @@ public class WeaponEquip : MonoBehaviour
     public void UnequipWeapon()
     {
         isEquipped = false;
-        weaponNumber--;
+        //weaponNumber--;
         if (weaponNumber < 0) { weaponNumber = 0;  }
         
         if (currentWeapon != skullParent)

@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class GameCard : MonoBehaviour
 {
-    //GameObject player;
-    //public GameObject cardWon;
+    GameObject player;
+    public GameObject cardWon;
 
     private void Awake()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start()
     {
-        //player.GetComponent<FPSController>().cardCount++;
+        //Boss appears after x cards. This increments the count.
+        player.GetComponent<FPSController>().cardCount++;
     }
 }

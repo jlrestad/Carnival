@@ -29,6 +29,11 @@ public class MeleeSwing : MonoBehaviour
     
     private new Collider enemyCollider;
 
+    //for boss fight
+    [SerializeField] BossCritterBehaviors[] bossCritters;
+    [SerializeField] CritterSpawnerManager spawnerManager;
+    [SerializeField] GameObject hold; //reference the object hold so it actually finds the critter
+    [SerializeField] float bossRange; //set to 1 in inspector. for some reason it keeps reverting to 2 when i initialize in code
 
     private void Start()
     {
@@ -40,15 +45,24 @@ public class MeleeSwing : MonoBehaviour
         spawnTransform = GetComponentInChildren<Transform>();
 
         canSwing = true;
+
+        spawnerManager = FindObjectOfType<CritterSpawnerManager>();
     }
 
     private void Update()
     {
+        //* TEMP COMMENTED OUT
+        //* Add a control statement so this isn't running when it shouldn't
+        //continualy find boss critters && find the object hold for bossAI fight
+        //bossCritters = FindObjectsOfType<BossCritterBehaviors>();
+        //Transform hld = hold.transform;
+
+
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
             StartCoroutine(MeleeAttack());
 
-
+            //this part for CS game
             //Get raycast hit information and use it to calculate damage
             //Look into spherecast to see if this will be better 
             if (Physics.Raycast(player.position, player.forward, out hit, range))
@@ -97,6 +111,15 @@ public class MeleeSwing : MonoBehaviour
                 }
             }
 
+            //this part for Boss fight
+
+            //** TEMP COMMENTED OUT
+            //if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
+            //{
+            //    Debug.Log("Hit: " + hit.collider.name);
+            //    BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
+            //    bossCritter.hasBeenHit = true;
+            //}
         }
 
         //Find ClosestWhackEm script

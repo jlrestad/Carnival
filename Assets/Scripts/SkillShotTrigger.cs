@@ -12,9 +12,16 @@ public class SkillShotTrigger : MonoBehaviour
     public Transform gameplayPosition;
     public Transform player;
 
+
+    [SerializeField] public float triggerDistance;
+    public float distanceFromGame;
+    public GameObject prompt;
+    public Menu menu;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        menu = GameObject.FindObjectOfType<Menu>();
     }
 
     private void Update()
@@ -25,11 +32,34 @@ public class SkillShotTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;
         }
+
+        //find distance between player and gamebooth
+        distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
+
+        if (distanceFromGame <= triggerDistance && player.position != gameplayPosition.position)
+        {
+            //Debug.Log("Entered skillshot area");
+            // if button pressed, then bring up UI
+            if (menu.usingJoystick)
+            {
+                prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+            }
+            else
+            {
+                prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+            }
+
+            prompt.SetActive(true);
+            if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
+            {
+                ShowGameUI();
+            }
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void ShowGameUI()
     {
-        if(!skillshotGM.gameWon && other.CompareTag("Player"))
+        if (!skillshotGM.gameWon)
         {
             //Only show the rules screen if player has not picked up the mallet
             if (!skillshotGM.weaponEquip.haveGun && !skillshotGM.gameJustPlayed)
@@ -83,7 +113,7 @@ public class SkillShotTrigger : MonoBehaviour
         rulesUI.SetActive(false);
 
         //Spend the required ticket cost for the game
-        TicketManager.Instance.SpendTicket(ticketCost);
+        HudManager.Instance.HealthTicket(ticketCost);
 
         //* When game is played, make mallet appear in player hands.
         //* If game is lost, mallet disappears.

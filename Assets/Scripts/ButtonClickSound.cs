@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ButtonClickSound : MonoBehaviour
+public class ButtonClickSound : Selectable
 {
-    //public new AudioSource audioSource;
+    BaseEventData m_BaseEvent;
 
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-    //    audioSource = GetComponent<AudioSource>();
-    //}
-    
-    //private void OnMouseOver()
-    //{
-    //    audioSource.Play();
-    //}
+    AudioSource audioSource;
+
+    private void Update()
+    {
+        //Check if the button is highlighted
+        if (IsHighlighted() == true) 
+        {
+            audioSource.Play();
+        }
+    }
 }

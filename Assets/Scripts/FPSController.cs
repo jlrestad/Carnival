@@ -37,9 +37,12 @@ public class FPSController : MonoBehaviour
     public Camera playerCamera;
     float originalCamHeight;
     public float lookXLimit = 55.0f;
-    
-    public Vector3 moveDirection = Vector3.zero; //set to 0
+    [HideInInspector] public Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
+
+
+    [Header("AUDIO")]
+    public AudioSource lightClick;
 
     [Header("BOOLS")]
     //[HideInInspector]
@@ -62,6 +65,7 @@ public class FPSController : MonoBehaviour
     public void OnValidate()
     {
         characterController = GetComponent<CharacterController>();
+
     }
 
     private void Awake()
@@ -74,6 +78,9 @@ public class FPSController : MonoBehaviour
         weaponEquip = GetComponent<WeaponEquip>(); 
         characterController = GetComponent<CharacterController>();
         capsule = GetComponentInChildren<Transform>();
+
+        //Set the sensitivity of the mouse
+        lookSpeed = PlayerPrefs.GetFloat("sensitivityValue");
 
         //Get and set the original settings of player
         originalHeight = characterController.height;
@@ -118,15 +125,23 @@ public class FPSController : MonoBehaviour
         //Flashlight
         if (useFlashlight)
         {
+            lightClick.Play();
             flashlightHold.SetActive(true);
             flashlightOn = true;
+
+            //Call the method to change flashlight indicator
+            HudManager.Instance.FlashlightIndicator(flashlightOn);
         }
 
         //If holding the flashlight and button is pressed again put the flashlight away
         if (dontUseFlashlight)
         {
+            lightClick.Play();
             flashlightHold.SetActive(false);
             flashlightOn = false;
+
+            //Call the method to change flashlight indicator
+            HudManager.Instance.FlashlightIndicator(flashlightOn);
         }
 
         // Player is grounded -- recalculate the move direction based on axes
@@ -290,9 +305,9 @@ public class FPSController : MonoBehaviour
 
         characterController.height = slideHeight; //being character height down to immitate sliding
         characterController.Move(moveDirection * Time.deltaTime * slideSpeed); //move in the direction player slid at slide speed
-        //capsule = transform; //get the transform of FPSPlayer object
 
         Transform faceForward = capsule.transform;
+
         //Tilt to the side during slide
         capsule.transform.Rotate(0f, 0f, slideAngle, Space.Self); //works...
 
@@ -300,10 +315,6 @@ public class FPSController : MonoBehaviour
       
         isUp = true;
 
-        //Return to upright position after slide
-        //capsule.transform.rotation = Quaternion.LookRotation(moveDirection, Vector3.up); //not working....
-
-        //capsule.transform.Rotate(0f, 0f, transform.rotation.z - 10f, Space.Self); //not working well....
         capsule.transform.Rotate(0f, 0f, -slideAngle, Space.Self); 
 
         characterController.height = originalHeight; //set character height back to normal

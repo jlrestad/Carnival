@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SkillShotGameManager : MonoBehaviour
 {
+    public static SkillShotGameManager Instance;
+
     //public Transform leftPos, rightPos, parentPos;
     [HideInInspector] public WeaponEquip weaponEquip;
 
@@ -38,21 +40,27 @@ public class SkillShotGameManager : MonoBehaviour
 
     [Header("TAROT CARD")]
     public GameObject displayCard;
+    public GameObject BGCard;
     public Sprite cardImage;
+    public Sprite BGImage;
 
     [HideInInspector] public bool gameOver;
 
     private void Awake()
     {
+        Instance = this; 
+
         levelLoaded = true;
     }
 
     private void Start()
     {
+        //Tarot Cards
         cardImage = displayCard.GetComponent<Image>().sprite;
+        BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
-        ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
+        ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
         scoreText.text = (score + "/" + scoreLimit);
         //Timer
         resetTime = timeCounter; //Store this for the reset
@@ -104,11 +112,11 @@ public class SkillShotGameManager : MonoBehaviour
             }
 
             //Update ticket count
-            ticketsText.text = ("Tickets: " + TicketManager.Instance.tickets);
+            ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
 
-            if (TicketManager.Instance.tickets < 0)
+            if (HudManager.Instance.redTickets < 0)
             {
-                TicketManager.Instance.tickets = 0;
+                HudManager.Instance.redTickets = 0;
                 ticketsText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
@@ -225,6 +233,9 @@ public class SkillShotGameManager : MonoBehaviour
 
         displayCard.GetComponent<Image>().enabled = false;
 
+        
+        //Menu.Instance.GetComponentInChildren<GameCard>().cardWon = displayCard.GetComponent<Image>().gameObject;
+        
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();
 
