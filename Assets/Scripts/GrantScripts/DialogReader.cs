@@ -57,7 +57,8 @@ public class DialogReader : MonoBehaviour
                     SpokenText.text = currentDialog.spokenDialog; //input the dialog from the holder into the SpokenDialog text.
                     GuideText.text = currentDialog.guideDialog; //input the dialog from the holder into the GuideDialog text.
                     TextAnimator.SetTrigger("FadeIn"); //tell the animator to start fading the text box in.
-                    StartCoroutine("FadeTimer"); //start the timer for the text to start fading out.
+                    StopCoroutine("FadeTimer"); //stop the timer in case it was already running
+                    StartCoroutine("FadeTimer"); //(re)start the timer for the text to start fading out.
                 }
                 else
                 {
@@ -68,11 +69,13 @@ public class DialogReader : MonoBehaviour
             {
                 Debug.Log("Dialog object has no DialogHolder script or it is otherwise null."); //give a debug message.
             }
+            other.gameObject.SetActive(false); //turn off the gameobject so we don't trigger the dialog again.
         }
     }
 
     private IEnumerator FadeTimer()
     {
+        
         yield return new WaitForSecondsRealtime(textFadeOutTime); //wait for the amount of time specified by textFadeoutTime;
         TextAnimator.SetTrigger("FadeOut"); //tell the animator to start fading the text box out.
     }
