@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 6748194217030220999}
   - component: {fileID: 5659006118406691320}
   - component: {fileID: 1627808704}
+  - component: {fileID: 8011755099672485152}
   m_Layer: 0
   m_Name: pCylinder8
   m_TagString: Untagged
@@ -222,6 +223,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &8011755099672485152
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622923699099951687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0.05, y: 0.85, z: 0}
 --- !u!1 &2856558851744766913
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,7 +447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8674643803004162770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.02, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6881695671934027987}
@@ -593,6 +608,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &2953761321321916896
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583958038051015995}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 0.1
+  m_Direction: 1
+  m_Center: {x: 0.0000000037252907, y: -0.11, z: 0.0000000032596295}
 --- !u!59 &858172884
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -605,7 +634,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.21379378, z: 0}
   m_Axis: {x: 1, y: 0, z: 90}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.17099994, y: 1.2228398, z: 0.0030002682}
+  m_ConnectedAnchor: {x: -0.17099994, y: 1.22284, z: 0.0030000089}
   m_UseSpring: 1
   m_Spring:
     spring: 0.5
