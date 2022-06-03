@@ -39,6 +39,7 @@ public class WhackEmGameManager : MonoBehaviour
     public float minRando; private float minRandoTemp; 
     public float maxRando; private float maxRandoTemp;
     public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
+    public float speedCap;
 
     [Header("UI")]
     public GameObject gameUI;
@@ -197,7 +198,12 @@ public class WhackEmGameManager : MonoBehaviour
 
     public void IncreaseSpeed()
     {
-        minRando /= divideSpeedBy;
+        if( (minRando / divideSpeedBy) > speedCap)
+        {
+            minRando /= divideSpeedBy;
+        }
+        Debug.Log("Speed: " + minRando);
+       //minRando /= divideSpeedBy;
         maxRando /= divideSpeedBy;
     }
 
@@ -281,7 +287,7 @@ public class WhackEmGameManager : MonoBehaviour
                     randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
                     randomTauntTime = randomStayTime / 2;
                     randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
-
+                    Debug.Log("Stay up time " + randomStayTime);
                     //if main creature is not visible
                     if (!critterIsVisible)
                     {
