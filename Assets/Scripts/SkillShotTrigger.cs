@@ -41,7 +41,7 @@ public class SkillShotTrigger : MonoBehaviour
         //find distance between player and gamebooth
         distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
 
-        if (distanceFromGame <= triggerDistance && player.position != gameplayPosition.position)
+        if (distanceFromGame <= triggerDistance && player.position != gameplayPosition.position && !skillshotGM.gameWon)
         {
             //Debug.Log("Entered skillshot area");
             // if button pressed, then bring up UI

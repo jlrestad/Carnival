@@ -37,9 +37,9 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //find distance between the player and game booth
         distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
 
-        if(distanceFromGame <= triggerDistance && player.position != gameplayPosition.position)
+        if(distanceFromGame <= triggerDistance && player.position != gameplayPosition.position && !whackemGM.gameWon)
         {
-
+            Debug.Log("CS trigger encountered");
             // pull up button
             // if button pressed, then bring up UI
             if (menu.usingJoystick)
