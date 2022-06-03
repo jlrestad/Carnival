@@ -34,6 +34,13 @@ public class MeleeSwing : MonoBehaviour
     [SerializeField] CritterSpawnerManager spawnerManager;
     [SerializeField] GameObject hold; //reference the object hold so it actually finds the critter
     [SerializeField] float bossRange; //set to 1 in inspector. for some reason it keeps reverting to 2 when i initialize in code
+    public GameObject boss;
+    public SkillShotGameManager skillshotGM;
+
+    // these are for testing purposes-- remove from full game. see notes in update
+    public bool ssWon;
+    public bool csWon;
+
 
     private void Start()
     {
@@ -47,79 +54,93 @@ public class MeleeSwing : MonoBehaviour
         canSwing = true;
 
         spawnerManager = FindObjectOfType<CritterSpawnerManager>();
+        skillshotGM = FindObjectOfType<SkillShotGameManager>();
+        boss = GameObject.FindGameObjectWithTag("Boss");
+        hold = GameObject.FindGameObjectWithTag("ObjectHold");
     }
 
     private void Update()
     {
-        //* TEMP COMMENTED OUT
-        //* Add a control statement so this isn't running when it shouldn't
-        //continualy find boss critters && find the object hold for bossAI fight
-        //bossCritters = FindObjectsOfType<BossCritterBehaviors>();
-        //Transform hld = hold.transform;
-
+        //can remove from full game.
+        // need to comment these out in boss AI scnee
+        if (skillshotGM.gameWon) ssWon = true;
+        if (whackemGM.gameWon) csWon = true;
 
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
             StartCoroutine(MeleeAttack());
-
-            //this part for CS game
-            //Get raycast hit information and use it to calculate damage
-            //Look into spherecast to see if this will be better 
-            if (Physics.Raycast(player.position, player.forward, out hit, range))
+            
+            //if minigames won and boss is active run this loop
+            // replace if line with this line after we don't need boss AI scene anymore
+            // if (skillshotGM.gameWon && whackemGM.gameWon && boss.activeInHierarchy)
+            if(ssWon && csWon && boss.activeInHierarchy)
             {
-                //Debug.Log(hit.distance);
-                //Debug.DrawLine(player.position, player.forward, Color.yellow);
-                //Debug.Log(hit.transform.name);
-                
-                //Target target = hit.transform.GetComponent<Target>();
-                WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
+                Debug.Log("BossAI melee");
+                //this part for Boss fight
+                //continualy find boss critters && find the object hold for bossAI fight
+                bossCritters = FindObjectsOfType<BossCritterBehaviors>();
+                Transform hld = hold.transform;
 
-                enemyCollider = hit.collider;
-
-                if (enemy != null)
+                if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
                 {
-                    //Show hit VFX to let player know it has been hit.
-                    GameObject hitVfx = Instantiate(hitVfxPrefab, enemy.transform.position, Quaternion.identity);
-                    Destroy(hitVfx, 0.5f);
-                    enemy.hasBeenHit = true;
-
-                    cardManager = enemy.GetComponentInParent<GameCardManager>();
-
-                    //Increase speed after each hit
-                    whackemGM.IncreaseSpeed();
-                    //Turn off enemy after hit
-                    enemy.HealthManager();
-
-                    //Add to the score
-                    if (!whackemGM.isTaunting)
-                    {
-                        whackemGM.score++;
-                    }
-                    else
-                    {
-                        //Taunting so no points given
-                        Debug.Log("HAHA ~ No point!");
-                    }
-
-                    //Add enemy to the list
-                    cardManager.critterList.Add(enemy.gameObject);
-
-                    //Spawn the head used as throwing object
-                    SpawnHead();
-                    
-                    Debug.Log("Smashed enemy!");
+                    Debug.Log("Hit: " + hit.collider.name);
+                    BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
+                    bossCritter.hasBeenHit = true;
                 }
             }
+            else
+            {
+                //this part for CS game
+                //Get raycast hit information and use it to calculate damage
+                //Look into spherecast to see if this will be better 
+                if (Physics.Raycast(player.position, player.forward, out hit, range))
+                {
+                    //Debug.Log(hit.distance);
+                    //Debug.DrawLine(player.position, player.forward, Color.yellow);
+                    //Debug.Log(hit.transform.name);
 
-            //this part for Boss fight
+                    //Target target = hit.transform.GetComponent<Target>();
+                    WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
 
-            //** TEMP COMMENTED OUT
-            //if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
-            //{
-            //    Debug.Log("Hit: " + hit.collider.name);
-            //    BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
-            //    bossCritter.hasBeenHit = true;
-            //}
+                    enemyCollider = hit.collider;
+
+                    if (enemy != null)
+                    {
+                        //Show hit VFX to let player know it has been hit.
+                        GameObject hitVfx = Instantiate(hitVfxPrefab, enemy.transform.position, Quaternion.identity);
+                        Destroy(hitVfx, 0.5f);
+                        enemy.hasBeenHit = true;
+
+                        cardManager = enemy.GetComponentInParent<GameCardManager>();
+
+                        //Increase speed after each hit
+                        whackemGM.IncreaseSpeed();
+                        //Turn off enemy after hit
+                        enemy.HealthManager();
+
+                        //Add to the score
+                        if (!whackemGM.isTaunting)
+                        {
+                            whackemGM.score++;
+                        }
+                        else
+                        {
+                            //Taunting so no points given
+                            Debug.Log("HAHA ~ No point!");
+                        }
+
+                        //Add enemy to the list
+                        cardManager.critterList.Add(enemy.gameObject);
+
+                        //Spawn the head used as throwing object
+                        SpawnHead();
+
+                        Debug.Log("Smashed enemy!");
+                    }
+                }
+            }
+            
+         
         }
 
         //Find ClosestWhackEm script

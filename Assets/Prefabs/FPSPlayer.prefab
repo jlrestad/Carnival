@@ -1556,7 +1556,7 @@ GameObject:
   - component: {fileID: 421488722694587073}
   m_Layer: 0
   m_Name: ObjectHold
-  m_TagString: Untagged
+  m_TagString: ObjectHold
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2072,6 +2072,10 @@ MonoBehaviour:
   spawnerManager: {fileID: 0}
   hold: {fileID: 0}
   bossRange: 0
+  boss: {fileID: 0}
+  skillshotGM: {fileID: 0}
+  ssWon: 0
+  csWon: 0
 --- !u!1001 &421488722866503260
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -335,6 +335,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 309953408, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1097268734, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -398,6 +402,10 @@ PrefabInstance:
     - target: {fileID: 167711530714242627, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 20.968994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572762623887996967, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7589783342074068269, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: crossHair
@@ -546,6 +554,10 @@ PrefabInstance:
     - target: {fileID: 8567739266467498286, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767103573650423314, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8477729249756985447, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
@@ -1269,6 +1281,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2629851577572945908, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2629851579160301402, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2828072266146698706, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1317,13 +1337,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player-WeaponTest
       objectReference: {fileID: 0}
+    - target: {fileID: 2828072267388009540, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: m_TagString
+      value: ObjectHold
+      objectReference: {fileID: 0}
     - target: {fileID: 4075122671950012881, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 1503913348}
     - target: {fileID: 4075122671950012881, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6052978657863066573, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: csWon
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6052978657863066573, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: ssWon
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6052978657863066573, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
+      propertyPath: bossRange
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8ad49a6e84c784491688462d25e5c1, type: 3}
