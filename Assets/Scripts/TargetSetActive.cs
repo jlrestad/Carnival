@@ -97,8 +97,21 @@ public class TargetSetActive : MonoBehaviour
         if (targetHit && !isFlipped)
         {
             skillshotGM.score++;
+            //Debug.Log("Score is: " + skillshotGM.score);
         }
-        //remobed isFlipped loop-- was decrementing score after animations were added in.
+
+        //if the wrong side is hit, take a point
+        // don't go below 0
+        if( targetHit && isFlipped)
+        {
+            if(skillshotGM.score > 0)
+            {
+                //Debug.Log("Score was: " + skillshotGM.score);
+                skillshotGM.score--;
+                //Debug.Log("Decrement score: " + skillshotGM.score);
+            }
+        }
+       
     }
 
 

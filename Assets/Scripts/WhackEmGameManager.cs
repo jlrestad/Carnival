@@ -202,7 +202,6 @@ public class WhackEmGameManager : MonoBehaviour
         {
             minRando /= divideSpeedBy;
         }
-        Debug.Log("Speed: " + minRando);
        //minRando /= divideSpeedBy;
         maxRando /= divideSpeedBy;
     }
