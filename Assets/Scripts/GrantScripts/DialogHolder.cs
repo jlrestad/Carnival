@@ -11,8 +11,11 @@ public class DialogHolder : MonoBehaviour
      * Grant Hargraves - May 2022
      */
     //=========================|FIELDS|=========================
+    [TextArea]
     public string spokenDialog = ""; //The dialog spoken out loud in-game. Public so that the DialogReader script can see it.
+    [TextArea]
     public string guideDialog = ""; //The dialog used for tutorials and guidance for the player. Public so that the DialogReader script can see it.
+    public float fadeOutTime = 5f;
     //=========================|METHODS|=========================
     //No methods here. This script is only meant to hold variables :)
 }

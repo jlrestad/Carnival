@@ -53,7 +53,7 @@ public class SliderManager : MonoBehaviour
         // SENSITIVITY INPUT
         if (PlayerPrefs.HasKey("sensitivityValue"))
         {
-            PlayerPrefs.SetFloat("sensitivityValue", 50);
+            PlayerPrefs.SetFloat("sensitivityValue", 100f);
             LoadSensitivity();
         }
         else

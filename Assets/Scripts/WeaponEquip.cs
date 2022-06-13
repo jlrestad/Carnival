@@ -10,7 +10,7 @@ public class WeaponEquip : MonoBehaviour
     public static WeaponEquip Instance;
 
     [Header("UI")]
-    public Canvas crossHair;
+    public GameObject crossHair;
     public GameObject actionPrompt;
     public List<GameObject> weaponCardBG;
     int BGCount;
@@ -118,7 +118,7 @@ public class WeaponEquip : MonoBehaviour
         if (isEquipped)
         {
             //Show crosshair only if weapon is equipped.
-            crossHair.enabled = true;
+            crossHair.SetActive(true);
 
             //If input for flashlight, put the weapon away and use flashlight.
             if (GetComponent<FPSController>().useFlashlight)
@@ -136,7 +136,7 @@ public class WeaponEquip : MonoBehaviour
         else
         {
             //Don't display reticle if nothing is equipped.
-            crossHair.enabled = false;
+            crossHair.SetActive(false);
         }
 
         //Debug.Log(weaponList.Count);
