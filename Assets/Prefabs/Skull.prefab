@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 594462070351438474}
   - component: {fileID: 6707903325209212652}
   m_Layer: 11
-  m_Name: Head
+  m_Name: Skull
   m_TagString: Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   pickUpRange: 2
   returnSkullTime: 3
   canThrow: 0
+  hasBeenThrown: 0
 --- !u!82 &594462070351438474
 AudioSource:
   m_ObjectHideFlags: 0

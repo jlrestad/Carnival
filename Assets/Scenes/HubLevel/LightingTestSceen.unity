@@ -778,6 +778,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 421488722864597281, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7589783342074068269, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
       propertyPath: crossHair
       value: 
@@ -1078,6 +1082,28 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 7648047152529491678, guid: 216ed04be327167408eae632a0ba2b89, type: 3}
   m_PrefabInstance: {fileID: 2500456006555049687}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &978137500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8567739266467498283, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+  m_PrefabInstance: {fileID: 695508083}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &978137509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978137500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db7f2e75a5af3848a32e15b09b53f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skullPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
+  poolAmount: 5
+  skullParent: {fileID: 1980631729}
+  pooledSkulls: []
+  rb: {fileID: 0}
 --- !u!1001 &1091768518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1201,11 +1227,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 887310906049672662, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
   m_PrefabInstance: {fileID: 1274650741}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &1358817877 stripped
-SphereCollider:
-  m_CorrespondingSourceObject: {fileID: 887310906333382306, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
-  m_PrefabInstance: {fileID: 695508083}
   m_PrefabAsset: {fileID: 0}
 --- !u!108 &1381028554 stripped
 Light:
@@ -1866,6 +1887,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d755f94a0146d444accf021a1462261, type: 3}
+--- !u!4 &1980631729 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 421488722864597282, guid: 02753fac092e8994bb6f4fe2266fca63, type: 3}
+  m_PrefabInstance: {fileID: 695508083}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1987892824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,7 +2336,7 @@ PrefabInstance:
     - target: {fileID: 2308391307890018458, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_SphereColliders.Array.data[0].first
       value: 
-      objectReference: {fileID: 1358817877}
+      objectReference: {fileID: 0}
     - target: {fileID: 2308391308606647656, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_CapsuleColliders.Array.data[0]
       value: 
@@ -2318,7 +2344,7 @@ PrefabInstance:
     - target: {fileID: 2308391308606647656, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_SphereColliders.Array.data[0].first
       value: 
-      objectReference: {fileID: 1358817877}
+      objectReference: {fileID: 0}
     - target: {fileID: 2308391309037992136, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_CapsuleColliders.Array.data[0]
       value: 
@@ -2326,7 +2352,7 @@ PrefabInstance:
     - target: {fileID: 2308391309037992136, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_SphereColliders.Array.data[0].first
       value: 
-      objectReference: {fileID: 1358817877}
+      objectReference: {fileID: 0}
     - target: {fileID: 2877533452663726924, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_RootOrder
       value: 7
