@@ -2180,7 +2180,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2e32b8348c7af242b4eff351117bfef, type: 2}
+  - {fileID: 2100000, guid: abbab30a1a06b5a4585ee3abcd197c97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4027,6 +4027,8 @@ MonoBehaviour:
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
   poolAmount: 4
   pooledTargets: []
+  weaponEquip: {fileID: 0}
+  sentHome: 0
 --- !u!1 &4919458860083039743
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,6 +4177,8 @@ MonoBehaviour:
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
   poolAmount: 4
   pooledTargets: []
+  weaponEquip: {fileID: 0}
+  sentHome: 0
 --- !u!1 &4968816750222131160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4387,6 +4391,7 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   BGImage: {fileID: 0}
   gameOver: 0
+  movingTarget: []
 --- !u!1 &5268484723148095584
 GameObject:
   m_ObjectHideFlags: 0
@@ -5435,7 +5440,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3dfd4714faaaec41862b60ce1d68c12, type: 2}
+  - {fileID: 2100000, guid: 5c26f7e3b0b2d714eb1dfa8927a51628, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7749,7 +7754,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8912335902325584973, guid: d66c11ffd323033409aa2fb4f6a4d6b9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d66c11ffd323033409aa2fb4f6a4d6b9, type: 3}
 --- !u!4 &2847318227046453823 stripped
 Transform:

@@ -1133,7 +1133,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 784475416}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CarnivalSmashTrigger, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 1
@@ -2087,26 +2087,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215234059}
   m_CullTransparentMesh: 1
---- !u!1 &215334304 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5772612950512055985, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
-  m_PrefabInstance: {fileID: 3201530908460130411}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &215334305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 215334304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2db7f2e75a5af3848a32e15b09b53f22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skullPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
-  poolAmount: 20
-  pooledSkullsList: []
 --- !u!1 &222027344
 GameObject:
   m_ObjectHideFlags: 0
@@ -3683,11 +3663,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &569154954 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8328720834795952121, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
-  m_PrefabInstance: {fileID: 8850762237160086802}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &586963137
 GameObject:
   m_ObjectHideFlags: 0
@@ -4574,17 +4549,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778452179}
   m_CullTransparentMesh: 1
---- !u!114 &784475416 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8850762237568238815, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
-  m_PrefabInstance: {fileID: 8850762237160086802}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7384c3db36261db48993c67edc81f31b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &787139648
 GameObject:
   m_ObjectHideFlags: 0
@@ -5408,7 +5372,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 784475416}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CarnivalSmashTrigger, Assembly-CSharp
         m_MethodName: PlayGame
         m_Mode: 1
@@ -8879,17 +8843,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556754582}
   m_CullTransparentMesh: 1
---- !u!114 &1557295853 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4601321185395551708, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
-  m_PrefabInstance: {fileID: 8850762237160086802}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5477838e3b0a0d489826865a50519ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1557337850
 GameObject:
   m_ObjectHideFlags: 0
@@ -13356,10 +13309,6 @@ PrefabInstance:
       propertyPath: actionPrompt
       value: 
       objectReference: {fileID: 586963137}
-    - target: {fileID: 5772612950512055985, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
 --- !u!1 &3218745870439560771
@@ -14674,11 +14623,11 @@ PrefabInstance:
     - target: {fileID: 7607940420005374623, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: whackemGM
       value: 
-      objectReference: {fileID: 1557295853}
+      objectReference: {fileID: 0}
     - target: {fileID: 7607940420005374623, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: cardDisplay
       value: 
-      objectReference: {fileID: 569154954}
+      objectReference: {fileID: 0}
     - target: {fileID: 7607940420005374623, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: skillshotGM
       value: 
