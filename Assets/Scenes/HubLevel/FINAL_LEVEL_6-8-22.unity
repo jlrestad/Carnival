@@ -5674,7 +5674,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU LOSE...
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf717d34730dad642b54791608589f37, type: 2}
   m_sharedMaterial: {fileID: -3668864021392069635, guid: cf717d34730dad642b54791608589f37, type: 2}
@@ -13775,7 +13775,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU WIN!
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf717d34730dad642b54791608589f37, type: 2}
   m_sharedMaterial: {fileID: -3668864021392069635, guid: cf717d34730dad642b54791608589f37, type: 2}
@@ -14583,6 +14583,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2196313596725963255, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196313596725963255, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 143
+      objectReference: {fileID: 0}
     - target: {fileID: 3625465087844120368, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: gameUI
       value: 
@@ -14603,6 +14611,14 @@ PrefabInstance:
       propertyPath: displayPickupScreen
       value: 
       objectReference: {fileID: 1987014386}
+    - target: {fileID: 4508477714974910606, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508477714974910606, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 107
+      objectReference: {fileID: 0}
     - target: {fileID: 4601321185395551708, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: gameUI
       value: 
@@ -14621,7 +14637,7 @@ PrefabInstance:
       objectReference: {fileID: 2261458813459964388}
     - target: {fileID: 4601321185395551708, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: scoreLimit
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4601321185395551708, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: winloseText
@@ -14639,6 +14655,14 @@ PrefabInstance:
       propertyPath: rulesUI
       value: 
       objectReference: {fileID: 969204974}
+    - target: {fileID: 6846441653384659037, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846441653384659037, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 107
+      objectReference: {fileID: 0}
     - target: {fileID: 7607940420005374623, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: WE
       value: 
@@ -14659,6 +14683,22 @@ PrefabInstance:
       propertyPath: skillshotGM
       value: 
       objectReference: {fileID: 2141511689}
+    - target: {fileID: 8772522880534535303, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772522880534535303, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 143
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772522880534535303, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1633
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772522880534535303, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -975
+      objectReference: {fileID: 0}
     - target: {fileID: 8850762237568238815, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: rulesUI
       value: 

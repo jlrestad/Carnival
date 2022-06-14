@@ -78,7 +78,7 @@ public class WhackEmGameManager : MonoBehaviour
         weaponEquip = FindObjectOfType<WeaponEquip>();
 
         //Tarot Cards
-        cardImage = displayPickupScreen.GetComponentInChildren<Image>().sprite;
+        cardImage = GameObject.FindGameObjectWithTag(("MeleeGame")).GetComponentInChildren<GameCard>().GetComponent<Image>().sprite;
         BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets

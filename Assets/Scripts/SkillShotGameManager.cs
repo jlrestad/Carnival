@@ -59,7 +59,7 @@ public class SkillShotGameManager : MonoBehaviour
     private void Start()
     {
         //Tarot Cards
-        cardImage = displayPickupScreen.GetComponentInChildren<Image>().sprite;  //** need to grab image that holds the card only. Need to do this differently and the children in displaypickupscreen has many images as children
+        cardImage = GameObject.FindGameObjectWithTag(("ShootingGame")).GetComponentInChildren<GameCard>().GetComponent<Image>().sprite;
         BGImage = BGCard.GetComponent<Image>().sprite;
 
         //Tickets
