@@ -420,13 +420,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 421488722864597282}
+  - component: {fileID: 377238002}
   m_Layer: 7
   m_Name: SkullParent
   m_TagString: SkullParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &421488722864597282
 Transform:
   m_ObjectHideFlags: 0
@@ -441,6 +442,21 @@ Transform:
   m_Father: {fileID: 8567739268083058314}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -13, y: 0, z: 0}
+--- !u!114 &377238002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421488722864597281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db7f2e75a5af3848a32e15b09b53f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skullPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
+  poolAmount: 20
+  pooledSkullsList: []
 --- !u!1 &2612335690708660907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,7 +1118,6 @@ GameObject:
   - component: {fileID: 8567739266467498281}
   - component: {fileID: 8567739266467498280}
   - component: {fileID: 7589783342074068269}
-  - component: {fileID: 8389002783063534608}
   - component: {fileID: 1097268734}
   - component: {fileID: 1097268735}
   - component: {fileID: 1097268736}
@@ -1240,22 +1255,6 @@ MonoBehaviour:
   skillshotActive: 0
   gameName: 
   menu: {fileID: 0}
---- !u!114 &8389002783063534608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8567739266467498283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2db7f2e75a5af3848a32e15b09b53f22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skullPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
-  poolAmount: 5
-  skullParent: {fileID: 421488722864597282}
-  pooledSkulls: []
 --- !u!114 &1097268734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2149,14 +2148,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 232efa840bae88446ba20f55248fa69b, type: 3}
---- !u!1 &613503056408685703 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 962349773627604596, guid: 232efa840bae88446ba20f55248fa69b, type: 3}
-  m_PrefabInstance: {fileID: 421488723198939891}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &613503057636328983 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 962349774791283940, guid: 232efa840bae88446ba20f55248fa69b, type: 3}
+  m_PrefabInstance: {fileID: 421488723198939891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &613503056408685703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 962349773627604596, guid: 232efa840bae88446ba20f55248fa69b, type: 3}
   m_PrefabInstance: {fileID: 421488723198939891}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2647942982889272680

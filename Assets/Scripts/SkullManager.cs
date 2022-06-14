@@ -6,46 +6,22 @@ public class SkullManager : MonoBehaviour
 {
     public static SkullManager Instance;
 
-    public GameObject skullPrefab;
+    [SerializeField] GameObject skullPrefab;
+
+    [Space (15)]
     public int poolAmount;
-    public Transform skullParent;
-    public List<GameObject> pooledSkulls;
-    [SerializeField] Rigidbody rb;
+    public List<GameObject> pooledSkullsList;
+    private Rigidbody rb;
 
     private void Awake()
     {
-        Instance = this; 
-    }
+        Instance = this;
 
-    private void Start()
-    {
-        PoolSkulls(skullPrefab, pooledSkulls, poolAmount, skullParent);
-    }
-
-    private void Update()
-    {
-        //After skull is thrown, start the Coroutine that will return the thrown skull to inventory
-        //if (skullPrefab.GetComponent<Head>().hasBeenThrown)
-        //{
-        //    StartCoroutine(skullPrefab.GetComponent<Head>().ReturnSkull());
-        //}
-
-        for (int i = 0; i < pooledSkulls.Count; i++)
-        {
-            GameObject returnSkull = pooledSkulls[i];
-            bool canReturn = Head.Instance.hasBeenThrown;
-
-            if (canReturn)
-            {
-                Debug.Log("Can Return");
-
-                StartCoroutine(Head.Instance.ReturnSkull());
-            }
-        }
+        PoolSkulls(skullPrefab, pooledSkullsList, poolAmount, transform);
     }
 
     //
-    // POOL SKULLS THAT THE PLAYER HOLDS
+    // POOL SKULLS THAT THE PLAYER HOLDS - Called once in Awake to begin the Pool
     public void PoolSkulls(GameObject skullPrefab, List<GameObject> pooledSkulls, int poolAmount, Transform skullParent)
     {
         GameObject skullHeld;
@@ -53,24 +29,18 @@ public class SkullManager : MonoBehaviour
         //Pool the amount of targets needed and hold them in a list.
         while (pooledSkulls.Count < poolAmount)
         {
-            skullHeld = Instantiate(skullPrefab, skullParent, instantiateInWorldSpace: false) as GameObject;
-            skullHeld.SetActive(false);
-            skullHeld.transform.parent = skullParent; //Set the targets inside this gameObject folder
-            pooledSkulls.Add(skullHeld);
-        }
+            skullHeld = Instantiate(skullPrefab, skullParent, instantiateInWorldSpace: false) as GameObject; //Instantiate the gameobject
+            skullHeld.SetActive(false); //Hide the gameobject
+            skullHeld.transform.parent = skullParent; //Parent the gameobjects to the skullParent transform
+            pooledSkulls.Add(skullHeld); //Add the gameobject to the pooledSkulls list
 
-        //Set kinematic and gravity for the held skulls
-        GameObject[] heldSkulls = pooledSkulls.ToArray();
-
-        foreach (GameObject skull in heldSkulls)
-        {
-            rb = skull.GetComponent<Rigidbody>();
-            Collider collider = skull.GetComponent<Collider>();
+            //Turn off gravity and collider for the skulls in inventory
+            rb = skullHeld.GetComponent<Rigidbody>();
+            Collider collider = skullHeld.GetComponent<Collider>();
 
             collider.enabled = false;
             rb.isKinematic = true;
             rb.useGravity = false;
-            
         }
     }
 
