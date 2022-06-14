@@ -69,27 +69,29 @@ public class MeleeSwing : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
             StartCoroutine(MeleeAttack());
-            
+
             //if minigames won and boss is active run this loop
             // replace if line with this line after we don't need boss AI scene anymore
             // if (skillshotGM.gameWon && whackemGM.gameWon && boss.activeInHierarchy)
-            if(ssWon && csWon && boss.activeInHierarchy)
-            {
-                Debug.Log("BossAI melee");
-                //this part for Boss fight
-                //continualy find boss critters && find the object hold for bossAI fight
-                bossCritters = FindObjectsOfType<BossCritterBehaviors>();
-                Transform hld = hold.transform;
 
-                if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
-                {
-                    Debug.Log("Hit: " + hit.collider.name);
-                    BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
-                    bossCritter.hasBeenHit = true;
-                }
-            }
-            else
-            {
+            //*** CODE FOR BOSS APPEARANCE ***  
+            //if (ssWon && csWon && boss.activeInHierarchy)
+            //{
+            //    Debug.Log("BossAI melee");
+            //    //this part for Boss fight
+            //    //continualy find boss critters && find the object hold for bossAI fight
+            //    bossCritters = FindObjectsOfType<BossCritterBehaviors>();
+            //    Transform hld = hold.transform;
+
+            //    if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
+            //    {
+            //        Debug.Log("Hit: " + hit.collider.name);
+            //        BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
+            //        bossCritter.hasBeenHit = true;
+            //    }
+            //}
+            //else
+            //{
                 //this part for CS game
                 //Get raycast hit information and use it to calculate damage
                 //Look into spherecast to see if this will be better 
@@ -138,9 +140,9 @@ public class MeleeSwing : MonoBehaviour
                         Debug.Log("Smashed enemy!");
                     }
                 }
-            }
-            
-         
+            //}
+
+
         }
 
         //Find ClosestWhackEm script

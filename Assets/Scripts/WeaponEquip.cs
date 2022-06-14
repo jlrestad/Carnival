@@ -146,16 +146,21 @@ public class WeaponEquip : MonoBehaviour
             distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
             distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
         {
+            //If holding a weapon, put it away before equipping new weapon.
+            if (currentWeapon != null)
+            {
+                currentWeapon.SetActive(false);
+            }
 
             //Pick up and equip weapon.
             PickUpWeapon();
             BGCount = menu.BGCount; //get the count from Menu
         }
-        else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
-        {
-            //Put weapon in inventory.
-            UnequipWeapon();
-        }
+        //else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
+        //{
+        //    //Put weapon in inventory.
+        //    UnequipWeapon();
+        //}
         else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
         {
             //Equip weapon from inventory.
@@ -402,9 +407,11 @@ public class WeaponEquip : MonoBehaviour
         inInventory = false;
         isEquipped = true;
         weaponNumber++;
+
         if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
 
         //Equip weapon (except for skull)
+        //if (currentWeapon != skullParent && holdingSkull)
         if (currentWeapon != skullParent && holdingSkull)
         {
             holdingSkull = false;
