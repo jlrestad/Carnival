@@ -17,7 +17,7 @@ public class FPSController : MonoBehaviour
     public float walkSpeed = 7.0f;
     public float runSpeed = 10.0f;
     public float jumpSpeed = 8.0f;
-    public float lookSpeed = 1.0f;
+    public float lookSpeed = 100.0f;
     public float gravity = 20.0f;
     public float slideSpeed = 2.0f;
     public float pushPower = 10.0f;
