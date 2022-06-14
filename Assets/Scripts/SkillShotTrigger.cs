@@ -19,7 +19,7 @@ public class SkillShotTrigger : MonoBehaviour
     public Menu menu;
 
 
-    private MovingTarget[] mts;
+    private MovingTarget[] movingTargets;
         
     private void Start()
     {
@@ -29,7 +29,7 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void Update()
     {
-        mts = FindObjectsOfType<MovingTarget>();
+        movingTargets = FindObjectsOfType<MovingTarget>();
         if (buttonPressed)
         {
             //Hide cursor again
@@ -113,7 +113,9 @@ public class SkillShotTrigger : MonoBehaviour
 
         //Unlock player camera movement
         FPSController.Instance.canMove = true;
+        //Disable character controller so that player can't walk.
         FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+        //Put player in the play-position.
         player.position = gameplayPosition.position;
 
         //Turn off the game rules screen
@@ -121,10 +123,11 @@ public class SkillShotTrigger : MonoBehaviour
 
         //Spend the required ticket cost for the game
         HudManager.Instance.HealthTicket(ticketCost);
-        foreach (MovingTarget mt in mts)
+
+        foreach (MovingTarget movingTarget in movingTargets)
         {
             Debug.Log("reset");
-            mt.ResetTargets();
+            movingTarget.ResetTargets();
         }
         //* When game is played, make mallet appear in player hands.
         //* If game is lost, mallet disappears.

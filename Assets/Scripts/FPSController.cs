@@ -76,7 +76,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         weaponEquip = GetComponent<WeaponEquip>(); 
-        characterController = GetComponent<CharacterController>();
+        //characterController = GetComponent<CharacterController>();
         capsule = GetComponentInChildren<Transform>();
 
         //Set the sensitivity of the mouse
@@ -229,8 +229,6 @@ public class FPSController : MonoBehaviour
     {
         transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
     }
-
-    //** Create a method to adjust mouse sensitivity using lookSpeed.
 
     // Limit the amount of time until slide is allowed
     IEnumerator CanSlide() 

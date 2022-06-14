@@ -116,6 +116,7 @@ public class WhackEmGameManager : MonoBehaviour
             if (!stopPopUp)
             {
                 StartCoroutine(CountDownTimer());
+                //Foratting
                 if (timeLeft >= 10)
                 {
                     timerText.text = ("00:" + (int)timeLeft);
@@ -239,7 +240,7 @@ public class WhackEmGameManager : MonoBehaviour
         }
         stopPopUp = true;
         gameOn = false;
-        gameJustFinished = true;
+        //gameJustFinished = true;
         weaponEquip.whackEmActive = false;
         timerText.enabled = false;
         
@@ -251,7 +252,7 @@ public class WhackEmGameManager : MonoBehaviour
         //Clear and turn off lose message
         winloseText.text = (" ");
         winloseText.enabled = false;
-        gameOver = true;
+        //gameOver = true;
         gameUI.SetActive(false);
 
         if (gameWon)
@@ -274,7 +275,7 @@ public class WhackEmGameManager : MonoBehaviour
                 // create queue of custom class (params to call)
                 Debug.Log("Entered Game");
 
-                while (!gameJustFinished && !gameWon)
+                while (/*!gameJustFinished &&*/ !gameWon)
                 {
                     WhackEmRoutine wr = new WhackEmRoutine();
                     int critUp = wr.up, critTaunt = wr.taunt;
