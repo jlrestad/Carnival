@@ -49,6 +49,9 @@ public class SkillShotGameManager : MonoBehaviour
 
     public MovingTarget[] movingTarget;
 
+    public GameObject minigameAudio;
+    public GameObject minigameLight;
+
     private void Awake()
     {
         Instance = this; 
@@ -80,6 +83,11 @@ public class SkillShotGameManager : MonoBehaviour
         {
             // alert weapon equip that the game is active and mallet can be picked up
             weaponEquip.skillshotActive = true;
+            if(! minigameAudio.activeInHierarchy || ! minigameLight.activeInHierarchy)
+            {
+                minigameLight.SetActive(true);
+                minigameAudio.SetActive(true);
+            }
         }
         //Run this when the WhackEm game is on.
         if (gameOn && weaponEquip.haveGun)
@@ -130,6 +138,12 @@ public class SkillShotGameManager : MonoBehaviour
         }
         else if (!gameOn)
         {
+            if(minigameAudio.activeInHierarchy || minigameLight.activeInHierarchy)
+            {
+                minigameAudio.SetActive(false);
+                minigameLight.SetActive(false);
+            }
+            
   //          gameUI.SetActive(false);
    //         ResetGame(); //Reset the variables back to original
         }
@@ -188,11 +202,11 @@ public class SkillShotGameManager : MonoBehaviour
         winloseText.enabled = true;
         if (gameWon)
         {
-            winloseText.text = "You have won...";
+            winloseText.text = "YOU WIN!";
         }
         else
         {
-            winloseText.text = "You have lost...";
+            winloseText.text = "YOU LOSE...";
         }
         gameOn = false;
         gameJustPlayed = true;

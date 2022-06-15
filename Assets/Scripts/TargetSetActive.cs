@@ -16,11 +16,16 @@ public class TargetSetActive : MonoBehaviour
 
     public Transform hideSpot;
     public GameObject targetParent;
-    public int flipTime;
+    public float flipTime;
+    public float shakeTime;
     public bool reachedEnd;
     public bool targetHit;
     public bool isFlipped;
     public bool hasGone;
+
+    public GameObject bigHitFX;
+    public AudioSource targetAudio;
+    public AudioClip goodHitSound, badHitSound, flipSound, shakeSound;
 
     //Unneeded since more than one target uses this script.
     //private void Awake()
@@ -60,8 +65,11 @@ public class TargetSetActive : MonoBehaviour
             if (!isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
+                animator.SetBool("shake", true);
+                yield return new WaitForSeconds(shakeTime);
                 isFlipped = true;
 
+                animator.SetBool("shake", false);
                 animator.SetBool("isPos", false);
                 animator.SetBool("isNeg", true);
             }
@@ -69,8 +77,12 @@ public class TargetSetActive : MonoBehaviour
             if (isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
+                animator.SetBool("shake", true);
+                yield return new WaitForSeconds(shakeTime);
                 isFlipped = false;
-               
+
+
+                animator.SetBool("shake", false);
                 animator.SetBool("isNeg", false);
                 animator.SetBool("isPos", true);
             }
@@ -89,6 +101,8 @@ public class TargetSetActive : MonoBehaviour
         //slide down and hide
         if (!isFlipped)
         {
+            bigHitFX.SetActive(true);
+            targetAudio.PlayOneShot(goodHitSound);
             transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
         }
 
@@ -104,6 +118,7 @@ public class TargetSetActive : MonoBehaviour
         // don't go below 0
         if( targetHit && isFlipped)
         {
+            targetAudio.PlayOneShot(badHitSound);
             if(skillshotGM.score > 0)
             {
                 //Debug.Log("Score was: " + skillshotGM.score);
