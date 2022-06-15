@@ -49,7 +49,8 @@ public class SkillShotGameManager : MonoBehaviour
 
     public MovingTarget[] movingTarget;
 
-    public GameObject minigameAudio;
+    //public GameObject minigameAudio;
+    public AudioSource minigameAudio;
     public GameObject minigameLight;
 
     private void Awake()
@@ -83,10 +84,15 @@ public class SkillShotGameManager : MonoBehaviour
         {
             // alert weapon equip that the game is active and mallet can be picked up
             weaponEquip.skillshotActive = true;
-            if(! minigameAudio.activeInHierarchy || ! minigameLight.activeInHierarchy)
+
+            if(! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
             {
                 minigameLight.SetActive(true);
-                minigameAudio.SetActive(true);
+                if (minigameAudio.volume == 0)
+                {
+                    minigameAudio.volume = 0.5f;
+                }
+                minigameAudio.Play();
             }
         }
         //Run this when the WhackEm game is on.
@@ -136,17 +142,29 @@ public class SkillShotGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        else if (!gameOn)
+        else if (gameOver)
         {
-            if(minigameAudio.activeInHierarchy || minigameLight.activeInHierarchy)
-            {
-                minigameAudio.SetActive(false);
-                minigameLight.SetActive(false);
-            }
-            
-  //          gameUI.SetActive(false);
-   //         ResetGame(); //Reset the variables back to original
+            StartCoroutine(ShutDownGame());
         }
+    }
+
+    IEnumerator ShutDownGame()
+    {
+        yield return new WaitForSeconds(2);
+
+        float audio = minigameAudio.volume;
+        float speed = 0.01f;
+
+        for (float i = audio; i > 0; i -= speed)
+        {
+            minigameAudio.volume = i;
+            yield return null;
+        }
+
+        minigameAudio.Stop();
+        minigameLight.SetActive(false);
+
+        minigameAudio.volume = 0.5f;
     }
 
     
