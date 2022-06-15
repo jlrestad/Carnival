@@ -130,13 +130,11 @@ public class WhackEmGameManager : MonoBehaviour
             //Display Win/Lose
             if (score >= scoreLimit && timeLeft > 0 && !gameOver)
             {
-                Debug.Log("got into win/lose if");
                 gameWon = true;
                 StartCoroutine(WinLoseUI());
             }
             else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
             {
-                Debug.Log("Update, win/lose else");
                 //Display win or lose
                 StartCoroutine(WinLoseUI());
 
@@ -273,7 +271,7 @@ public class WhackEmGameManager : MonoBehaviour
             while (gameOn && !stopPopUp && weaponEquip.haveMallet) //But don't do anything until the game is on.
             {
                 // create queue of custom class (params to call)
-                Debug.Log("Entered Game");
+                //Debug.Log("Entered Game");
 
                 while (/*!gameJustFinished &&*/ !gameWon)
                 {
@@ -287,7 +285,7 @@ public class WhackEmGameManager : MonoBehaviour
                     randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
                     randomTauntTime = randomStayTime / 2;
                     randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
-                    Debug.Log("Stay up time " + randomStayTime);
+                    //Debug.Log("Stay up time " + randomStayTime);
                     //if main creature is not visible
                     if (!critterIsVisible)
                     {
@@ -312,7 +310,7 @@ public class WhackEmGameManager : MonoBehaviour
                         critterIsVisible = false;
                         critters[critUp].SetActive(false);
                     }
-                    Debug.Log("score = " + score + " game won " + gameWon);
+                    //Debug.Log("score = " + score + " game won " + gameWon);
                 }
             }
             yield return null;

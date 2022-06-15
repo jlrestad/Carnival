@@ -25,7 +25,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
         prompt = player.GetComponent<WeaponEquip>().actionPrompt; //WHY ISNT THIS FINDING THE ACTION PROMPT
         menu = GameObject.FindObjectOfType<Menu>();
 
-        Debug.Log(prompt + " = prompt");
+        //Debug.Log(prompt + " = prompt");
     }
 
 

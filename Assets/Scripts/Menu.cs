@@ -83,7 +83,7 @@ public class Menu : MonoBehaviour
 
     public void HandleOnStateChange()
     {
-        Debug.Log("OnStateChange!");
+        //Debug.Log("OnStateChange!");
     }
 
     private void Update()
@@ -144,7 +144,7 @@ public class Menu : MonoBehaviour
         //Invoke("LoadLevel", delayTime);
         StartCoroutine(LoadLevel());
 
-        Debug.Log(GM.GameState);
+        //Debug.Log(GM.GameState);
     }
 
     public void PauseGame()
@@ -278,7 +278,8 @@ public class Menu : MonoBehaviour
             //If the first cardslot space is not enabled then enable it
             if (gameCard.GetComponent<Image>().sprite == null)
             {
-                //Debug.Log("Sprite is null");
+                //
+                //ug.Log("Sprite is null");
 
                 //Turn on card image
                 gameCard.GetComponent<Image>().enabled = true; //enable the image component

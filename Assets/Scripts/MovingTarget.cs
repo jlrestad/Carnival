@@ -65,7 +65,7 @@ public class MovingTarget : MonoBehaviour
 
     public void ResetTargets()
     {
-        Debug.Log("left game area, resetting");
+        //Debug.Log("left game area, resetting");
         foreach (GameObject target in pooledTargets)
         {
             target.GetComponentInChildren<TargetSetActive>().hasGone = false;

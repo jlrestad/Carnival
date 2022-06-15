@@ -132,7 +132,7 @@ public class SkillShotTrigger : MonoBehaviour
 
         foreach (MovingTarget movingTarget in movingTargets)
         {
-            Debug.Log("reset");
+            //Debug.Log("reset");
             movingTarget.ResetTargets();
         }
         //* When game is played, make mallet appear in player hands.
