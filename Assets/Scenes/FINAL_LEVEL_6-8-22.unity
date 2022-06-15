@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 154042383}
         m_TargetAssemblyTypeName: CarnivalSmashTrigger, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 1
@@ -1571,6 +1571,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152340593}
   m_CullTransparentMesh: 1
+--- !u!114 &154042383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7648912984090320773, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+  m_PrefabInstance: {fileID: 8850762237160086802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7384c3db36261db48993c67edc81f31b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &160010629
 GameObject:
   m_ObjectHideFlags: 0
@@ -5231,7 +5242,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 154042383}
         m_TargetAssemblyTypeName: CarnivalSmashTrigger, Assembly-CSharp
         m_MethodName: PlayGame
         m_Mode: 1
@@ -14197,6 +14208,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 911997469, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3398372414149293702, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: gameUI
       value: 
@@ -14245,10 +14260,18 @@ PrefabInstance:
       propertyPath: rulesUI
       value: 
       objectReference: {fileID: 969204974}
+    - target: {fileID: 5999285393391381425, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: triggerDistance
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7648912984090320773, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: rulesUI
       value: 
       objectReference: {fileID: 1866355925}
+    - target: {fileID: 7648912984090320773, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: triggerDistance
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8850762238631956277, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: m_Name
       value: +LEVEL_POPULATION

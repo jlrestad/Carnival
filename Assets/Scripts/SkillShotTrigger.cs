@@ -14,7 +14,7 @@ public class SkillShotTrigger : MonoBehaviour
 
 
     [SerializeField] public float triggerDistance;
-    public float distanceFromGame;
+    [HideInInspector] public float distanceFromGame;
     public GameObject prompt;
     public Menu menu;
 
@@ -46,23 +46,12 @@ public class SkillShotTrigger : MonoBehaviour
         {
             //Debug.Log("Entered skillshot area");
 
-            //If button pressed, then bring up UI
-            //if (menu.usingJoystick)
-            //{
-            //    prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
-            //}
-            //else
-            //{
-            //    prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
-            //}
-
             if (!gameRulesOn)
             {
                 //Display action prompt when near an interactive booth.
                 prompt.SetActive(true);
             }
             
-
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
             {
                 //Bring up the game rule UI
@@ -126,6 +115,7 @@ public class SkillShotTrigger : MonoBehaviour
         //reset targets
         skillshotGM.gameOn = true;
         buttonPressed = true;
+        gameRulesOn = false;
 
         //Unlock player camera movement
         FPSController.Instance.canMove = true;
@@ -152,6 +142,8 @@ public class SkillShotTrigger : MonoBehaviour
 
     public void LeaveGame()
     {
+        gameRulesOn = false;
+
         //Hide the cursor again
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

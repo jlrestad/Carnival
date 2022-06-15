@@ -13,20 +13,26 @@ public class CarnivalSmashTrigger : MonoBehaviour
     public Transform player;
 
     [SerializeField] public float triggerDistance;
-    public float distanceFromGame;
+    [HideInInspector] public float distanceFromGame;
     public GameObject prompt;
     public Menu menu;
-    
+    bool gameRulesOn;
+
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        prompt = player.GetComponent<WeaponEquip>().actionPrompt; //WHY ISNT THIS FINDING THE ACTION PROMPT
         menu = GameObject.FindObjectOfType<Menu>();
+
+        Debug.Log(prompt + " = prompt");
     }
 
 
     private void Update()
     {
+        prompt = player.GetComponent<WeaponEquip>().actionPrompt;
+
         if (buttonPressed)
         {
             //Hide cursor again
@@ -39,18 +45,12 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
         if(distanceFromGame <= triggerDistance && player.position != gameplayPosition.position && !whackemGM.gameWon)
         {
-            // pull up button
-            // if button pressed, then bring up UI
-            if (menu.usingJoystick)
+            if (!gameRulesOn)
             {
-                prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
-            }
-            else
-            {
-                prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+                //Display action prompt when near an interactive booth.
+                prompt.SetActive(true);
             }
 
-            prompt.SetActive(true);
             if (Input.GetButton("ActionButton") && !whackemGM.gameWon){
                 ShowGameUI();
             }
@@ -59,6 +59,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void ShowGameUI()
     {
+        gameRulesOn = true;
+        //Turn off the prompt
+        prompt.SetActive(false);
+
         if (!whackemGM.gameWon)
         {
             //Only show the rules screen if player has not picked up the mallet
@@ -66,6 +70,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
             {
                 //Display game rules screen with play buttons
                 rulesUI.SetActive(true);
+            }
+            else
+            {
+                player.GetComponent<WeaponEquip>().gameRulesDisplayed = false;
             }
 
             //Lock player camera movement until a button is pressed
@@ -103,6 +111,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
     {
         whackemGM.gameOn = true;
         buttonPressed = true;
+        gameRulesOn = false;
 
         //Unlock player camera movement, put player in position, lock player body movement
         FPSController.Instance.canMove = true;
@@ -123,6 +132,8 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     public void LeaveGame()
     {
+        gameRulesOn = false;
+
         //Hide the cursor again
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
