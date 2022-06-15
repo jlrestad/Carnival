@@ -12831,6 +12831,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2532048141029103501, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2532048141029103537, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.8
@@ -12843,10 +12847,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3685243269413263456, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4364355940665402045, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 3377964145609816106}
+    - target: {fileID: 6691532337596669085, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
+      propertyPath: m_Name
+      value: TommyGun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee8f4de285e67f940a07865db6ff967d, type: 3}
 --- !u!1 &3218745870439560771

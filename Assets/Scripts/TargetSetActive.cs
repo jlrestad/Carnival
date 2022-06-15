@@ -16,6 +16,7 @@ public class TargetSetActive : MonoBehaviour
 
     public Transform hideSpot;
     public GameObject targetParent;
+
     public float flipTime;
     public float shakeTime;
     public bool reachedEnd;
@@ -103,6 +104,8 @@ public class TargetSetActive : MonoBehaviour
         {
             bigHitFX.SetActive(true);
             targetAudio.PlayOneShot(goodHitSound);
+
+            //Move target to this position to hide
             transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
         }
 

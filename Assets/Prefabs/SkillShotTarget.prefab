@@ -131,7 +131,7 @@ MonoBehaviour:
   hideSpot: {fileID: 8887548058049208305}
   targetParent: {fileID: 5404032245932627344}
   flipTime: 1
-  shakeTime: 0.1
+  shakeTime: 0.2
   reachedEnd: 0
   targetHit: 0
   isFlipped: 0
@@ -410,6 +410,10 @@ PrefabInstance:
       propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2254757896315959202, guid: a23dc4c6b8408034582d4645be873075, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2254757896646202436, guid: a23dc4c6b8408034582d4645be873075, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -430,9 +434,17 @@ PrefabInstance:
       propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2254757896646202438, guid: a23dc4c6b8408034582d4645be873075, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2254757896799716376, guid: a23dc4c6b8408034582d4645be873075, type: 3}
       propertyPath: looping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254757896799716376, guid: a23dc4c6b8408034582d4645be873075, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2254757896799716454, guid: a23dc4c6b8408034582d4645be873075, type: 3}
       propertyPath: m_LocalScale.x
@@ -473,6 +485,10 @@ PrefabInstance:
     - target: {fileID: 2254757896846138158, guid: a23dc4c6b8408034582d4645be873075, type: 3}
       propertyPath: looping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254757896846138158, guid: a23dc4c6b8408034582d4645be873075, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a23dc4c6b8408034582d4645be873075, type: 3}

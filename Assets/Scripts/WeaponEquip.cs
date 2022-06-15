@@ -122,7 +122,7 @@ public class WeaponEquip : MonoBehaviour
             //If input for flashlight, put the weapon away and use flashlight.
             if (GetComponent<FPSController>().useFlashlight)
             {
-                Debug.Log("this is the current weapon: " + currentWeapon.name);
+                //Debug.Log("this is the current weapon: " + currentWeapon.name);
 
                 //Turn on the flashlight
                 GetComponent<FPSController>().flashlightHold.SetActive(true);
