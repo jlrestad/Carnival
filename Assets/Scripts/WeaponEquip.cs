@@ -52,12 +52,11 @@ public class WeaponEquip : MonoBehaviour
 
     public bool whackEmActive = false;
     public bool skillshotActive = false;
+    public bool gameRulesDisplayed;
 
     [Space(15)]
     public string gameName;
     private Weapon newWeapon;
-    //private Head newSkull;
-    //public Head[] headSkull;
     Head head; //Get the Head script for skull
 
     [HideInInspector] RaycastHit hit;
@@ -167,7 +166,7 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        if (!gameObject.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
+        if (!gameObject.CompareTag("Head") && !gameRulesDisplayed /*&& !closestWeapon.CompareTag("Untagged")*/)
         {
             //SHOW ACTION/INTERACT PROMPT
             //if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon != skull)

@@ -38,13 +38,14 @@ public class SkillShotTrigger : MonoBehaviour
 
         }
 
-        //find distance between player and gamebooth
+        //Find distance between player and gamebooth
         distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
 
         if (distanceFromGame <= triggerDistance && player.position != gameplayPosition.position && !skillshotGM.gameWon)
         {
             //Debug.Log("Entered skillshot area");
-            // if button pressed, then bring up UI
+
+            //If button pressed, then bring up UI
             if (menu.usingJoystick)
             {
                 prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
@@ -55,8 +56,11 @@ public class SkillShotTrigger : MonoBehaviour
             }
 
             prompt.SetActive(true);
+
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
             {
+                player.GetComponent<WeaponEquip>().actionPrompt.SetActive(false);
+                //Bring up the game rule UI
                 ShowGameUI();
             }
         }
@@ -71,6 +75,12 @@ public class SkillShotTrigger : MonoBehaviour
             {
                 //Display game rules screen with play buttons
                 rulesUI.SetActive(true);
+                //Turn off the prompt
+                player.GetComponent<WeaponEquip>().gameRulesDisplayed = true;
+            }
+            else
+            {
+                player.GetComponent<WeaponEquip>().gameRulesDisplayed = false;
             }
 
             //Lock player camera movement until a button is pressed
@@ -85,7 +95,6 @@ public class SkillShotTrigger : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
-
         }
     }
 
