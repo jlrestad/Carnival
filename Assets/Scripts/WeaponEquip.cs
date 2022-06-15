@@ -74,7 +74,7 @@ public class WeaponEquip : MonoBehaviour
 
         //weaponCardBG.Add(menu.gameCardBG); //Add the won game card bg to the list. Used to highlight which weapon is equipped
 
-        //Detect if joystick or keyboard is used and display correct prompt.
+        //Detect if joystick or keyboard is used and SET the correct prompt variable.
         if (menu.usingJoystick)
         {
             actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
@@ -166,11 +166,13 @@ public class WeaponEquip : MonoBehaviour
             EquipWeapon();
         }
 
-        if (!gameObject.CompareTag("Head") && !gameRulesDisplayed /*&& !closestWeapon.CompareTag("Untagged")*/)
+        //SHOW ACTION/INTERACT PROMPT
+        if (!gameRulesDisplayed)
         {
-            //SHOW ACTION/INTERACT PROMPT
-            //if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon != skull)
-            //{
+            if (!gameObject.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
+            {
+                //if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon != skull)
+                //{
                 if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
                 {
                     if (hit.transform.GetComponent<Weapon>())
@@ -204,6 +206,12 @@ public class WeaponEquip : MonoBehaviour
                 {
                     actionPrompt.SetActive(false);
                 }
+            }
+        }
+        else
+        {
+            //If game rules are displayer -- then do not show action prompt.
+            actionPrompt.SetActive(false);
         }
     }
 

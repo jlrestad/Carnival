@@ -18,12 +18,13 @@ public class SkillShotTrigger : MonoBehaviour
     public GameObject prompt;
     public Menu menu;
 
-
+    bool gameRulesOn;
     private MovingTarget[] movingTargets;
         
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        prompt = player.GetComponent<WeaponEquip>().actionPrompt;
         menu = GameObject.FindObjectOfType<Menu>();
     }
 
@@ -46,20 +47,24 @@ public class SkillShotTrigger : MonoBehaviour
             //Debug.Log("Entered skillshot area");
 
             //If button pressed, then bring up UI
-            if (menu.usingJoystick)
-            {
-                prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
-            }
-            else
-            {
-                prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
-            }
+            //if (menu.usingJoystick)
+            //{
+            //    prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+            //}
+            //else
+            //{
+            //    prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+            //}
 
-            prompt.SetActive(true);
+            if (!gameRulesOn)
+            {
+                //Display action prompt when near an interactive booth.
+                prompt.SetActive(true);
+            }
+            
 
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
             {
-                player.GetComponent<WeaponEquip>().actionPrompt.SetActive(false);
                 //Bring up the game rule UI
                 ShowGameUI();
             }
@@ -68,6 +73,10 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void ShowGameUI()
     {
+        gameRulesOn = true;
+        //Turn off the prompt
+        prompt.SetActive(false);
+
         if (!skillshotGM.gameWon)
         {
             //Only show the rules screen if player has not picked up the mallet
@@ -75,8 +84,6 @@ public class SkillShotTrigger : MonoBehaviour
             {
                 //Display game rules screen with play buttons
                 rulesUI.SetActive(true);
-                //Turn off the prompt
-                player.GetComponent<WeaponEquip>().gameRulesDisplayed = true;
             }
             else
             {
