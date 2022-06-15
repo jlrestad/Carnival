@@ -68,7 +68,7 @@ public class TargetSetActive : MonoBehaviour
                 yield return new WaitForSeconds(flipTime);
                 animator.SetBool("shake", true);
                 yield return new WaitForSeconds(shakeTime);
-                isFlipped = true;
+                isFlipped = false;
 
                 animator.SetBool("shake", false);
                 animator.SetBool("isPos", false);
@@ -80,7 +80,7 @@ public class TargetSetActive : MonoBehaviour
                 yield return new WaitForSeconds(flipTime);
                 animator.SetBool("shake", true);
                 yield return new WaitForSeconds(shakeTime);
-                isFlipped = false;
+                isFlipped = true;
 
 
                 animator.SetBool("shake", false);
