@@ -14,11 +14,11 @@ public class SliderManager : MonoBehaviour
     public UnityEngine.UI.Slider brightnessSlider;
 
     [Header ("SENSITIVITY")]
-    public float sensitivityValue;  //Holds the slider value so that FPSController can use it.
+    public float sensitivityValue = 50;  //Holds the slider value so that FPSController can use it.
 
     [Header("BRIGHTNESS")]
     Light sceneLight;
-    public float brightnessValue;
+    public float brightnessValue = 0.5f;
 
 
     private void Awake()
@@ -30,9 +30,12 @@ public class SliderManager : MonoBehaviour
     void Start()
     {
         //Set the sliders
-        volumeSlider = GameObject.Find("VolumeSlider").GetComponent<UnityEngine.UI.Slider>();
-        sensitivitySlider = GameObject.Find("SensitivitySlider").GetComponent<UnityEngine.UI.Slider>();
-        brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<UnityEngine.UI.Slider>();
+        //volumeSlider = GameObject.Find("VolumeSlider").GetComponent<UnityEngine.UI.Slider>();
+        //sensitivitySlider = GameObject.Find("SensitivitySlider").GetComponent<UnityEngine.UI.Slider>();
+        //brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<UnityEngine.UI.Slider>();
+        LoadVolume();
+        LoadSensitivity();
+        LoadBrightness();
 
         //Set scene light
         //sceneLight = Menu.Instance.sceneLight;
@@ -41,7 +44,7 @@ public class SliderManager : MonoBehaviour
         // VOLUME INPUT
         if (PlayerPrefs.HasKey("musicVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume", 1);
+            PlayerPrefs.SetFloat("musicVolume", 0.6f);
             LoadVolume();
         }
         else
@@ -80,9 +83,10 @@ public class SliderManager : MonoBehaviour
     {
         AudioListener.volume = volumeSlider.value;
         SaveVolume();
+        //PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
     }
 
-    private void LoadVolume()
+    public void LoadVolume()
     {
         volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");  //Make a new float in PlayerPrefs called musicVolume
     }
@@ -96,12 +100,12 @@ public class SliderManager : MonoBehaviour
     // SENSITIVITY
     public void AdjustSensitivity()
     {
-        //FPSController.Instance.lookSpeed = mouseSlider.value;       
         sensitivityValue = sensitivitySlider.value;  //Set the value to the slider value
+        FPSController.Instance.lookSpeed = sensitivityValue;
         SaveSensitivity();
     }
 
-    private void LoadSensitivity()
+    public void LoadSensitivity()
     {
         sensitivitySlider.value = PlayerPrefs.GetFloat("sensitivityValue");
     }
@@ -125,7 +129,7 @@ public class SliderManager : MonoBehaviour
         SaveBrightness();
     }
 
-    private void LoadBrightness()
+    public void LoadBrightness()
     {
         brightnessSlider.value = PlayerPrefs.GetFloat("brightnessValue");
     }

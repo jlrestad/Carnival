@@ -15,7 +15,7 @@ public class SkillShotTrigger : MonoBehaviour
 
     [SerializeField] public float triggerDistance;
     [HideInInspector] public float distanceFromGame;
-    public GameObject prompt;
+    //public GameObject prompt;
     public Menu menu;
 
     bool gameRulesOn;
@@ -71,7 +71,7 @@ public class SkillShotTrigger : MonoBehaviour
         //Show the game rules
         gameRulesOn = true;
         //Turn off the prompt
-        prompt.SetActive(false);
+        player.GetComponent<WeaponEquip>().actionPrompt.SetActive(false);
 
         if (!skillshotGM.gameWon)
         {

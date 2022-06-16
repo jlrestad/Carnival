@@ -62,7 +62,7 @@ public class Menu : MonoBehaviour
     public string[] controllerArray = null;
 
     public Light sceneLight;
-    public float brightnessValue;
+    public float brightnessValue = 0.7f;
 
     public bool usingJoystick;
 
@@ -80,6 +80,8 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
+
+
     }
 
     public void HandleOnStateChange()
@@ -202,7 +204,7 @@ public class Menu : MonoBehaviour
     //Get the main light and set the intensity to the value in Menu
     public void GetSceneLight()
     {
-        StartCoroutine(Delay());
+        StartCoroutine(Delay());  //Delay getting this info because the scene is still loading.
     }
 
     IEnumerator Delay()
@@ -211,6 +213,9 @@ public class Menu : MonoBehaviour
 
         sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
         sceneLight.intensity = brightnessValue;
+
+        Debug.Log("Scene Light:" + sceneLight);
+        Debug.Log("Brightness: " + brightnessValue);
     }
 
     public void ClearButton()

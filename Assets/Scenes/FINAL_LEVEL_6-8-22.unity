@@ -13504,7 +13504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5793053968108599367, guid: 3bf15d21bef53644892b8b9ada1005d3, type: 3}
       propertyPath: m_EnableTreeColliders
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5793053968694980105, guid: 3bf15d21bef53644892b8b9ada1005d3, type: 3}
       propertyPath: m_IsActive
@@ -13723,6 +13723,10 @@ PrefabInstance:
     - target: {fileID: 6580404626604765959, guid: 87664e6147f68a8458df333829dc913b, type: 3}
       propertyPath: m_TagString
       value: SceneLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580404626604765960, guid: 87664e6147f68a8458df333829dc913b, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87664e6147f68a8458df333829dc913b, type: 3}
@@ -14224,6 +14228,10 @@ PrefabInstance:
       propertyPath: displayPickupScreen
       value: 
       objectReference: {fileID: 1987014386}
+    - target: {fileID: 3626467830392866642, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: poolAmount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3923191069392037788, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -14232,10 +14240,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4508477714466774191, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: poolAmount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4508477714974910601, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: cardWon
       value: 
       objectReference: {fileID: 400111085}
+    - target: {fileID: 4508477715606495522, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
+      propertyPath: poolAmount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5518248824496153188, guid: 48159b7060958ca4ca635b90a25c60c9, type: 3}
       propertyPath: health
       value: 100

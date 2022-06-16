@@ -64,13 +64,13 @@ public class FPSController : MonoBehaviour
 
     public void OnValidate()
     {
-        //characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
 
     }
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        //characterController = GetComponent<CharacterController>();
         Instance = this;
     }
 

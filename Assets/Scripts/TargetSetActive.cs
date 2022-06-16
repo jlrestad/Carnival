@@ -63,29 +63,36 @@ public class TargetSetActive : MonoBehaviour
     {
         while (skillshotGM.gameOn)
         {
+            //If Positive
             if (!isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
                 animator.SetBool("shake", true);
                 yield return new WaitForSeconds(shakeTime);
-                isFlipped = false;
 
                 animator.SetBool("shake", false);
+
+                //Flip to negative
                 animator.SetBool("isPos", false);
                 animator.SetBool("isNeg", true);
+
+                isFlipped = true;
             }
 
-            if (isFlipped && !skillshotGM.gameOver)
+            //If Negative
+            if (!isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
                 animator.SetBool("shake", true);
                 yield return new WaitForSeconds(shakeTime);
-                isFlipped = true;
-
 
                 animator.SetBool("shake", false);
+
+                //Flip to positive
                 animator.SetBool("isNeg", false);
                 animator.SetBool("isPos", true);
+
+                isFlipped = false;
             }
 
             //if (skillshotGM.gameOver || !skillshotGM.gameOn)
@@ -99,19 +106,21 @@ public class TargetSetActive : MonoBehaviour
     //Target moves down and hides after being hit, add to the score
     public void HitTarget()
     {
+        //If Positive
         //slide down and hide
-        if (!isFlipped)
+        if (isFlipped)
         {
+            //Play FX and Audio
             bigHitFX.SetActive(true);
             targetAudio.PlayOneShot(goodHitSound);
 
             //Move target to this position to hide
-            transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f);
+            transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f * Time.deltaTime);
         }
 
         targetHit = true;
 
-        if (targetHit && !isFlipped)
+        if (targetHit && isFlipped)
         {
             skillshotGM.score++;
             //Debug.Log("Score is: " + skillshotGM.score);
@@ -119,7 +128,7 @@ public class TargetSetActive : MonoBehaviour
 
         //if the wrong side is hit, take a point
         // don't go below 0
-        if( targetHit && isFlipped)
+        if(targetHit && !isFlipped)
         {
             targetAudio.PlayOneShot(badHitSound);
             if(skillshotGM.score > 0)
