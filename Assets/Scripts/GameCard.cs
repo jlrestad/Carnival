@@ -15,6 +15,6 @@ public class GameCard : MonoBehaviour
     private void Start()
     {
         //Boss appears after x cards. This increments the count.
-        player.GetComponent<FPSController>().cardCount++;
+        //player.GetComponent<FPSController>().cardCount++;
     }
 }

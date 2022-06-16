@@ -64,12 +64,13 @@ public class FPSController : MonoBehaviour
 
     public void OnValidate()
     {
-        characterController = GetComponent<CharacterController>();
+        //characterController = GetComponent<CharacterController>();
 
     }
 
     private void Awake()
     {
+        characterController = GetComponent<CharacterController>();
         Instance = this;
     }
 
@@ -215,14 +216,14 @@ public class FPSController : MonoBehaviour
         }
 
         // Crouching
-        if (isCrouching)
-        {
-            Crouch();
-        }
-        else if (crouch && !isUp)
-        {
-            StandUp();
-        }
+        //if (isCrouching)
+        //{
+        //    Crouch();
+        //}
+        //else if (crouch && !isUp)
+        //{
+        //    StandUp();
+        //}
     }
 
     public void LockCamera()
@@ -288,12 +289,12 @@ public class FPSController : MonoBehaviour
         characterController.height = originalHeight;
     }
 
-    private void Crouch()
-    {
-        isUp = false;
+    //private void Crouch()
+    //{
+    //    isUp = false;
 
-        characterController.height = crouchHeight;
-    }
+    //    characterController.height = crouchHeight;
+    //}
 
     IEnumerator Slide()
     {

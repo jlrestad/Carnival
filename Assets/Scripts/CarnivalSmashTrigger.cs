@@ -22,7 +22,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        prompt = player.GetComponent<WeaponEquip>().actionPrompt; //WHY ISNT THIS FINDING THE ACTION PROMPT
+        //prompt = player.GetComponent<WeaponEquip>().actionPrompt; //WHY ISNT THIS FINDING THE ACTION PROMPT
         menu = GameObject.FindObjectOfType<Menu>();
 
         //Debug.Log(prompt + " = prompt");
@@ -31,10 +31,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (prompt == null)
-        {
-            prompt = player.GetComponent<WeaponEquip>().actionPrompt;
-        }
+            //if (prompt == null)
+            //{
+            //    prompt = player.GetComponent<WeaponEquip>().actionPrompt;
+            //}
 
         if (buttonPressed)
         {
@@ -51,7 +51,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
             if (!gameRulesOn)
             {
                 //Display action prompt when near an interactive booth.
-                prompt.SetActive(true);
+                player.GetComponent<WeaponEquip>().actionPrompt.SetActive(true);
             }
 
             if (Input.GetButton("ActionButton") && !whackemGM.gameWon){
@@ -65,6 +65,15 @@ public class CarnivalSmashTrigger : MonoBehaviour
         gameRulesOn = true;
         //Turn off the prompt
         prompt.SetActive(false);
+
+
+        //If controller type is keyboard give mouse control
+        if (!Menu.Instance.usingJoystick)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+
 
         if (!whackemGM.gameWon)
         {
@@ -85,12 +94,6 @@ public class CarnivalSmashTrigger : MonoBehaviour
                 FPSController.Instance.canMove = false;
             }
 
-            //If controller type is keyboard give mouse control
-            if (!Menu.Instance.usingJoystick)
-            {
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
-            }
         }
     }
 

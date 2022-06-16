@@ -24,12 +24,17 @@ public class SkillShotTrigger : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        prompt = player.GetComponent<WeaponEquip>().actionPrompt;
+        //prompt = player.GetComponent<WeaponEquip>().actionPrompt;
         menu = GameObject.FindObjectOfType<Menu>();
     }
 
     private void Update()
     {
+        //if (prompt == null)
+        //{
+        //    prompt = player.GetComponent<WeaponEquip>().actionPrompt;
+        //}
+
         movingTargets = FindObjectsOfType<MovingTarget>();
         if (buttonPressed)
         {
@@ -49,11 +54,12 @@ public class SkillShotTrigger : MonoBehaviour
             if (!gameRulesOn)
             {
                 //Display action prompt when near an interactive booth.
-                prompt.SetActive(true);
+                player.GetComponent<WeaponEquip>().actionPrompt.SetActive(true);
             }
             
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
             {
+                Debug.Log("E Pressed");
                 //Bring up the game rule UI
                 ShowGameUI();
             }
@@ -62,13 +68,14 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void ShowGameUI()
     {
+        //Show the game rules
         gameRulesOn = true;
         //Turn off the prompt
         prompt.SetActive(false);
 
         if (!skillshotGM.gameWon)
         {
-            //Only show the rules screen if player has not picked up the mallet
+            //Only show the rules screen if player has not picked up the gun
             if (!skillshotGM.weaponEquip.haveGun && !skillshotGM.gameJustPlayed)
             {
                 //Display game rules screen with play buttons

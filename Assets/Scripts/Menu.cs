@@ -39,14 +39,15 @@ public class Menu : MonoBehaviour
     //public string exposedParam;
 
     [Header("OBJECTS")]
-    [SerializeField] public GameObject titleScreen;
+    [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject titleCamera;
     public GameObject player;
 
     [Header("MENUS")]
-    public GameObject pauseMenu;
-    public GameObject skullCountUI;
-    public TextMeshProUGUI skullCountText;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject settingsMenu;
+    //public GameObject skullCountUI;
+    //public TextMeshProUGUI skullCountText;
     GameObject firstButton;
     
     [Header("TAROT UI")]
@@ -136,6 +137,8 @@ public class Menu : MonoBehaviour
 
     }
 
+    //
+    //START THE GAME
     public void StartGame()
     {
         //Start game scene
@@ -147,6 +150,8 @@ public class Menu : MonoBehaviour
         //Debug.Log(GM.GameState);
     }
 
+    //
+    //PAUSE GAME
     public void PauseGame()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -163,6 +168,8 @@ public class Menu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
+    //
+    //UNPAUSE GAME
     public void UnpauseGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -172,6 +179,24 @@ public class Menu : MonoBehaviour
         counter = 0;
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+    }
+
+    //
+    //EXIT THE SETTINGS MENU AND RETURN TO PREVIOUS MENU
+    public void ExitSettingsMenu()
+    {
+        //Called from Settings menu Back button:
+        
+        if (counter == 1)
+        {
+            pauseMenu.SetActive(true);
+            settingsMenu.SetActive(false);
+        }
+        else
+        {
+            titleScreen.SetActive(true);
+            settingsMenu.SetActive(false);
+        }
     }
 
     //Get the main light and set the intensity to the value in Menu

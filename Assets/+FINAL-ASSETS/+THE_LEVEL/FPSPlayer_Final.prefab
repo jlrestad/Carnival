@@ -419,7 +419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2333969564158586015
 Transform:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2333969564158586008}
   m_LocalRotation: {x: 0.30460083, y: -0.1380662, z: 0.07156141, w: 0.9396994}
-  m_LocalPosition: {x: 0.75, y: -0.67, z: 0.36}
+  m_LocalPosition: {x: 0.523, y: -0.658, z: 0.528}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8715801306508693841}
@@ -6677,7 +6677,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7948301588802071135}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &7948301588802071133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6883,7 +6883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6904423771503933769, guid: c83073d70e8e1a2498c0c4d10ceaf190, type: 3}
       propertyPath: m_Name
-      value: Mallet_Final (1)
+      value: Mallet
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c83073d70e8e1a2498c0c4d10ceaf190, type: 3}
@@ -6916,10 +6916,10 @@ MonoBehaviour:
   whackEmEnemy: []
   whackemGM: {fileID: 0}
   headPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
-  meleeRange: 2
+  meleeRange: 3
   damage: 100
   canSwing: 0
-  hitVfxPrefab: {fileID: 5443168891726632875, guid: 36dc4121c540f55498475e05039a5bc4, type: 3}
+  hitVfxPrefab: {fileID: 6853940307766330543, guid: 6b3393d108dca3c4e8f72457e14f5439, type: 3}
   bossCritters: []
   spawnerManager: {fileID: 0}
   hold: {fileID: 0}
