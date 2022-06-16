@@ -22,7 +22,6 @@ public class CarnivalSmashTrigger : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //prompt = player.GetComponent<WeaponEquip>().actionPrompt; //WHY ISNT THIS FINDING THE ACTION PROMPT
         menu = GameObject.FindObjectOfType<Menu>();
 
         //Debug.Log(prompt + " = prompt");
@@ -31,10 +30,15 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void Update()
     {
-            //if (prompt == null)
-            //{
-            //    prompt = player.GetComponent<WeaponEquip>().actionPrompt;
-            //}
+        //Detect if joystick or keyboard is used and SET the correct prompt variable.
+        if (menu.usingJoystick)
+        {
+            prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+        }
+        else
+        {
+            prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+        }
 
         if (buttonPressed)
         {
@@ -51,7 +55,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
             if (!gameRulesOn)
             {
                 //Display action prompt when near an interactive booth.
-                player.GetComponent<WeaponEquip>().actionPrompt.SetActive(true);
+                prompt.SetActive(true);
             }
 
             if (Input.GetButton("ActionButton") && !whackemGM.gameWon){

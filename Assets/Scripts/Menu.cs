@@ -156,7 +156,9 @@ public class Menu : MonoBehaviour
     //PAUSE GAME
     public void PauseGame()
     {
+        //Show mouse
         Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
 
         counter = 1;
@@ -174,8 +176,8 @@ public class Menu : MonoBehaviour
     //UNPAUSE GAME
     public void UnpauseGame()
     {
+        //Hide mouse
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
         counter = 0;

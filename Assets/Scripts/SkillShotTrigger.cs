@@ -15,25 +15,29 @@ public class SkillShotTrigger : MonoBehaviour
 
     [SerializeField] public float triggerDistance;
     [HideInInspector] public float distanceFromGame;
-    //public GameObject prompt;
+    public GameObject prompt;
     public Menu menu;
 
-    bool gameRulesOn;
+    public bool gameRulesOn;
     private MovingTarget[] movingTargets;
         
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //prompt = player.GetComponent<WeaponEquip>().actionPrompt;
         menu = GameObject.FindObjectOfType<Menu>();
     }
 
     private void Update()
     {
-        //if (prompt == null)
-        //{
-        //    prompt = player.GetComponent<WeaponEquip>().actionPrompt;
-        //}
+        //Detect if joystick or keyboard is used and SET the correct prompt variable.
+        if (menu.usingJoystick)
+        {
+            prompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+        }
+        else
+        {
+            prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+        }
 
         movingTargets = FindObjectsOfType<MovingTarget>();
         if (buttonPressed)
@@ -54,7 +58,7 @@ public class SkillShotTrigger : MonoBehaviour
             if (!gameRulesOn)
             {
                 //Display action prompt when near an interactive booth.
-                player.GetComponent<WeaponEquip>().actionPrompt.SetActive(true);
+                prompt.SetActive(true);
             }
             
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
@@ -71,7 +75,7 @@ public class SkillShotTrigger : MonoBehaviour
         //Show the game rules
         gameRulesOn = true;
         //Turn off the prompt
-        player.GetComponent<WeaponEquip>().actionPrompt.SetActive(false);
+        prompt.SetActive(false);
 
         if (!skillshotGM.gameWon)
         {
@@ -83,7 +87,8 @@ public class SkillShotTrigger : MonoBehaviour
             }
             else
             {
-                player.GetComponent<WeaponEquip>().gameRulesDisplayed = false;
+                //player.GetComponent<WeaponEquip>().gameRulesDisplayed = false;
+                rulesUI.SetActive(false);
             }
 
             //Lock player camera movement until a button is pressed
@@ -142,9 +147,6 @@ public class SkillShotTrigger : MonoBehaviour
             //Debug.Log("reset");
             movingTarget.ResetTargets();
         }
-        //* When game is played, make mallet appear in player hands.
-        //* If game is lost, mallet disappears.
-        //* If game is won, mallet stays in inventory.
     }
 
     public void LeaveGame()

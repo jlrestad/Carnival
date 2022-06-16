@@ -101,7 +101,7 @@ public class SliderManager : MonoBehaviour
     public void AdjustSensitivity()
     {
         sensitivityValue = sensitivitySlider.value;  //Set the value to the slider value
-        FPSController.Instance.lookSpeed = sensitivityValue;
+        //FPSController.Instance.lookSpeed = sensitivityValue;
         SaveSensitivity();
     }
 
