@@ -1090,7 +1090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &187091208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4108,7 +4108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &705731593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5938,7 +5938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1063099820
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6138,7 +6138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1093086757
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6170,7 +6170,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7227258535442146889, guid: 70631dae5c5ad724983924f4e4f9e457, type: 2}
   m_audioClip: {fileID: 8300000, guid: 9b011b261451448059f85fb2648a1655, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.3
   m_Pitch: 0.45
   Loop: 1
   Mute: 0
@@ -6554,7 +6554,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7227258535442146889, guid: 70631dae5c5ad724983924f4e4f9e457, type: 2}
   m_audioClip: {fileID: 8300000, guid: ff09c6858e636407286ab113506e8feb, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 0.4
   Loop: 1
   Mute: 0
@@ -9355,10 +9355,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 662562327}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 583050339}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: UnpauseGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

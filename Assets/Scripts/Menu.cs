@@ -215,9 +215,9 @@ public class Menu : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-        StartCoroutine(DelayQuit());
+        //StartCoroutine(DelayQuit());
 
-        //Application.Quit();
+        Application.Quit();
     }
 
     IEnumerator DelayQuit()
@@ -245,7 +245,8 @@ public class Menu : MonoBehaviour
         titleCamera.SetActive(false);
 
         SceneManager.LoadScene(sceneBuildIndex:1, LoadSceneMode.Additive);
-        
+        Time.timeScale = 1;
+
         //Clear level name on start
         //levelName = "";
 
