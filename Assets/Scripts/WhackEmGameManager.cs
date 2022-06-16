@@ -238,7 +238,7 @@ public class WhackEmGameManager : MonoBehaviour
         }
         stopPopUp = true;
         gameOn = false;
-        //gameJustFinished = true;
+        gameJustFinished = true;
         weaponEquip.whackEmActive = false;
         timerText.enabled = false;
         
@@ -246,11 +246,11 @@ public class WhackEmGameManager : MonoBehaviour
 
         // lock player here until WinLoseUI done--
         //if player leaves trigger area before this loop finishes, cannot win replay
-        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
         //Clear and turn off lose message
+
         winloseText.text = (" ");
         winloseText.enabled = false;
-        //gameOver = true;
+        gameOver = true;
         gameUI.SetActive(false);
 
         if (gameWon)
@@ -273,7 +273,7 @@ public class WhackEmGameManager : MonoBehaviour
                 // create queue of custom class (params to call)
                 //Debug.Log("Entered Game");
 
-                while (/*!gameJustFinished &&*/ !gameWon)
+                while (!gameJustFinished && !gameWon)
                 {
                     WhackEmRoutine wr = new WhackEmRoutine();
                     int critUp = wr.up, critTaunt = wr.taunt;
@@ -324,7 +324,6 @@ public class WhackEmGameManager : MonoBehaviour
     public void DisplayGameCard()
     {
         //Display the card that was won
-        //displayPickupScreen.GetComponent<Image>().enabled = true;
         displayPickupScreen.SetActive(true);
 
         //Transition from card display to weapon card
@@ -334,14 +333,16 @@ public class WhackEmGameManager : MonoBehaviour
     //Transition from displayed card to weapon indicator card
     public IEnumerator DisplayCardWon()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
 
-        //displayPickupScreen.GetComponent<Image>().enabled = false;
+        //Turn off card won display screen
         displayPickupScreen.SetActive(false);
+
+        //Let player move when the display screen is off.
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();
-
     }
 
 }

@@ -88,6 +88,7 @@ public class SkillShotGameManager : MonoBehaviour
             if(! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
             {
                 minigameLight.SetActive(true);
+
                 if (minigameAudio.volume == 0)
                 {
                     minigameAudio.volume = 0.5f;
@@ -162,7 +163,6 @@ public class SkillShotGameManager : MonoBehaviour
         }
 
         minigameAudio.Stop();
-        minigameLight.SetActive(false);
 
         minigameAudio.volume = 0.5f;
     }
@@ -235,9 +235,8 @@ public class SkillShotGameManager : MonoBehaviour
 
         // lock player here until WinLoseUI done--
         //if player leaves trigger area before this loop finishes, cannot win replay
-        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
-
         //Clear and turn off lose message
+        
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;
@@ -256,7 +255,6 @@ public class SkillShotGameManager : MonoBehaviour
     public void DisplayGameCard()
     {
         //Display the card that was won
-        //displayPickupScreen.GetComponent<Image>().enabled = true;
         displayPickupScreen.SetActive(true);
 
         //Transition from card display back to game display
@@ -266,12 +264,16 @@ public class SkillShotGameManager : MonoBehaviour
     //Transition from displayed card to weapon indicator card
     public IEnumerator DisplayCardWon()
     {
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
 
-        //displayPickupScreen.GetComponent<Image>().enabled = false;
+        //Turn off card won display screen
         displayPickupScreen.SetActive(false);
-
-        //Menu.Instance.GetComponentInChildren<GameCard>().cardWon = displayCard.GetComponent<Image>().gameObject;
+        
+        //Let player move when the display screen is off.
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+        //Turn off the light 
+        minigameLight.SetActive(false);
 
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();
