@@ -31,7 +31,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void Update()
     {
-        prompt = player.GetComponent<WeaponEquip>().actionPrompt;
+        if (prompt == null)
+        {
+            prompt = player.GetComponent<WeaponEquip>().actionPrompt;
+        }
 
         if (buttonPressed)
         {
