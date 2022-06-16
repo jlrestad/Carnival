@@ -7,7 +7,7 @@ using UnityEngine;
 public class MeleeSwing : MonoBehaviour
 {
     public Transform player;
-    [SerializeField] float range = 25f;
+    [SerializeField] float range = 5f;
 
     CharacterController characterController;
     public int health;
@@ -97,12 +97,12 @@ public class MeleeSwing : MonoBehaviour
                 //Look into spherecast to see if this will be better 
                 if (Physics.Raycast(player.position, player.forward, out hit, range))
                 {
-                    //Debug.Log(hit.distance);
-                    //Debug.DrawLine(player.position, player.forward, Color.yellow);
-                    //Debug.Log(hit.transform.name);
+                //Debug.Log(hit.distance);
+                //Debug.DrawLine(player.position, player.forward, Color.yellow);
+                Debug.Log(hit.transform.name);
 
-                    //Target target = hit.transform.GetComponent<Target>();
-                    WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
+                //Target target = hit.transform.GetComponent<Target>();
+                WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
 
                     enemyCollider = hit.collider;
 

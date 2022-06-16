@@ -10,7 +10,7 @@ public class WhackEmGameManager : MonoBehaviour
     public static WhackEmGameManager Instance;
 
     public GameObject[] critters;
-    public GameObject[] taunts;
+    //public GameObject[] taunts;
     public GameObject whackemEnemy;
     [HideInInspector] public WeaponEquip weaponEquip;
     [SerializeField] GameCardManager cardManager;
@@ -295,16 +295,16 @@ public class WhackEmGameManager : MonoBehaviour
                         critterIsVisible = true;
                         //check if specified taunt creat bool is on and its not visible already (not main creat)
                         
-                        if (tauntBool && !tauntCritVisible)
-                        {
-                            TauntPosition position = taunts[critTaunt].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
-                            taunts[critTaunt].SetActive(true);
-                            taunts[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
-                            tauntCritVisible = true;
-                            yield return new WaitForSeconds(randomTauntTime);
-                            tauntCritVisible = false;
-                            taunts[critTaunt].SetActive(false);
-                        }
+                        //if (tauntBool && !tauntCritVisible)
+                        //{
+                        //    TauntPosition position = taunts[critTaunt].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
+                        //    taunts[critTaunt].SetActive(true);
+                        //    taunts[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
+                        //    tauntCritVisible = true;
+                        //    yield return new WaitForSeconds(randomTauntTime);
+                        //    tauntCritVisible = false;
+                        //    taunts[critTaunt].SetActive(false);
+                        //}
                         //bring both down
                         yield return new WaitForSeconds(randomStayTime);
                         critterIsVisible = false;

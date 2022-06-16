@@ -18,15 +18,15 @@ public class TauntPosition : MonoBehaviour
     }
 
     //* TEMP COMMENTED OUT
-    //void Start()
-    //{
-    //    //Enemy parent game object to get position from
-    //    thisEnemy = GetComponentInParent<WhackEmEnemy>().gameObject;
+    void Start()
+    {
+        //Enemy parent game object to get position from
+        thisEnemy = GetComponentInParent<WhackEmEnemy>().gameObject;
 
-    //    //Original position of the enemy
-    //    enemyPosition = thisEnemy.transform;
+        //Original position of the enemy
+        enemyPosition = thisEnemy.transform;
 
-    //}
+    }
 
 
 }
