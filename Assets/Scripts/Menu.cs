@@ -41,7 +41,7 @@ public class Menu : MonoBehaviour
     [Header("OBJECTS")]
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject titleCamera;
-    public GameObject player;
+    //public GameObject player;
 
     [Header("MENUS")]
     [SerializeField] private GameObject pauseMenu;
@@ -69,7 +69,7 @@ public class Menu : MonoBehaviour
     [Header("LEVEL LOAD")]
     //[SerializeField] private string levelName;
 
-    int counter = -1; //Used to handle pause.
+    public int counter = -1; //Used to handle pause.
     public GameObject controllerPrompt, keyboardPrompt;
 
     private void Awake()
@@ -91,15 +91,15 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        controllerArray = Input.GetJoystickNames();
+        if (controllerArray == null) { controllerArray = Input.GetJoystickNames(); }
         whackemGM = FindObjectOfType<WhackEmGameManager>();
         skillshotGM = FindObjectOfType<SkillShotGameManager>();
         WE = FindObjectOfType<WeaponEquip>();
 
         //Set Player
-        player = GameObject.FindGameObjectWithTag("Player");
+        //player = GameObject.FindGameObjectWithTag("Player");
 
-        //Detect if joystick is used.
+        //DETECT CONTROLLER
         if (controllerArray == null)
         {
             usingJoystick = false;
@@ -119,6 +119,13 @@ public class Menu : MonoBehaviour
 
             UnpauseGame();
         }
+
+        //Change the counter so that the pause menu cannot appear while settings is open.
+        if (settingsMenu.activeInHierarchy)
+        {
+            counter = 1;
+        }
+
 
         //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
         if (WE != null)

@@ -75,7 +75,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tauntPosition: {fileID: 0}
   enemyPosition: {fileID: 0}
-  thisEnemy: {fileID: 0}
 --- !u!1001 &751263068975500886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139,22 +138,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7496826098770971201, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c26f7e3b0b2d714eb1dfa8927a51628, type: 2}
+    - target: {fileID: -4473078804845878400, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c26f7e3b0b2d714eb1dfa8927a51628, type: 2}
+    - target: {fileID: -3635563820627579794, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ea57213215ef83c46af5b789d3701307, type: 2}
     - target: {fileID: -1905511394262339684, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 901751596538047748, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ea57213215ef83c46af5b789d3701307, type: 2}
     - target: {fileID: 919132149155446097, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
       propertyPath: m_Name
       value: Critter Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
       propertyPath: m_TagString
       value: Critter
       objectReference: {fileID: 0}
+    - target: {fileID: 2928371499300205025, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ea57213215ef83c46af5b789d3701307, type: 2}
+    - target: {fileID: 3294530921226666362, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7bb59eaa7a129d643898ff8205a3402a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de0f7f1df242c74892ff12350cba8c1, type: 3}
 --- !u!1 &480878102020010759 stripped
@@ -223,6 +246,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  maxHealth: 100
   hasBeenHit: 0
   isVis: 0
