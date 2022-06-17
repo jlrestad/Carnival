@@ -10,7 +10,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     [SerializeField] GameObject rulesUI;
     [SerializeField] int ticketCost = 1;
-    [SerializeField] bool buttonPressed;
+    //[SerializeField] bool buttonPressed;
     public Transform gameplayPosition;
     public Transform player;
 
@@ -71,7 +71,8 @@ public class CarnivalSmashTrigger : MonoBehaviour
                 prompt.SetActive(true);
             }
 
-            if (Input.GetButton("ActionButton") && !whackemGM.gameWon){
+            if (Input.GetButton("ActionButton") && !whackemGM.gameWon)
+            {
                 ShowGameUI();
             }
         } 
@@ -104,13 +105,12 @@ public class CarnivalSmashTrigger : MonoBehaviour
             {
                 player.GetComponent<WeaponEquip>().gameRulesDisplayed = false;
             }
+        }
 
-            //Lock player camera movement until a button is pressed
-            if (!buttonPressed)
-            {
-                FPSController.Instance.canMove = false;
-            }
-
+        //Lock camera movement
+        if (!whackemGM.gameOn)
+        {
+            FPSController.Instance.canMove = false;
         }
     }
 
@@ -125,7 +125,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
             whackemGM.gameOn = false;
             whackemGM.gameOver = false;
             whackemGM.gameJustFinished = false;
-            buttonPressed = false;
+            //buttonPressed = false;
         }
     }
     public void LockPlayerOnPlay()
@@ -144,13 +144,14 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
         //Allow player to walk again
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+        FPSController.Instance.canMove = true;
     }
 
     //Pay the cost to play the game
     public void PlayGame()
     {
         whackemGM.gameOn = true;
-        buttonPressed = true;
+        //buttonPressed = true;
         gameRulesOn = false;
 
         LockPlayerOnPlay();

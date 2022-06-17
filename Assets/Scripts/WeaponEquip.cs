@@ -132,11 +132,11 @@ public class WeaponEquip : MonoBehaviour
             //    inInventory = true;
             //}
         }
-        else
-        {
-            //Don't display reticle if nothing is equipped.
-            crossHair.SetActive(false);
-        }
+        //else
+        //{
+        //    //Don't display reticle if nothing is equipped.
+        //    crossHair.SetActive(false);
+        //}
 
         //Debug.Log(weaponList.Count);
         // * * *
@@ -359,12 +359,13 @@ public class WeaponEquip : MonoBehaviour
 
     public void PickUpWeapon()
     {
-        closestWeapon.SetActive(false); //Hide weapon from scene.
-        if (currentWeapon != null)
-            currentWeapon.SetActive(false);
-
         //Turn on crosshair
         crossHair.SetActive(true);
+
+        closestWeapon.SetActive(false); //Hide weapon from scene.
+
+        if (currentWeapon != null)
+            currentWeapon.SetActive(false);
 
         //GUN
         //if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)

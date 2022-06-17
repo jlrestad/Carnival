@@ -95,8 +95,6 @@ public class SkillShotGameManager : MonoBehaviour
                 weaponEquip.crossHair.SetActive(true);
             }
             
-
-
             if (! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
             {
                 minigameLight.SetActive(true);
@@ -108,6 +106,7 @@ public class SkillShotGameManager : MonoBehaviour
                 minigameAudio.Play();
             }
         }
+
         //Run this when the WhackEm game is on.
         if (gameOn && weaponEquip.haveGun)
         {

@@ -8,7 +8,7 @@ public class SkillShotTrigger : MonoBehaviour
 
     [SerializeField] GameObject rulesUI;
     [SerializeField] int ticketCost = 1;
-    [SerializeField] bool buttonPressed;
+    //[SerializeField] bool buttonPressed;
     public Transform gameplayPosition;
     public Transform player;
 
@@ -49,7 +49,8 @@ public class SkillShotTrigger : MonoBehaviour
         }
 
         movingTargets = FindObjectsOfType<MovingTarget>();
-        if (buttonPressed)
+
+        if (player.GetComponent<WeaponEquip>().skillshotActive)
         {
             //Hide cursor again
             Cursor.lockState = CursorLockMode.Confined;
@@ -99,7 +100,7 @@ public class SkillShotTrigger : MonoBehaviour
             }
 
             //Lock player camera movement until a button is pressed
-            if (!buttonPressed)
+            if (!player.GetComponent<WeaponEquip>().skillshotActive)
             {
                 FPSController.Instance.canMove = false;
             }
@@ -124,7 +125,7 @@ public class SkillShotTrigger : MonoBehaviour
             skillshotGM.gameOn = false;
             skillshotGM.gameOver = false;
             skillshotGM.gameJustPlayed = false;
-            buttonPressed = false;
+            //buttonPressed = false;
         }
     }
 
@@ -144,6 +145,7 @@ public class SkillShotTrigger : MonoBehaviour
 
         //Allow player to walk again
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+        FPSController.Instance.canMove = true;
     }
 
     //Pay the cost to play the game
@@ -151,7 +153,7 @@ public class SkillShotTrigger : MonoBehaviour
     {
         //reset targets
         skillshotGM.gameOn = true;
-        buttonPressed = true;
+        //buttonPressed = true;
         gameRulesOn = false;
 
         LockPlayerOnPlay();
