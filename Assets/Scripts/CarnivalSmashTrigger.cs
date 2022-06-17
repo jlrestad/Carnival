@@ -53,7 +53,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
             prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
         }
 
-        if (buttonPressed)
+        if (player.GetComponent<WeaponEquip>().whackEmActive)
         {
             //Hide cursor again
             Cursor.lockState = CursorLockMode.Confined;
