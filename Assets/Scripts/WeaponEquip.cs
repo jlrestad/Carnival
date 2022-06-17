@@ -359,9 +359,6 @@ public class WeaponEquip : MonoBehaviour
 
     public void PickUpWeapon()
     {
-        //Turn on crosshair
-        crossHair.SetActive(true);
-
         closestWeapon.SetActive(false); //Hide weapon from scene.
 
         if (currentWeapon != null)

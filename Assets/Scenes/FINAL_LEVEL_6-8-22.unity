@@ -2114,6 +2114,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24f30349bdec72e4b8db75c2fd3dae22, type: 3}
+--- !u!1 &37045979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4976218522670786507, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+  m_PrefabInstance: {fileID: 1221140196307810720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &37680835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87759,7 +87764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4976218522670786507, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4976218523041632045, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: m_Name
@@ -87783,7 +87788,7 @@ PrefabInstance:
       objectReference: {fileID: 5585068444293865755}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: speedCap
-      value: 0.5
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: scoreText
@@ -87795,16 +87800,24 @@ PrefabInstance:
       objectReference: {fileID: 952779974}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: scoreLimit
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: timeCounter
-      value: 60
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: winloseText
       value: 
       objectReference: {fileID: 5025837337751498275}
+    - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: minigameAudio
+      value: 
+      objectReference: {fileID: 3201530908082711249}
+    - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: minigameLight
+      value: 
+      objectReference: {fileID: 37045979}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: displayPickupScreen
       value: 

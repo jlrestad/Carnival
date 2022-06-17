@@ -54,6 +54,10 @@ public class WhackEmGameManager : MonoBehaviour
     public Sprite BGImage;
     public Sprite cardImage;
 
+    [Header("AUDIO & LIGHTS")]
+    public AudioSource minigameAudio;
+    public GameObject minigameLight;
+
     [Space(10)]
     /*[HideInInspector]*/ public bool gameWon;
     /*[HideInInspector]*/ public bool gameOver;
@@ -118,6 +122,17 @@ public class WhackEmGameManager : MonoBehaviour
                 weaponEquip.haveMallet = true; 
                 weaponEquip.crossHair.SetActive(true);
             }
+            
+            if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
+            {
+                minigameLight.SetActive(true);
+
+                if (minigameAudio.volume == 0)
+                {
+                    minigameAudio.volume = 0.5f;
+                }
+                minigameAudio.Play();
+            }
 
             // fixes bug causing mouse to appear when critter pops up
             Cursor.lockState = CursorLockMode.Locked;
@@ -164,11 +179,31 @@ public class WhackEmGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        //else
-        //{
-        //    //gameUI.SetActive(false);
-        //    ResetGame(); //Reset the variables back to original
-        //}
+        else if (gameOver)
+        {
+            StartCoroutine(ShutDownGame());
+        }
+    }
+
+    IEnumerator ShutDownGame()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        float audio = minigameAudio.volume;
+        float speed = 0.01f;
+
+        for (float i = audio; i > 0; i -= speed)
+        {
+            minigameAudio.volume = i;
+            yield return null;
+        }
+
+        //Turn off the light 
+        minigameLight.SetActive(false);
+
+        minigameAudio.Stop();
+
+        minigameAudio.volume = 0.5f;
     }
 
     public void DisplayTextUI()
@@ -244,9 +279,9 @@ public class WhackEmGameManager : MonoBehaviour
     {
         //Display lose message
         winloseText.enabled = true;
-        gameOver = true;
+        //gameOver = true;
 
-        if(gameWon)
+        if (gameWon)
         {
             winloseText.text = "You have won...";
 
@@ -266,7 +301,7 @@ public class WhackEmGameManager : MonoBehaviour
 
         stopPopUp = true;
         gameOn = false;
-        gameOver = false;
+        //gameOver = false;
         gameJustFinished = true;
         weaponEquip.whackEmActive = false;
         timerText.enabled = false;
@@ -277,6 +312,7 @@ public class WhackEmGameManager : MonoBehaviour
         CarnivalSmashTrigger.Instance.UnLockPlayer();
         winloseText.text = (" ");
         winloseText.enabled = false;
+        gameOver = true;
         gameUI.SetActive(false);
     }
 
@@ -366,7 +402,6 @@ public class WhackEmGameManager : MonoBehaviour
 
         //Turn off card won display screen
         displayPickupScreen.SetActive(false);
-
 
         //Let player move when the display screen is off.
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;

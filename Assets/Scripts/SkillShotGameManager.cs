@@ -48,10 +48,11 @@ public class SkillShotGameManager : MonoBehaviour
     [HideInInspector] public bool gameOver;
 
     public MovingTarget[] movingTarget;
-
-    //public GameObject minigameAudio;
+    
+    [Header("AUDIO & LIGHTS")]
     public AudioSource minigameAudio;
     public GameObject minigameLight;
+
     bool runOnce; //Controls pickupweapon
     [HideInInspector] public GameObject gameWeapon;
     [HideInInspector] public GameObject playerWeapon;
@@ -156,7 +157,7 @@ public class SkillShotGameManager : MonoBehaviour
 
     IEnumerator ShutDownGame()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         float audio = minigameAudio.volume;
         float speed = 0.01f;
@@ -166,6 +167,9 @@ public class SkillShotGameManager : MonoBehaviour
             minigameAudio.volume = i;
             yield return null;
         }
+
+        //Turn off the light 
+        minigameLight.SetActive(false);
 
         minigameAudio.Stop();
 
@@ -232,6 +236,7 @@ public class SkillShotGameManager : MonoBehaviour
     {
         //Display lose message
         winloseText.enabled = true;
+        //gameOver = true;
 
         if (gameWon)
         {
@@ -293,8 +298,6 @@ public class SkillShotGameManager : MonoBehaviour
         
         //Let player move when the display screen is off.
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
-        //Turn off the light 
-        minigameLight.SetActive(false);
 
         //Display the current weapon card
         Menu.Instance.DisplayWeaponCard();
