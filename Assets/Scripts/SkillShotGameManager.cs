@@ -53,6 +53,8 @@ public class SkillShotGameManager : MonoBehaviour
     public AudioSource minigameAudio;
     public GameObject minigameLight;
     bool runOnce; //Controls pickupweapon
+    [HideInInspector] public GameObject gameWeapon;
+    [HideInInspector] public GameObject playerWeapon;
 
     [HideInInspector] public GameObject currentWeapon; //The new weapon to be added to weaponList of WE.
 
@@ -136,9 +138,9 @@ public class SkillShotGameManager : MonoBehaviour
 
                 //* Put weapon back
                 weaponEquip.haveGun = false;
-                weaponEquip.currentWeapon.SetActive(false);
-                weaponEquip._closestWeapon.SetActive(true);
-                weaponEquip.prevWeapon.SetActive(true);
+                //weaponEquip.currentWeapon.SetActive(false);
+                //weaponEquip._closestWeapon.SetActive(true);
+                //weaponEquip.prevWeapon.SetActive(true);
             }
 
             //Update ticket count

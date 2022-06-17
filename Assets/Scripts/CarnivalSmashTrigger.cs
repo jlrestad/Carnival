@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CarnivalSmashTrigger : MonoBehaviour
 {
+    public static CarnivalSmashTrigger Instance;
+
     public WhackEmGameManager whackemGM;
 
     [SerializeField] GameObject rulesUI;
@@ -22,14 +24,20 @@ public class CarnivalSmashTrigger : MonoBehaviour
     public GameObject gameWeapon;
     public GameObject playerWeapon;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
-        gameWeapon = GameObject.FindGameObjectWithTag("Mallet");
         whackemGM.currentWeapon = playerWeapon;
 
-        //Debug.Log(prompt + " = prompt");
+        //Set the weapon in the manager
+        WhackEmGameManager.Instance.gameWeapon = gameWeapon;
+        WhackEmGameManager.Instance.playerWeapon = playerWeapon;
     }
 
 
@@ -120,6 +128,23 @@ public class CarnivalSmashTrigger : MonoBehaviour
             buttonPressed = false;
         }
     }
+    public void LockPlayerOnPlay()
+    {
+        //Unlock player camera movement, put player in position, lock player body movement
+        FPSController.Instance.canMove = true;
+        player.position = gameplayPosition.position;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+    }
+
+    public void UnLockPlayer()
+    {
+        //Hide the cursor again
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        //Allow player to walk again
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+    }
 
     //Pay the cost to play the game
     public void PlayGame()
@@ -128,10 +153,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
         buttonPressed = true;
         gameRulesOn = false;
 
-        //Unlock player camera movement, put player in position, lock player body movement
-        FPSController.Instance.canMove = true;
-        player.position = gameplayPosition.position;
-        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+        LockPlayerOnPlay();
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);
@@ -149,14 +171,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
     {
         gameRulesOn = false;
 
-        //Hide the cursor again
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         //Hide the game rules UI
         rulesUI.SetActive(false);
 
         //Unlock player movement
-        FPSController.Instance.canMove = true;
+        UnLockPlayer();
     }
 }

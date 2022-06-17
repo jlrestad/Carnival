@@ -29,7 +29,6 @@ public class SkillShotTrigger : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
-        gameWeapon = GameObject.FindGameObjectWithTag("Gun");
         skillshotGM.currentWeapon = playerWeapon;
     }
 

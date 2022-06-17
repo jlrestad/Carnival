@@ -7132,6 +7132,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140645276}
   m_Mesh: {fileID: -5597002278806442958, guid: ad83783d46cc3444a9d7cae92d86eeb9, type: 3}
+--- !u!1 &141822945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2864562019227970518, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+  m_PrefabInstance: {fileID: 1221140196307810720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &142735403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1087006626596759547, guid: e04838bc2a760a143b1fe92b3a24e4e8, type: 3}
@@ -16583,6 +16588,10 @@ PrefabInstance:
       propertyPath: rulesUI
       value: 
       objectReference: {fileID: 969204974}
+    - target: {fileID: 2996449677386550979, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: gameWeapon
+      value: 
+      objectReference: {fileID: 1246464483}
     - target: {fileID: 2996449677386550979, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: playerWeapon
       value: 
@@ -51986,6 +51995,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24f30349bdec72e4b8db75c2fd3dae22, type: 3}
+--- !u!1 &1246464483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2978425584375866885, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+  m_PrefabInstance: {fileID: 367245408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1249858939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1395006924396309102, guid: 4e5df890f81d897458b6945d0beb94db, type: 3}
@@ -90982,7 +90996,7 @@ PrefabInstance:
     - target: {fileID: 841841463, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: gameWeapon
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 141822945}
     - target: {fileID: 841841463, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: playerWeapon
       value: 
@@ -91173,7 +91187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: timeCounter
-      value: 60
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: winloseText

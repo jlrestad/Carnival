@@ -65,7 +65,9 @@ public class WhackEmGameManager : MonoBehaviour
     [HideInInspector] public GameObject currentWeapon;
     bool runOnce; //Controls pickupweapon
     Menu menu;
-   
+    [HideInInspector] public GameObject gameWeapon;
+    [HideInInspector] public GameObject playerWeapon;
+
     int randomEnemy;
     public MonoBehaviour script;
 
@@ -109,7 +111,6 @@ public class WhackEmGameManager : MonoBehaviour
         //Run this when the WhackEm game is on.
         if (gameOn)
         {
-            //Pickup the weapon - once
             if (!weaponEquip.haveMallet && !runOnce)
             {
                 //weaponEquip.PickUpWeapon();
@@ -147,14 +148,8 @@ public class WhackEmGameManager : MonoBehaviour
             }
             else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
             {
-                //Display win or lose
+                gameWon = false;
                 StartCoroutine(WinLoseUI());
-
-                //* Put weapon back
-                weaponEquip.haveMallet = false;
-                //weaponEquip.currentWeapon.SetActive(false);
-                weaponEquip._closestWeapon.SetActive(true);
-                weaponEquip.prevWeapon.SetActive(true);
             }
 
             //Update ticket count
@@ -163,7 +158,7 @@ public class WhackEmGameManager : MonoBehaviour
             if (HudManager.Instance.redTickets < 0)
             {
                 HudManager.Instance.redTickets = 0;
-                //ticketsText.text = "NEED TICKETS";
+                //winloseText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
                 gameOn = false;
@@ -205,6 +200,15 @@ public class WhackEmGameManager : MonoBehaviour
         timerText.text = ("00:" + (int)timeLeft);
 
         gameUI.SetActive(false);
+
+        if (!gameWon)
+        {
+            //* Put weapon back
+            weaponEquip.haveMallet = false;
+            weaponEquip.crossHair.SetActive(false);
+            gameWeapon.SetActive(true);
+            playerWeapon.SetActive(false);
+        }
 
     }
 
@@ -258,7 +262,9 @@ public class WhackEmGameManager : MonoBehaviour
         } else
         {
             winloseText.text = "You have lost...";
+            yield return new WaitForSeconds(2);
             ResetGame();
+            CarnivalSmashTrigger.Instance.UnLockPlayer();
         }
         stopPopUp = true;
         gameOn = false;
