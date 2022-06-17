@@ -61,6 +61,7 @@ public class Menu : MonoBehaviour
     [Space(10)]
     public string[] controllerArray = null;
 
+    [Header("BRIGHTNESS")]
     public Light sceneLight;
     public float brightnessValue = 0.7f;
 
