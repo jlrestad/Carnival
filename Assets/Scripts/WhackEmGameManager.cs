@@ -199,7 +199,7 @@ public class WhackEmGameManager : MonoBehaviour
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
 
-        gameUI.SetActive(false);
+        //gameUI.SetActive(false);
 
         if (!gameWon)
         {
@@ -245,6 +245,7 @@ public class WhackEmGameManager : MonoBehaviour
     {
         //Display lose message
         winloseText.enabled = true;
+
         if(gameWon)
         {
             winloseText.text = "You have won...";
@@ -257,15 +258,14 @@ public class WhackEmGameManager : MonoBehaviour
                 weaponEquip.isEquipped = true;
             }
 
-            //weaponEquip.isEquipped = true;
             DisplayGameCard();
         } else
         {
-            winloseText.text = "You have lost...";
-            yield return new WaitForSeconds(2);
+            winloseText.text = "YOU LOSE...";
             ResetGame();
-            CarnivalSmashTrigger.Instance.UnLockPlayer();
+            
         }
+
         stopPopUp = true;
         gameOn = false;
         gameJustFinished = true;
@@ -274,6 +274,7 @@ public class WhackEmGameManager : MonoBehaviour
         
         yield return new WaitForSeconds(2);
 
+        CarnivalSmashTrigger.Instance.UnLockPlayer();
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;

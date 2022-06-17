@@ -133,14 +133,8 @@ public class SkillShotGameManager : MonoBehaviour
             }
             else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
             {
-                //Display win or lose
+                gameWon = false;
                 StartCoroutine(WinLoseUI());
-
-                //* Put weapon back
-                weaponEquip.haveGun = false;
-                //weaponEquip.currentWeapon.SetActive(false);
-                //weaponEquip._closestWeapon.SetActive(true);
-                //weaponEquip.prevWeapon.SetActive(true);
             }
 
             //Update ticket count
@@ -149,7 +143,7 @@ public class SkillShotGameManager : MonoBehaviour
             if (HudManager.Instance.redTickets < 0)
             {
                 HudManager.Instance.redTickets = 0;
-                //ticketsText.text = "NEED TICKETS";
+                //winLoseText.text = "NEED TICKETS";
 
                 //Ticket is needed in order to play...
                 gameOn = false;
@@ -194,7 +188,8 @@ public class SkillShotGameManager : MonoBehaviour
     {
         runOnce = false; 
 
-        weaponEquip.skillshotActive = false;
+        //weaponEquip.skillshotActive = false;
+
         //Score
         score = 0;
         scoreText.text = (score + "/" + scoreLimit);
@@ -203,12 +198,18 @@ public class SkillShotGameManager : MonoBehaviour
         //minRando = minRandoTemp;
         //maxRando = maxRandoTemp;
 
-        //winloseUI
-        //gameUI.SetActive(false);
-
         //Time
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
+
+        if (!gameWon)
+        {
+            //* Put weapon back
+            weaponEquip.haveGun = false;
+            weaponEquip.crossHair.SetActive(false);
+            gameWeapon.SetActive(true);
+            playerWeapon.SetActive(false);
+        }
     }
 
 
@@ -232,6 +233,7 @@ public class SkillShotGameManager : MonoBehaviour
     {
         //Display lose message
         winloseText.enabled = true;
+
         if (gameWon)
         {
             winloseText.text = "YOU WIN!";
@@ -251,6 +253,7 @@ public class SkillShotGameManager : MonoBehaviour
             winloseText.text = "YOU LOSE...";
             ResetGame();
         }
+
         gameOn = false;
         gameJustPlayed = true;
         weaponEquip.skillshotActive = false;
@@ -262,6 +265,7 @@ public class SkillShotGameManager : MonoBehaviour
         //if player leaves trigger area before this loop finishes, cannot win replay
         //Clear and turn off lose message
         
+        CarnivalSmashTrigger.Instance.UnLockPlayer();
         winloseText.text = (" ");
         winloseText.enabled = false;
         gameOver = true;

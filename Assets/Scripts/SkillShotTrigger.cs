@@ -30,6 +30,10 @@ public class SkillShotTrigger : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
         skillshotGM.currentWeapon = playerWeapon;
+
+        //Set the weapon in the manager
+        SkillShotGameManager.Instance.gameWeapon = gameWeapon;
+        SkillShotGameManager.Instance.playerWeapon = playerWeapon;
     }
 
     private void Update()
@@ -68,8 +72,6 @@ public class SkillShotTrigger : MonoBehaviour
             
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
             {
-                //Debug.Log("E Pressed");
-                //Bring up the game rule UI
                 ShowGameUI();
             }
         }
@@ -126,6 +128,24 @@ public class SkillShotTrigger : MonoBehaviour
         }
     }
 
+    public void LockPlayerOnPlay()
+    {
+        //Unlock player camera movement, put player in position, lock player body movement
+        FPSController.Instance.canMove = true;
+        player.position = gameplayPosition.position;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+    }
+
+    public void UnLockPlayer()
+    {
+        //Hide the cursor again
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        //Allow player to walk again
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+    }
+
     //Pay the cost to play the game
     public void PlayGame()
     {
@@ -134,12 +154,7 @@ public class SkillShotTrigger : MonoBehaviour
         buttonPressed = true;
         gameRulesOn = false;
 
-        //Unlock player camera movement
-        FPSController.Instance.canMove = true;
-        //Disable character controller so that player can't walk.
-        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
-        //Put player in the play-position.
-        player.position = gameplayPosition.position;
+        LockPlayerOnPlay();
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);
@@ -147,7 +162,7 @@ public class SkillShotTrigger : MonoBehaviour
         //Spend the required ticket cost for the game
         HudManager.Instance.HealthTicket(ticketCost);
 
-        gameWeapon.SetActive(false); //Hide weapon in scene
+        //gameWeapon.SetActive(false); //Hide weapon in scene
         playerWeapon.SetActive(true); //Show player holding weapon
 
         player.GetComponent<WeaponEquip>().PickUpWeapon();
@@ -165,15 +180,10 @@ public class SkillShotTrigger : MonoBehaviour
     {
         gameRulesOn = false;
 
-        //Hide the cursor again
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         //Hide the game rules UI
         rulesUI.SetActive(false);
 
-        //Unlock player movement
-        FPSController.Instance.canMove = true;
+        UnLockPlayer();
     }
 
 }
