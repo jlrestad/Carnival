@@ -7,7 +7,7 @@ public class TauntPosition : MonoBehaviour
     public static TauntPosition Instance;
     public Transform tauntPosition;
     public Transform enemyPosition;
-    public GameObject thisEnemy;
+    //public GameObject thisEnemy;
 
     void Awake()
     {
@@ -21,10 +21,11 @@ public class TauntPosition : MonoBehaviour
     void Start()
     {
         //Enemy parent game object to get position from
-        thisEnemy = GetComponentInParent<WhackEmEnemy>().gameObject;
+        //thisEnemy = GetComponentInParent<WhackEmEnemy>().gameObject;
+        
 
         //Original position of the enemy
-        enemyPosition = thisEnemy.transform;
+        enemyPosition = transform;
 
     }
 
