@@ -8,7 +8,7 @@ public class WhackEmEnemy : MonoBehaviour
 
     WhackEmGameManager whackemGM;
     public int health;
-    public int maxHealth = 100;
+    //public int maxHealth = 100;
     public bool hasBeenHit;
     public bool isVis;
 
@@ -20,7 +20,7 @@ public class WhackEmEnemy : MonoBehaviour
 
     void Start()
     {
-        health = maxHealth;
+        //health = maxHealth;
         whackemGM = GetComponent<WhackEmGameManager>();
     }
 

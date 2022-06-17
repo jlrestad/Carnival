@@ -75,6 +75,12 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Start()
     {
+        //Default setting if it isn't manually set.
+        if (speedCap == 0)
+        {
+            speedCap = 0.5f;
+        }
+
         weaponEquip = FindObjectOfType<WeaponEquip>();
 
         //Tarot Cards

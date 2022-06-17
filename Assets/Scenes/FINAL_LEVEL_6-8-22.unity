@@ -90947,7 +90947,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102743335115650768}
   m_LocalRotation: {x: -0, y: 0.91225976, z: -0, w: 0.40961218}
-  m_LocalPosition: {x: 18.4, y: -7.78, z: 34.413}
+  m_LocalPosition: {x: 69.3, y: -8.96, z: 12.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1102743334713653210}
@@ -91310,6 +91310,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2102302524760487526, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2788475582821795530, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -91394,14 +91398,46 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4976218522670786505, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218522670786505, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_SpotAngle
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218522670786505, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218522670786506, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.981
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218522670786507, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_Name
+      value: GameLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218522670786507, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218523041632045, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_Name
+      value: InnerBoothLight
+      objectReference: {fileID: 0}
     - target: {fileID: 4976218523041632045, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: gameUI
       value: 
       objectReference: {fileID: 5585068444293865755}
+    - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: speedCap
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: scoreText
       value: 
@@ -91410,6 +91446,14 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 952779974}
+    - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: scoreLimit
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: timeCounter
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4976218524061274676, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: winloseText
       value: 
@@ -91451,8 +91495,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6653959223595026615, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_Name
+      value: SignLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 6653959223595026615, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7282848032379299466, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: m_IsActive
@@ -94811,24 +94859,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  range: 2
-  health: 0
-  spawnTransform: {fileID: 0}
+  playerCamera: {fileID: 0}
+  range: 50
   whackEmEnemy: []
   whackemGM: {fileID: 0}
-  headPrefab: {fileID: 887310906049672663, guid: 658cbf0f901583e4a87220293f658f50, type: 3}
-  meleeRange: 3
-  damage: 100
   canSwing: 0
   hitVfxPrefab: {fileID: 6853940307766330543, guid: 6b3393d108dca3c4e8f72457e14f5439, type: 3}
-  bossCritters: []
-  spawnerManager: {fileID: 0}
-  hold: {fileID: 0}
-  bossRange: 0
-  boss: {fileID: 0}
-  skillshotGM: {fileID: 0}
-  ssWon: 0
-  csWon: 0
 --- !u!1 &3218745870439560771
 GameObject:
   m_ObjectHideFlags: 0

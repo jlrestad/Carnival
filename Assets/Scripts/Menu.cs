@@ -149,6 +149,8 @@ public class Menu : MonoBehaviour
         //Invoke("LoadLevel", delayTime);
         StartCoroutine(LoadLevel());
 
+        SliderManager.Instance.LoadBrightness();
+
         //Debug.Log(GM.GameState);
     }
 
