@@ -80,8 +80,6 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
-
-
     }
 
     public void HandleOnStateChange()

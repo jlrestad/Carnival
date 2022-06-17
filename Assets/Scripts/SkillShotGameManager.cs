@@ -52,6 +52,9 @@ public class SkillShotGameManager : MonoBehaviour
     //public GameObject minigameAudio;
     public AudioSource minigameAudio;
     public GameObject minigameLight;
+    bool runOnce; //Controls pickupweapon
+
+    [HideInInspector] public GameObject currentWeapon; //The new weapon to be added to weaponList of WE.
 
     private void Awake()
     {
@@ -82,10 +85,17 @@ public class SkillShotGameManager : MonoBehaviour
     {
         if (gameOn)
         {
-            // alert weapon equip that the game is active and mallet can be picked up
-            weaponEquip.skillshotActive = true;
+            if (!weaponEquip.haveGun && !runOnce)
+            {
+                //weaponEquip.PickUpWeapon();
+                runOnce = true;
+                weaponEquip.haveGun = true;
+                weaponEquip.crossHair.SetActive(true);
+            }
+            
 
-            if(! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
+
+            if (! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
             {
                 minigameLight.SetActive(true);
 
@@ -180,6 +190,8 @@ public class SkillShotGameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        runOnce = false; 
+
         weaponEquip.skillshotActive = false;
         //Score
         score = 0;
@@ -221,10 +233,21 @@ public class SkillShotGameManager : MonoBehaviour
         if (gameWon)
         {
             winloseText.text = "YOU WIN!";
+
+            if (!weaponEquip.weaponList.Contains(currentWeapon))
+            {
+                weaponEquip.weaponList.Add(currentWeapon);
+                weaponEquip.currentWeapon = currentWeapon;
+                weaponEquip.weaponNumber++;
+                weaponEquip.isEquipped = true;
+            }
+
+            DisplayGameCard();
         }
         else
         {
             winloseText.text = "YOU LOSE...";
+            ResetGame();
         }
         gameOn = false;
         gameJustPlayed = true;
@@ -241,15 +264,6 @@ public class SkillShotGameManager : MonoBehaviour
         winloseText.enabled = false;
         gameOver = true;
         gameUI.SetActive(false);
-
-        if (gameWon)
-        {
-            DisplayGameCard();
-        }
-        else
-        {
-            ResetGame();
-        }
     }
 
     public void DisplayGameCard()
@@ -264,8 +278,10 @@ public class SkillShotGameManager : MonoBehaviour
     //Transition from displayed card to weapon indicator card
     public IEnumerator DisplayCardWon()
     {
-        //yield return new WaitForSeconds(2);
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+         //Wait 1 second before being able to click so the card won screen isn't exited by accident.
+        yield return new WaitForSeconds(1);
+        //After the wait a click will close the card won screen and return movement to the player.
+        yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
 
         //Turn off card won display screen
         displayPickupScreen.SetActive(false);

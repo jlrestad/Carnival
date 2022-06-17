@@ -64,7 +64,7 @@ public class FPSController : MonoBehaviour
 
     public void OnValidate()
     {
-        //characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
 
     }
 

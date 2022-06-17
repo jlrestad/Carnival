@@ -12,17 +12,22 @@ public class CarnivalSmashTrigger : MonoBehaviour
     public Transform gameplayPosition;
     public Transform player;
 
-    [SerializeField] public float triggerDistance;
+    [HideInInspector] public float triggerDistance;
     [HideInInspector] public float distanceFromGame;
     public GameObject prompt;
     public Menu menu;
     bool gameRulesOn;
 
+    [Space(15)]
+    public GameObject gameWeapon;
+    public GameObject playerWeapon;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
+        gameWeapon = GameObject.FindGameObjectWithTag("Mallet");
+        whackemGM.currentWeapon = playerWeapon;
 
         //Debug.Log(prompt + " = prompt");
     }
@@ -125,8 +130,8 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
         //Unlock player camera movement, put player in position, lock player body movement
         FPSController.Instance.canMove = true;
-        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
         player.position = gameplayPosition.position;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
 
         //Turn off the game rules screen
         rulesUI.SetActive(false);
@@ -134,10 +139,10 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //Spend the required ticket cost for the game
         HudManager.Instance.HealthTicket(ticketCost);
 
+        //gameWeapon.SetActive(false); //Hides weapon in scene
+        playerWeapon.SetActive(true); //Shows player holding weapon
 
-        //* When game is played, make mallet appear in player hands.
-        //* If game is lost, mallet disappears.
-        //* If game is won, mallet stays in inventory.
+        player.GetComponent<WeaponEquip>().PickUpWeapon();
     }
 
     public void LeaveGame()

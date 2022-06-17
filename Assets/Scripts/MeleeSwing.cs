@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class MeleeSwing : MonoBehaviour
 {
+    public static MeleeSwing Instance;
+
     public Transform player;
     public Camera playerCamera;
     [SerializeField] float range = 5f;
@@ -17,7 +19,7 @@ public class MeleeSwing : MonoBehaviour
 
     //[SerializeField] WhackEmEnemy newWhackEm;
     //[SerializeField] GameObject closestWhackEm;
-    [SerializeField] WhackEmEnemy[] whackEmEnemy;
+    //[SerializeField] WhackEmEnemy[] whackEmEnemy;
     [SerializeField] WhackEmGameManager whackemGM;
     //[SerializeField] GameObject headPrefab;
     //[SerializeField] float meleeRange = 3.0f;
@@ -42,6 +44,10 @@ public class MeleeSwing : MonoBehaviour
     //public bool ssWon;
     //public bool csWon;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -49,7 +55,7 @@ public class MeleeSwing : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerCamera = player.GetComponentInChildren<Camera>();
         characterController = player.GetComponent<CharacterController>();
-        whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
+        //whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
         whackemGM = FindObjectOfType<WhackEmGameManager>();
         //spawnTransform = GetComponentInChildren<Transform>();
 
@@ -77,8 +83,8 @@ public class MeleeSwing : MonoBehaviour
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
             {
                 //Debug.Log(hit.distance);
-                Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward, Color.yellow); //Draw a line to show the direction of the raycast.
-                Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
+                //Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward, Color.yellow); //Draw a line to show the direction of the raycast.
+                //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
 
                 //Target target = hit.transform.GetComponent<Target>();
                 WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
@@ -116,7 +122,7 @@ public class MeleeSwing : MonoBehaviour
                     //Spawn the head used as throwing object
                     //SpawnHead();
 
-                    Debug.Log("Smashed enemy!");
+                    //Debug.Log("Smashed enemy!");
                 }
                 //if minigames won and boss is active run this loop
                 // replace if line with this line after we don't need boss AI scene anymore
@@ -172,10 +178,18 @@ public class MeleeSwing : MonoBehaviour
 
     IEnumerator SwingMallet()
     {
+        //Keep player from clicking the card screen off by accident. 
+        if (SkillShotGameManager.Instance.gameWon)
+        {
+            canSwing = false;
+            yield return new WaitForSeconds(1);
+            canSwing = true;
+        }
+
         transform.Rotate(Vector3.right, 60f);
         canSwing = false;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
 
         transform.Rotate(Vector3.right, -60f);
         canSwing = true;

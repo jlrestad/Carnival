@@ -120,17 +120,17 @@ public class WeaponEquip : MonoBehaviour
             crossHair.SetActive(true);
 
             //If input for flashlight, put the weapon away and use flashlight.
-            if (GetComponent<FPSController>().useFlashlight)
-            {
-                //Debug.Log("this is the current weapon: " + currentWeapon.name);
+            //if (GetComponent<FPSController>().useFlashlight)
+            //{
+            //    //Debug.Log("this is the current weapon: " + currentWeapon.name);
 
-                //Turn on the flashlight
-                GetComponent<FPSController>().flashlightHold.SetActive(true);
-                GetComponent<FPSController>().flashlightOn = true;
+            //    //Turn on the flashlight
+            //    GetComponent<FPSController>().flashlightHold.SetActive(true);
+            //    GetComponent<FPSController>().flashlightOn = true;
 
-                isEquipped = false;
-                inInventory = true;
-            }
+            //    isEquipped = false;
+            //    inInventory = true;
+            //}
         }
         else
         {
@@ -141,30 +141,30 @@ public class WeaponEquip : MonoBehaviour
         //Debug.Log(weaponList.Count);
         // * * *
         //PLAYER INPUT
-        if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
-            distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
-            distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
-        {
-            //If holding a weapon, put it away before equipping new weapon.
-            if (currentWeapon != null)
-            {
-                currentWeapon.SetActive(false);
-            }
-
-            //Pick up and equip weapon.
-            PickUpWeapon();
-            BGCount = menu.BGCount; //get the count from Menu
-        }
-        //else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
+        //if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
+        //    distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
+        //    distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
         //{
-        //    //Put weapon in inventory.
-        //    UnequipWeapon();
+        //    //If holding a weapon, put it away before equipping new weapon.
+        //    if (currentWeapon != null)
+        //    {
+        //        currentWeapon.SetActive(false);
+        //    }
+
+        //    //Pick up and equip weapon.
+        //    PickUpWeapon();
+        //    BGCount = menu.BGCount; //get the count from Menu
         //}
-        else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
-        {
-            //Equip weapon from inventory.
-            EquipWeapon();
-        }
+        ////else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
+        ////{
+        ////    //Put weapon in inventory.
+        ////    UnequipWeapon();
+        ////}
+        //else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
+        //{
+        //    //Equip weapon from inventory.
+        //    EquipWeapon();
+        //}
 
         //SHOW ACTION/INTERACT PROMPT
         if (!gameRulesDisplayed)
@@ -179,27 +179,6 @@ public class WeaponEquip : MonoBehaviour
                     {
                         //If within pickup range show the prompt.
                         actionPrompt.SetActive(true);
-                    }
-
-                    //Even if weapon is equipped, hide it and pick up new weapon.
-                    if (Input.GetButton("ActionButton") && !haveGun) //Because there are multiple guns in scene. If only one is avail then get rid of the bool. ***
-                    {
-                        PickUpWeapon();
-                    }
-
-                    // ** Because there are multiple guns in scene. If only one then this is uneccessary. **
-                    //If have gun and closest weapon is a gun don't show the prompt.
-                    if (haveGun)
-                    {
-                        if (closestWeapon.CompareTag("Gun"))
-                        {
-                            actionPrompt.SetActive(false);
-                        }
-                        //If have gun but closest weapon is not a gun show the prompt.
-                        else
-                        {
-                            actionPrompt.SetActive(true);
-                        }
                     }
                 }
                 else
@@ -380,51 +359,45 @@ public class WeaponEquip : MonoBehaviour
 
     public void PickUpWeapon()
     {
-        //isEquipped = true;
+        closestWeapon.SetActive(false); //Hide weapon from scene.
+        if (currentWeapon != null)
+            currentWeapon.SetActive(false);
+
+        //Turn on crosshair
+        crossHair.SetActive(true);
 
         //GUN
-        if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
+        //if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
+        if (haveGun)
         {
             currentWeapon = gunHold;
-            weaponList.Add(currentWeapon);
-            haveGun = true;
             prevWeapon = closestWeapon;
-            closestWeapon.SetActive(false); //hide the picked up weapon
-
-            //After picking up the weapon, equip it.
-            EquipWeapon(); //picked up weapon is equipped
+            //EquipWeapon(); //Equip picked up weapon
         }
+
         //MALLET
-        if (closestWeapon.CompareTag("Mallet") && !haveMallet && whackEmActive)
+        //if (closestWeapon.CompareTag("Mallet") && !haveMallet && whackEmActive)
+        if (haveMallet)
         {
             currentWeapon = malletHold;
-            weaponList.Add(malletHold);
-            haveMallet = true;
             prevWeapon = closestWeapon;
-            closestWeapon.SetActive(false); //hide the picked up weapon
-
-            //After picking up the weapon, equip it.
-            EquipWeapon(); //picked up weapon is equipped
+            //EquipWeapon(); //Equip picked up weapon
         }
     }
 
     // Bring weapon out of inventory:
     void EquipWeapon()
     {
-        inInventory = false;
-        isEquipped = true;
-        weaponNumber++;
-
         if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
 
         //Equip weapon (except for skull)
-        //if (currentWeapon != skullParent && holdingSkull)
         if (currentWeapon != skullParent && holdingSkull)
         {
             holdingSkull = false;
 
             //Put away skulls before equiping weapon.
             skullParent.transform.GetChild(0).gameObject.SetActive(false);
+
             //Equip weapon
             currentWeapon.SetActive(true);
         }

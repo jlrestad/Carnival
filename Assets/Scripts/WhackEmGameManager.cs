@@ -62,6 +62,9 @@ public class WhackEmGameManager : MonoBehaviour
     float randomStayTime;
     public bool levelLoaded;
     [HideInInspector] bool stopPopUp;
+    [HideInInspector] public GameObject currentWeapon;
+    bool runOnce; //Controls pickupweapon
+    Menu menu;
    
     int randomEnemy;
     public MonoBehaviour script;
@@ -82,6 +85,7 @@ public class WhackEmGameManager : MonoBehaviour
         }
 
         weaponEquip = FindObjectOfType<WeaponEquip>();
+        menu = FindObjectOfType<Menu>();
 
         //Tarot Cards
         cardImage = GameObject.FindGameObjectWithTag(("MeleeGame")).GetComponentInChildren<GameCard>().GetComponent<Image>().sprite;
@@ -102,18 +106,21 @@ public class WhackEmGameManager : MonoBehaviour
 
     private void Update()
     {
-        
-        if(gameOn)
-        {
-            // alert weapon equip that the game is active and mallet can be picked up
-            weaponEquip.whackEmActive = true;
-        }
-
         //Run this when the WhackEm game is on.
-        if (gameOn && weaponEquip.haveMallet)
+        if (gameOn)
         {
+            //Pickup the weapon - once
+            if (!weaponEquip.haveMallet && !runOnce)
+            {
+                //weaponEquip.PickUpWeapon();
+                runOnce = true; 
+                weaponEquip.haveMallet = true; 
+                weaponEquip.crossHair.SetActive(true);
+            }
+
             // fixes bug causing mouse to appear when critter pops up
             Cursor.lockState = CursorLockMode.Locked;
+
             //Display the game UI
             DisplayTextUI();
 
@@ -145,7 +152,7 @@ public class WhackEmGameManager : MonoBehaviour
 
                 //* Put weapon back
                 weaponEquip.haveMallet = false;
-                weaponEquip.currentWeapon.SetActive(false);
+                //weaponEquip.currentWeapon.SetActive(false);
                 weaponEquip._closestWeapon.SetActive(true);
                 weaponEquip.prevWeapon.SetActive(true);
             }
@@ -162,11 +169,11 @@ public class WhackEmGameManager : MonoBehaviour
                 gameOn = false;
             }
         }
-        else 
-        {
-         //   gameUI.SetActive(false);
-         //   ResetGame(); //Reset the variables back to original
-        }
+        //else
+        //{
+        //    //gameUI.SetActive(false);
+        //    ResetGame(); //Reset the variables back to original
+        //}
     }
 
     public void DisplayTextUI()
@@ -181,6 +188,7 @@ public class WhackEmGameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        runOnce = false; 
         stopPopUp = false;
         weaponEquip.whackEmActive = false;
 
@@ -236,10 +244,21 @@ public class WhackEmGameManager : MonoBehaviour
         if(gameWon)
         {
             winloseText.text = "You have won...";
-            weaponEquip.isEquipped = true;
+
+            if (!weaponEquip.weaponList.Contains(currentWeapon))
+            {
+                weaponEquip.weaponList.Add(currentWeapon);
+                weaponEquip.currentWeapon = currentWeapon;
+                weaponEquip.weaponNumber++;
+                weaponEquip.isEquipped = true;
+            }
+
+            //weaponEquip.isEquipped = true;
+            DisplayGameCard();
         } else
         {
             winloseText.text = "You have lost...";
+            ResetGame();
         }
         stopPopUp = true;
         gameOn = false;
@@ -253,15 +272,6 @@ public class WhackEmGameManager : MonoBehaviour
         winloseText.enabled = false;
         gameOver = true;
         gameUI.SetActive(false);
-
-        if (gameWon)
-        {
-            DisplayGameCard();
-        }
-        else
-        {
-            ResetGame();
-        }
     }
 
     //Choose random enemy with random appear times
@@ -343,16 +353,21 @@ public class WhackEmGameManager : MonoBehaviour
     //Transition from displayed card to weapon indicator card
     public IEnumerator DisplayCardWon()
     {
+        //Wait 1 second before being able to click so the card won screen isn't exited by accident.
+        yield return new WaitForSeconds(1);
+        //After the wait a click will close the card won screen and return movement to the player.
         yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
 
         //Turn off card won display screen
         displayPickupScreen.SetActive(false);
 
+
         //Let player move when the display screen is off.
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
         //Display the current weapon card
-        Menu.Instance.DisplayWeaponCard();
+        menu.DisplayWeaponCard();
+        //Menu.Instance.DisplayWeaponCard();
     }
 
 }

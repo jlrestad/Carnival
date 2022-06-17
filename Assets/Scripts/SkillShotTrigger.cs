@@ -21,10 +21,16 @@ public class SkillShotTrigger : MonoBehaviour
     public bool gameRulesOn;
     private MovingTarget[] movingTargets;
         
+    public GameObject gameWeapon;
+    public GameObject playerWeapon;
+
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
+        gameWeapon = GameObject.FindGameObjectWithTag("Gun");
+        skillshotGM.currentWeapon = playerWeapon;
     }
 
     private void Update()
@@ -63,7 +69,7 @@ public class SkillShotTrigger : MonoBehaviour
             
             if (Input.GetButton("ActionButton") && !skillshotGM.gameWon)
             {
-                Debug.Log("E Pressed");
+                //Debug.Log("E Pressed");
                 //Bring up the game rule UI
                 ShowGameUI();
             }
@@ -142,6 +148,13 @@ public class SkillShotTrigger : MonoBehaviour
         //Spend the required ticket cost for the game
         HudManager.Instance.HealthTicket(ticketCost);
 
+        gameWeapon.SetActive(false); //Hide weapon in scene
+        playerWeapon.SetActive(true); //Show player holding weapon
+
+        player.GetComponent<WeaponEquip>().PickUpWeapon();
+
+
+        //*
         foreach (MovingTarget movingTarget in movingTargets)
         {
             //Debug.Log("reset");
