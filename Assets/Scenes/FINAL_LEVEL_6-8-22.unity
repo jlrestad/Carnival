@@ -12039,6 +12039,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: -DialogAreas_keyboard
       objectReference: {fileID: 0}
+    - target: {fileID: 8706705229225453187, guid: ffed1bd6f6e16824c93841e9e3ebc146, type: 3}
+      propertyPath: CS_game
+      value: 
+      objectReference: {fileID: 1849671106}
+    - target: {fileID: 8706705229225453187, guid: ffed1bd6f6e16824c93841e9e3ebc146, type: 3}
+      propertyPath: SS_game
+      value: 
+      objectReference: {fileID: 2100313719}
+    - target: {fileID: 8706705229225453187, guid: ffed1bd6f6e16824c93841e9e3ebc146, type: 3}
+      propertyPath: introText
+      value: 
+      objectReference: {fileID: 684681717}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffed1bd6f6e16824c93841e9e3ebc146, type: 3}
 --- !u!4 &263611111 stripped
@@ -16249,7 +16261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5225305957612556866, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: timeCounter
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5225305957612556866, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: winloseText
@@ -30354,6 +30366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e04838bc2a760a143b1fe92b3a24e4e8, type: 3}
+--- !u!1 &684681717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9194780275648563154, guid: 9b9bce684168276479a48a62f96e6f2e, type: 3}
+  m_PrefabInstance: {fileID: 847640929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &684723009
 GameObject:
   m_ObjectHideFlags: 0
@@ -74829,6 +74846,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1087006626596759547, guid: e04838bc2a760a143b1fe92b3a24e4e8, type: 3}
   m_PrefabInstance: {fileID: 680246761}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1849671106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4976218524061274678, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+  m_PrefabInstance: {fileID: 1221140196307810720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1850165541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84639,6 +84661,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098273572}
   m_CullTransparentMesh: 1
+--- !u!1 &2100313719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5225305957612556869, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+  m_PrefabInstance: {fileID: 367245408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2100972328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1395006924396309102, guid: 4e5df890f81d897458b6945d0beb94db, type: 3}
@@ -87884,7 +87911,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102743335115650768}
   m_LocalRotation: {x: -0, y: 0.91225976, z: -0, w: 0.40961218}
-  m_LocalPosition: {x: 69.3, y: -8.96, z: 12.77}
+  m_LocalPosition: {x: 19.2, y: -8.96, z: 30.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1102743334713653210}

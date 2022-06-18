@@ -192,9 +192,9 @@ public class SkillShotGameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        runOnce = false; 
-
-        //weaponEquip.skillshotActive = false;
+        runOnce = false;
+        
+        weaponEquip.skillshotActive = false;
 
         //Score
         score = 0;
@@ -326,8 +326,9 @@ public class SkillShotGameManager : MonoBehaviour
 
     public void SendOneHome(GameObject trgt, Transform parentPos)
     {
-        trgt.SetActive(false);
+        trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
         trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+        trgt.SetActive(false);
         trgt.transform.position = parentPos.position;
     } 
 

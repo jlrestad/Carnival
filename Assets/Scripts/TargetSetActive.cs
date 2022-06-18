@@ -45,7 +45,6 @@ public class TargetSetActive : MonoBehaviour
     private void Update()
     {
         StartCoroutine(FlipAround());
-
     }
 
     //Controls when to restart the loop
@@ -93,6 +92,7 @@ public class TargetSetActive : MonoBehaviour
                 animator.SetBool("isPos", true);
 
                 isFlipped = false;
+                targetHit = false;
             }
 
             //if (skillshotGM.gameOver || !skillshotGM.gameOn)
