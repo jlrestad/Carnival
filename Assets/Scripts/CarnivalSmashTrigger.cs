@@ -13,6 +13,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
     //[SerializeField] bool buttonPressed;
     public Transform gameplayPosition;
     public Transform player;
+    WeaponEquip WE;
 
     [HideInInspector] public float triggerDistance;
     [HideInInspector] public float distanceFromGame;
@@ -33,6 +34,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
+        WE = player.GetComponent<WeaponEquip>();
         whackemGM.currentWeapon = playerWeapon;
 
         //Set the weapon in the manager
@@ -80,10 +82,11 @@ public class CarnivalSmashTrigger : MonoBehaviour
 
     private void ShowGameUI()
     {
-        gameRulesOn = true;
         //Turn off the prompt
-        //prompt.SetActive(false);
+        //WE.actionPrompt.SetActive(false);
+        prompt.SetActive(false);
 
+        gameRulesOn = true;
 
         //If controller type is keyboard give mouse control
         if (!Menu.Instance.usingJoystick)

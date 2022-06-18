@@ -11,6 +11,7 @@ public class SkillShotTrigger : MonoBehaviour
     //[SerializeField] bool buttonPressed;
     public Transform gameplayPosition;
     public Transform player;
+    WeaponEquip WE;
     public int maxDistance = 4;
 
 
@@ -30,6 +31,7 @@ public class SkillShotTrigger : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         menu = GameObject.FindObjectOfType<Menu>();
+        WE = player.GetComponent<WeaponEquip>();
         skillshotGM.currentWeapon = playerWeapon;
 
         //Set the weapon in the manager
@@ -81,10 +83,13 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void ShowGameUI()
     {
+        //Turn off the prompt
+        //WE.actionPrompt.SetActive(false);
+        prompt.SetActive(false); //**
+
         //Show the game rules
         gameRulesOn = true;
-        //Turn off the prompt
-        //prompt.SetActive(false); //**
+
 
         if (!skillshotGM.gameWon)
         {

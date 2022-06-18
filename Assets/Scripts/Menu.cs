@@ -82,8 +82,6 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
-        //SliderManager.Instance.brightnessSlider.value = brightnessValue;
-        //PlayerPrefs.SetFloat("brightnessValue", brightnessValue);
     }
 
     public void HandleOnStateChange()

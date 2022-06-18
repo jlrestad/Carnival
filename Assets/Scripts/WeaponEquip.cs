@@ -66,6 +66,7 @@ public class WeaponEquip : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
     }
 
     private void Start()

@@ -231,7 +231,8 @@ public class WhackEmGameManager : MonoBehaviour
 
         runOnce = false; 
         stopPopUp = false;
-        gameJustFinished = false;
+        gameOver = false;
+        //gameJustFinished = false;
         weaponEquip.whackEmActive = false;
 
         //Score
@@ -302,7 +303,7 @@ public class WhackEmGameManager : MonoBehaviour
 
         stopPopUp = true;
         gameOn = false;
-        //gameOver = false;
+        gameOver = true;
         gameJustFinished = true;
         weaponEquip.whackEmActive = false;
         timerText.enabled = false;
@@ -313,7 +314,8 @@ public class WhackEmGameManager : MonoBehaviour
         CarnivalSmashTrigger.Instance.UnLockPlayer();
         winloseText.text = (" ");
         winloseText.enabled = false;
-        gameOver = true;
+        //gameOver = true;
+        gameJustFinished = false;
         gameUI.SetActive(false);
     }
 

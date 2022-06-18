@@ -16301,7 +16301,7 @@ PrefabInstance:
       objectReference: {fileID: 1987014386}
     - target: {fileID: 5226414292463460896, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: moveSpeed
-      value: 1.3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5226414292463460896, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: timeBetweenTargets
@@ -88099,7 +88099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponEquip: {fileID: 1224787770007421654}
-  walkSpeed: 3
+  walkSpeed: 4
   runSpeed: 7.5
   jumpSpeed: 5
   lookSpeed: 100
@@ -88441,6 +88441,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 721381574}
     m_Modifications:
+    - target: {fileID: 28901857, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 28901857, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.69
+      objectReference: {fileID: 0}
     - target: {fileID: 366248202, guid: f2d51098338f3df4e95ae2e60bcc2efb, type: 3}
       propertyPath: health
       value: 100
@@ -111225,7 +111233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d9cfb6baeef9479392be9efe1b268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingBobbingSpeed: 10
+  walkingBobbingSpeed: 9
   bobbingAmount: 0.07
   controller: {fileID: 1102743335115650771}
 --- !u!4 &8967352415626204889
