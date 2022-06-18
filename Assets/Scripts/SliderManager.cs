@@ -33,9 +33,9 @@ public class SliderManager : MonoBehaviour
         //volumeSlider = GameObject.Find("VolumeSlider").GetComponent<UnityEngine.UI.Slider>();
         //sensitivitySlider = GameObject.Find("SensitivitySlider").GetComponent<UnityEngine.UI.Slider>();
         //brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<UnityEngine.UI.Slider>();
-        LoadVolume();
-        LoadSensitivity();
-        LoadBrightness();
+        //LoadVolume();
+        //LoadSensitivity();
+        //LoadBrightness();
 
         //Set scene light
         //sceneLight = Menu.Instance.sceneLight;

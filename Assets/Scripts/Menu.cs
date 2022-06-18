@@ -39,8 +39,8 @@ public class Menu : MonoBehaviour
     //public string exposedParam;
 
     [Header("OBJECTS")]
-    [SerializeField] private GameObject titleScreen;
-    [SerializeField] private GameObject titleCamera;
+    public GameObject titleScreen;
+    public GameObject titleCamera;
     //public GameObject player;
 
     [Header("MENUS")]
@@ -57,6 +57,7 @@ public class Menu : MonoBehaviour
     public Sprite cardImage;
     public Sprite bgImage;
     public int BGCount;
+    bool pauseOn;
 
     [Space(10)]
     public string[] controllerArray = null;
@@ -81,6 +82,8 @@ public class Menu : MonoBehaviour
         GM.OnStateChange += HandleOnStateChange;
 
         controllerArray = Input.GetJoystickNames();
+        //SliderManager.Instance.brightnessSlider.value = brightnessValue;
+        //PlayerPrefs.SetFloat("brightnessValue", brightnessValue);
     }
 
     public void HandleOnStateChange()
@@ -108,7 +111,7 @@ public class Menu : MonoBehaviour
             usingJoystick = true;
         }
 
-        if (Input.GetButtonDown("Menu") && counter == 0)
+        if (Input.GetButtonDown("Menu") && counter == 0 && !pauseOn)
         {
             PauseGame();
         }
@@ -122,9 +125,8 @@ public class Menu : MonoBehaviour
         //Change the counter so that the pause menu cannot appear while settings is open.
         if (settingsMenu.activeInHierarchy)
         {
-            counter = 1;
+            pauseOn = true;
         }
-
 
         //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
         if (WE != null)
@@ -142,7 +144,6 @@ public class Menu : MonoBehaviour
                 return;
             }
         }
-
     }
 
     //
@@ -155,7 +156,7 @@ public class Menu : MonoBehaviour
         //Invoke("LoadLevel", delayTime);
         StartCoroutine(LoadLevel());
 
-        SliderManager.Instance.LoadBrightness();
+        StartCoroutine(GetSceneLight());
 
         //Debug.Log(GM.GameState);
     }
@@ -173,11 +174,7 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
 
-        //Clear button selected
-        EventSystem.current.SetSelectedGameObject(null);
-        //Set selected button
-        firstButton = GameObject.FindGameObjectWithTag("FirstButton");
-        EventSystem.current.SetSelectedGameObject(firstButton);
+        ClearButton();
     }
 
     //
@@ -199,7 +196,7 @@ public class Menu : MonoBehaviour
     {
         //Called from Settings menu Back button:
         
-        if (counter == 1)
+        if (counter == 1 )
         {
             pauseMenu.SetActive(true);
             settingsMenu.SetActive(false);
@@ -212,12 +209,7 @@ public class Menu : MonoBehaviour
     }
 
     //Get the main light and set the intensity to the value in Menu
-    public void GetSceneLight()
-    {
-        StartCoroutine(Delay());  //Delay getting this info because the scene is still loading.
-    }
-
-    IEnumerator Delay()
+    public IEnumerator GetSceneLight()
     {
         yield return new WaitForSeconds(1);
 
@@ -225,7 +217,7 @@ public class Menu : MonoBehaviour
         sceneLight.intensity = brightnessValue;
 
         Debug.Log("Scene Light:" + sceneLight);
-        Debug.Log("Brightness: " + brightnessValue);
+        //Debug.Log("Brightness: " + brightnessValue);
     }
 
     public void ClearButton()
@@ -289,8 +281,6 @@ public class Menu : MonoBehaviour
 
         //Clear level name on start
         //levelName = "";
-
-        //introAudio.volume = 1;
     }
 
     public void ChangeLevel(string name)
@@ -301,8 +291,6 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(name, LoadSceneMode.Additive);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-        //StartCoroutine(DelayDeactivation());
     }
 
     
