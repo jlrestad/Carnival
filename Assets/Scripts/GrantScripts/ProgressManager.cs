@@ -10,7 +10,7 @@ public class ProgressManager : MonoBehaviour
     public GameObject CS_game;
     private SkillShotGameManager SS_GM;
     private WhackEmGameManager CS_GM;
-    public GameObject introIndicator; //reference to the text that needs to be set inactive for the first dialog to run
+    public GameObject introText; //reference to the text that needs to be set inactive for the first dialog to run
     [Header("AUTO")]
     public GameObject FirstDialog; //the first dialog triggers after the intro has played
     public GameObject SecondDialog; //the second dialog triggers after clearing 1 game
