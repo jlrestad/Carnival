@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.TerrainAPI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -117,7 +118,6 @@ public class WhackEmGameManager : MonoBehaviour
         {
             if (!weaponEquip.haveMallet && !runOnce)
             {
-                //weaponEquip.PickUpWeapon();
                 runOnce = true; 
                 weaponEquip.haveMallet = true; 
                 weaponEquip.crossHair.SetActive(true);
@@ -129,7 +129,7 @@ public class WhackEmGameManager : MonoBehaviour
 
                 if (minigameAudio.volume == 0)
                 {
-                    minigameAudio.volume = 0.5f;
+                    minigameAudio.volume = 0.7f;
                 }
                 minigameAudio.Play();
             }
@@ -187,7 +187,11 @@ public class WhackEmGameManager : MonoBehaviour
 
     IEnumerator ShutDownGame()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
+        //Turn off the light 
+        minigameLight.SetActive(false);
+
+        yield return new WaitForSeconds(1.0f);
 
         float audio = minigameAudio.volume;
         float speed = 0.01f;
@@ -197,13 +201,10 @@ public class WhackEmGameManager : MonoBehaviour
             minigameAudio.volume = i;
             yield return null;
         }
-
-        //Turn off the light 
-        minigameLight.SetActive(false);
-
+       
         minigameAudio.Stop();
 
-        minigameAudio.volume = 0.5f;
+        minigameAudio.volume = 0.7f;
     }
 
     public void DisplayTextUI()

@@ -27,6 +27,7 @@ public class MeleeSwing : MonoBehaviour
     [SerializeField] bool canSwing;
     [HideInInspector] RaycastHit hit;
     [SerializeField] GameObject hitVfxPrefab;
+    public AudioSource hitSound;
 
     Vector3 distanceToPlayer;
     
@@ -98,12 +99,14 @@ public class MeleeSwing : MonoBehaviour
                     Destroy(hitVfx, 0.5f);
                     enemy.hasBeenHit = true;
 
+                    hitSound.Play();
+
                     cardManager = enemy.GetComponentInParent<GameCardManager>();
 
                     //Increase speed after each hit
                     whackemGM.IncreaseSpeed();
                     //Turn off enemy after hit
-                    enemy.HealthManager();
+                    enemy.HitEnemy();
 
                     //Add to the score
                     if (!whackemGM.isTaunting)

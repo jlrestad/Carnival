@@ -102,10 +102,13 @@ public class SkillShotGameManager : MonoBehaviour
 
                 if (minigameAudio.volume == 0)
                 {
-                    minigameAudio.volume = 0.5f;
+                    minigameAudio.volume = 0.7f;
                 }
                 minigameAudio.Play();
             }
+
+            // fixes bug causing mouse to appear when critter pops up
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         //Run this when the WhackEm game is on.
@@ -173,7 +176,7 @@ public class SkillShotGameManager : MonoBehaviour
 
         minigameAudio.Stop();
 
-        minigameAudio.volume = 0.5f;
+        minigameAudio.volume = 0.7f;
     }
 
     

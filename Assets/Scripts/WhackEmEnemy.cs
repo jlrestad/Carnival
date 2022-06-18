@@ -11,6 +11,7 @@ public class WhackEmEnemy : MonoBehaviour
     //public int maxHealth = 100;
     public bool hasBeenHit;
     public bool isVis;
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class WhackEmEnemy : MonoBehaviour
         whackemGM = GetComponent<WhackEmGameManager>();
     }
 
-    public void HealthManager()
+    public void HitEnemy()
     {
         if (hasBeenHit)
         {
