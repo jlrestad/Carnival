@@ -101,12 +101,6 @@ public class SkillShotTrigger : MonoBehaviour
                 FPSController.Instance.canMove = true;
             }
 
-            //Lock player camera movement until a button is pressed
-            //if (!player.GetComponent<WeaponEquip>().skillshotActive)
-            //{
-            //    FPSController.Instance.canMove = false;
-            //}
-
             //If controller type is keyboard give mouse control
             if (!Menu.Instance.usingJoystick)
             {

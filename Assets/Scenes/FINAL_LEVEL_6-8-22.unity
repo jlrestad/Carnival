@@ -16288,7 +16288,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 7901300498008949284, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
     - {fileID: 4555957730529127602, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
 --- !u!1001 &369236614
@@ -36883,6 +36882,10 @@ PrefabInstance:
     - target: {fileID: 1765499882477027839, guid: 9b9bce684168276479a48a62f96e6f2e, type: 3}
       propertyPath: m_Name
       value: BlackBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765499882477027839, guid: 9b9bce684168276479a48a62f96e6f2e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b9bce684168276479a48a62f96e6f2e, type: 3}

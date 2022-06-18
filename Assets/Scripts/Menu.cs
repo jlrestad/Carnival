@@ -57,7 +57,7 @@ public class Menu : MonoBehaviour
     public Sprite cardImage;
     public Sprite bgImage;
     public int BGCount;
-    [SerializeField] bool pauseOn;
+    [SerializeField] bool settingsOn;
 
     [Space(10)]
     public string[] controllerArray = null;
@@ -101,6 +101,15 @@ public class Menu : MonoBehaviour
         //Set Player
         //player = GameObject.FindGameObjectWithTag("Player");
 
+        if (settingsMenu.activeInHierarchy == true)
+        {
+            settingsOn = true;
+        }
+        else
+        {
+            settingsOn = false;
+        }
+
         //DETECT CONTROLLER
         if (controllerArray == null)
         {
@@ -109,17 +118,20 @@ public class Menu : MonoBehaviour
         else if (controllerArray.Length > 0 /*&& controllerArray[0] != ""*/)
         {
             usingJoystick = true;
+            
+            //Hide cursor
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
         }
 
-        if (Input.GetButtonDown("Menu") && counter == 0 && !pauseOn)
+        if (Input.GetButtonDown("Menu") && counter == 0)
         {
             PauseGame();
         }
-        else if (Input.GetButtonDown("Menu") && counter == 1)
+        else if (Input.GetButtonDown("Menu") && counter == 1 && !settingsOn)
         {
-            //pauseSound.Play();
-
             UnpauseGame();
+            Cursor.visible = false;
         }
 
         //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
@@ -159,7 +171,6 @@ public class Menu : MonoBehaviour
     //PAUSE GAME
     public void PauseGame()
     {
-        pauseOn = true;
         //Show mouse
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
@@ -176,10 +187,8 @@ public class Menu : MonoBehaviour
     //UNPAUSE GAME
     public void UnpauseGame()
     {
-        pauseOn = false;
-
         //Hide mouse
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
         counter = 0;
@@ -280,17 +289,19 @@ public class Menu : MonoBehaviour
         //levelName = "";
     }
 
-    public void ChangeLevel(string name)
-    {
-        //Clear button selected
-        EventSystem.current.SetSelectedGameObject(null);
+    //public void AddScene(string name)
+    //{
+    //    //Clear button selected
+    //    EventSystem.current.SetSelectedGameObject(null);
 
-        SceneManager.LoadScene(name, LoadSceneMode.Additive);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+    //    SceneManager.LoadScene(name, LoadSceneMode.Additive);
 
-    
+    //    //Hide mouse when new level loaded
+    //    Cursor.lockState = CursorLockMode.Locked;
+    //    Cursor.visible = false;
+    //}
+
+
     //Displays the card that was just won in the first most available spot, left to right.
     public void DisplayWeaponCard()
     {
