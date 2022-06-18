@@ -155,7 +155,6 @@ public class Menu : MonoBehaviour
 
         //Invoke("LoadLevel", delayTime);
         StartCoroutine(LoadLevel());
-
         StartCoroutine(GetSceneLight());
 
         //Debug.Log(GM.GameState);
