@@ -57,14 +57,14 @@ public class Menu : MonoBehaviour
     public Sprite cardImage;
     public Sprite bgImage;
     public int BGCount;
-    bool pauseOn;
+    [SerializeField] bool pauseOn;
 
     [Space(10)]
     public string[] controllerArray = null;
 
     [Header("BRIGHTNESS")]
     public Light sceneLight;
-    public float brightnessValue = 0.7f;
+    //public float brightnessValue = 0.7f;
 
     public bool usingJoystick;
 
@@ -122,12 +122,6 @@ public class Menu : MonoBehaviour
             UnpauseGame();
         }
 
-        //Change the counter so that the pause menu cannot appear while settings is open.
-        if (settingsMenu.activeInHierarchy)
-        {
-            pauseOn = true;
-        }
-
         //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
         if (WE != null)
         {
@@ -155,6 +149,7 @@ public class Menu : MonoBehaviour
 
         //Invoke("LoadLevel", delayTime);
         StartCoroutine(LoadLevel());
+        //SliderManager.Instance.SetSceneBrightness();
         StartCoroutine(GetSceneLight());
 
         //Debug.Log(GM.GameState);
@@ -164,6 +159,7 @@ public class Menu : MonoBehaviour
     //PAUSE GAME
     public void PauseGame()
     {
+        pauseOn = true;
         //Show mouse
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
@@ -180,6 +176,8 @@ public class Menu : MonoBehaviour
     //UNPAUSE GAME
     public void UnpauseGame()
     {
+        pauseOn = false;
+
         //Hide mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -213,7 +211,7 @@ public class Menu : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
-        sceneLight.intensity = brightnessValue;
+        //sceneLight.intensity = brightnessValue;
 
         Debug.Log("Scene Light:" + sceneLight);
         //Debug.Log("Brightness: " + brightnessValue);

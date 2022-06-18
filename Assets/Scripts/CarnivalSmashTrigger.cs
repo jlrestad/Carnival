@@ -57,7 +57,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
         {
             //Hide cursor again
             Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = false;
+            Cursor.visible = true;
         }
 
         //find distance between the player and game booth

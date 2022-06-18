@@ -11,9 +11,10 @@ public class SkillShotTrigger : MonoBehaviour
     //[SerializeField] bool buttonPressed;
     public Transform gameplayPosition;
     public Transform player;
+    public int maxDistance = 4;
 
 
-    [SerializeField] public float triggerDistance;
+    //[SerializeField] public float triggerDistance;
     [HideInInspector] public float distanceFromGame;
     public GameObject prompt;
     public Menu menu;
@@ -61,7 +62,7 @@ public class SkillShotTrigger : MonoBehaviour
         //Find distance between player and gamebooth
         distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
 
-        if (distanceFromGame <= gameWeapon.transform.position.sqrMagnitude && player.position != gameplayPosition.position && !skillshotGM.gameWon)
+        if (distanceFromGame <= maxDistance /*&& player.position != gameplayPosition.position*/ && !skillshotGM.gameWon)
         {
             //Debug.Log("Entered skillshot area");
 

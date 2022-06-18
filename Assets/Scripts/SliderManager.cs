@@ -118,10 +118,10 @@ public class SliderManager : MonoBehaviour
     //
     // BRIGHTNESS
     //Set the brightness value in Menu to be called when the scene loads
-    public void SetSceneBrightness()
-    {
-        Menu.Instance.brightnessValue = brightnessValue;
-    }
+    //public void SetSceneBrightness()
+    //{
+    //    Menu.Instance.brightnessValue = brightnessValue;
+    //}
 
     public void AdjustBrightness()
     {
