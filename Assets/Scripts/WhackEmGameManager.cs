@@ -219,6 +219,15 @@ public class WhackEmGameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        if (!gameWon)
+        {
+            //* Put weapon back
+            weaponEquip.haveMallet = false;
+            weaponEquip.crossHair.SetActive(false);
+            gameWeapon.SetActive(true);
+            playerWeapon.SetActive(false);
+        }
+
         runOnce = false; 
         stopPopUp = false;
         gameJustFinished = false;
@@ -235,16 +244,6 @@ public class WhackEmGameManager : MonoBehaviour
         //Time
         timeLeft = resetTime;
         timerText.text = ("00:" + (int)timeLeft);
-
-        if (!gameWon)
-        {
-            //* Put weapon back
-            weaponEquip.haveMallet = false;
-            weaponEquip.crossHair.SetActive(false);
-            gameWeapon.SetActive(true);
-            playerWeapon.SetActive(false);
-        }
-
     }
 
     public void IncreaseSpeed()

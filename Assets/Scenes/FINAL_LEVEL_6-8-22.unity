@@ -16227,6 +16227,10 @@ PrefabInstance:
       propertyPath: playerWeapon
       value: 
       objectReference: {fileID: 868618127026957405}
+    - target: {fileID: 2996449677386550979, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+      propertyPath: triggerDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3216939856758536694, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: m_Name
       value: SKILLSHOT
@@ -16279,7 +16283,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7901300498008949284, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
+    - {fileID: 4555957730529127602, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
 --- !u!1001 &369236614
 PrefabInstance:

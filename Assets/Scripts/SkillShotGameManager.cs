@@ -88,9 +88,10 @@ public class SkillShotGameManager : MonoBehaviour
     {
         if (gameOn)
         {
+            weaponEquip.skillshotActive = true;
+
             if (!weaponEquip.haveGun && !runOnce)
             {
-                //weaponEquip.PickUpWeapon();
                 runOnce = true;
                 weaponEquip.haveGun = true;
                 weaponEquip.crossHair.SetActive(true);
@@ -160,7 +161,12 @@ public class SkillShotGameManager : MonoBehaviour
 
     IEnumerator ShutDownGame()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        //Turn off the light 
+        minigameLight.SetActive(false);
+
+        yield return new WaitForSeconds(1.0f);
 
         float audio = minigameAudio.volume;
         float speed = 0.01f;
@@ -170,9 +176,6 @@ public class SkillShotGameManager : MonoBehaviour
             minigameAudio.volume = i;
             yield return null;
         }
-
-        //Turn off the light 
-        minigameLight.SetActive(false);
 
         minigameAudio.Stop();
 
@@ -192,22 +195,6 @@ public class SkillShotGameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        runOnce = false;
-        
-        weaponEquip.skillshotActive = false;
-
-        //Score
-        score = 0;
-        scoreText.text = (score + "/" + scoreLimit);
-
-        //Speed
-        //minRando = minRandoTemp;
-        //maxRando = maxRandoTemp;
-
-        //Time
-        timeLeft = resetTime;
-        timerText.text = ("00:" + (int)timeLeft);
-
         if (!gameWon)
         {
             //* Put weapon back
@@ -216,6 +203,18 @@ public class SkillShotGameManager : MonoBehaviour
             gameWeapon.SetActive(true);
             playerWeapon.SetActive(false);
         }
+
+        runOnce = false;
+        gameJustPlayed = true;
+        weaponEquip.skillshotActive = false;
+
+        //Score
+        score = 0;
+        scoreText.text = (score + "/" + scoreLimit);
+
+        //Time
+        timeLeft = resetTime;
+        timerText.text = ("00:" + (int)timeLeft);
     }
 
 
@@ -239,7 +238,6 @@ public class SkillShotGameManager : MonoBehaviour
     {
         //Display lose message
         winloseText.enabled = true;
-        //gameOver = true;
 
         if (gameWon)
         {
@@ -263,7 +261,7 @@ public class SkillShotGameManager : MonoBehaviour
 
         gameOn = false;
         gameJustPlayed = true;
-        weaponEquip.skillshotActive = false;
+        //weaponEquip.skillshotActive = false;
         timerText.enabled = false;
       
         yield return new WaitForSeconds(2);
