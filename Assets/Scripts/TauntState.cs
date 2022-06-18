@@ -66,7 +66,7 @@ namespace CH
         {
             // method to call taunt animation
             agent.destination = (agent.transform.position);   // stops boss from continuing the previous movement if player leaves fov during taunt
-            Debug.Log("taunting");
+            //Debug.Log("taunting");
             StartCoroutine(spawnManager.SpawnCritters());
         }
     }

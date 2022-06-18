@@ -99,7 +99,7 @@ public class Gun : MonoBehaviour
         //Get raycast hit information and use it to calculate damage
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
 
             Transform target = hit.transform.GetComponent<Transform>();
             TargetSetActive targetScript = hit.transform.GetComponentInChildren<TargetSetActive>();

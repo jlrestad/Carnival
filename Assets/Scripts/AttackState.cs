@@ -68,13 +68,13 @@ namespace CH
 
         private void LeftSwing()
         {
-            Debug.Log("left swing");
+            //Debug.Log("left swing");
             // need left swing animation to happen when called
             Attack();
         }
         private void RightSwing()
         {
-            Debug.Log("right swing");
+            //Debug.Log("right swing");
             // need left swing animation to happen when called
             Attack();
         }

@@ -88,7 +88,7 @@ public class Head : MonoBehaviour
         //For Casket Baskets game
         if (other.CompareTag("Bucket"))
         {
-            Debug.Log("Head trigger working");
+            //Debug.Log("Head trigger working");
             other.GetComponentInParent<GameCardManager>().critterList.Add(other.transform.gameObject);
 
             //If skull hits the bucket then hide it from the scene.

@@ -88,6 +88,8 @@ public class SkillShotGameManager : MonoBehaviour
     {
         if (gameOn)
         {
+            weaponEquip.actionPrompt.SetActive(false);
+
             weaponEquip.skillshotActive = true;
 
             if (!weaponEquip.haveGun && !runOnce)

@@ -116,7 +116,7 @@ public class MeleeSwing : MonoBehaviour
                     else
                     {
                         //Taunting so no points given
-                        Debug.Log("HAHA ~ No point!");
+                        //Debug.Log("HAHA ~ No point!");
                     }
 
                     //Add enemy to the list
@@ -182,7 +182,7 @@ public class MeleeSwing : MonoBehaviour
     IEnumerator SwingMallet()
     {
         //Keep player from clicking the card screen off by accident. 
-        if (SkillShotGameManager.Instance.gameWon)
+        if (WhackEmGameManager.Instance.displayPickupScreen.activeInHierarchy)
         {
             canSwing = false;
             yield return new WaitForSeconds(1);

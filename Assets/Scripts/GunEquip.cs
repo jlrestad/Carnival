@@ -54,7 +54,7 @@ public class GunEquip : MonoBehaviour
 
     public void GetGun()
     {
-        Debug.Log("Equipped gun!");
+        //Debug.Log("Equipped gun!");
 
         weaponEquip.weaponList.Add(this.gameObject); //Add this weapon to the weapons list.
 
@@ -71,7 +71,7 @@ public class GunEquip : MonoBehaviour
 
     public void HideWeapon()
     {
-        Debug.Log("Unequip!");
+        //Debug.Log("Unequip!");
 
         activeWeapon.SetActive(false);
 
@@ -83,7 +83,7 @@ public class GunEquip : MonoBehaviour
 
     void ShowWeapon()
     {
-        Debug.Log("ReEquip!");
+        //Debug.Log("ReEquip!");
 
         activeWeapon.SetActive(true);
 

@@ -222,7 +222,7 @@ public class Menu : MonoBehaviour
         sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
         //sceneLight.intensity = brightnessValue;
 
-        Debug.Log("Scene Light:" + sceneLight);
+        //Debug.Log("Scene Light:" + sceneLight);
         //Debug.Log("Brightness: " + brightnessValue);
     }
 

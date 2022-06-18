@@ -51,13 +51,13 @@ public class SkillShotTrigger : MonoBehaviour
 
         movingTargets = FindObjectsOfType<MovingTarget>();
 
-        if (player.GetComponent<WeaponEquip>().skillshotActive)
-        {
-            //Hide cursor again
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = false;
+        //if (player.GetComponent<WeaponEquip>().skillshotActive)
+        //{
+        //    //Hide cursor again
+        //    Cursor.lockState = CursorLockMode.Confined;
+        //    Cursor.visible = false;
 
-        }
+        //}
 
         //Find distance between player and gamebooth
         distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
@@ -84,7 +84,7 @@ public class SkillShotTrigger : MonoBehaviour
         //Show the game rules
         gameRulesOn = true;
         //Turn off the prompt
-        prompt.SetActive(false);
+        //prompt.SetActive(false); //**
 
         if (!skillshotGM.gameWon)
         {
@@ -102,7 +102,7 @@ public class SkillShotTrigger : MonoBehaviour
             }
 
             //If controller type is keyboard give mouse control
-            if (!Menu.Instance.usingJoystick)
+            if (!menu.usingJoystick)
             {
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
@@ -163,7 +163,7 @@ public class SkillShotTrigger : MonoBehaviour
         //gameWeapon.SetActive(false); //Hide weapon in scene
         playerWeapon.SetActive(true); //Show player holding weapon
 
-        player.GetComponent<WeaponEquip>().PickUpWeapon();
+        //player.GetComponent<WeaponEquip>().PickUpWeapon();
 
 
         //*

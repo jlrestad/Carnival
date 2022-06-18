@@ -16301,7 +16301,7 @@ PrefabInstance:
       objectReference: {fileID: 1987014386}
     - target: {fileID: 5226414292463460896, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: moveSpeed
-      value: 1.5
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 5226414292463460896, guid: 5346d4edf8b084543b824f612db5481b, type: 3}
       propertyPath: timeBetweenTargets
@@ -88076,7 +88076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponEquip: {fileID: 1224787770007421654}
   walkSpeed: 3
-  runSpeed: 6
+  runSpeed: 7.5
   jumpSpeed: 5
   lookSpeed: 100
   gravity: 9.8

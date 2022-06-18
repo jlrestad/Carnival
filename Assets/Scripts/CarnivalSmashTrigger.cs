@@ -53,12 +53,12 @@ public class CarnivalSmashTrigger : MonoBehaviour
             prompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
         }
 
-        if (player.GetComponent<WeaponEquip>().whackEmActive)
-        {
-            //Hide cursor again
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-        }
+        //if (player.GetComponent<WeaponEquip>().whackEmActive)
+        //{
+        //    //Hide cursor again
+        //    Cursor.lockState = CursorLockMode.Confined;
+        //    Cursor.visible = true;
+        //}
 
         //find distance between the player and game booth
         distanceFromGame = Vector3.Distance(player.transform.position, this.transform.position);
@@ -82,7 +82,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
     {
         gameRulesOn = true;
         //Turn off the prompt
-        prompt.SetActive(false);
+        //prompt.SetActive(false);
 
 
         //If controller type is keyboard give mouse control
@@ -165,7 +165,7 @@ public class CarnivalSmashTrigger : MonoBehaviour
         //gameWeapon.SetActive(false); //Hides weapon in scene
         playerWeapon.SetActive(true); //Shows player holding weapon
 
-        player.GetComponent<WeaponEquip>().PickUpWeapon();
+        //player.GetComponent<WeaponEquip>().PickUpWeapon();
     }
 
     public void LeaveGame()

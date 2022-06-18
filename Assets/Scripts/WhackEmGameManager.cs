@@ -115,6 +115,8 @@ public class WhackEmGameManager : MonoBehaviour
         //Run this when the WhackEm game is on.
         if (gameOn)
         {
+            weaponEquip.actionPrompt.SetActive(false);
+
             if (!weaponEquip.haveMallet && !runOnce)
             {
                 runOnce = true; 
