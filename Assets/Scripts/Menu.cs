@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine.UI;
+using System.Data.SqlTypes;
 
 #if UNITY_EDITOR
 using UnityEditor.PackageManager;
@@ -69,10 +70,15 @@ public class Menu : MonoBehaviour
     public bool usingJoystick;
 
     [Header("LEVEL LOAD")]
+    public GameObject loadScreen;
+    public Slider loadBar;
+    public TextMeshProUGUI loadPercentText;
     //[SerializeField] private string levelName;
 
-    public int counter = -1; //Used to handle pause.
-    public GameObject controllerPrompt, keyboardPrompt;
+    [Header("CONTROLLER PROMPT")]
+    public GameObject controllerPrompt;
+    public GameObject keyboardPrompt;
+    [HideInInspector] public int counter = -1; //Used to handle pause.
 
     private void Awake()
     {
@@ -157,13 +163,52 @@ public class Menu : MonoBehaviour
         //Start game scene
         GM.SetGameState(GameState.LEVEL_ONE);
 
-        //Invoke("LoadLevel", delayTime);
         StartCoroutine(LoadLevel());
-        //SliderManager.Instance.SetSceneBrightness();
-        StartCoroutine(GetSceneLight());
 
         //Debug.Log(GM.GameState);
     }
+
+    public IEnumerator LoadLevel()
+    {
+        counter = 0;
+        titleScreen.SetActive(false);
+
+        loadScreen.SetActive(true);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneBuildIndex: 1, LoadSceneMode.Additive);
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+            loadBar.value = progress;
+            loadPercentText.text = String.Format((decimal)progress * 100 + "%", 2);
+
+            yield return null;
+        }
+
+        loadScreen.SetActive(false);
+        titleCamera.SetActive(false);
+
+        sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
+
+        //Time.timeScale = 1;
+
+        //Clear level name on start
+        //levelName = "";
+    }
+
+    //public void AddScene(string name)
+    //{
+    //    //Clear button selected
+    //    EventSystem.current.SetSelectedGameObject(null);
+
+    //    SceneManager.LoadScene(name, LoadSceneMode.Additive);
+
+    //    //Hide mouse when new level loaded
+    //    Cursor.lockState = CursorLockMode.Locked;
+    //    Cursor.visible = false;
+    //}
 
     //
     //PAUSE GAME
@@ -271,34 +316,6 @@ public class Menu : MonoBehaviour
     //{
     //    PlayerPrefs.SetString("QuitTime", "The application last closed at: " + System.DateTime.Now);
     //}
-
-    public IEnumerator LoadLevel()
-    {
-        yield return new WaitForSeconds(0.3f);
-
-        counter = 0;
-        titleScreen.SetActive(false);
-        titleCamera.SetActive(false);
-
-        SceneManager.LoadScene(sceneBuildIndex:1, LoadSceneMode.Additive);
-        Time.timeScale = 1;
-
-        //Clear level name on start
-        //levelName = "";
-    }
-
-    //public void AddScene(string name)
-    //{
-    //    //Clear button selected
-    //    EventSystem.current.SetSelectedGameObject(null);
-
-    //    SceneManager.LoadScene(name, LoadSceneMode.Additive);
-
-    //    //Hide mouse when new level loaded
-    //    Cursor.lockState = CursorLockMode.Locked;
-    //    Cursor.visible = false;
-    //}
-
 
     //Displays the card that was just won in the first most available spot, left to right.
     public void DisplayWeaponCard()
