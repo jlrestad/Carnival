@@ -13,8 +13,9 @@ public class Gun : MonoBehaviour
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject muzzleLight;
     [SerializeField] GameObject impactEffect;
-    [SerializeField] float burstAmount = 3f;
-    [SerializeField] float delayFire = 1f;
+    [SerializeField] float force = 10.0f;
+    [SerializeField] float burstAmount = 3.0f;
+    [SerializeField] float delayFire = 1.0f;
     [SerializeField] float rateOfFire = 666f;
     [SerializeField] float coolDown = 0.3f;
 
@@ -22,6 +23,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField] bool canShoot = true;
 
+    public GameObject brokenCrate;
     public AudioSource shootAudio;
 
     private void Awake()
@@ -34,7 +36,7 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
         {
-            StartCoroutine(BurstFire()); //cooldown isn't working
+            StartCoroutine(BurstFire());
             GetTriggerUse();
         }
 
@@ -115,6 +117,19 @@ public class Gun : MonoBehaviour
             if (target != null && target.CompareTag("BossTarget") && !bossTargetScript.targetHit)
             {
                 StartCoroutine(bossTargetScript.HitTarget());
+            }
+
+            //For Breakables
+            if (target != null && target.CompareTag("Breakable"))
+            {
+                //Swap unbroken for broken object.
+                Instantiate(brokenCrate, target.transform.position, target.transform.rotation);
+                Destroy(target.gameObject);
+            }
+            if (target.CompareTag("Broken"))
+            {
+                //Add force to the broken object rigidbody.
+                hit.rigidbody.AddForce(target.up * force);
             }
 
             StartCoroutine(TurnOffMuzzleLight());
