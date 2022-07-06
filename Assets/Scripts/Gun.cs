@@ -23,7 +23,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField] bool canShoot = true;
 
-    public GameObject brokenCrate;
+    public GameObject brokenBottle;
     public AudioSource shootAudio;
 
     private void Awake()
@@ -120,13 +120,13 @@ public class Gun : MonoBehaviour
             }
 
             //For Breakables
-            if (target != null && target.CompareTag("Breakable"))
+            if (target != null && target.CompareTag("BottleBreakable"))
             {
                 //Swap unbroken for broken object.
-                Instantiate(brokenCrate, target.transform.position, target.transform.rotation);
+                Instantiate(brokenBottle, target.transform.position, target.transform.rotation);
                 Destroy(target.gameObject);
             }
-            if (target.CompareTag("Broken"))
+            if (target.CompareTag("BottleBroken"))
             {
                 //Add force to the broken object rigidbody.
                 hit.rigidbody.AddForce(target.up * force);

@@ -42,7 +42,10 @@ TagManager:
   - BossCritter
   - ObjectHold
   - Breakable
-  - Broken
+  - BottleBreakable
+  - BottleBroken
+  - CrateBreakable
+  - CrateBroken
   layers:
   - Default
   - TransparentFX
