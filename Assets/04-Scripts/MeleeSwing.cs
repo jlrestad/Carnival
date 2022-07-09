@@ -20,14 +20,18 @@ public class MeleeSwing : MonoBehaviour
     //[SerializeField] WhackEmEnemy newWhackEm;
     //[SerializeField] GameObject closestWhackEm;
     //[SerializeField] WhackEmEnemy[] whackEmEnemy;
-    [SerializeField] WhackEmGameManager whackemGM;
     //[SerializeField] GameObject headPrefab;
     //[SerializeField] float meleeRange = 3.0f;
     //[SerializeField] int damage;
+
+    [SerializeField] WhackEmGameManager whackemGM;
     [SerializeField] bool canSwing;
+    [SerializeField] float force = 10.0f;
     [HideInInspector] RaycastHit hit;
     [SerializeField] GameObject hitVfxPrefab;
     public AudioSource hitSound;
+
+    public GameObject brokenCrate;
 
     Vector3 distanceToPlayer;
     
@@ -87,11 +91,25 @@ public class MeleeSwing : MonoBehaviour
                 //Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward, Color.yellow); //Draw a line to show the direction of the raycast.
                 //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
 
-                //Target target = hit.transform.GetComponent<Target>();
-                WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>();
+                Transform target = hit.transform.GetComponent<Transform>(); //For breakable
+                WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>(); //For critters
 
                 enemyCollider = hit.collider;
 
+                //FOR BREAKABLES
+                if (target != null && target.CompareTag("CrateBreakable"))
+                {
+                    //Swap unbroken for broken
+                    Instantiate(brokenCrate, target.transform.position, target.transform.rotation);
+                    Destroy(target.gameObject);
+                }
+                if (target.CompareTag("CrateBroken"))
+                {
+                    //Add force to the broken object rigidbody
+                    hit.rigidbody.AddForce(target.up * force);
+                }
+
+                //FOR CRITTERS
                 if (enemy != null)
                 {
                     //Show hit VFX to let player know it has been hit.

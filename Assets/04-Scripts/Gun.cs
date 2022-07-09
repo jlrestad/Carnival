@@ -107,19 +107,19 @@ public class Gun : MonoBehaviour
             TargetSetActive targetScript = hit.transform.GetComponentInChildren<TargetSetActive>();
             BossTarget bossTargetScript = hit.transform.GetComponentInChildren<BossTarget>();
 
-            //For Skillshot
+            //FOR SKILLSHOT
             if (target != null && target.CompareTag("MovingTarget") && !targetScript.targetHit)
             {
                 targetScript.HitTarget();
             }
 
-            //For Freakshow Boss
+            //FOR FREAKSHOW-BOSS
             if (target != null && target.CompareTag("BossTarget") && !bossTargetScript.targetHit)
             {
                 StartCoroutine(bossTargetScript.HitTarget());
             }
 
-            //For Breakables
+            //FOR BREAKABLES
             if (target != null && target.CompareTag("BottleBreakable"))
             {
                 //Swap unbroken for broken object.
