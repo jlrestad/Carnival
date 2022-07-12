@@ -53,7 +53,7 @@ public class WalkSound : MonoBehaviour
     {
         //Debug.Log("RUNNING");
 
-        run.volume = Random.Range(0.5f, 0.7f);
+        run.volume = Random.Range(0.1f, 0.3f);
         run.pitch = Random.Range(1.4f, 1.6f);
         run.Play();
 
