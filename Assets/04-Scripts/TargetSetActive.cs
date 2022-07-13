@@ -44,6 +44,7 @@ public class TargetSetActive : MonoBehaviour
 
     private void Update()
     {
+        flipTime = Random.Range(0.8f, 1.3f);
         StartCoroutine(FlipAround());
     }
 
@@ -66,39 +67,32 @@ public class TargetSetActive : MonoBehaviour
             if (!isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
-                animator.SetBool("shake", true);
-                yield return new WaitForSeconds(shakeTime);
-
-                animator.SetBool("shake", false);
 
                 //Flip to negative
-                animator.SetBool("isPos", false);
                 animator.SetBool("isNeg", true);
 
                 isFlipped = true;
             }
 
             //If Negative
-            if (!isFlipped && !skillshotGM.gameOver)
+            if (isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
-                animator.SetBool("shake", true);
-                yield return new WaitForSeconds(shakeTime);
-
-                animator.SetBool("shake", false);
 
                 //Flip to positive
                 animator.SetBool("isNeg", false);
-                animator.SetBool("isPos", true);
 
                 isFlipped = false;
                 targetHit = false;
             }
 
-            //if (skillshotGM.gameOver || !skillshotGM.gameOn)
-            //{
-            //    targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
-            //}
+            if (skillshotGM.gameOver || !skillshotGM.gameOn)
+            {
+                //targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
+                animator.SetBool("isNeg", true);
+                isFlipped = true;
+            }
+
             yield return null;
         }
     }
