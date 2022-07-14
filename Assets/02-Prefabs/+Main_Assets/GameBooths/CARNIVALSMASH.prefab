@@ -182,7 +182,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8535462671199257104}
-  - component: {fileID: 7746878946239904158}
   m_Layer: 0
   m_Name: TauntGroup
   m_TagString: Untagged
@@ -209,64 +208,6 @@ Transform:
   m_Father: {fileID: 4793427717140430483}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7746878946239904158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17652807868169345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5477838e3b0a0d489826865a50519ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  critters:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  taunts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  whackemEnemy: {fileID: 0}
-  weaponEquip: {fileID: 0}
-  cardManager: {fileID: 1387369116836205943}
-  gameOn: 0
-  gameJustFinished: 0
-  popUp: 0
-  critterIsVisible: 0
-  gameIsRunning: 0
-  isTaunting: 0
-  tauntCritVisible: 0
-  scoreLimit: 1
-  score: 0
-  timeCounter: 25
-  minRando: 1
-  maxRando: 1.5
-  divideSpeedBy: 1.3
-  speedCap: 0
-  gameUI: {fileID: 0}
-  scoreText: {fileID: 0}
-  timerText: {fileID: 0}
-  winloseText: {fileID: 0}
-  displayPickupScreen: {fileID: 0}
-  BGCard: {fileID: 667014487390775313}
-  BGImage: {fileID: 0}
-  cardImage: {fileID: 0}
-  minigameAudio: {fileID: 0}
-  minigameLight: {fileID: 0}
-  gameWon: 0
-  gameOver: 0
-  levelLoaded: 0
-  currentWeapon: {fileID: 0}
-  gameWeapon: {fileID: 0}
-  playerWeapon: {fileID: 0}
-  script: {fileID: 0}
 --- !u!1 &272655100060381011
 GameObject:
   m_ObjectHideFlags: 0
