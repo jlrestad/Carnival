@@ -93,16 +93,18 @@ public class WhackEmGameManager : MonoBehaviour
         weaponEquip = FindObjectOfType<WeaponEquip>();
         menu = FindObjectOfType<Menu>();
 
-        //Tarot Cards
+        //TAROT CARDS
         cardImage = GameObject.FindGameObjectWithTag(("MeleeGame")).GetComponentInChildren<GameCard>().GetComponent<Image>().sprite;
         BGImage = BGCard.GetComponent<Image>().sprite;
 
-        //Tickets
-        scoreText.text = (score + "/" + scoreLimit);
-        //Timer
+        //TICKETS
+        //scoreText.text = (score + "/" + scoreLimit);
+
+        //TIMER
         resetTime = timeCounter; //Store this for the reset
         timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
-        //Speeds
+
+        //SPEEDS
         minRandoTemp = minRando;
         maxRandoTemp = maxRando;
 
@@ -115,28 +117,28 @@ public class WhackEmGameManager : MonoBehaviour
         //Run this when the WhackEm game is on.
         if (gameOn)
         {
-            weaponEquip.actionPrompt.SetActive(false);
+            // fixes bug causing mouse to appear when critter pops up
+            Cursor.lockState = CursorLockMode.Locked;
+
+            weaponEquip.actionPrompt.SetActive(false); //Turn off action prompt
 
             if (!weaponEquip.haveMallet && !runOnce)
             {
                 runOnce = true; 
                 weaponEquip.haveMallet = true; 
-                weaponEquip.crossHair.SetActive(true);
+                weaponEquip.crossHair.SetActive(true); //Turn on crosshair
             }
             
             if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
             {
-                minigameLight.SetActive(true);
+                minigameLight.SetActive(true); //Turn on game light
 
                 if (minigameAudio.volume == 0)
                 {
-                    minigameAudio.volume = 0.7f;
+                    minigameAudio.volume = 0.7f; //If volume has been turned down, turn it back up.
                 }
                 minigameAudio.Play();
             }
-
-            // fixes bug causing mouse to appear when critter pops up
-            Cursor.lockState = CursorLockMode.Locked;
 
             //Display the game UI
             DisplayTextUI();
