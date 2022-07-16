@@ -25,7 +25,7 @@ public class TauntPosition : MonoBehaviour
         
 
         //Original position of the enemy
-        enemyPosition = transform;
+        //enemyPosition = transform;
 
     }
 

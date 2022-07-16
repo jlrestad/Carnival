@@ -119,27 +119,9 @@ public class WeaponEquip : MonoBehaviour
         {
             //Show crosshair only if weapon is equipped.
             crossHair.SetActive(true);
-
-            //If input for flashlight, put the weapon away and use flashlight.
-            //if (GetComponent<FPSController>().useFlashlight)
-            //{
-            //    //Debug.Log("this is the current weapon: " + currentWeapon.name);
-
-            //    //Turn on the flashlight
-            //    GetComponent<FPSController>().flashlightHold.SetActive(true);
-            //    GetComponent<FPSController>().flashlightOn = true;
-
-            //    isEquipped = false;
-            //    inInventory = true;
-            //}
         }
-        //else
-        //{
-        //    //Don't display reticle if nothing is equipped.
-        //    crossHair.SetActive(false);
-        //}
 
-        //Debug.Log(weaponList.Count);
+        // // // ~OLD~ WAS USED FOR WEAPON PICKUPS -- THOSE ARE NOW BUILT INTO THE PLAY BUTTON
         // * * *
         //PLAYER INPUT
         //if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
@@ -166,6 +148,7 @@ public class WeaponEquip : MonoBehaviour
         //    //Equip weapon from inventory.
         //    EquipWeapon();
         //}
+        // // // ~OLD~
 
         //SHOW ACTION/INTERACT PROMPT
         if (!gameRulesDisplayed)
