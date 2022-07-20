@@ -26,7 +26,7 @@ public class Ticket_Pickups : MonoBehaviour
     [Tooltip("The group that will display effects and appear invisible as soon as the pickup is collected.")]
     [SerializeField] GameObject myInActiveGroup;
     [Tooltip("Put here whatever script manages the tickets/health that the player has.")]
-    [SerializeField] PlayerHealthManager healthScript;
+    [SerializeField] HudManager healthScript;
     //-------------------------
     [Header("INTERNAL/DEBUG")]
     [SerializeField] bool healthScriptPresent = true; //keeps script from throwing errors if healthScript is not present
@@ -37,7 +37,7 @@ public class Ticket_Pickups : MonoBehaviour
 
     void Start()
     {
-        if(healthScript == null) //if we can't find a PlayerHealthManager script assigned to this object...
+        if(healthScript == null) //if we can't find a HUDManager script assigned to this object...
         {
             healthScriptPresent = false; //flag the health script as not present to prevent bugs
         }
@@ -50,28 +50,30 @@ public class Ticket_Pickups : MonoBehaviour
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
+
+    //--------------------------------------------------|CollectPickup|
     public void CollectPickup()
     {
         if(myPickupType == PickupType.RedTicket && healthScriptPresent)
         {
-            //healthScript stuff goes here
+            healthScript.HealthTicket(-1); //add one red ticket to the counter for the player (don't ask why it's negative)
         }
         if (myPickupType == PickupType.TicketString && healthScriptPresent)
         {
-            //healthScript stuff goes here
+            healthScript.HealthTicket(-3); //add three red tickets to the counter for the player
         }
         if (myPickupType == PickupType.BlueTicket && healthScriptPresent)
         {
-            //healthScript stuff goes here
+            healthScript.ContinueTicket(-1); //add one blue ticket to the counter for the player
         }
         if(! healthScriptPresent)
         {
-            Debug.Log("Couldn't find a PlayerHealthManager attached to this pickup. Collect Pickup failed.");
+            Debug.Log("Couldn't find a HUDManager assigned to this pickup. Collect Pickup failed.");
         }
     }
 
 
-    //-------------------------
+    //--------------------------------------------------|TogglePickupActive|
     //This method is used to turn off the pickup when collected, and to turn it back on when called from an object pooler.=====|TogglePickupActive|
     public void TogglePickupActive()
     {
@@ -95,12 +97,13 @@ public class Ticket_Pickups : MonoBehaviour
             Debug.Log("Couldn't find a PlayerHealthManager attached to this pickup. Toggle active failed.");
         }
     }
-    //-------------------------|DisableTimer|
+    //--------------------------------------------------|DisableTimer|
+    //Disables the object after being picked up in order to make the object compatible with object poolers.
     private IEnumerator disableTimer()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f); //wait for the effect to finish
         myInActiveGroup.SetActive(false); //disable the inactive group
         this.gameObject.SetActive(false); //disable the parent gameobject of this script
-        //The above is performed in order to make the object compatible with object poolers.
+        
     }
 }
