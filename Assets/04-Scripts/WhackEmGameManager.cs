@@ -333,8 +333,9 @@ public class WhackEmGameManager : MonoBehaviour
 
                 while (!gameJustFinished && !gameWon)
                 {
-                    WhackEmRoutine routine = new WhackEmRoutine();
-                    int critUp = routine.up, critTaunt = routine.taunt;
+                    WhackEmRoutine routine = new WhackEmRoutine(); //Uses contructor to pick random enemy.
+                    int critUp = routine.up; //Random enemy that is up
+                    int critTaunt = routine.taunt; //Random enemy that is taunting
                     bool tauntBool = routine.addTaunt;
                     
                     //Check if the critter has shown itself.

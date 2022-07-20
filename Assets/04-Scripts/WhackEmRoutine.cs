@@ -29,8 +29,8 @@ public class WhackEmRoutine
         }
 
         // choose if taunting or not
-        int which = UnityEngine.Random.Range(0, 100);
-        if (which % 2 == 0)
+        int getEvenNum = UnityEngine.Random.Range(0, 100);
+        if (getEvenNum % 2 == 0)
         {
             addTaunt = true;
         }
