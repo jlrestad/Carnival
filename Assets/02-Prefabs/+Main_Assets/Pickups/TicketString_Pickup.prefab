@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2706165755973708762}
   - component: {fileID: 2706165755973708760}
-  - component: {fileID: 2706165755973708761}
   m_Layer: 0
   m_Name: activeGroup
   m_TagString: Untagged
@@ -85,20 +84,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &2706165755973708761
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706165755973708763}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 0.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2706165756606164779
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,9 +94,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2706165756606164778}
   - component: {fileID: 2561693105427340457}
+  - component: {fileID: 1866900123441067277}
   m_Layer: 0
   m_Name: TicketString_Pickup
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,10 +131,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPickupType: 1
-  myActiveGroup: {fileID: 0}
-  myInActiveGroup: {fileID: 0}
-  healthScript: {fileID: 0}
+  myValue: 3
+  myPrompt: Red Tickets ( 3 )
+  myActiveGroup: {fileID: 2706165755973708763}
+  myInActiveGroup: {fileID: 2706165755520127992}
+  healthScript: {fileID: 570507253347281388, guid: 478890d35e7725744ab779859d8d0a27, type: 3}
   healthScriptPresent: 1
+--- !u!136 &1866900123441067277
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706165756606164779}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2706165756714340481
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4513297306521666943, guid: 739a04229b51ca744b263cb31e26f011, type: 3}
       propertyPath: m_RenderAlignment
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 739a04229b51ca744b263cb31e26f011, type: 3}

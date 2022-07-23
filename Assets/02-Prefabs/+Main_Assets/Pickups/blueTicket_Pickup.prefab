@@ -203,7 +203,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5949407760654315668}
   - component: {fileID: 5949407760654315666}
-  - component: {fileID: 5949407760654315669}
   m_Layer: 0
   m_Name: activeGroup
   m_TagString: Untagged
@@ -247,20 +246,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &5949407760654315669
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5949407760654315671}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.15
-  m_Height: 0.15
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5949407760661560502
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,9 +256,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5949407760661560503}
   - component: {fileID: 1613386447423684916}
+  - component: {fileID: 1587868592574736332}
   m_Layer: 0
   m_Name: blueTicket_Pickup
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,10 +293,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPickupType: 2
-  myActiveGroup: {fileID: 0}
-  myInActiveGroup: {fileID: 0}
-  healthScript: {fileID: 0}
+  myValue: 1
+  myPrompt: Blue Ticket ( 1 )
+  myActiveGroup: {fileID: 5949407760654315671}
+  myInActiveGroup: {fileID: 5949407760023927565}
+  healthScript: {fileID: 570507253347281388, guid: 478890d35e7725744ab779859d8d0a27, type: 3}
   healthScriptPresent: 1
+--- !u!136 &1587868592574736332
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5949407760661560502}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 0.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5949407760691406195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -388,7 +390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4513297306521666943, guid: 739a04229b51ca744b263cb31e26f011, type: 3}
       propertyPath: m_RenderAlignment
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 739a04229b51ca744b263cb31e26f011, type: 3}

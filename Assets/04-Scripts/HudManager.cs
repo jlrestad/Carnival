@@ -18,6 +18,7 @@ public class HudManager : MonoBehaviour
     //==================================================
     //=========================|FIELDS|
     //==================================================
+    #region FIELDS
     public static HudManager Instance;
     //-------------------------
     [Header ("STATS")]
@@ -50,11 +51,6 @@ public class HudManager : MonoBehaviour
     [SerializeField] GameObject gainTarotFX;
     //All the below are references to scripts attached to the Visual Effects Game Objects. 
     //These scripts allow them to play every particle effect parented under them.
-    [HideInInspector] ParticlePlayer RGFX;
-    [HideInInspector] ParticlePlayer RLFX;
-    [HideInInspector] ParticlePlayer BGFX;
-    [HideInInspector] ParticlePlayer BLFX;
-    [HideInInspector] ParticlePlayer GTFX;
     //-------------------------
     [Header("INTERNAL/DEBUG")]
     [Tooltip("Player's current red ticket count.")]
@@ -67,9 +63,11 @@ public class HudManager : MonoBehaviour
     public int blueTixDisplay = 0;
     [Tooltip("A utility bool that allows the player to not lose tickets when necessary")]
     public bool playerInvincible = false;
+    #endregion
     //==================================================
     //=========================|BUILT-IN METHODS|
     //==================================================
+    #region BUILT-IN METHODS
     //--------------------------------------------------|Awake|
     private void Awake()
     {
@@ -91,10 +89,11 @@ public class HudManager : MonoBehaviour
         //Once everything is set up, show how many tickets we have (should be none at the start)
         DisplayTicketAmount();
     }
+    #endregion
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
-
+    #region CUSTOM METHODS
     //--------------------------------------------------|DisplayTicketAmount|
     public void DisplayTicketAmount()
     {
@@ -115,7 +114,7 @@ public class HudManager : MonoBehaviour
     //Adds or removes red tickets from the ticket bar while playing effects.
     public void HealthTicket(int tixAmt)
     {
-        redTickets += tixAmt; //add/subtract tickets immediately, even if FX is still going. 
+        redTickets -= tixAmt; //add/subtract tickets immediately, even if FX is still going. 
         //This helps avoid bugs if the player quickly starts a game after collecting tickets.
         if (redTickets > maxRedTix)
         {
@@ -129,7 +128,7 @@ public class HudManager : MonoBehaviour
         if(tixAmt > 0) //!!!NOTE!!! THIS SYSTEM IS CURRENTLY BACKWARDS FOR SOME UNHOLY REASON. Tickets are LOST when entering a POSITIVE number.
         {
             //start the coroutine that subtracts tickets from the bar.
-            StartCoroutine(RedTixSubtractFX(redTickets - redTixDisplay)); //calculate how many tickets need to be subtracted from the bar instead of using tixAmt (in case tixAmt goes above max or below 0)
+            StartCoroutine(RedTixSubtractFX(redTixDisplay - redTickets)); //calculate how many tickets need to be subtracted from the bar instead of using tixAmt (in case tixAmt goes above max or below 0)
         }
         else if (tixAmt < 0) //!!!NOTE!!! THIS SYSTEM IS CURRENTLY BACKWARDS FOR SOME UNHOLY REASON. Tickets are ADDED when entering a NEGATIVE number.
         {
@@ -148,7 +147,7 @@ public class HudManager : MonoBehaviour
     //--Mostly the same logic as above, but gives the player maximum red tickets when consumed.
     public void ContinueTicket(int tixAmt)
     {
-        blueTickets += tixAmt; //add/subtract tickets immediately, even if FX is still going. 
+        blueTickets -= tixAmt; //add/subtract tickets immediately, even if FX is still going. 
         //This helps avoid bugs if the player quickly starts a game after collecting tickets.
         if (blueTickets > maxBlueTix)
         {
@@ -161,7 +160,7 @@ public class HudManager : MonoBehaviour
         if (tixAmt > 0) //!!!NOTE!!! THIS SYSTEM IS CURRENTLY BACKWARDS FOR SOME UNHOLY REASON. Tickets are LOST when entering a POSITIVE number.
         {
             //start the coroutine that subtracts tickets from the bar.
-            StartCoroutine(BlueTixSubtractFX(blueTickets - blueTixDisplay)); //calculate how many tickets need to be subtracted from the bar instead of using tixAmt (in case tixAmt goes above max or below 0)
+            StartCoroutine(BlueTixSubtractFX(blueTixDisplay - blueTickets)); //calculate how many tickets need to be subtracted from the bar instead of using tixAmt (in case tixAmt goes above max or below 0)
         }
         else if (tixAmt < 0) //!!!NOTE!!! THIS SYSTEM IS CURRENTLY BACKWARDS FOR SOME UNHOLY REASON. Tickets are ADDED when entering a NEGATIVE number.
         {
@@ -224,19 +223,21 @@ public class HudManager : MonoBehaviour
             lightOff.GetComponent<UnityEngine.UI.Image>().enabled = true;
         }
     }
-
+    #endregion
     //==================================================
     //=========================|COROUTINES|
     //==================================================
-
+    #region COROUTINES
     //--------------------------------------------------|RedTixAddFX|
     //Plays effects and changes the visual for the red ticket bar when adding tickets
     private IEnumerator RedTixAddFX(int tixAmt)
     {
-        for(int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
+        Debug.Log("Add Red");
+        for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
         {
             redGainFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
-            //RGFX.PlayFX();
+            redLoseFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //take the other effect with also
+            redGainFX.SetActive(true); //play the needed particle effects
             yield return new WaitForSeconds(0.2f); //wait while the first part of the animation plays
             redTixDisplay++; //add one to the bar
             DisplayTicketAmount(); //update the bar to show the new ticket
@@ -252,14 +253,16 @@ public class HudManager : MonoBehaviour
     {
         if(! playerInvincible)
         {
+            Debug.Log("Subtract Red");
             for (int i = 0; i < tixAmt; i++) //take the tickets off one by one until they reach the proper amount
             {
-                //RLFX.PlayFX();
+                redLoseFX.SetActive(true); //play the needed particle effects
                 redTixDisplay--; //remove one from the bar
                 DisplayTicketAmount(); //update the bar to show fewer tickets
                 myAudio.PlayOneShot(loseRedTicket);
                 yield return new WaitForSeconds(0.5f); //wait for the animation to play
                 redLoseFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
+                redGainFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //take the other effect with also
             }
         }
     }
@@ -268,10 +271,12 @@ public class HudManager : MonoBehaviour
     //Plays effects and changes the visual for the blue ticket bar when adding tickets
     private IEnumerator BlueTixAddFX(int tixAmt)
     {
+        Debug.Log("Add Blue");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
         {
             blueGainFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
-            //BGFX.PlayFX();
+            blueLoseFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //take the other effect with also
+            blueGainFX.SetActive(true); //play the needed particle effects
             yield return new WaitForSeconds(0.2f); //wait while the first part of the animation plays
             blueTixDisplay++; //add one to the bar
             DisplayTicketAmount(); //update the bar to show the new ticket
@@ -286,18 +291,21 @@ public class HudManager : MonoBehaviour
     //The logic is written in a different order than in the above method to keep the effects from playing over an empty ticket slot.
     private IEnumerator BlueTixSubtractFX(int tixAmt)
     {
-        if(! playerInvincible)
+        Debug.Log("Subtract Blue");
+        if (! playerInvincible)
         {
             for (int i = 0; i < tixAmt; i++) //take the tickets off one by one until they reach the proper amount
             {
-                //BLFX.PlayFX();
+                blueLoseFX.SetActive(true); //play the needed particle effects
                 blueTixDisplay--; //remove one from the bar
                 DisplayTicketAmount(); //update the bar to show fewer tickets
                 myAudio.PlayOneShot(loseBlueTicket);
                 yield return new WaitForSeconds(0.5f); //wait for the animation to play
                 blueLoseFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
+                blueGainFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //take the other effect with also
             }
             HealthTicket(-1 * maxRedTix); //refill the player's red tickets to full!
         }
     }
+    #endregion
 }

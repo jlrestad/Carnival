@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7eee9f6ced48143ac8b18fba0a08a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeDisable: 1
+  timeBeforeDisable: 0.5
   destroyInstead: 0
 --- !u!1 &582681902414750122
 GameObject:
@@ -88,7 +88,7 @@ ParticleSystem:
   m_GameObject: {fileID: 582681902414750122}
   serializedVersion: 7
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -4950,7 +4950,7 @@ ParticleSystem:
   m_GameObject: {fileID: 582681902763480510}
   serializedVersion: 7
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
