@@ -50,14 +50,17 @@ public class GameBooth : MonoBehaviour
         timeCounter = 60.0f;
     }
 
-    //Set & Get the active card
+    //* * *
+    //SETTERS
+
+    //Set the active card
     public GameObject ActiveCard
     {
         get { return activeCard; }
         set { activeCard = value; }
     }
 
-    //Set and Get the inactive card
+    //Set the inactive card
     public GameObject InactiveCard
     {
         get { return inactiveCard; }
@@ -89,18 +92,28 @@ public class GameBooth : MonoBehaviour
 
     // * * *
     //GAME METHODS
+    public void ShowGameUI()
+    {
+        ShowCursor();
+
+        FPSController.Instance.canMove = false;
+        
+        gameRules.SetActive(true);
+    }
+
     public void PlayGame()
     {
         gameOn = true;
+        
         WeaponEquip.Instance.gameRulesDisplayed = false;
+        FPSController.Instance.canMove = true;
+
         minigameHUD.SetActive(true);
     }
 
     public void ExitGame()
     {
-        gameOn = false;
-        WeaponEquip.Instance.gameRulesDisplayed = false;
-        minigameHUD.SetActive(false);
+        ResetGame();
     }
 
     public void ResetGame()
@@ -108,9 +121,32 @@ public class GameBooth : MonoBehaviour
         //Will reset things back to default
         gameOn = false;
 
+        WeaponEquip.Instance.gameRulesDisplayed = false;
         WeaponEquip.Instance.actionPrompt.SetActive(false);
+        FPSController.Instance.canMove = true;
+        
+        minigameHUD.SetActive(false);
 
         HideCursor();
+    }
+
+    public void LockPlayerOnPlay()
+    {
+        //Unlock player camera movement, put player in position, lock player body movement
+        FPSController.Instance.canMove = true;
+        //FPSController.Instance.transform.position = gameplayPosition.position;
+        FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+    }
+
+    public void UnLockPlayer()
+    {
+        //Hide the cursor again
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        //Allow player to walk again
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+        FPSController.Instance.canMove = true;
     }
 
     public void HideCursor()

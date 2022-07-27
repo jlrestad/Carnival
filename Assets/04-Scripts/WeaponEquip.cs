@@ -150,13 +150,10 @@ public class WeaponEquip : MonoBehaviour
                     //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
                     if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
                     {
-                        //CURSOR VISIBILITY
-                        CasketBasketsGameManager.Instance.ShowCursor();
+                        CasketBasketsGameManager.Instance.ShowGameUI();
 
                         actionPrompt.SetActive(false);
-
                         gameRulesDisplayed = true;
-                        CasketBasketsGameManager.Instance.gameRules.SetActive(true);
                     }
                     else
                     {
