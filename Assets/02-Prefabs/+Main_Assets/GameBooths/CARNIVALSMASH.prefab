@@ -923,7 +923,7 @@ RectTransform:
   - {fileID: 246143579664180079}
   - {fileID: 2726730787430956981}
   m_Father: {fileID: 3183166738633725612}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1019,8 +1019,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4793427717140430483}
-  - {fileID: 4976218523674954401}
   - {fileID: 2421517876776743092}
+  - {fileID: 4976218523674954401}
   - {fileID: 6653959223595026616}
   - {fileID: 4976218522670786506}
   - {fileID: 4976218523041632044}
@@ -1612,7 +1612,7 @@ Transform:
   m_Children:
   - {fileID: 2864562019227970517}
   m_Father: {fileID: 3183166738633725612}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 3.693, y: -83.883, z: 153.903}
 --- !u!1 &4976218524061274678
 GameObject:
@@ -3030,14 +3030,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bad278024da1074b8e8995e16213780, type: 3}
---- !u!1 &667014487390775313 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
-  m_PrefabInstance: {fileID: 4976218522959126030}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &246143579664180079 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5072581680830807393, guid: 4bad278024da1074b8e8995e16213780, type: 3}
+  m_PrefabInstance: {fileID: 4976218522959126030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &667014487390775313 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
   m_PrefabInstance: {fileID: 4976218522959126030}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7187098103396512129
@@ -3491,7 +3491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
       propertyPath: m_Name
-      value: MalletCard
+      value: InactiveCard
       objectReference: {fileID: 0}
     - target: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
       propertyPath: m_IsActive
@@ -3503,14 +3503,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bad278024da1074b8e8995e16213780, type: 3}
---- !u!224 &2726730787430956981 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5072581680830807393, guid: 4bad278024da1074b8e8995e16213780, type: 3}
-  m_PrefabInstance: {fileID: 7183845166168638164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3457787426874225867 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
+  m_PrefabInstance: {fileID: 7183845166168638164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2726730787430956981 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5072581680830807393, guid: 4bad278024da1074b8e8995e16213780, type: 3}
   m_PrefabInstance: {fileID: 7183845166168638164}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1175532159

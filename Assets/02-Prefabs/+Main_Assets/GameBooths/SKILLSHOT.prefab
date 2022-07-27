@@ -4779,7 +4779,7 @@ Transform:
   - {fileID: 852898857119470768}
   - {fileID: 2683913424650740200}
   m_Father: {fileID: 2877533452663726924}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &3140236321328941237
 GameObject:
@@ -4900,8 +4900,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4886358015991269631}
-  - {fileID: 9163966986754603274}
   - {fileID: 7194319574154567283}
+  - {fileID: 9163966986754603274}
   - {fileID: 2847318227046453823}
   - {fileID: 11098148322051421}
   - {fileID: 2233309240263389895}
@@ -6387,7 +6387,7 @@ GameObject:
   - component: {fileID: 4919458860083039741}
   - component: {fileID: 4919458860083039739}
   m_Layer: 5
-  m_Name: GunCard
+  m_Name: InactiveCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8781,7 +8781,7 @@ RectTransform:
   - {fileID: 7254989800443989125}
   - {fileID: 4919458860083039740}
   m_Father: {fileID: 2877533452663726924}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

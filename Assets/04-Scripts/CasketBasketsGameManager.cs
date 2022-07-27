@@ -22,33 +22,4 @@ public class CasketBasketsGameManager : GameBooth
         inactiveCardSprite = GetInactiveCardSprite();
         activeCardSprite = GetActiveCardSprite();
     }
-
-    //public void PlayGame()
-    //{
-    //    WeaponEquip.Instance.gameRulesDisplayed = false;
-    //    minigameHUD.SetActive(true);
-    //}
-
-    //public void ExitGame()
-    //{
-    //    WeaponEquip.Instance.gameRulesDisplayed = false;
-    //}
-
-    //public void ResetGame()
-    //{
-    //    //Will reset things back to default
-    //    WeaponEquip.Instance.actionPrompt.SetActive(false);
-    //}
-
-    //public void HideCursor()
-    //{
-    //    Cursor.lockState = CursorLockMode.Locked;
-    //    Cursor.visible = false;
-    //}
-
-    //public void ShowCursor()
-    //{
-    //    Cursor.lockState = CursorLockMode.Confined;
-    //    Cursor.visible = true;
-    //}
 }

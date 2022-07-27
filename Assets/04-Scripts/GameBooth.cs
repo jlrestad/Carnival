@@ -27,7 +27,7 @@ public class GameBooth : MonoBehaviour
     private float resetTime;
 
     [Header("TAROT CARD")]
-    public GameObject displayScreen; //PlayerHUD game menu - manually set in Unity game manager script
+    public GameObject displayScreen; //Tarot card won screen (PlayerHud > Pickups > Skulls) - manually set in Unity game manager script
     public GameObject activeCard; //Game card for active weapon - manually set in Unity game manager script
     public GameObject inactiveCard; //Game card for inactive weapon - manually set in Unity game manager scrit
     public Sprite inactiveCardSprite;
