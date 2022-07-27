@@ -133,7 +133,7 @@ public class WeaponEquip : MonoBehaviour
             if (!gameRulesDisplayed)
             {
                 //IF RAYCAST HITS ONE OF THE MINIGAMES
-                if (hit.transform.gameObject == GameObject.Find("CBGame"))
+                if (hit.transform.gameObject == GameObject.Find("CBGame") && !CasketBasketsGameManager.Instance.gameOn)
                 {
                     //Find distance of the game to the player
                     distanceToPlayer = (hit.transform.position - transform.position);
@@ -149,10 +149,9 @@ public class WeaponEquip : MonoBehaviour
 
                     //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
                     if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-                    { 
+                    {
                         //CURSOR VISIBILITY
-                        Cursor.lockState = CursorLockMode.Confined;
-                        Cursor.visible = true;
+                        CasketBasketsGameManager.Instance.ShowCursor();
 
                         actionPrompt.SetActive(false);
 

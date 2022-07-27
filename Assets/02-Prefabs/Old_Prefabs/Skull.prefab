@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b02825a4f2d677e489a4f9bb542bb77e, type: 2}
+  - {fileID: 2100000, guid: ea57213215ef83c46af5b789d3701307, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,7 +148,6 @@ MonoBehaviour:
   pickUpRange: 2
   returnSkullTime: 1.5
   canThrow: 0
-  hasBeenThrown: 0
 --- !u!82 &594462070351438474
 AudioSource:
   m_ObjectHideFlags: 0

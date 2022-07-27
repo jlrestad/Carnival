@@ -33,7 +33,7 @@ public class GameBooth : MonoBehaviour
     public Sprite inactiveCardSprite;
     public Sprite activeCardSprite;
 
-    public GameObject managerScript;
+    public bool gameOn;
 
     private void Awake()
     {
@@ -70,6 +70,7 @@ public class GameBooth : MonoBehaviour
         set { gameRules = value; }
     }
 
+    // * * *
     //GETTERS FOR THE SPRITES
     public Sprite GetActiveCardSprite()
     {
@@ -86,4 +87,41 @@ public class GameBooth : MonoBehaviour
         return gameRules.gameObject; 
     }
 
+    // * * *
+    //GAME METHODS
+    public void PlayGame()
+    {
+        gameOn = true;
+        WeaponEquip.Instance.gameRulesDisplayed = false;
+        minigameHUD.SetActive(true);
+    }
+
+    public void ExitGame()
+    {
+        gameOn = false;
+        WeaponEquip.Instance.gameRulesDisplayed = false;
+        minigameHUD.SetActive(false);
+    }
+
+    public void ResetGame()
+    {
+        //Will reset things back to default
+        gameOn = false;
+
+        WeaponEquip.Instance.actionPrompt.SetActive(false);
+
+        HideCursor();
+    }
+
+    public void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
 }
