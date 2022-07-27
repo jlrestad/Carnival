@@ -11,21 +11,26 @@ public class ParticlePlayer : MonoBehaviour
     //==================================================
     //=========================|FIELDS|
     //==================================================
-
+    [SerializeField] List<ParticleSystem> myParticleSystems = new List<ParticleSystem>(); //an editable list of all the particle systems parented under this object.
     //==================================================
     //=========================|BUILT-IN METHODS|
     //==================================================
-
-    void Start()
+    //When enabled, the object will play all its particle effects automatically.
+    private void OnEnable()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        PlayFX();
     }
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
+    //This method can also be called directly if needed.
+    public void PlayFX()
+    {
+        for(int i = 0; i < myParticleSystems.Count; i++)
+        {
+            ParticleSystem currentFX = myParticleSystems[i];
+            currentFX.Play();
+        }
+    }
+
 }

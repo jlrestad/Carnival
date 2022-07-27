@@ -17,6 +17,11 @@ public class DisableTimer : MonoBehaviour
         StartCoroutine(countdown()); //immediately upon start the countdown is started
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(countdown()); //also upon enabling start countdown
+    }
+
     private IEnumerator countdown()
     {
         yield return new WaitForSeconds(timeBeforeDisable); //wait for (timeBeforeDisable) seconds

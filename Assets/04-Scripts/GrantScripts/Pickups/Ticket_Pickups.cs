@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ticket_Pickups : MonoBehaviour
+public class Ticket_Pickups : MonoBehaviour, IPooledObject
 {
     /*
      * This script handles the management and effects of the individual pickup item it's attached to.
@@ -17,8 +17,12 @@ public class Ticket_Pickups : MonoBehaviour
     [HideInInspector] public enum PickupType { RedTicket, TicketString, BlueTicket };
     //-------------------------
     [Header("STATS")]
-    [Tooltip("The type of pickup this script is attached to. This determines what methods will be triggered in the player's main script")]
+    [Tooltip("The type of pickup this script is attached to. This determines what methods will be triggered in the player's main script.")]
     public PickupType myPickupType;
+    [Tooltip("The value in tickets that this pickup will add to the sliders when collected.")]
+    public int myValue;
+    [Tooltip("The info prompt to display when this pickup is being looked at.")]
+    [TextArea] public string myPrompt;
     //-------------------------
     [Header("PLUG-INS")]
     [Tooltip("The group that will show when the pickup has not been collected yet and is active in the scene.")]
@@ -37,16 +41,20 @@ public class Ticket_Pickups : MonoBehaviour
 
     void Start()
     {
-        if(healthScript == null) //if we can't find a HUDManager script assigned to this object...
+        healthScript = HudManager.Instance;
+        if (healthScript == null) //if we can't find a HUDManager script assigned to this object...
         {
             healthScriptPresent = false; //flag the health script as not present to prevent bugs
         }
-        if(! myActiveGroup.activeInHierarchy)
+    }
+
+    public void OnObjectSpawn()
+    {
+        if (!myActiveGroup.activeInHierarchy)
         {
             myActiveGroup.SetActive(true);
         }
     }
-
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
@@ -56,19 +64,19 @@ public class Ticket_Pickups : MonoBehaviour
     {
         if(myPickupType == PickupType.RedTicket && healthScriptPresent)
         {
-            healthScript.HealthTicket(-1); //add one red ticket to the counter for the player (don't ask why it's negative)
+            healthScript.HealthTicket(myValue * -1); //add one red ticket to the counter for the player (don't ask why it's negative)
         }
         if (myPickupType == PickupType.TicketString && healthScriptPresent)
         {
-            healthScript.HealthTicket(-3); //add three red tickets to the counter for the player
+            healthScript.HealthTicket(myValue * -1); //add three red tickets to the counter for the player
         }
         if (myPickupType == PickupType.BlueTicket && healthScriptPresent)
         {
-            healthScript.ContinueTicket(-1); //add one blue ticket to the counter for the player
+            healthScript.ContinueTicket(myValue * -1); //add one blue ticket to the counter for the player
         }
         if(! healthScriptPresent)
         {
-            Debug.Log("Couldn't find a HUDManager assigned to this pickup. Collect Pickup failed.");
+            Debug.LogWarning("Couldn't find a HUDManager assigned to this pickup. Collect Pickup failed.");
         }
     }
 
@@ -94,7 +102,7 @@ public class Ticket_Pickups : MonoBehaviour
         }
         else if(! healthScriptPresent)
         {
-            Debug.Log("Couldn't find a PlayerHealthManager attached to this pickup. Toggle active failed.");
+            Debug.LogWarning("Couldn't find a PlayerHealthManager attached to this pickup. Toggle active failed.");
         }
     }
     //--------------------------------------------------|DisableTimer|
