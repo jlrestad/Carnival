@@ -62,6 +62,8 @@ public class WeaponEquip : MonoBehaviour
     [HideInInspector] RaycastHit hit;
     [SerializeField] int maxHitDistance = 10;
     public Menu menu;
+    GameBooth gb = new GameBooth();
+
 
 
     private void Awake()
@@ -147,11 +149,15 @@ public class WeaponEquip : MonoBehaviour
 
                     //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
                     if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-                    {
-                        gameRulesDisplayed = true;
-                        CasketBasketsGameManager.Instance.gameRules.SetActive(true);
+                    { 
+                        //CURSOR VISIBILITY
+                        Cursor.lockState = CursorLockMode.Confined;
+                        Cursor.visible = true;
 
                         actionPrompt.SetActive(false);
+
+                        gameRulesDisplayed = true;
+                        CasketBasketsGameManager.Instance.gameRules.SetActive(true);
                     }
                     else
                     {

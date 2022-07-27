@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class GameBooth : MonoBehaviour
 {
+    public static GameBooth Instance;
+
     [Header("UI")]
     public GameObject minigameHUD; //Manually set in Unity game manager script
     public GameObject gameRules; //Manually set in Unity game manager script
@@ -30,6 +33,12 @@ public class GameBooth : MonoBehaviour
     public Sprite inactiveCardSprite;
     public Sprite activeCardSprite;
 
+    public GameObject managerScript;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     //Constructor sets the default values.
     public GameBooth()
@@ -74,6 +83,7 @@ public class GameBooth : MonoBehaviour
 
     public GameObject GetGameRulesMenu()
     {
-        return gameRules.gameObject; }
+        return gameRules.gameObject; 
+    }
 
 }

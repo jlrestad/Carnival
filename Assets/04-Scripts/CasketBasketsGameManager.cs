@@ -21,9 +21,12 @@ public class CasketBasketsGameManager : GameBooth
         //Get the sprite from the tarot cards
         inactiveCardSprite = GetInactiveCardSprite();
         activeCardSprite = GetActiveCardSprite();
-
-        //Get the game rules menu
-        gameRules = GetGameRulesMenu();
-
     }
+
+
+    public void ShowGameUI()
+    {
+        minigameHUD.SetActive(true);
+    }
+
 }
