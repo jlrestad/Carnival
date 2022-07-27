@@ -235,8 +235,8 @@ public class HudManager : MonoBehaviour
         Debug.Log("Add Red");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
         {
-            redGainFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
-            redLoseFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //take the other effect with also
+            redGainFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
+            redLoseFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //take the other effect with also
             redGainFX.SetActive(true); //play the needed particle effects
             yield return new WaitForSeconds(0.2f); //wait while the first part of the animation plays
             redTixDisplay++; //add one to the bar
@@ -261,8 +261,8 @@ public class HudManager : MonoBehaviour
                 DisplayTicketAmount(); //update the bar to show fewer tickets
                 myAudio.PlayOneShot(loseRedTicket);
                 yield return new WaitForSeconds(0.5f); //wait for the animation to play
-                redLoseFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
-                redGainFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //take the other effect with also
+                redLoseFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
+                redGainFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //take the other effect with also
             }
         }
     }
@@ -274,8 +274,8 @@ public class HudManager : MonoBehaviour
         Debug.Log("Add Blue");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
         {
-            blueGainFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
-            blueLoseFX.gameObject.transform.position += new Vector3(0.55f, 0, 0); //take the other effect with also
+            blueGainFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
+            blueLoseFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //take the other effect with also
             blueGainFX.SetActive(true); //play the needed particle effects
             yield return new WaitForSeconds(0.2f); //wait while the first part of the animation plays
             blueTixDisplay++; //add one to the bar
@@ -301,8 +301,8 @@ public class HudManager : MonoBehaviour
                 DisplayTicketAmount(); //update the bar to show fewer tickets
                 myAudio.PlayOneShot(loseBlueTicket);
                 yield return new WaitForSeconds(0.5f); //wait for the animation to play
-                blueLoseFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
-                blueGainFX.gameObject.transform.position -= new Vector3(0.55f, 0, 0); //take the other effect with also
+                blueLoseFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
+                blueGainFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //take the other effect with also
             }
             HealthTicket(-1 * maxRedTix); //refill the player's red tickets to full!
         }
