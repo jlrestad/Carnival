@@ -37,7 +37,7 @@ public class SkillShotGameManager : MonoBehaviour
     [Header("TIMER")]
     [SerializeField] private float timeCounter = 30; //used to count down the time
     private float timeLeft; //used to set the amount of time to countdown by
-    private float resetTime;
+    private float resetTime; //holds the count down time
 
     [Header("TAROT CARD")]
     public GameObject displayPickupScreen;

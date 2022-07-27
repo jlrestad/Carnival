@@ -21,8 +21,6 @@ TagManager:
   - ThrowingGame
   - MeleeGame
   - WhackEm
-  - Bucket
-  - CritterSpawn
   - TargetHome
   - MeleeCard
   - ShootingCard
@@ -46,7 +44,10 @@ TagManager:
   - BottleBroken
   - CrateBreakable
   - CrateBroken
-  - Broken
+  - ScoreText
+  - TimerText
+  - WinLoseText
+  - MinigameHUD
   layers:
   - Default
   - TransparentFX

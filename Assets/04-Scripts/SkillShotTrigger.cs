@@ -10,7 +10,7 @@ public class SkillShotTrigger : MonoBehaviour
     [SerializeField] int ticketCost = 1;
     //[SerializeField] bool buttonPressed;
     public Transform gameplayPosition;
-    public Transform player;
+    public GameObject player;
     WeaponEquip WE;
     public int maxDistance = 4;
 
@@ -29,7 +29,7 @@ public class SkillShotTrigger : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
         menu = GameObject.FindObjectOfType<Menu>();
         WE = player.GetComponent<WeaponEquip>();
         skillshotGM.currentWeapon = playerWeapon;
@@ -134,7 +134,7 @@ public class SkillShotTrigger : MonoBehaviour
     {
         //Unlock player camera movement, put player in position, lock player body movement
         FPSController.Instance.canMove = true;
-        player.position = gameplayPosition.position;
+        player.transform.position = gameplayPosition.position;
         FPSController.Instance.GetComponent<CharacterController>().enabled = false;
     }
 

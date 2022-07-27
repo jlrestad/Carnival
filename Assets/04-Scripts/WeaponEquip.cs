@@ -60,6 +60,7 @@ public class WeaponEquip : MonoBehaviour
     Head head; //Get the Head script for skull
 
     [HideInInspector] RaycastHit hit;
+    [SerializeField] int maxHitDistance = 10;
     public Menu menu;
 
 
@@ -88,7 +89,6 @@ public class WeaponEquip : MonoBehaviour
 
     void Update()
     {
-
         FindClosestWeapon();
 
         if (isEquipped || inInventory)
@@ -121,60 +121,44 @@ public class WeaponEquip : MonoBehaviour
             crossHair.SetActive(true);
         }
 
-        // // // ~OLD~ WAS USED FOR WEAPON PICKUPS -- THOSE ARE NOW BUILT INTO THE PLAY BUTTON
+
         // * * *
-        //PLAYER INPUT
-        //if (distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveGun && closestWeapon.CompareTag("Gun") ||
-        //    distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && !haveMallet && closestWeapon.CompareTag("Mallet") ||
-        //    distanceToPlayer.sqrMagnitude <= pickUpRange && Input.GetButtonDown("ActionButton") && closestWeapon.CompareTag("Head"))
-        //{
-        //    //If holding a weapon, put it away before equipping new weapon.
-        //    if (currentWeapon != null)
-        //    {
-        //        currentWeapon.SetActive(false);
-        //    }
-
-        //    //Pick up and equip weapon.
-        //    PickUpWeapon();
-        //    BGCount = menu.BGCount; //get the count from Menu
-        //}
-        ////else if (Input.GetButtonDown("Fire2") && isEquipped && !inInventory)
-        ////{
-        ////    //Put weapon in inventory.
-        ////    UnequipWeapon();
-        ////}
-        //else if (Input.GetButtonDown("Fire2") && !isEquipped && inInventory)
-        //{
-        //    //Equip weapon from inventory.
-        //    EquipWeapon();
-        //}
-        // // // ~OLD~
-
-        //SHOW ACTION/INTERACT PROMPT
-        if (!gameRulesDisplayed)
+        //RAYCAST INFO
+        if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
         {
-            if (!gameObject.CompareTag("Head") /*&& !closestWeapon.CompareTag("Untagged")*/)
+            Debug.Log(hit.transform.name);
+
+            if (!gameRulesDisplayed)
             {
-                //if (distanceToPlayer.magnitude <= pickUpRange && closestWeapon != skull)
-                //{
-                if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
+                //IF RAYCAST HITS ONE OF THE MINIGAMES
+                if (hit.transform.gameObject == GameObject.Find("CBGame"))
                 {
-                    if (hit.transform.GetComponent<Weapon>())
+                    //Find distance of the game to the player
+                    distanceToPlayer = (hit.transform.position - transform.position);
+
+                    if (distanceToPlayer.sqrMagnitude < maxHitDistance)
                     {
-                        //If within pickup range show the prompt.
                         actionPrompt.SetActive(true);
                     }
-                }
-                else
-                {
-                    actionPrompt.SetActive(false);
+                    else
+                    {
+                        actionPrompt.SetActive(false);
+                    }
+
+                    //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
+                    if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
+                    {
+                        gameRulesDisplayed = true;
+                        CasketBasketsGameManager.Instance.gameRules.SetActive(true);
+
+                        actionPrompt.SetActive(false);
+                    }
+                    else
+                    {
+                        gameRulesDisplayed = false;
+                    }
                 }
             }
-        }
-        else
-        {
-            //If game rules are displayer -- then do not show action prompt.
-            actionPrompt.SetActive(false);
         }
     }
 

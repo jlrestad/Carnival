@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class TauntPosition : MonoBehaviour
 {
+    [TextArea]
+    [SerializeField] string notes;
+
     public static TauntPosition Instance;
     public Transform tauntPosition;
     public Transform enemyPosition;
     private GameObject thisEnemy;
+
+    public void OnValidate()
+    {
+        notes = "Drag this parent Critter to the Enemy Position. Taunt Position is automatically filled.";
+    }
 
     void Awake()
     {

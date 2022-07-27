@@ -270,12 +270,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec7c764285ca574aa7968a942d8495c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redTickets: 10
-  blueTickets: 0
+  maxRedTix: 10
+  startingRedTix: 0
+  maxBlueTix: 3
+  startingBlueTix: 0
   redSlider: {fileID: 0}
   blueSlider: {fileID: 0}
   lightOn: {fileID: 0}
   lightOff: {fileID: 0}
+  myAudio: {fileID: 0}
+  gainRedTicket: {fileID: 0}
+  loseRedTicket: {fileID: 0}
+  gainBlueTicket: {fileID: 0}
+  loseBlueTicket: {fileID: 0}
+  gainTarot: {fileID: 0}
+  redGainFX: {fileID: 0}
+  redLoseFX: {fileID: 0}
+  blueGainFX: {fileID: 0}
+  blueLoseFX: {fileID: 0}
+  gainTarotFX: {fileID: 0}
+  redTickets: 10
+  blueTickets: 0
+  redTixDisplay: 0
+  blueTixDisplay: 0
+  playerInvincible: 0
 --- !u!1 &1214996161714071794
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,9 +589,10 @@ GameObject:
   - component: {fileID: 6943567144732288405}
   - component: {fileID: 8056456868342278983}
   - component: {fileID: 8323377059751657058}
+  - component: {fileID: 1094518088}
   m_Layer: 5
   m_Name: WinText
-  m_TagString: Untagged
+  m_TagString: WinLoseText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -694,6 +713,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1094518088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915867575602734594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3674aa5ea7ea8e449ba336375239e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2265805408441228632
 GameObject:
   m_ObjectHideFlags: 0
@@ -4894,9 +4925,10 @@ GameObject:
   - component: {fileID: 3908507891764381384}
   - component: {fileID: 3908507891764381386}
   - component: {fileID: 3908507891764381387}
+  - component: {fileID: 1509939668}
   m_Layer: 5
   m_Name: ScoreText
-  m_TagString: Untagged
+  m_TagString: ScoreText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5017,6 +5049,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1509939668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908507891764381385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3674aa5ea7ea8e449ba336375239e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3908507891771569892
 GameObject:
   m_ObjectHideFlags: 0
@@ -5870,9 +5914,10 @@ GameObject:
   - component: {fileID: 3908507891949704324}
   - component: {fileID: 3908507891949704326}
   - component: {fileID: 3908507891949704327}
+  - component: {fileID: 590375618}
   m_Layer: 5
   m_Name: TimerText
-  m_TagString: Untagged
+  m_TagString: TimerText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5993,6 +6038,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &590375618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908507891949704325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3674aa5ea7ea8e449ba336375239e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3908507891965640020
 GameObject:
   m_ObjectHideFlags: 0
@@ -13516,9 +13573,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9075976585695508151}
+  - component: {fileID: 5585068444293865756}
   m_Layer: 5
   m_Name: Minigame_HUD
-  m_TagString: Untagged
+  m_TagString: MinigameHUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13550,3 +13608,15 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5585068444293865756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917102045128978778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3674aa5ea7ea8e449ba336375239e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

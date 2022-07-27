@@ -4895,7 +4895,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3216939856758536694}
-  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 28.06, y: -8.85, z: 35.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6365,7 +6365,7 @@ MonoBehaviour:
   leftPos: {fileID: 1677671100010958054}
   rightPos: {fileID: 1677671100572900122}
   parentPos: {fileID: 0}
-  moveSpeed: 1.5
+  moveSpeed: 1
   timeBetweenTargets: 2
   direction: 0
   moveLeft: 0
@@ -6410,7 +6410,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 100, y: 105}
-  m_SizeDelta: {x: 64, y: 107}
+  m_SizeDelta: {x: 100, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4919458860083039738
 CanvasRenderer:
@@ -6559,7 +6559,7 @@ MonoBehaviour:
   leftPos: {fileID: 1677671100833701764}
   rightPos: {fileID: 1677671100277883136}
   parentPos: {fileID: 0}
-  moveSpeed: 1.5
+  moveSpeed: 1
   timeBetweenTargets: 2
   direction: 0
   moveLeft: 1
@@ -6767,7 +6767,7 @@ GameObject:
   - component: {fileID: 4886358015991269631}
   - component: {fileID: 5225305957612556866}
   m_Layer: 0
-  m_Name: SkillShotGame
+  m_Name: SSGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6881,7 +6881,7 @@ MonoBehaviour:
   leftPos: {fileID: 4919458860668806269}
   rightPos: {fileID: 4919458858842335274}
   parentPos: {fileID: 0}
-  moveSpeed: 1.5
+  moveSpeed: 1
   timeBetweenTargets: 2
   direction: 0
   moveLeft: 1
@@ -10001,7 +10001,7 @@ GameObject:
   - component: {fileID: 5325715176256286688}
   - component: {fileID: 2996449677928884581}
   m_Layer: 5
-  m_Name: SelectedBG
+  m_Name: ActiveCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10024,7 +10024,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 100, y: 105}
-  m_SizeDelta: {x: 85, y: 143}
+  m_SizeDelta: {x: 120, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4619881289999419534
 CanvasRenderer:
