@@ -33,6 +33,8 @@ public class GameBooth : MonoBehaviour
     public Sprite inactiveCardSprite;
     public Sprite activeCardSprite;
 
+    public GameObject playerWeapon;
+
     public bool gameOn;
 
     private void Awake()
@@ -107,6 +109,9 @@ public class GameBooth : MonoBehaviour
         
         WeaponEquip.Instance.gameRulesDisplayed = false;
         FPSController.Instance.canMove = true;
+
+        // Get/Set player weapon, then set the weapon active:
+        playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
 
         minigameHUD.SetActive(true);
     }

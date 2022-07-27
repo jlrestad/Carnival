@@ -37,6 +37,8 @@ public class Head : MonoBehaviour
         playerWeapon = player.GetComponent<WeaponEquip>();
         collider = GetComponent<Collider>();
         skullParent = playerWeapon.skullParent.transform;
+
+        SetSkullWeapon();
     }   
 
     private void FixedUpdate()
@@ -86,14 +88,14 @@ public class Head : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //For Casket Baskets game
-        if (other.CompareTag("Bucket"))
-        {
-            //Debug.Log("Head trigger working");
-            other.GetComponentInParent<GameCardManager>().critterList.Add(other.transform.gameObject);
+        //if (other.CompareTag("Bucket"))
+        //{
+        //    //Debug.Log("Head trigger working");
+        //    other.GetComponentInParent<GameCardManager>().critterList.Add(other.transform.gameObject);
 
-            //If skull hits the bucket then hide it from the scene.
-            playerWeapon.skull.SetActive(false);
-        }
+        //    //If skull hits the bucket then hide it from the scene.
+        //    playerWeapon.skull.SetActive(false);
+        //}
 
         if (other.CompareTag("BossHeart"))
         {
@@ -115,6 +117,11 @@ public class Head : MonoBehaviour
 
         //skullParent.gameObject.SetActive(true);  //Turn on player's skullParent
 
+        SetSkullWeapon();
+    }
+
+    public void SetSkullWeapon()
+    {
         playerWeapon.currentWeapon = skullParent.gameObject; //Set current weapon
         playerWeapon.skull = skullParent.transform.GetChild(0).gameObject; //Set the skull that is held
         playerWeapon.skull.transform.gameObject.SetActive(true); //Make the skull visible
