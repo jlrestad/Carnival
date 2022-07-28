@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 
@@ -36,6 +37,10 @@ public class HudManager : MonoBehaviour
     public UnityEngine.UI.Slider blueSlider;
     [SerializeField] GameObject lightOn;
     [SerializeField] GameObject lightOff;
+    [Tooltip("Put in here the 'game over screen' prefab. It will be enabled when the player loses.")]
+    public GameObject gameOverScreen;
+    [Tooltip("Put in here the 'creepyText' nested under the game over screen prefab.")]
+    public Text gameOverText;
     //-----Sound Effects-----
     [SerializeField] AudioSource myAudio;
     [SerializeField] AudioClip gainRedTicket;
@@ -43,6 +48,7 @@ public class HudManager : MonoBehaviour
     [SerializeField] AudioClip gainBlueTicket;
     [SerializeField] AudioClip loseBlueTicket;
     [SerializeField] AudioClip gainTarot;
+    [SerializeField] AudioMixer myMixer;
     //-----Visual Effects-----
     [SerializeField] GameObject redGainFX;
     [SerializeField] GameObject redLoseFX;
@@ -196,7 +202,25 @@ public class HudManager : MonoBehaviour
     //Currently does nothing, as the Game Over sequence is not designed yet.
     public void playGameOver()
     {
-        Debug.Log("Game Over sequence was triggered, but no sequence exists yet. Game Over failed.");
+        FPSController.Instance.canMove = false; //keep the player from moving
+        myMixer.SetFloat("MusicVolume", -80); //set all the sound mixers to muted except for the GameOver to muted
+        myMixer.SetFloat("SFXVolume", -80);
+        myMixer.SetFloat("PlayerVolume", -80);
+        //-----Below just takes the game over text and randomizes it from a few options-----
+        int textroll = Random.Range(0, 10);
+        if (textroll <= 0) gameOverText.text = "YOU   aRe   oNE   OF   US   Now";
+        if (textroll == 1) gameOverText.text = "How   sAd,   it   WaS   fUn";
+        if (textroll == 2) gameOverText.text = "it   was   AlL   jUST   a   GAme";
+        if (textroll == 3) gameOverText.text = "noNe   Of   y0u   cAN   EsCape";
+        if (textroll == 4) gameOverText.text = "Another   fOR   my   HoarD";
+        if (textroll == 5) gameOverText.text = "you'Re   AlL   mInE";
+        if (textroll == 6) gameOverText.text = "juSt   as   yoU   dEServE";
+        if (textroll == 7) gameOverText.text = "welcomE   t0   The   CirCuS!";
+        if (textroll == 8) gameOverText.text = "I   knEw   This   woulD   HapPeN";
+        if (textroll >= 9) gameOverText.text = "Another   PRizE   f0r   me?";
+        //-----
+        gameOverScreen.SetActive(true); //open up the game over screen
+
     }
 
     //--------------------------------------------------|GainTarot|
