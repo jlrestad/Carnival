@@ -222,7 +222,7 @@ public class SkillShotGameManager : MonoBehaviour
 
     IEnumerator CountDownTimer()
     {
-        //Wait for 1 second so that the starting number is displayed.
+        //Wait so that the starting number is displayed.
         yield return new WaitForSeconds(0.5f);
 
         timeLeft -= Time.deltaTime;

@@ -62,8 +62,6 @@ public class WeaponEquip : MonoBehaviour
     [HideInInspector] RaycastHit hit;
     [SerializeField] int maxHitDistance = 10;
     public Menu menu;
-    GameBooth gb = new GameBooth();
-
 
 
     private void Awake()
@@ -132,25 +130,18 @@ public class WeaponEquip : MonoBehaviour
 
             if (!gameRulesDisplayed)
             {
-                //IF RAYCAST HITS ONE OF THE MINIGAMES
-                if (hit.transform.gameObject == GameObject.Find("CBGame") && !CasketBasketsGameManager.Instance.gameOn)
-                {
-                    //Find distance of the game to the player
-                    distanceToPlayer = (hit.transform.position - transform.position);
+                //Find distance of the game to the player
+                distanceToPlayer = (hit.transform.position - transform.position);
 
-                    if (distanceToPlayer.sqrMagnitude < maxHitDistance)
-                    {
-                        actionPrompt.SetActive(true);
-                    }
-                    else
-                    {
-                        actionPrompt.SetActive(false);
-                    }
+                //IF RAYCAST HITS ONE OF THE MINIGAMES
+                if (hit.transform.gameObject == GameObject.Find("CBGame") && !CasketBasketsGameManager.Instance.gameOn && distanceToPlayer.sqrMagnitude < maxHitDistance)
+                {
+                    actionPrompt.SetActive(true);
 
                     //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
                     if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
                     {
-                        CasketBasketsGameManager.Instance.ShowGameUI();
+                        CasketBasketsGameManager.Instance.ShowGameRules();
 
                         actionPrompt.SetActive(false);
                         gameRulesDisplayed = true;
@@ -159,6 +150,10 @@ public class WeaponEquip : MonoBehaviour
                     {
                         gameRulesDisplayed = false;
                     }
+                }
+                else
+                {
+                    actionPrompt.SetActive(false);
                 }
             }
         }

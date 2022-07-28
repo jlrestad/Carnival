@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class GameBooth : MonoBehaviour
 {
-    public static GameBooth Instance;
+    //public static GameBooth Instance;
 
     [Header("UI")]
     public GameObject minigameHUD; //Manually set in Unity game manager script
@@ -22,9 +22,9 @@ public class GameBooth : MonoBehaviour
     [HideInInspector] public int score; //the player kills
 
     [Header("TIMER")]
-    [SerializeField] private float timeCounter; //used to count down the time
-    private float timeLeft; //used to set the amount of time to countdown by
-    private float resetTime;
+    public float timeCounter; //used to count down the time
+    public float timeLeft; //used to set the amount of time to countdown by
+    public float resetTime;
 
     [Header("TAROT CARD")]
     public GameObject displayScreen; //Tarot card won screen (PlayerHud > Pickups > Skulls) - manually set in Unity game manager script
@@ -33,13 +33,16 @@ public class GameBooth : MonoBehaviour
     public Sprite inactiveCardSprite;
     public Sprite activeCardSprite;
 
-    public GameObject playerWeapon;
-
+    [Header("GAME SETUP")]
     public bool gameOn;
+    public GameObject playerWeapon;
+    public Transform gameplayPosition;
 
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
+
+        Debug.Log("time: " + timeCounter);
     }
 
     //Constructor sets the default values.
@@ -49,11 +52,25 @@ public class GameBooth : MonoBehaviour
         this.inactiveCard = InactiveCard;
 
         scoreLimit = 20;
-        timeCounter = 60.0f;
+
+        resetTime = timeCounter; //Store this for the reset
+        timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
     }
 
     //* * *
     //SETTERS
+
+    //Set Timer Info
+    public float TimeCounter
+    {
+        get { return timeCounter; }
+        set { timeCounter = value; }
+    }
+
+    public float GetTimeCounter()
+    {
+        return timeCounter;
+    }
 
     //Set the active card
     public GameObject ActiveCard
@@ -94,26 +111,33 @@ public class GameBooth : MonoBehaviour
 
     // * * *
     //GAME METHODS
-    public void ShowGameUI()
+    public void ShowGameRules()
     {
         ShowCursor();
 
         FPSController.Instance.canMove = false;
-        
         gameRules.SetActive(true);
     }
 
     public void PlayGame()
     {
-        gameOn = true;
-        
-        WeaponEquip.Instance.gameRulesDisplayed = false;
-        FPSController.Instance.canMove = true;
+        //* Need to unpause the game timer here -- if game is paused
 
-        // Get/Set player weapon, then set the weapon active:
-        playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+        gameRules.SetActive(false);
 
-        minigameHUD.SetActive(true);
+        LockPlayerOnPlay();
+
+        if (!gameOn)
+        {
+            gameOn = true;
+            minigameHUD.SetActive(true);
+
+            FPSController.Instance.canMove = true; //Camera movement
+
+            playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+
+            HideCursor();
+        }
     }
 
     public void ExitGame()
@@ -121,9 +145,9 @@ public class GameBooth : MonoBehaviour
         ResetGame();
     }
 
+    //RESETS THE GAME BACK TO DEFAULT
     public void ResetGame()
     {
-        //Will reset things back to default
         gameOn = false;
 
         WeaponEquip.Instance.gameRulesDisplayed = false;
@@ -137,9 +161,8 @@ public class GameBooth : MonoBehaviour
 
     public void LockPlayerOnPlay()
     {
-        //Unlock player camera movement, put player in position, lock player body movement
         FPSController.Instance.canMove = true;
-        //FPSController.Instance.transform.position = gameplayPosition.position;
+        FPSController.Instance.transform.position = gameplayPosition.position;
         FPSController.Instance.GetComponent<CharacterController>().enabled = false;
     }
 
@@ -164,5 +187,24 @@ public class GameBooth : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+    }
+
+
+    public IEnumerator CountDownTimer()
+    {
+        timerText.text = ("00:" + (int)timeLeft);
+
+        //Wait so that the starting number is displayed.
+        yield return new WaitForSeconds(0.5f);
+
+        timeLeft -= Time.deltaTime;
+        if (timeLeft <= 0f)
+        {
+            timeLeft = 0f;
+        }
+        else
+        {
+            yield return null;
+        }
     }
 }
