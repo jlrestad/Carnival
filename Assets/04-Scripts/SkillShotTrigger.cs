@@ -165,10 +165,7 @@ public class SkillShotTrigger : MonoBehaviour
         //Spend the required ticket cost for the game
         HudManager.Instance.HealthTicket(ticketCost);
 
-        //gameWeapon.SetActive(false); //Hide weapon in scene
         playerWeapon.SetActive(true); //Show player holding weapon
-
-        //player.GetComponent<WeaponEquip>().PickUpWeapon();
 
 
         //*
