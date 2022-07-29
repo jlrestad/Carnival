@@ -190,7 +190,8 @@ public class Menu : MonoBehaviour
         loadScreen.SetActive(false);
         titleCamera.SetActive(false);
 
-        sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
+        //sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
+        //sceneLight = GameObject.Find("MoonLight").GetComponent<Light>();
 
         //Time.timeScale = 1;
 

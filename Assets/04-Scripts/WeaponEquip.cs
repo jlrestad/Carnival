@@ -128,13 +128,13 @@ public class WeaponEquip : MonoBehaviour
         {
             //Debug.Log(hit.transform.name);
 
-            if (!gameRulesDisplayed)
-            {
-                //Find distance of the game to the player
-                distanceToPlayer = (hit.transform.position - transform.position);
+            //Find distance of the game to the player
+            distanceToPlayer = (hit.transform.position - transform.position);
 
+            if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
+            {
                 //IF RAYCAST HITS ONE OF THE MINIGAMES
-                if (hit.transform.gameObject == GameObject.Find("CBGame") && !CasketBasketsGameManager.Instance.gameOn && distanceToPlayer.sqrMagnitude < maxHitDistance)
+                if (hit.transform.gameObject == GameObject.Find("CBGame") && !CasketBasketsGameManager.Instance.gameOn)
                 {
                     actionPrompt.SetActive(true);
 
