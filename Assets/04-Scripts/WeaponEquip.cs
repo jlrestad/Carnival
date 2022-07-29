@@ -126,7 +126,7 @@ public class WeaponEquip : MonoBehaviour
         //RAYCAST INFO
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
         {
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
 
             if (!gameRulesDisplayed)
             {

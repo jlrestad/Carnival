@@ -121,22 +121,18 @@ public class GameBooth : MonoBehaviour
 
     public void PlayGame()
     {
-        //* Need to unpause the game timer here -- if game is paused
-
-        gameRules.SetActive(false);
-
-        LockPlayerOnPlay();
-
         if (!gameOn)
         {
             gameOn = true;
             minigameHUD.SetActive(true);
-
-            FPSController.Instance.canMove = true; //Camera movement
-
-            playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
-
+            gameRules.SetActive(false);
+            LockPlayerOnPlay(); //Puts player into game play position.
             HideCursor();
+        }
+        else
+        {
+            Time.timeScale = 1;
+            gameRules.SetActive(false);
         }
     }
 

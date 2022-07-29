@@ -34,6 +34,8 @@ public class CasketBasketsGameManager : GameBooth
 
         if (gameOn)
         {
+            playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+
             StartCoroutine(CountDownTimer());
         }
 
@@ -52,9 +54,8 @@ public class CasketBasketsGameManager : GameBooth
         if (gameOn && Input.GetButtonDown("Menu"))
         {
             gameRules.SetActive(true);
+            Time.timeScale = 0;
         }
-
-        //* Need to pause the game timer here. 
     }
 
 }
