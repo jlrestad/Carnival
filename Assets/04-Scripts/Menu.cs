@@ -78,7 +78,7 @@ public class Menu : MonoBehaviour
     [Header("CONTROLLER PROMPT")]
     public GameObject controllerPrompt;
     public GameObject keyboardPrompt;
-    [HideInInspector] public int counter = -1; //Used to handle pause.
+    /*[HideInInspector] */public int counter = -1; //Used to handle pause.
 
     private void Awake()
     {
@@ -128,7 +128,7 @@ public class Menu : MonoBehaviour
             Cursor.visible = false;
         }
 
-        if (Input.GetButtonDown("Menu") && counter == 0)
+        if (Input.GetButtonDown("Menu") && counter == 0 && !CasketBasketsGameManager.Instance.gameOn)
         {
             PauseGame();
         }
@@ -192,11 +192,6 @@ public class Menu : MonoBehaviour
 
         //sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
         //sceneLight = GameObject.Find("MoonLight").GetComponent<Light>();
-
-        //Time.timeScale = 1;
-
-        //Clear level name on start
-        //levelName = "";
     }
 
     //public void AddScene(string name)

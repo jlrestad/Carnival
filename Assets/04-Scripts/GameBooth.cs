@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class GameBooth : MonoBehaviour
 {
-    //public static GameBooth Instance;
+    public static GameBooth Instance;
 
     [Header("UI")]
     public GameObject minigameHUD; //Manually set in Unity game manager script
@@ -40,7 +40,7 @@ public class GameBooth : MonoBehaviour
 
     private void Awake()
     {
-        //Instance = this;
+        Instance = this;
 
         Debug.Log("time: " + timeCounter);
     }
@@ -67,11 +67,6 @@ public class GameBooth : MonoBehaviour
         set { timeCounter = value; }
     }
 
-    public float GetTimeCounter()
-    {
-        return timeCounter;
-    }
-
     //Set the active card
     public GameObject ActiveCard
     {
@@ -92,8 +87,9 @@ public class GameBooth : MonoBehaviour
         set { gameRules = value; }
     }
 
+
     // * * *
-    //GETTERS FOR THE SPRITES
+    //GETTERS
     public Sprite GetActiveCardSprite()
     {
         return activeCard.GetComponent<Image>().sprite;
@@ -109,6 +105,11 @@ public class GameBooth : MonoBehaviour
         return gameRules.gameObject; 
     }
 
+    public float GetTimeCounter()
+    {
+        return timeCounter;
+    }
+
     // * * *
     //GAME METHODS
     public void ShowGameRules()
@@ -121,6 +122,8 @@ public class GameBooth : MonoBehaviour
 
     public void PlayGame()
     {
+        Time.timeScale = 1;
+
         if (!gameOn)
         {
             gameOn = true;
@@ -131,7 +134,6 @@ public class GameBooth : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1;
             gameRules.SetActive(false);
         }
     }
