@@ -37,6 +37,7 @@ public class GameBooth : MonoBehaviour
     public bool gameOn;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
+    public Component gameManagerScript;
 
     private void Awake()
     {
@@ -55,6 +56,13 @@ public class GameBooth : MonoBehaviour
 
         resetTime = timeCounter; //Store this for the reset
         timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
+    }
+
+    public Component GetGameManagerScript(Component thisClassName)
+    {
+        gameManagerScript = thisClassName;
+        Debug.Log(gameManagerScript);
+        return gameManagerScript;
     }
 
     //* * *
@@ -117,6 +125,7 @@ public class GameBooth : MonoBehaviour
         ShowCursor();
 
         FPSController.Instance.canMove = false;
+        WeaponEquip.Instance.gameRulesDisplayed = true;
         gameRules.SetActive(true);
     }
 
@@ -135,6 +144,8 @@ public class GameBooth : MonoBehaviour
         else
         {
             gameRules.SetActive(false);
+            WeaponEquip.Instance.gameRulesDisplayed = false;
+            LockPlayerOnPlay();
         }
     }
 
@@ -153,8 +164,10 @@ public class GameBooth : MonoBehaviour
         FPSController.Instance.canMove = true;
         
         minigameHUD.SetActive(false);
+        Time.timeScale = 1;
 
         HideCursor();
+        UnLockPlayer();
     }
 
     public void LockPlayerOnPlay()

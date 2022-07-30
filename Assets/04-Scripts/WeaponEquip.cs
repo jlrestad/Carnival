@@ -144,12 +144,8 @@ public class WeaponEquip : MonoBehaviour
                         CasketBasketsGameManager.Instance.ShowGameRules();
 
                         actionPrompt.SetActive(false);
-                        gameRulesDisplayed = true;
                     }
-                    else
-                    {
-                        gameRulesDisplayed = false;
-                    }
+
                 }
                 else
                 {
