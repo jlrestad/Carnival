@@ -35,15 +35,17 @@ public class GameBooth : MonoBehaviour
 
     [Header("GAME SETUP")]
     public bool gameOn;
+    public bool gameWon;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
     public Component gameManagerScript;
 
+    [Header("SCRIPTS")]
+    public WeaponEquip WE;
+
     private void Awake()
     {
         Instance = this;
-
-        Debug.Log("time: " + timeCounter);
     }
 
     //Constructor sets the default values.

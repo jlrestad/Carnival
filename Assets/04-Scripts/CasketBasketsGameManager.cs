@@ -14,6 +14,9 @@ public class CasketBasketsGameManager : GameBooth
     private void Awake()
     {
         Instance = this;
+
+        WE = playerWeapon.GetComponentInParent<WeaponEquip>(); //Get the script from the Player
+
     }
 
     private void Start()
@@ -30,13 +33,10 @@ public class CasketBasketsGameManager : GameBooth
 
     private void Update()
     {
-        //ShowGameRulesPause();
-
-        //* Need to release player from being locked when the game is over or exited.
-
+        //When the game is on, player is holding the skull and can bring up the game rules menu.
         if (gameOn)
         {
-            //playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+            playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
 
             StartCoroutine(CountDownTimer());
 
@@ -47,6 +47,17 @@ public class CasketBasketsGameManager : GameBooth
             }
         }
 
+        //Hide the skull if the game is lost. Add the skull weapon to the weapon list if the game is won.
+        if (gameWon && !gameOn)
+        {
+            WE.weaponList.Add(playerWeapon);
+        }
+        else if (!gameWon && !gameOn)
+        {
+            playerWeapon.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        //Timer formatting
         if (timeLeft >= 10)
         {
             timerText.text = ("00:" + (int)timeLeft);
@@ -56,15 +67,4 @@ public class CasketBasketsGameManager : GameBooth
             timerText.text = ("00:0" + (int)timeLeft);
         }
     }
-
-    void ShowGameRulesPause()
-    {
-        if (gameOn && Input.GetButtonDown("Menu"))
-        {
-            gameRules.SetActive(true);
-            WeaponEquip.Instance.gameRulesDisplayed = true;
-            Time.timeScale = 0;
-        }
-    }
-
 }

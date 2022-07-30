@@ -104,14 +104,16 @@ public class WeaponEquip : MonoBehaviour
             haveSkull = true;
         }
 
-        if (holdingSkull)
-        {
-            //Add skulls to weapon list.
-            if (!weaponList.Contains(skullParent))
-            {
-                weaponList.Add(skullParent);
-            }
-        }
+        //*
+        //* Use the CB Game Manager to add skull to the weapon list if the game is won.
+        //if (holdingSkull)
+        //{
+        //    //Add skulls to weapon list.
+        //    if (!weaponList.Contains(skullParent))
+        //    {
+        //        weaponList.Add(skullParent);
+        //    }
+        //}
 
         // * * *
         //RETICLE DISPLAY -- Only show crosshair if a weapon is equipped.
