@@ -36,12 +36,14 @@ public class GameBooth : MonoBehaviour
     [Header("GAME SETUP")]
     public bool gameOn;
     public bool gameWon;
+    public bool isPaused;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
     public Component gameManagerScript;
 
     [Header("SCRIPTS")]
     public WeaponEquip WE;
+    public Component className;
 
     private void Awake()
     {
@@ -126,6 +128,11 @@ public class GameBooth : MonoBehaviour
     {
         ShowCursor();
 
+        if (gameOn)
+        {
+            isPaused = true;
+        }
+
         FPSController.Instance.canMove = false;
         WeaponEquip.Instance.gameRulesDisplayed = true;
         gameRules.SetActive(true);
@@ -133,7 +140,7 @@ public class GameBooth : MonoBehaviour
 
     public void PlayGame()
     {
-        Time.timeScale = 1;
+        isPaused = false;
 
         if (!gameOn)
         {
@@ -160,16 +167,17 @@ public class GameBooth : MonoBehaviour
     public void ResetGame()
     {
         gameOn = false;
+        isPaused = false;
 
         WeaponEquip.Instance.gameRulesDisplayed = false;
         WeaponEquip.Instance.actionPrompt.SetActive(false);
         FPSController.Instance.canMove = true;
-        
         minigameHUD.SetActive(false);
-        Time.timeScale = 1;
 
         HideCursor();
         UnLockPlayer();
+
+        timeLeft = timeCounter;
     }
 
     public void LockPlayerOnPlay()
@@ -210,7 +218,13 @@ public class GameBooth : MonoBehaviour
         //Wait so that the starting number is displayed.
         yield return new WaitForSeconds(0.5f);
 
-        timeLeft -= Time.deltaTime;
+        //Count down if the game is not paused.
+        if (!isPaused)
+        {
+            timeLeft -= Time.deltaTime;
+        }
+
+        //Stop the countdown at 0.
         if (timeLeft <= 0f)
         {
             timeLeft = 0f;

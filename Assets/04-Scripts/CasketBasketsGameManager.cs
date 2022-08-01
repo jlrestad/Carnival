@@ -43,7 +43,6 @@ public class CasketBasketsGameManager : GameBooth
             if (Input.GetButtonDown("Menu"))
             {
                 ShowGameRules();
-                Time.timeScale = 0; //Pause the timer (this stops it from visibly counting down, but when timeScale = 1 the time drops to where it would be at if never set to 0 -- So need to pause time counter coroutine..)
             }
         }
 
