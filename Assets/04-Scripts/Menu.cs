@@ -29,8 +29,8 @@ public class Menu : MonoBehaviour
     public static Menu Instance;
 
     GameManager GM;
-    WhackEmGameManager whackemGM;
-    SkillShotGameManager skillshotGM;
+    CarnivalSmashGameManager carnivalSmashGM;
+    SkillShotGameManager skillShotGM;
     WeaponEquip WE;
 
     [Header("AUDIO")]
@@ -98,8 +98,8 @@ public class Menu : MonoBehaviour
     private void Update()
     {
         if (controllerArray == null) { controllerArray = Input.GetJoystickNames(); }
-        whackemGM = FindObjectOfType<WhackEmGameManager>();
-        skillshotGM = FindObjectOfType<SkillShotGameManager>();
+        carnivalSmashGM = FindObjectOfType<CarnivalSmashGameManager>();
+        skillShotGM = FindObjectOfType<SkillShotGameManager>();
         WE = FindObjectOfType<WeaponEquip>();
 
         //Set Player
@@ -143,14 +143,14 @@ public class Menu : MonoBehaviour
         {
             if (WE.gameName == "MeleeGame")
             {
-                cardImage = whackemGM.cardImage;
-                bgImage = whackemGM.BGImage;
+                cardImage = carnivalSmashGM.inactiveCardSprite;
+                bgImage = carnivalSmashGM.activeCardSprite;
                 return;
             }
             else if (WE.gameName == "ShootingGame")
             {
-                cardImage = skillshotGM.inactiveCardSprite;
-                bgImage = skillshotGM.activeCardSprite;
+                cardImage = skillShotGM.inactiveCardSprite;
+                bgImage = skillShotGM.activeCardSprite;
                 return;
             }
         }

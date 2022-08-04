@@ -193,7 +193,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8561035353794263912}
   - component: {fileID: 1044635887018742694}
-  - component: {fileID: 7901300498008949284}
   m_Layer: 8
   m_Name: GunGroup3
   m_TagString: Untagged
@@ -229,18 +228,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0.2}
---- !u!114 &7901300498008949284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174003681670167372}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &194072722967613263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,7 +2933,7 @@ BoxCollider:
   m_GameObject: {fileID: 1677671101436815815}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.584586, y: 3.1985817, z: 2.010826}
   m_Center: {x: -0.36000156, y: 0.4138584, z: -3.8}
@@ -2957,7 +2944,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677671101436815815}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0b40b2d2899f634196053b9c0e3ca42, type: 3}
   m_Name: 
@@ -4619,7 +4606,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4672755499783678162}
   - component: {fileID: 4410381344333977001}
-  - component: {fileID: 3976260456796448365}
   m_Layer: 8
   m_Name: GunGroup2
   m_TagString: Gun
@@ -4655,18 +4641,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0.2}
---- !u!114 &3976260456796448365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2978425584375866885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2996449677386550977
 GameObject:
   m_ObjectHideFlags: 0
@@ -4757,6 +4731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9163966986754603274}
+  - component: {fileID: 223953691}
   m_Layer: 0
   m_Name: GunObjectsGroup
   m_TagString: Untagged
@@ -4781,6 +4756,18 @@ Transform:
   m_Father: {fileID: 2877533452663726924}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &223953691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3123361609999097289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3140236321328941237
 GameObject:
   m_ObjectHideFlags: 0
@@ -6766,9 +6753,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4886358015991269631}
   - component: {fileID: 5225305957612556866}
+  - component: {fileID: 558215313}
   m_Layer: 0
   m_Name: SSGame
-  m_TagString: Untagged
+  m_TagString: ShootingGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -6816,18 +6804,16 @@ MonoBehaviour:
   timeLeft: 0
   resetTime: 0
   displayScreen: {fileID: 0}
-  activeCard: {fileID: 0}
-  inactiveCard: {fileID: 0}
+  activeCard: {fileID: 8910778627959794042}
+  inactiveCard: {fileID: 4919458860083039743}
   inactiveCardSprite: {fileID: 0}
   activeCardSprite: {fileID: 0}
   gameOn: 0
   gameWon: 0
   isPaused: 0
   playerWeapon: {fileID: 0}
-  gameplayPosition: {fileID: 0}
-  gameManagerScript: {fileID: 0}
+  gameplayPosition: {fileID: 1883155276}
   WE: {fileID: 0}
-  weaponEquip: {fileID: 0}
   targetFlipped: 0
   reachedEnd: 0
   gameJustPlayed: 0
@@ -6837,6 +6823,19 @@ MonoBehaviour:
   minigameLight: {fileID: 8850762238060242703}
   gameWeapon: {fileID: 0}
   currentWeapon: {fileID: 0}
+--- !u!65 &558215313
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5225305957612556869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 2, z: 1}
+  m_Center: {x: 0, y: 0.5, z: -5}
 --- !u!1 &5226414292463460898
 GameObject:
   m_ObjectHideFlags: 0
@@ -9790,7 +9789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &11098148322051421
 Transform:
   m_ObjectHideFlags: 0

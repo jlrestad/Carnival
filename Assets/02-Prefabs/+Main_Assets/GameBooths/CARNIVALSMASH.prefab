@@ -101,7 +101,7 @@ BoxCollider:
   m_GameObject: {fileID: 841841461}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.9719434, y: 2.9568787, z: 2.7694857}
   m_Center: {x: 0.114893675, y: 1.0594254, z: 0.9683741}
@@ -112,12 +112,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841841461}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7384c3db36261db48993c67edc81f31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whackemGM: {fileID: 4976218524061274676}
+  whackemGM: {fileID: 0}
   rulesUI: {fileID: 0}
   ticketCost: 1
   gameplayPosition: {fileID: 28901857}
@@ -1564,13 +1564,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4976218523301054376}
-  m_LocalRotation: {x: -0.6453677, y: -0.17416881, z: 0.7291057, w: 0.14686963}
-  m_LocalPosition: {x: -1.5097457, y: 0.006185269, z: -0.4866445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4793427717140430483}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: -0.237, z: 78.843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4976218523301054382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1623,7 +1623,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4976218524061274677}
-  - component: {fileID: 4976218524061274676}
   m_Layer: 0
   m_Name: CrittersGroup
   m_TagString: Untagged
@@ -1650,64 +1649,6 @@ Transform:
   m_Father: {fileID: 4793427717140430483}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4976218524061274676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4976218524061274678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5477838e3b0a0d489826865a50519ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  critters:
-  - {fileID: 7375994265678108515}
-  - {fileID: 532543497412439535}
-  - {fileID: 2112755823891214353}
-  - {fileID: 272655100060381011}
-  - {fileID: 686731667457314920}
-  taunts:
-  - {fileID: 4837392462166225374}
-  - {fileID: 3731458566792440}
-  - {fileID: 4535358101270605283}
-  - {fileID: 7719593109646874835}
-  - {fileID: 5790997602376419568}
-  whackemEnemy: {fileID: 0}
-  weaponEquip: {fileID: 0}
-  cardManager: {fileID: 1387369116836205943}
-  gameOn: 0
-  gameJustFinished: 0
-  popUp: 0
-  critterIsVisible: 0
-  gameIsRunning: 0
-  isTaunting: 0
-  tauntCritVisible: 0
-  scoreLimit: 20
-  score: 0
-  timeCounter: 60
-  minRando: 0.5
-  maxRando: 1
-  divideSpeedBy: 1.3
-  speedCap: 0.8
-  gameUI: {fileID: 0}
-  scoreText: {fileID: 0}
-  timerText: {fileID: 0}
-  winloseText: {fileID: 0}
-  displayPickupScreen: {fileID: 0}
-  BGCard: {fileID: 667014487390775313}
-  BGImage: {fileID: 0}
-  cardImage: {fileID: 0}
-  minigameAudio: {fileID: 0}
-  minigameLight: {fileID: 4976218522670786507}
-  gameWon: 0
-  gameOver: 0
-  levelLoaded: 0
-  currentWeapon: {fileID: 0}
-  gameWeapon: {fileID: 0}
-  playerWeapon: {fileID: 0}
-  script: {fileID: 0}
 --- !u!1 &5318326405545255977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,9 +1659,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4793427717140430483}
   - component: {fileID: 1387369116836205943}
+  - component: {fileID: 952988462}
+  - component: {fileID: 952988461}
   m_Layer: 0
   m_Name: CSGame
-  m_TagString: Untagged
+  m_TagString: MeleeGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1769,6 +1712,52 @@ MonoBehaviour:
   critterList: []
   cardDisplay: {fileID: 0}
   cardWon: {fileID: 3457787426874225867}
+--- !u!65 &952988462
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318326405545255977}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 2, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &952988461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318326405545255977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff6882936ff864ba883dde389a6e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minigameHUD: {fileID: 0}
+  gameRules: {fileID: 0}
+  scoreText: {fileID: 0}
+  timerText: {fileID: 0}
+  winLoseText: {fileID: 0}
+  scoreLimit: 20
+  score: 0
+  timeCounter: 60
+  timeLeft: 0
+  resetTime: 0
+  displayScreen: {fileID: 0}
+  activeCard: {fileID: 667014487390775313}
+  inactiveCard: {fileID: 3457787426874225867}
+  inactiveCardSprite: {fileID: 0}
+  activeCardSprite: {fileID: 0}
+  gameOn: 0
+  gameWon: 0
+  isPaused: 0
+  playerWeapon: {fileID: 0}
+  gameplayPosition: {fileID: 28901857}
+  WE: {fileID: 0}
 --- !u!1 &5790997602376419568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,7 +1852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1343249792415441442
 Transform:
   m_ObjectHideFlags: 0
@@ -3503,14 +3492,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bad278024da1074b8e8995e16213780, type: 3}
---- !u!1 &3457787426874225867 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
-  m_PrefabInstance: {fileID: 7183845166168638164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2726730787430956981 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5072581680830807393, guid: 4bad278024da1074b8e8995e16213780, type: 3}
+  m_PrefabInstance: {fileID: 7183845166168638164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3457787426874225867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
   m_PrefabInstance: {fileID: 7183845166168638164}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1175532159
