@@ -48,7 +48,8 @@ public class WeaponEquip : MonoBehaviour
     //[SerializeField] Rigidbody skullRB;
 
     [Space(2)]
-    /*[HideInInspector] */public bool haveGun, haveMallet, haveSkull, holdingSkull;
+    /*[HideInInspector] */
+    public bool haveGun, haveMallet, haveSkull, holdingSkull;
 
     public bool whackEmActive = false;
     public bool skillshotActive = false;
@@ -62,11 +63,19 @@ public class WeaponEquip : MonoBehaviour
     [HideInInspector] RaycastHit hit;
     [SerializeField] int maxHitDistance = 10;
     public Menu menu;
+    GameBooth gameBooth = new GameBooth();
+    CasketBasketsGameManager CBManager;
+    SkillShotGameManager SSManager;
+    CarnivalSmashGameManager CSManager;
 
 
     private void Awake()
     {
         Instance = this;
+
+        CBManager = GameObject.FindObjectOfType<CasketBasketsGameManager>();
+        CSManager = GameObject.FindObjectOfType<CarnivalSmashGameManager>();
+        SSManager = GameObject.FindObjectOfType<SkillShotGameManager>();
 
     }
 
@@ -90,6 +99,7 @@ public class WeaponEquip : MonoBehaviour
     void Update()
     {
         FindClosestWeapon();
+        //DetectMiniGames();
 
         if (isEquipped || inInventory)
         {
@@ -104,39 +114,140 @@ public class WeaponEquip : MonoBehaviour
             haveSkull = true;
         }
 
-        //*
-        //* Use the CB Game Manager to add skull to the weapon list if the game is won.
-        //if (holdingSkull)
-        //{
-        //    //Add skulls to weapon list.
-        //    if (!weaponList.Contains(skullParent))
-        //    {
-        //        weaponList.Add(skullParent);
-        //    }
-        //}
-
-        // * * *
-        //RETICLE DISPLAY -- Only show crosshair if a weapon is equipped.
-        if (isEquipped)
-        {
-            //Show crosshair only if weapon is equipped.
-            crossHair.SetActive(true);
-        }
-
-
-        // * * *
-        //RAYCAST INFO
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
         {
             //Debug.Log(hit.transform.name);
+
+            Transform hitTransform = hit.transform;
+
+            //Find distance of the game to the player
+            distanceToPlayer = (hitTransform.position - transform.position);
+
+            if (hitTransform.CompareTag("ShootingGame") && !SSManager.gameOn)
+            {
+                Debug.Log(hitTransform.CompareTag("ShootingGame"));
+
+                actionPrompt.SetActive(true);
+
+                //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
+                if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
+                {
+                    //SkillShotGameManager.Instance.ShowGameRules();
+                    SSManager.ShowGameRules();
+
+                    actionPrompt.SetActive(false);
+                }
+            }
+
+            else if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
+            {
+                //IF RAYCAST HITS CASKET BASKETS
+                if (hitTransform.CompareTag("ThrowingGame") && !CBManager.gameOn)
+                {
+                    Debug.Log(hitTransform.CompareTag("ThrowingGame"));
+
+                    actionPrompt.SetActive(true);
+
+                    //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
+                    if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
+                    {
+                        //CasketBasketsGameManager.Instance.ShowGameRules();
+                        CBManager.ShowGameRules();
+
+                        actionPrompt.SetActive(false);
+                    }
+
+                }
+            else if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
+                if (hitTransform.CompareTag("MeleeGame") && !CSManager.gameOn)
+                {
+                    Debug.Log(hitTransform.CompareTag("MeleeGame"));
+
+                    actionPrompt.SetActive(true);
+
+                    //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
+                    if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
+                    {
+                        CSManager.ShowGameRules();
+
+                        actionPrompt.SetActive(false);
+                    }
+                }
+            }
+        }
+        else
+        {
+            actionPrompt.SetActive(false);
+        }
+
+            //if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
+            //{
+            //    Debug.Log(hit.transform.name);
+
+            //    //Find distance of the game to the player
+            //    distanceToPlayer = (hit.transform.position - transform.position);
+
+            //    if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
+            //    {
+            //        //IF RAYCAST HITS SKILLSHOT
+            //        if (hit.transform.gameObject.tag == GameObject.Find("SSGame").tag && !SSManager.gameOn)
+            //        {
+            //            Debug.Log("This code works!");
+            //            actionPrompt.SetActive(true);
+
+            //            //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
+            //            if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
+            //            {
+            //                //SkillShotGameManager.Instance.ShowGameRules();
+            //                SSManager.ShowGameRules();
+
+            //                actionPrompt.SetActive(false);
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        actionPrompt.SetActive(false);
+            //    }
+            //}
+
+            if (isEquipped)
+            {
+                //Show crosshair only if weapon is equipped.
+                crossHair.SetActive(true);
+            }
+
+            //*
+            //* Use the CB Game Manager to add skull to the weapon list if the game is won.
+            //if (holdingSkull)
+            //{
+            //    //Add skulls to weapon list.
+            //    if (!weaponList.Contains(skullParent))
+            //    {
+            //        weaponList.Add(skullParent);
+            //    }
+            //}
+
+            // * * *
+            //RETICLE DISPLAY -- Only show crosshair if a weapon is equipped.
+    }
+
+    // * * *
+    //RAYCAST INFO
+    public void DetectMiniGames()
+    {
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
+        {
+            Debug.Log(hit.transform.name);
 
             //Find distance of the game to the player
             distanceToPlayer = (hit.transform.position - transform.position);
 
             if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
             {
-                //IF RAYCAST HITS ONE OF THE MINIGAMES
-                if (hit.transform.gameObject == GameObject.Find("CBGame") && !CasketBasketsGameManager.Instance.gameOn)
+                //IF RAYCAST HITS CASKET BASKETS
+                if (hit.transform.gameObject.tag == GameObject.Find("CBGame").tag && !CasketBasketsGameManager.Instance.gameOn)
                 {
                     actionPrompt.SetActive(true);
 
@@ -149,10 +260,30 @@ public class WeaponEquip : MonoBehaviour
                     }
 
                 }
-                else
+            }
+        }
+        if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
+        {
+
+            //Find distance of the game to the player
+            distanceToPlayer = (hit.transform.position - transform.position);
+
+            //IF RAYCAST HITS SKILLSHOT
+            if (hit.transform.gameObject.tag == GameObject.Find("SSGame").tag && !SkillShotGameManager.Instance.gameOn)
+            {
+                actionPrompt.SetActive(true);
+
+                //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
+                if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
                 {
+                    SkillShotGameManager.Instance.ShowGameRules();
+
                     actionPrompt.SetActive(false);
                 }
+            }
+            else
+            {
+                actionPrompt.SetActive(false);
             }
         }
     }
@@ -304,18 +435,18 @@ public class WeaponEquip : MonoBehaviour
         currentWeapon = weaponList[weaponNumber];
 
         //Equip the weapon
-        if (currentWeapon == skullParent)
-        {
-            //Equip skull
-            skullParent.transform.GetChild(0).gameObject.SetActive(true);
-            holdingSkull = true;
-        }
-        else
-        {
-            //Equip other weapon
-            currentWeapon.SetActive(true);
-            holdingSkull = false;
-        }
+        //if (currentWeapon == skullParent)
+        //{
+        //    //Equip skull
+        //    skullParent.transform.GetChild(0).gameObject.SetActive(true);
+        //    holdingSkull = true;
+        //}
+        //else
+        //{
+        //    //Equip other weapon
+        //    currentWeapon.SetActive(true);
+        //    holdingSkull = false;
+        //}
     }
 
     /// ...EQUIP WEAPONS SECTION... ///

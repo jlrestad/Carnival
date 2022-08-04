@@ -15,7 +15,7 @@ public class CasketBasketsGameManager : GameBooth
     {
         Instance = this;
 
-        WE = playerWeapon.GetComponentInParent<WeaponEquip>(); //Get the script from the Player
+        WE = GetWEScript();
 
     }
 
@@ -27,8 +27,6 @@ public class CasketBasketsGameManager : GameBooth
 
         //Set timer info
         timeLeft = GetTimeCounter();
-
-        GetGameManagerScript(GetComponent<CasketBasketsGameManager>());
     }
 
     private void Update()

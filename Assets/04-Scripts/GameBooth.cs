@@ -18,7 +18,7 @@ public class GameBooth : MonoBehaviour
     public TextMeshProUGUI winLoseText; //Manually set in Unity game manager script
 
     [Header("SCORE")]
-    [SerializeField] int scoreLimit; //the amount needed to win
+    public int scoreLimit; //the amount needed to win
     [HideInInspector] public int score; //the player kills
 
     [Header("TIMER")]
@@ -39,11 +39,11 @@ public class GameBooth : MonoBehaviour
     public bool isPaused;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
-    public Component gameManagerScript;
+    //public Component gameManagerScript;
 
     [Header("SCRIPTS")]
     public WeaponEquip WE;
-    public Component className;
+    //public Component className;
 
     private void Awake()
     {
@@ -60,13 +60,7 @@ public class GameBooth : MonoBehaviour
 
         resetTime = timeCounter; //Store this for the reset
         timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
-    }
-
-    public Component GetGameManagerScript(Component thisClassName)
-    {
-        gameManagerScript = thisClassName;
-        Debug.Log(gameManagerScript);
-        return gameManagerScript;
+    
     }
 
     //* * *
@@ -110,6 +104,11 @@ public class GameBooth : MonoBehaviour
     public Sprite GetInactiveCardSprite()
     {
         return inactiveCard.GetComponent<Image>().sprite;
+    }
+
+    public WeaponEquip GetWEScript()
+    {
+        return WE = GameObject.FindGameObjectWithTag("Player").GetComponent<WeaponEquip>(); //Get the script from the Player 
     }
 
     public GameObject GetGameRulesMenu()

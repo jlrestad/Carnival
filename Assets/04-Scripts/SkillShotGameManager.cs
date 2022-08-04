@@ -5,45 +5,45 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillShotGameManager : MonoBehaviour
+public class SkillShotGameManager : GameBooth
 {
     public static SkillShotGameManager Instance;
 
     //public Transform leftPos, rightPos, parentPos;
-    [HideInInspector] public WeaponEquip weaponEquip;
+    //[HideInInspector] public WeaponEquip weaponEquip;
 
     public bool targetFlipped;
-    public bool gameOn;
+    //public bool gameOn;
     public bool reachedEnd;
-    public bool gameWon;
+    //public bool gameWon;
     public bool gameJustPlayed;
     bool levelLoaded;
 
     [Header("UI")]
-    public GameObject gameUI;
+    //public GameObject gameUI;
     //public TextMeshProUGUI ticketsText;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI timerText;
-    public TextMeshProUGUI winloseText;
+    //public TextMeshProUGUI scoreText;
+    //public TextMeshProUGUI timerText;
+    //public TextMeshProUGUI winLoseText;
 
     //[Header("SPEED")]
     //public float minRando; private float minRandoTemp;
     //public float maxRando; private float maxRandoTemp;
 
     [Header("SCORE")]
-    [SerializeField] int scoreLimit; //the amount needed to win
-    [HideInInspector] public int score; //the player kills
+    //[SerializeField] int scoreLimit; //the amount needed to win
+    //[HideInInspector] public int score; //the player kills
 
     [Header("TIMER")]
-    [SerializeField] private float timeCounter = 30; //used to count down the time
-    private float timeLeft; //used to set the amount of time to countdown by
-    private float resetTime; //holds the count down time
+    //[SerializeField] private float timeCounter = 30; //used to count down the time
+    //private float timeLeft; //used to set the amount of time to countdown by
+    //private float resetTime; //holds the count down time
 
-    [Header("TAROT CARD")]
-    public GameObject displayPickupScreen;
-    public GameObject BGCard;
-    public Sprite cardImage;
-    public Sprite BGImage;
+    //[Header("TAROT CARD")]
+    //public GameObject displayPickupScreen;
+    //public GameObject BGCard;
+    //public Sprite cardImage;
+    //public Sprite BGImage;
 
     [HideInInspector] public bool gameOver;
 
@@ -55,7 +55,7 @@ public class SkillShotGameManager : MonoBehaviour
 
     bool runOnce; //Controls pickupweapon
     [HideInInspector] public GameObject gameWeapon;
-    [HideInInspector] public GameObject playerWeapon;
+    //[HideInInspector] public GameObject playerWeapon;
 
     [HideInInspector] public GameObject currentWeapon; //The new weapon to be added to weaponList of WE.
 
@@ -64,101 +64,122 @@ public class SkillShotGameManager : MonoBehaviour
         Instance = this; 
 
         levelLoaded = true;
+        WE = playerWeapon.GetComponentInParent<WeaponEquip>(); //Get the script from the Player
+
     }
 
     private void Start()
     {
-        //Tarot Cards
-        cardImage = GameObject.FindGameObjectWithTag(("ShootingGame")).GetComponentInChildren<GameCard>().GetComponent<Image>().sprite;
-        BGImage = BGCard.GetComponent<Image>().sprite;
+        //Get the sprite from the tarot cards
+        inactiveCardSprite = GetInactiveCardSprite();
+        activeCardSprite = GetActiveCardSprite();
 
-        //Tickets
-        //ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
-        scoreText.text = (score + "/" + scoreLimit);
-        //Timer
-        resetTime = timeCounter; //Store this for the reset
-        timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
-
-        weaponEquip = FindObjectOfType<WeaponEquip>();
+        //Set timer info
+        timeLeft = GetTimeCounter();
 
         movingTarget = FindObjectsOfType<MovingTarget>();
     }
 
     private void Update()
     {
+        //When the game is on, player is holding the skull and can bring up the game rules menu.
         if (gameOn)
         {
-            weaponEquip.actionPrompt.SetActive(false);
+            WE.skillshotActive = true;
 
-            weaponEquip.skillshotActive = true;
+            playerWeapon.SetActive(true); //Show player holding weapon
 
-            if (!weaponEquip.haveGun && !runOnce)
+            StartCoroutine(CountDownTimer());
+
+            if (Input.GetButtonDown("Menu"))
             {
-                runOnce = true;
-                weaponEquip.haveGun = true;
-                weaponEquip.crossHair.SetActive(true);
+                ShowGameRules();
             }
-            
-            if (! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
-            {
-                minigameLight.SetActive(true);
-
-                if (minigameAudio.volume == 0)
-                {
-                    minigameAudio.volume = 0.7f;
-                }
-                minigameAudio.Play();
-            }
-
-            // fixes bug causing mouse to appear when critter pops up
-            Cursor.lockState = CursorLockMode.Locked;
         }
+
+        //Timer formatting
+        if (timeLeft >= 10)
+        {
+            timerText.text = ("00:" + (int)timeLeft);
+        }
+        else
+        {
+            timerText.text = ("00:0" + (int)timeLeft);
+        }
+
+        //if (gameOn)
+        //{
+        //    weaponEquip.actionPrompt.SetActive(false);
+
+        //    weaponEquip.skillshotActive = true;
+
+        //    if (!weaponEquip.haveGun && !runOnce)
+        //    {
+        //        runOnce = true;
+        //        weaponEquip.haveGun = true;
+        //        weaponEquip.crossHair.SetActive(true);
+        //    }
+
+        //    if (! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
+        //    {
+        //        minigameLight.SetActive(true);
+
+        //        if (minigameAudio.volume == 0)
+        //        {
+        //            minigameAudio.volume = 0.7f;
+        //        }
+        //        minigameAudio.Play();
+        //    }
+
+        //    // fixes bug causing mouse to appear when critter pops up
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //}
 
         //Run this when the WhackEm game is on.
-        if (gameOn && weaponEquip.haveGun)
-        {
-            //Display the game UI
-            DisplayTextUI();
+        //if (gameOn && weaponEquip.haveGun)
+        //{
+        //    //Display the game UI
+        //    DisplayTextUI();
 
-            //Begin the game timer
-            StartCoroutine(CountDownTimer());
-            if (timeLeft >= 10)
-            {
-                timerText.text = ("00:" + (int)timeLeft);
-            }
-            else
-            {
-                timerText.text = ("00:0" + (int)timeLeft);
-            }
+        //    //Begin the game timer
+        //    StartCoroutine(CountDownTimer());
+        //    if (timeLeft >= 10)
+        //    {
+        //        timerText.text = ("00:" + (int)timeLeft);
+        //    }
+        //    else
+        //    {
+        //        timerText.text = ("00:0" + (int)timeLeft);
+        //    }
 
-            //Display Win/Lose
-            if (score >= scoreLimit && timeLeft > 0 && !gameOver)
-            {
-                gameWon = true;
-                StartCoroutine(WinLoseUI());
-            }
-            else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
-            {
-                gameWon = false;
-                StartCoroutine(WinLoseUI());
-            }
+        //    //Display Win/Lose
+        //    if (score >= scoreLimit && timeLeft > 0 && !gameOver)
+        //    {
+        //        gameWon = true;
+        //        StartCoroutine(WinLoseUI());
+        //    }
+        //    else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
+        //    {
+        //        gameWon = false;
+        //        StartCoroutine(WinLoseUI());
+        //    }
 
-            //Update ticket count
-            //ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
+        //    //Update ticket count
+        //    //ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
 
-            if (HudManager.Instance.redTickets < 0)
-            {
-                HudManager.Instance.redTickets = 0;
-                //winLoseText.text = "NEED TICKETS";
+        //    if (HudManager.Instance.redTickets < 0)
+        //    {
+        //        HudManager.Instance.redTickets = 0;
+        //        //winLoseText.text = "NEED TICKETS";
 
-                //Ticket is needed in order to play...
-                gameOn = false;
-            }
-        }
-        else if (gameOver)
-        {
-            StartCoroutine(ShutDownGame());
-        }
+        //        //Ticket is needed in order to play...
+        //        gameOn = false;
+        //    }
+        //}
+        //else if (gameOver)
+        //{
+        //    StartCoroutine(ShutDownGame());
+        //}
     }
 
     IEnumerator ShutDownGame()
@@ -188,7 +209,7 @@ public class SkillShotGameManager : MonoBehaviour
     public void DisplayTextUI()
     {
         //Display the scoreUI
-        gameUI.SetActive(true);
+        minigameHUD.SetActive(true);
         scoreText.text = (score + "/" + scoreLimit);
 
         //Display the timerUI
@@ -200,15 +221,15 @@ public class SkillShotGameManager : MonoBehaviour
         if (!gameWon)
         {
             //* Put weapon back
-            weaponEquip.haveGun = false;
-            weaponEquip.crossHair.SetActive(false);
+            WE.haveGun = false;
+            WE.crossHair.SetActive(false);
             gameWeapon.SetActive(true);
             playerWeapon.SetActive(false);
         }
 
         runOnce = false;
         gameJustPlayed = true;
-        weaponEquip.skillshotActive = false;
+        WE.skillshotActive = false;
 
         //Score
         score = 0;
@@ -220,44 +241,44 @@ public class SkillShotGameManager : MonoBehaviour
     }
 
 
-    IEnumerator CountDownTimer()
-    {
-        //Wait so that the starting number is displayed.
-        yield return new WaitForSeconds(0.5f);
+    //IEnumerator CountDownTimer()
+    //{
+    //    //Wait so that the starting number is displayed.
+    //    yield return new WaitForSeconds(0.5f);
 
-        timeLeft -= Time.deltaTime;
-        if (timeLeft <= 0f)
-        {
-            timeLeft = 0f;
-        }
-        else
-        {
-            yield return null;
-        }
-    }
+    //    timeLeft -= Time.deltaTime;
+    //    if (timeLeft <= 0f)
+    //    {
+    //        timeLeft = 0f;
+    //    }
+    //    else
+    //    {
+    //        yield return null;
+    //    }
+    //}
 
     IEnumerator WinLoseUI()
     {
         //Display lose message
-        winloseText.enabled = true;
+        winLoseText.enabled = true;
 
         if (gameWon)
         {
-            winloseText.text = "YOU WIN!";
+            winLoseText.text = "YOU WIN!";
 
-            if (!weaponEquip.weaponList.Contains(currentWeapon))
+            if (!WE.weaponList.Contains(currentWeapon))
             {
-                weaponEquip.weaponList.Add(currentWeapon);
-                weaponEquip.currentWeapon = currentWeapon;
-                weaponEquip.weaponNumber++;
-                weaponEquip.isEquipped = true;
+                WE.weaponList.Add(currentWeapon);
+                WE.currentWeapon = currentWeapon;
+                WE.weaponNumber++;
+                WE.isEquipped = true;
             }
 
             DisplayGameCard();
         }
         else
         {
-            winloseText.text = "YOU LOSE...";
+            winLoseText.text = "YOU LOSE...";
             ResetGame();
         }
 
@@ -273,16 +294,16 @@ public class SkillShotGameManager : MonoBehaviour
         //Clear and turn off lose message
         
         CarnivalSmashTrigger.Instance.UnLockPlayer();
-        winloseText.text = (" ");
-        winloseText.enabled = false;
+        winLoseText.text = (" ");
+        winLoseText.enabled = false;
         gameOver = true;
-        gameUI.SetActive(false);
+        minigameHUD.SetActive(false);
     }
 
     public void DisplayGameCard()
     {
         //Display the card that was won
-        displayPickupScreen.SetActive(true);
+        displayScreen.SetActive(true);
 
         //Transition from card display back to game display
         StartCoroutine(DisplayCardWon());
@@ -297,7 +318,7 @@ public class SkillShotGameManager : MonoBehaviour
         yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
 
         //Turn off card won display screen
-        displayPickupScreen.SetActive(false);
+        displayScreen.SetActive(false);
         
         //Let player move when the display screen is off.
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
@@ -339,7 +360,7 @@ public class SkillShotGameManager : MonoBehaviour
 
         while(i < pooledTargets.Count)
         {
-            if(gameOn && weaponEquip.haveGun)
+            if(gameOn && WE.haveGun)
             {
                 //if target at beginning or end, turn off
                 if (pooledTargets[i].transform.position == parentPos.position || pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)

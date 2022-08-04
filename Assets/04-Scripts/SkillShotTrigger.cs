@@ -94,7 +94,7 @@ public class SkillShotTrigger : MonoBehaviour
         if (!skillshotGM.gameWon)
         {
             //Only show the rules screen if player has not picked up the gun
-            if (!skillshotGM.weaponEquip.haveGun && !skillshotGM.gameJustPlayed)
+            if (!skillshotGM.WE.haveGun && !skillshotGM.gameJustPlayed)
             {
                 //Display game rules screen with play buttons
                 rulesUI.SetActive(true);

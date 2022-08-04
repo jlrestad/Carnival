@@ -149,8 +149,8 @@ public class Menu : MonoBehaviour
             }
             else if (WE.gameName == "ShootingGame")
             {
-                cardImage = skillshotGM.cardImage;
-                bgImage = skillshotGM.BGImage;
+                cardImage = skillshotGM.inactiveCardSprite;
+                bgImage = skillshotGM.activeCardSprite;
                 return;
             }
         }
