@@ -14,26 +14,24 @@ public class CasketManager : MonoBehaviour
     //=========================|FIELDS|
     //==================================================
     #region FIELDS
-    [Header("STATS")]
+    [Header("STATS")]//--------------------------------------------------|STATS|
     [Tooltip("The speed this coffin will move up and down at the beginning of the game.")]
     [SerializeField] float baseMoveSpeed;
     [Tooltip("The highest possible speed this coffin is allowed to move up and down.")]
     [SerializeField] float maximumMoveSpeed;
-    [Tooltip("The base time between when this coffin was last shut and can open again.")]
-    [SerializeField] float baseClosedTime;
-    [Tooltip("The minimum amount of time between when this coffin was last shut and can open again.")]
-    [SerializeField] float minimumClosedTime;
     [Tooltip("The amount of time the coffin will spend shaking before it opens.")]
     [SerializeField] float shakeTime;
     [Tooltip("The base amount of time between the coffin choosing a new position to move to. Lower = more spastic movement.")]
-    [SerializeField] float baseGoalShiftTime;
+    [SerializeField] float baseGoalShiftTime = 1;
     [Tooltip("The minimum amount of time between the coffin choosing a new position to move to. Lower = more spastic movement.")]
-    [SerializeField] float minimumGoalShiftTime;
+    [SerializeField] float minimumGoalShiftTime = 1;
     [Tooltip("The minimum distance the coffin will move each time it shifts positions. Increase for more polar results.")]
-    [SerializeField] float minimumGoalShiftDistance;
+    [SerializeField] float minimumGoalShiftDistance = 0.2f;
+    [Tooltip("How long the coffin needs to stay closed before opening again.")]
+    [SerializeField] float closedTimer = 2f;
     [Space(5)]
 
-    [Header("PLUG-INS")]
+    [Header("PLUG-INS")]//--------------------------------------------------|PLUG-INS|
     [Tooltip("A gameobject located the farthest down on the track this coffin is allowed to go.")]
     [SerializeField] GameObject bottomPosition;
     [Tooltip("A gameobject located the farthest up on the track this coffin is allowed to go.")]
@@ -42,41 +40,59 @@ public class CasketManager : MonoBehaviour
     //insert reference to audio sources
     [Space(5)]
 
-    [Header("INTERNAL/DEBUG")]
+    [Header("INTERNAL/DEBUG")]//--------------------------------------------------|INTERNAL/DEBUG|
     [Tooltip("How fast the coffin will currently move up and down along the track.")]
     [SerializeField] float currentSpeed;
     [Tooltip("The position the coffin is currently heading toward.")]
     [SerializeField] Vector3 currentGoal;
     [Tooltip("Keeps track of whether the coffin is currently open.")]
     public bool isOpen = false;
-    [Tooltip("Keeps track of how long the coffin has been closed.")]
-    [SerializeField] float currentClosedTimer = 0f;
+    [Tooltip("Tracks whether the coffin can be opened or not. ")]
+    public bool canOpen = true;
     [Tooltip("Keeps track of how long this coffin should wait before moving. Note this value is slightly randomized.")]
     [SerializeField] float currentGoalShiftTime;
+    [Tooltip("A reference to the skull that makes it inside the coffin so that it can be reused afterwards.")]
+    [SerializeField] Head hitSkull;
+    [Tooltip("Tracker for how long the coffin needs to stay closed before opening again.")]
+    [SerializeField] float currentClosedTimer = 2f;
 
 
     #endregion
     //==================================================
     //=========================|BUILT-IN METHODS|
     //==================================================
+    #region BUILT-IN METHODS
+    //--------------------------------------------------|Start|
     private void Start()
     {
         currentGoal = transform.position;
         StartCoroutine(goalShiftTimer());
     }
 
+    //--------------------------------------------------|Update|
     private void Update()
     {
         if(gameObject.transform.position != currentGoal) //if not currently at our goal position...
         {
-            transform.position = Vector3.MoveTowards(transform.position, currentGoal, currentSpeed); //move toward the goal at the speed of currentspeed
+            transform.position = Vector3.MoveTowards(transform.position, currentGoal, currentSpeed * Time.deltaTime); //move toward the goal at the speed of currentspeed
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        //if this object is a trigger area inside the coffin, the coffin is open, and a "head" object enters the trigger area...
+        if(isOpen && gameObject.tag == "Goal" && other.gameObject.tag == "Head")
+        {
+            CloseFinish(); //close the casket and activate the functions for when the player gets a hit.
+            hitSkull = other.gameObject.GetComponent<Head>(); //save a reference to this object so it can be disabled later.
+            if (hitSkull == null) Debug.LogWarning("Skull was missing a 'Head' script. May not behave correctly.");
+        }
+    }
+    #endregion
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
-
+    #region CUSTOM METHODS
     //--------------------------------------------------|shiftGoal|
     //set a new position for the coffin to move toward between the top and bottom available positions
     public void shiftGoal()
@@ -88,10 +104,10 @@ public class CasketManager : MonoBehaviour
         //-----Below increases the distance of the goal shift while keeping it random-----
         if (Vector3.Distance(transform.position, randoGoal) < minimumGoalShiftDistance) //if the amount it would move is less than the minimum...
         {
-            rando *= rando; //multiply rando times itself to increase the distance
-            if (rando > topPosition.transform.position.y) rando = topPosition.transform.position.y; //set to the top position if it would have gone higher
-            if (rando < bottomPosition.transform.position.y) rando = bottomPosition.transform.position.y; //set to the bottom position if it would have gone lower
-            randoGoal = new Vector3(currentGoal.x, rando, currentGoal.z); //set the randogoal position instead to the new amount
+            rando *= rando; //multiply rando times itself to increase the distance, then keep it within bounds
+            if (rando > topPosition.transform.position.y) rando = topPosition.transform.position.y;
+            if (rando < bottomPosition.transform.position.y) rando = bottomPosition.transform.position.y;
+            randoGoal = new Vector3(currentGoal.x, rando, currentGoal.z);
         }
         //-----
 
@@ -99,22 +115,100 @@ public class CasketManager : MonoBehaviour
         StartCoroutine(goalShiftTimer());  //wait until it's time to do this again
     }
 
-    //--------------------------------------------------|attemptOpen|
-    public void attemptOpen()
+    //--------------------------------------------------|AttemptOpen|
+    public void AttemptOpen()
     {
-        if(! isOpen && currentClosedTimer <= 0) //if the coffin is closed and the closed timer has run to zero...
+        if(canOpen) //if the coffin is closed and the closed timer has run to zero...
         {
             StartCoroutine("OpenStart");
         }
     }
 
+    //--------------------------------------------------|CloseFinish|
+    public void CloseFinish()
+    {
+        //animation (close doors)
+        //sfx
+        isOpen = false;
+        CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
+    }
+
+    //--------------------------------------------------|OpenFinish|
+    public void OpenFinish()
+    {
+        //animation (open doors)
+        //sfx
+        isOpen = true;
+        CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
+    }
+
+    //--------------------------------------------------|AddSpeed|
+    public void AddSpeed(float amt)
+    {
+        //keep the coffin's speed within bounds
+        if (currentSpeed + amt >= maximumMoveSpeed) currentSpeed = maximumMoveSpeed;
+        if (currentSpeed + amt <= baseMoveSpeed) currentSpeed = baseMoveSpeed;
+        currentSpeed += amt; //add the extra speed to movement speed
+    }
+
+    //--------------------------------------------------|ReduceGoalShiftTime|
+    public void ReduceGoalShiftTime(float amt)
+    {
+        if (currentGoalShiftTime + amt >= baseGoalShiftTime) currentGoalShiftTime = baseGoalShiftTime;
+        if (currentGoalShiftTime + amt <= minimumGoalShiftTime) currentGoalShiftTime = minimumGoalShiftTime;
+        currentGoalShiftTime -= amt; //reduce the goalshifttime by amt
+    }
+
+    //--------------------------------------------------|ReduceClosedTime|
+    public void ReduceClosedTime(float amt)
+    {
+        if(closedTimer - amt > 0.0001)
+        {
+            closedTimer -= amt;
+        }
+    }
+
+    //--------------------------------------------------|CoffinStart|
+    public void CoffinStart()
+    {
+        currentGoal = transform.position;
+        StartCoroutine(goalShiftTimer());
+    }
+
+    //--------------------------------------------------|CoffinReset|
+    public void CoffinReset()
+    {
+        currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
+        //animation (close doors)
+        currentSpeed = baseMoveSpeed; //set speed to base
+        currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
+        currentClosedTimer = closedTimer; //set closed timer to base
+    }
+    #endregion
     //==================================================
     //=========================|COROUTINES|
     //==================================================
-    private IEnumerator goalShiftTimer()
+    #region COROUTINES
+    public IEnumerator goalShiftTimer()
     {
         float rando = Random.Range(0.5f, 2f);
         yield return new WaitForSeconds(currentGoalShiftTime * rando);
         shiftGoal();
     }
+
+    private IEnumerator OpenStart()
+    {
+        //animation (shake)
+        //sfx
+        yield return new WaitForSeconds(shakeTime);
+        OpenFinish();
+    }
+
+    private IEnumerator CoffinClosedTimer()
+    {
+        canOpen = false;
+        yield return new WaitForSeconds(currentClosedTimer);
+        canOpen = true;
+    }
+    #endregion
 }
