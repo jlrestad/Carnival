@@ -83,8 +83,6 @@ public class WeaponEquip : MonoBehaviour
     {
         menu = FindObjectOfType<Menu>();
 
-        //weaponCardBG.Add(menu.gameCardBG); //Add the won game card bg to the list. Used to highlight which weapon is equipped
-
         //Detect if joystick or keyboard is used and SET the correct prompt variable.
         if (menu.usingJoystick)
         {
@@ -116,68 +114,46 @@ public class WeaponEquip : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
         {
-            //Debug.Log(hit.transform.name);
-
             Transform hitTransform = hit.transform;
+
+            bool isSS = hitTransform.CompareTag("ShootingGame");
+            bool isCS = hitTransform.CompareTag("MeleeGame");
+            bool isCB = hitTransform.CompareTag("ThrowingGame");
+
+            //Debug.Log(hitTransform.tag);
 
             //Find distance of the game to the player
             distanceToPlayer = (hitTransform.position - transform.position);
 
-            if (hitTransform.CompareTag("ShootingGame") && !SSManager.gameOn)
+            if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
             {
-                Debug.Log(hitTransform.CompareTag("ShootingGame"));
-
-                actionPrompt.SetActive(true);
-
-                //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
-                if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
+             
+                if (isCS && !CSManager.gameOn)
                 {
-                    //SkillShotGameManager.Instance.ShowGameRules();
-                    SSManager.ShowGameRules();
-
-                    actionPrompt.SetActive(false);
-                }
-            }
-
-            else if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
-            {
-                //IF RAYCAST HITS CASKET BASKETS
-                if (hitTransform.CompareTag("ThrowingGame") && !CBManager.gameOn)
-                {
-                    Debug.Log(hitTransform.CompareTag("ThrowingGame"));
-
                     actionPrompt.SetActive(true);
 
-                    //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
-                    if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-                    {
-                        //CasketBasketsGameManager.Instance.ShowGameRules();
-                        CBManager.ShowGameRules();
-
-                        actionPrompt.SetActive(false);
-                    }
-
+                    if (Input.GetButtonDown("ActionButton"))
+                    CSManager.ShowGameRules();
                 }
-            else if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
-                if (hitTransform.CompareTag("MeleeGame") && !CSManager.gameOn)
+                else if (isCB && !CBManager.gameOn)
                 {
-                    Debug.Log(hitTransform.CompareTag("MeleeGame"));
-
                     actionPrompt.SetActive(true);
 
-                    //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
-                    if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-                    {
-                        CSManager.ShowGameRules();
+                    if (Input.GetButtonDown("ActionButton"))
+                    CBManager.ShowGameRules();
+                }
+                else if (isSS && !SSManager.gameOn)
+                {
+                    actionPrompt.SetActive(true);
 
-                        actionPrompt.SetActive(false);
-                    }
+                    if (Input.GetButtonDown("ActionButton"))
+                        SSManager.ShowGameRules();
                 }
             }
-        }
-        else
-        {
-            actionPrompt.SetActive(false);
+            else
+            {
+                actionPrompt.SetActive(false);
+            }
         }
 
             //if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
@@ -237,55 +213,6 @@ public class WeaponEquip : MonoBehaviour
     public void DetectMiniGames()
     {
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
-        {
-            Debug.Log(hit.transform.name);
-
-            //Find distance of the game to the player
-            distanceToPlayer = (hit.transform.position - transform.position);
-
-            if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
-            {
-                //IF RAYCAST HITS CASKET BASKETS
-                if (hit.transform.gameObject.tag == GameObject.Find("CBGame").tag && !CasketBasketsGameManager.Instance.gameOn)
-                {
-                    actionPrompt.SetActive(true);
-
-                    //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
-                    if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-                    {
-                        CasketBasketsGameManager.Instance.ShowGameRules();
-
-                        actionPrompt.SetActive(false);
-                    }
-
-                }
-            }
-        }
-        if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
-        {
-
-            //Find distance of the game to the player
-            distanceToPlayer = (hit.transform.position - transform.position);
-
-            //IF RAYCAST HITS SKILLSHOT
-            if (hit.transform.gameObject.tag == GameObject.Find("SSGame").tag && !SkillShotGameManager.Instance.gameOn)
-            {
-                actionPrompt.SetActive(true);
-
-                //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
-                if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-                {
-                    SkillShotGameManager.Instance.ShowGameRules();
-
-                    actionPrompt.SetActive(false);
-                }
-            }
-            else
-            {
-                actionPrompt.SetActive(false);
-            }
-        }
     }
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER

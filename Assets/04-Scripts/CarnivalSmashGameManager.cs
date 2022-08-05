@@ -35,6 +35,7 @@ public class CarnivalSmashGameManager : GameBooth
 
             StartCoroutine(CountDownTimer());
 
+            //PAUSE
             if (Input.GetButtonDown("Menu"))
             {
                 ShowGameRules();

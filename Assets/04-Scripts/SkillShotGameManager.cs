@@ -9,41 +9,12 @@ public class SkillShotGameManager : GameBooth
 {
     public static SkillShotGameManager Instance;
 
-    //public Transform leftPos, rightPos, parentPos;
-    //[HideInInspector] public WeaponEquip weaponEquip;
-
     public bool targetFlipped;
     //public bool gameOn;
     public bool reachedEnd;
     //public bool gameWon;
     public bool gameJustPlayed;
     bool levelLoaded;
-
-    [Header("UI")]
-    //public GameObject gameUI;
-    //public TextMeshProUGUI ticketsText;
-    //public TextMeshProUGUI scoreText;
-    //public TextMeshProUGUI timerText;
-    //public TextMeshProUGUI winLoseText;
-
-    //[Header("SPEED")]
-    //public float minRando; private float minRandoTemp;
-    //public float maxRando; private float maxRandoTemp;
-
-    [Header("SCORE")]
-    //[SerializeField] int scoreLimit; //the amount needed to win
-    //[HideInInspector] public int score; //the player kills
-
-    [Header("TIMER")]
-    //[SerializeField] private float timeCounter = 30; //used to count down the time
-    //private float timeLeft; //used to set the amount of time to countdown by
-    //private float resetTime; //holds the count down time
-
-    //[Header("TAROT CARD")]
-    //public GameObject displayPickupScreen;
-    //public GameObject BGCard;
-    //public Sprite cardImage;
-    //public Sprite BGImage;
 
     [HideInInspector] public bool gameOver;
 
@@ -54,10 +25,6 @@ public class SkillShotGameManager : GameBooth
     public GameObject minigameLight;
 
     bool runOnce; //Controls pickupweapon
-    [HideInInspector] public GameObject gameWeapon;
-    //[HideInInspector] public GameObject playerWeapon;
-
-    [HideInInspector] public GameObject currentWeapon; //The new weapon to be added to weaponList of WE.
 
     private void Awake()
     {
@@ -85,17 +52,16 @@ public class SkillShotGameManager : GameBooth
         //When the game is on, player is holding the skull and can bring up the game rules menu.
         if (gameOn)
         {
-            WE.skillshotActive = true;
-
             playerWeapon.SetActive(true); //Show player holding weapon
 
             StartCoroutine(CountDownTimer());
 
+            //PAUSE
             if (Input.GetButtonDown("Menu"))
             {
                 ShowGameRules();
             }
-        }
+        }   
 
         //Timer formatting
         if (timeLeft >= 10)
@@ -206,39 +172,39 @@ public class SkillShotGameManager : GameBooth
     }
 
     
-    public void DisplayTextUI()
-    {
-        //Display the scoreUI
-        minigameHUD.SetActive(true);
-        scoreText.text = (score + "/" + scoreLimit);
+    //public void DisplayTextUI()
+    //{
+    //    //Display the scoreUI
+    //    minigameHUD.SetActive(true);
+    //    scoreText.text = (score + "/" + scoreLimit);
 
-        //Display the timerUI
-        timerText.enabled = true; ;
-    }
+    //    //Display the timerUI
+    //    timerText.enabled = true; ;
+    //}
 
-    public void ResetGame()
-    {
-        if (!gameWon)
-        {
-            //* Put weapon back
-            WE.haveGun = false;
-            WE.crossHair.SetActive(false);
-            gameWeapon.SetActive(true);
-            playerWeapon.SetActive(false);
-        }
+    //public void ResetGame()
+    //{
+    //    if (!gameWon)
+    //    {
+    //        //* Put weapon back
+    //        WE.haveGun = false;
+    //        WE.crossHair.SetActive(false);
+    //        gameWeapon.SetActive(true);
+    //        playerWeapon.SetActive(false);
+    //    }
 
-        runOnce = false;
-        gameJustPlayed = true;
-        WE.skillshotActive = false;
+    //    runOnce = false;
+    //    gameJustPlayed = true;
+    //    WE.skillshotActive = false;
 
-        //Score
-        score = 0;
-        scoreText.text = (score + "/" + scoreLimit);
+    //    //Score
+    //    score = 0;
+    //    scoreText.text = (score + "/" + scoreLimit);
 
-        //Time
-        timeLeft = resetTime;
-        timerText.text = ("00:" + (int)timeLeft);
-    }
+    //    //Time
+    //    timeLeft = resetTime;
+    //    timerText.text = ("00:" + (int)timeLeft);
+    //}
 
 
     //IEnumerator CountDownTimer()
@@ -257,76 +223,76 @@ public class SkillShotGameManager : GameBooth
     //    }
     //}
 
-    IEnumerator WinLoseUI()
-    {
-        //Display lose message
-        winLoseText.enabled = true;
+    //IEnumerator WinLoseUI()
+    //{
+    //    //Display lose message
+    //    winLoseText.enabled = true;
 
-        if (gameWon)
-        {
-            winLoseText.text = "YOU WIN!";
+    //    if (gameWon)
+    //    {
+    //        winLoseText.text = "YOU WIN!";
 
-            if (!WE.weaponList.Contains(currentWeapon))
-            {
-                WE.weaponList.Add(currentWeapon);
-                WE.currentWeapon = currentWeapon;
-                WE.weaponNumber++;
-                WE.isEquipped = true;
-            }
+    //        if (!WE.weaponList.Contains(currentWeapon))
+    //        {
+    //            WE.weaponList.Add(currentWeapon);
+    //            WE.currentWeapon = currentWeapon;
+    //            WE.weaponNumber++;
+    //            WE.isEquipped = true;
+    //        }
 
-            DisplayGameCard();
-        }
-        else
-        {
-            winLoseText.text = "YOU LOSE...";
-            ResetGame();
-        }
+    //        DisplayGameCard();
+    //    }
+    //    else
+    //    {
+    //        winLoseText.text = "YOU LOSE...";
+    //        ResetGame();
+    //    }
 
-        gameOn = false;
-        gameJustPlayed = true;
-        //weaponEquip.skillshotActive = false;
-        timerText.enabled = false;
+    //    gameOn = false;
+    //    gameJustPlayed = true;
+    //    //weaponEquip.skillshotActive = false;
+    //    timerText.enabled = false;
       
-        yield return new WaitForSeconds(2);
+    //    yield return new WaitForSeconds(2);
 
-        // lock player here until WinLoseUI done--
-        //if player leaves trigger area before this loop finishes, cannot win replay
-        //Clear and turn off lose message
+    //    // lock player here until WinLoseUI done--
+    //    //if player leaves trigger area before this loop finishes, cannot win replay
+    //    //Clear and turn off lose message
         
-        CarnivalSmashTrigger.Instance.UnLockPlayer();
-        winLoseText.text = (" ");
-        winLoseText.enabled = false;
-        gameOver = true;
-        minigameHUD.SetActive(false);
-    }
+    //    CarnivalSmashTrigger.Instance.UnLockPlayer();
+    //    winLoseText.text = (" ");
+    //    winLoseText.enabled = false;
+    //    gameOver = true;
+    //    minigameHUD.SetActive(false);
+    //}
 
-    public void DisplayGameCard()
-    {
-        //Display the card that was won
-        displayScreen.SetActive(true);
+    //public void DisplayGameCard()
+    //{
+    //    //Display the card that was won
+    //    displayScreen.SetActive(true);
 
-        //Transition from card display back to game display
-        StartCoroutine(DisplayCardWon());
-    }
+    //    //Transition from card display back to game display
+    //    StartCoroutine(DisplayCardWon());
+    //}
 
-    //Transition from displayed card to weapon indicator card
-    public IEnumerator DisplayCardWon()
-    {
-         //Wait 1 second before being able to click so the card won screen isn't exited by accident.
-        yield return new WaitForSeconds(1);
-        //After the wait a click will close the card won screen and return movement to the player.
-        yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
+    ////Transition from displayed card to weapon indicator card
+    //public IEnumerator DisplayCardWon()
+    //{
+    //     //Wait 1 second before being able to click so the card won screen isn't exited by accident.
+    //    yield return new WaitForSeconds(1);
+    //    //After the wait a click will close the card won screen and return movement to the player.
+    //    yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
 
-        //Turn off card won display screen
-        displayScreen.SetActive(false);
+    //    //Turn off card won display screen
+    //    displayScreen.SetActive(false);
         
-        //Let player move when the display screen is off.
-        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+    //    //Let player move when the display screen is off.
+    //    FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
-        //Display the current weapon card
-        Menu.Instance.DisplayWeaponCard();
+    //    //Display the current weapon card
+    //    Menu.Instance.DisplayWeaponCard();
 
-    }
+    //}
     
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {

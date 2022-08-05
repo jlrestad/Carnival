@@ -38,6 +38,7 @@ public class CasketBasketsGameManager : GameBooth
 
             StartCoroutine(CountDownTimer());
 
+            //PAUSE
             if (Input.GetButtonDown("Menu"))
             {
                 ShowGameRules();
