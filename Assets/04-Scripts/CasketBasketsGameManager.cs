@@ -34,9 +34,22 @@ public class CasketBasketsGameManager : GameBooth
         //When the game is on, player is holding the skull and can bring up the game rules menu.
         if (gameOn)
         {
+            timerText = GetTimerText();
+
             playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
 
+            //
+            //TIMER
             StartCoroutine(CountDownTimer());
+            //Timer formatting
+            if (timeLeft >= 10)
+            {
+                timerText.text = ("00:" + (int)timeLeft);
+            }
+            else
+            {
+                timerText.text = ("00:0" + (int)timeLeft);
+            }
 
             //PAUSE
             if (Input.GetButtonDown("Menu"))
@@ -55,14 +68,6 @@ public class CasketBasketsGameManager : GameBooth
             playerWeapon.transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        //Timer formatting
-        if (timeLeft >= 10)
-        {
-            timerText.text = ("00:" + (int)timeLeft);
-        }
-        else
-        {
-            timerText.text = ("00:0" + (int)timeLeft);
-        }
+  
     }
 }

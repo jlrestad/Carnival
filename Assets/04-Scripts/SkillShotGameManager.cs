@@ -10,11 +10,9 @@ public class SkillShotGameManager : GameBooth
     public static SkillShotGameManager Instance;
 
     public bool targetFlipped;
-    //public bool gameOn;
     public bool reachedEnd;
-    //public bool gameWon;
     public bool gameJustPlayed;
-    bool levelLoaded;
+    //bool levelLoaded;
 
     [HideInInspector] public bool gameOver;
 
@@ -28,10 +26,10 @@ public class SkillShotGameManager : GameBooth
 
     private void Awake()
     {
-        Instance = this; 
+        Instance = this;
 
-        levelLoaded = true;
-        WE = playerWeapon.GetComponentInParent<WeaponEquip>(); //Get the script from the Player
+        //levelLoaded = true;
+        WE = GetWEScript();
 
     }
 
@@ -40,6 +38,7 @@ public class SkillShotGameManager : GameBooth
         //Get the sprite from the tarot cards
         inactiveCardSprite = GetInactiveCardSprite();
         activeCardSprite = GetActiveCardSprite();
+        timerText = GetTimerText();
 
         //Set timer info
         timeLeft = GetTimeCounter();
@@ -52,26 +51,50 @@ public class SkillShotGameManager : GameBooth
         //When the game is on, player is holding the skull and can bring up the game rules menu.
         if (gameOn)
         {
+            timerText = GetTimerText();
+
+            //
+            //WEAPON
             playerWeapon.SetActive(true); //Show player holding weapon
 
+            //
+            //TIMER
             StartCoroutine(CountDownTimer());
+            if (timeLeft >= 10)
+            {
+                timerText.text = ("00:" + (int)timeLeft);
+            }
+            else
+            {
+                timerText.text = ("00:0" + (int)timeLeft);
+            }
 
-            //PAUSE
+            //
+            //AUDIO
+            if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
+            {
+                minigameLight.SetActive(true);
+
+                if (minigameAudio.volume == 0)
+                {
+                    minigameAudio.volume = 0.7f;
+                }
+                minigameAudio.Play();
+            }
+
+            //
+            //PAUSE - Game Rules Menu
             if (Input.GetButtonDown("Menu"))
             {
                 ShowGameRules();
             }
-        }   
-
-        //Timer formatting
-        if (timeLeft >= 10)
-        {
-            timerText.text = ("00:" + (int)timeLeft);
         }
         else
         {
-            timerText.text = ("00:0" + (int)timeLeft);
+            StartCoroutine(ShutDownGame());
         }
+
+
 
         //if (gameOn)
         //{

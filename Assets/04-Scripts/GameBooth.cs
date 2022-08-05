@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEditor;
+using JetBrains.Annotations;
 
 public class GameBooth : MonoBehaviour
 {
@@ -67,6 +68,12 @@ public class GameBooth : MonoBehaviour
     //SETTERS
 
     //Set Timer Info
+    public GameObject MinigameHUD
+    {
+        get { return minigameHUD; }
+        set { minigameHUD = value; }
+    }
+
     public float TimeCounter
     {
         get { return timeCounter; }
@@ -96,6 +103,22 @@ public class GameBooth : MonoBehaviour
 
     // * * *
     //GETTERS
+
+    public TextMeshProUGUI GetTimerText()
+    {
+        string _isCorrectText = minigameHUD.GetComponentInChildren<MinigameHUD>().tag;
+        MinigameHUD[] elements = FindObjectsOfType<MinigameHUD>();
+
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].CompareTag("TimerText"))
+            {
+                timerText = elements[i].GetComponent<TextMeshProUGUI>();
+            }   
+        }
+        return timerText;
+    }
+
     public Sprite GetActiveCardSprite()
     {
         return activeCard.GetComponent<Image>().sprite;
@@ -152,8 +175,9 @@ public class GameBooth : MonoBehaviour
         else
         {
             gameRules.SetActive(false);
-            WeaponEquip.Instance.gameRulesDisplayed = false;
+            WE.gameRulesDisplayed = false;
             LockPlayerOnPlay();
+            HideCursor();
         }
     }
 
@@ -168,15 +192,27 @@ public class GameBooth : MonoBehaviour
         gameOn = false;
         isPaused = false;
 
-        WeaponEquip.Instance.gameRulesDisplayed = false;
-        WeaponEquip.Instance.actionPrompt.SetActive(false);
+        WE.gameRulesDisplayed = false;
+        WE.actionPrompt.SetActive(false);
         FPSController.Instance.canMove = true;
         minigameHUD.SetActive(false);
+
+        //Reset Score
+        score = 0;
+        scoreText.text = (score + "/" + scoreLimit);
+
+        //Reset Time
+        timeLeft = timeCounter;
+        timerText.text = ("00:" + (int)timeLeft);
 
         HideCursor();
         UnLockPlayer();
 
-        timeLeft = timeCounter;
+        //Hide the weapon if the game was not won.
+        if (!gameWon)
+        {
+            playerWeapon.SetActive(false);
+        }
     }
 
     public void LockPlayerOnPlay()

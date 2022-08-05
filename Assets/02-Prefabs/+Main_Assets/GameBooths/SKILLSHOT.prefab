@@ -224,7 +224,7 @@ BoxCollider:
   m_GameObject: {fileID: 174003681670167372}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0.2}
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 33854236034567072}
   m_Layer: 0
   m_Name: Holster01
-  m_TagString: Untagged
+  m_TagString: ShootingGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4203,7 +4203,7 @@ GameObject:
   - component: {fileID: 2683913424650740200}
   m_Layer: 0
   m_Name: Holster03
-  m_TagString: Untagged
+  m_TagString: ShootingGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4294,7 +4294,7 @@ GameObject:
   - component: {fileID: 852898857119470768}
   m_Layer: 0
   m_Name: Holster02
-  m_TagString: Untagged
+  m_TagString: ShootingGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4637,7 +4637,7 @@ BoxCollider:
   m_GameObject: {fileID: 2978425584375866885}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0.2}
@@ -4734,7 +4734,7 @@ GameObject:
   - component: {fileID: 223953691}
   m_Layer: 0
   m_Name: GunObjectsGroup
-  m_TagString: Untagged
+  m_TagString: ShootingGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -5680,7 +5680,7 @@ BoxCollider:
   m_GameObject: {fileID: 4081559203225482207}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0.2}
@@ -8671,7 +8671,7 @@ GameObject:
   - component: {fileID: 6907815788172923151}
   m_Layer: 0
   m_Name: Rows
-  m_TagString: Untagged
+  m_TagString: ShootingGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
