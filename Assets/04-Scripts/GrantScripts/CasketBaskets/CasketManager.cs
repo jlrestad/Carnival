@@ -36,8 +36,18 @@ public class CasketManager : MonoBehaviour
     [SerializeField] GameObject bottomPosition;
     [Tooltip("A gameobject located the farthest up on the track this coffin is allowed to go.")]
     [SerializeField] GameObject topPosition;
+    [Tooltip("DEBUG ONLY: The gameobject that will change color to show when open or closed.")]
+    [SerializeField] GameObject coffinModel;
+    [Space(20)]
     //insert reference to animator
-    //insert reference to audio sources
+    [Tooltip("Any functional AudioSource inside the parent object. Must be set to loop to work properly.")]
+    [SerializeField] AudioSource myAudio;
+    [SerializeField] AudioClip CBClose;
+    [SerializeField] AudioClip CBOpen;
+    [SerializeField] AudioClip CBMove;
+    [SerializeField] AudioClip CBShake;
+    [SerializeField] AudioClip CBStop;
+
     [Space(5)]
 
     [Header("INTERNAL/DEBUG")]//--------------------------------------------------|INTERNAL/DEBUG|
@@ -48,15 +58,15 @@ public class CasketManager : MonoBehaviour
     [Tooltip("Keeps track of whether the coffin is currently open.")]
     public bool isOpen = false;
     [Tooltip("Tracks whether the coffin can be opened or not. ")]
-    public bool canOpen = true;
+    public bool canOpen = false;
     [Tooltip("Keeps track of how long this coffin should wait before moving. Note this value is slightly randomized.")]
     [SerializeField] float currentGoalShiftTime;
     [Tooltip("A reference to the skull that makes it inside the coffin so that it can be reused afterwards.")]
     [SerializeField] Head hitSkull;
     [Tooltip("Tracker for how long the coffin needs to stay closed before opening again.")]
     [SerializeField] float currentClosedTimer = 2f;
-
-
+    [Tooltip("Tracks whether the coffin is moving or not to allow sounds and effects to play properly.")]
+    [SerializeField] bool moving;
     #endregion
     //==================================================
     //=========================|BUILT-IN METHODS|
@@ -66,7 +76,6 @@ public class CasketManager : MonoBehaviour
     private void Start()
     {
         currentGoal = transform.position;
-        StartCoroutine(goalShiftTimer());
     }
 
     //--------------------------------------------------|Update|
@@ -75,6 +84,19 @@ public class CasketManager : MonoBehaviour
         if(gameObject.transform.position != currentGoal) //if not currently at our goal position...
         {
             transform.position = Vector3.MoveTowards(transform.position, currentGoal, currentSpeed * Time.deltaTime); //move toward the goal at the speed of currentspeed
+            //-----SOUND EFFECTS-----
+            if(!moving) //if we just started moving...
+            {
+                myAudio.clip = CBMove;
+                myAudio.Play(); //play the "moving" sound in a loop
+                moving = true; //trigger moving so that this doesn't play every frame
+            }
+        }
+        else if(gameObject.transform.position == currentGoal && moving) //if we ARE at our goal position and just stopped moving...
+        {
+            moving = false; //turn off moving so that this doesn't play every frame
+            myAudio.Stop();
+            myAudio.PlayOneShot(CBStop);
         }
     }
 
@@ -118,7 +140,7 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|AttemptOpen|
     public void AttemptOpen()
     {
-        if(canOpen) //if the coffin is closed and the closed timer has run to zero...
+        if(canOpen && !isOpen) //if the coffin is closed and the closed timer has run to zero...
         {
             StartCoroutine("OpenStart");
         }
@@ -128,15 +150,22 @@ public class CasketManager : MonoBehaviour
     public void CloseFinish()
     {
         //animation (close doors)
+        //-----DEBUG ONLY-----
+        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
+        //-----
         //sfx
         isOpen = false;
         CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
+        CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
     }
 
     //--------------------------------------------------|OpenFinish|
     public void OpenFinish()
     {
         //animation (open doors)
+        //-----DEBUG ONLY-----
+        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.white;
+        //-----
         //sfx
         isOpen = true;
         CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
@@ -171,14 +200,19 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|CoffinStart|
     public void CoffinStart()
     {
-        currentGoal = transform.position;
+        
         StartCoroutine(goalShiftTimer());
+        StartCoroutine(CoffinClosedTimer());
     }
 
     //--------------------------------------------------|CoffinReset|
     public void CoffinReset()
     {
+        StopAllCoroutines();
         currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
+        //-----DEBUG ONLY-----
+        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
+        //-----
         //animation (close doors)
         currentSpeed = baseMoveSpeed; //set speed to base
         currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
@@ -199,6 +233,10 @@ public class CasketManager : MonoBehaviour
     private IEnumerator OpenStart()
     {
         //animation (shake)
+        //-----DEBUG ONLY-----
+        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        myAudio.PlayOneShot(CBShake);
+        //-----
         //sfx
         yield return new WaitForSeconds(shakeTime);
         OpenFinish();

@@ -9,7 +9,7 @@ public class ProgressManager : MonoBehaviour
     public GameObject SS_game;
     public GameObject CS_game;
     private SkillShotGameManager SS_GM;
-    private WhackEmGameManager CS_GM;
+    private CarnivalSmashGameManager CS_GM;
     public GameObject introText; //reference to the text that needs to be set inactive for the first dialog to run
     [Header("AUTO")]
     public GameObject FirstDialog; //the first dialog triggers after the intro has played
@@ -22,7 +22,7 @@ public class ProgressManager : MonoBehaviour
     void Start()
     {
         SS_GM = SS_game.GetComponent<SkillShotGameManager>();
-        CS_GM = CS_game.GetComponent<WhackEmGameManager>();
+        CS_GM = CS_game.GetComponent<CarnivalSmashGameManager>();
     }
 
     // Update is called once per frame

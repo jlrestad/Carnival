@@ -75,6 +75,11 @@ public class Head : MonoBehaviour
             PickUpSkull();
         }
 
+        
+    }
+
+    private void Update()
+    {
         //THROW SKULL
         if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull && canThrow)
         {
