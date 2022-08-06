@@ -40,7 +40,10 @@ public class GameBooth : MonoBehaviour
     public bool isPaused;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
-    //public Component gameManagerScript;
+
+    [Header("AUDIO & LIGHTING")]
+    public AudioSource minigameAudio;
+    public GameObject minigameLight;
 
     [Header("SCRIPTS")]
     public Menu menu;
@@ -54,6 +57,7 @@ public class GameBooth : MonoBehaviour
         menu = FindObjectOfType<Menu>();
     }
 
+    #region CONTRUCTORS
     //Constructor sets the default values.
     public GameBooth()
     {
@@ -66,7 +70,9 @@ public class GameBooth : MonoBehaviour
         timeLeft = resetTime; //Time left is set to user defined variable of timeCounter
     
     }
+    #endregion
 
+    #region SETTERS
     //* * *
     //SETTERS
 
@@ -102,8 +108,9 @@ public class GameBooth : MonoBehaviour
         get { return gameRules; }
         set { gameRules = value; }
     }
+#endregion
 
-
+    #region GETTERS
     // * * *
     //GETTERS
     public TextMeshProUGUI GetScoreText()
@@ -174,9 +181,11 @@ public class GameBooth : MonoBehaviour
     {
         return timeCounter;
     }
+    #endregion
 
+    #region GAMEPLAY METHODS
     // * * *
-    //SHARED GAME METHODS
+    //SHARED GAMEPLAY METHODS
     public void ShowGameRules()
     {
         ShowCursor();
@@ -200,8 +209,10 @@ public class GameBooth : MonoBehaviour
             gameOn = true;
             minigameHUD.SetActive(true);
             gameRules.SetActive(false);
+
             LockPlayerOnPlay(); //Puts player into game play position.
             HideCursor();
+            PlayGameAudio();
         }
         else
         {
@@ -209,6 +220,20 @@ public class GameBooth : MonoBehaviour
             WE.gameRulesDisplayed = false;
             LockPlayerOnPlay();
             HideCursor();
+        }
+    }
+
+    public void PlayGameAudio()
+    {
+        if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
+        {
+            minigameLight.SetActive(true);
+
+            if (minigameAudio.volume == 0)
+            {
+                minigameAudio.volume = 0.7f;
+            }
+            minigameAudio.Play();
         }
     }
 
@@ -223,6 +248,7 @@ public class GameBooth : MonoBehaviour
         gameOn = false;
         isPaused = false;
 
+        gameRules.SetActive(false);
         WE.gameRulesDisplayed = false;
         WE.actionPrompt.SetActive(false);
         FPSController.Instance.canMove = true;
@@ -230,11 +256,10 @@ public class GameBooth : MonoBehaviour
 
         //Reset Score
         score = 0;
-        scoreText.text = (score + "/" + scoreLimit);
 
         //Reset Time
         timeLeft = timeCounter;
-        timerText.text = ("00:" + (int)timeLeft);
+        //timerText.text = ("00:" + (int)timeLeft);
 
         HideCursor();
         UnLockPlayer();
@@ -289,20 +314,50 @@ public class GameBooth : MonoBehaviour
         }
     }
 
+    public IEnumerator ShutDownGame()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        //Turn off the light 
+        minigameLight.SetActive(false);
+
+        yield return new WaitForSeconds(1.0f);
+
+        float audio = minigameAudio.volume;
+        float speed = 0.01f;
+
+        for (float i = audio; i > 0; i -= speed)
+        {
+            minigameAudio.volume = i;
+            yield return null;
+        }
+
+        minigameAudio.Stop();
+
+        minigameAudio.volume = 0.7f;
+    }
+
     public IEnumerator WinLoseDisplay()
     {
-        gameOn = false;
+        if (gameWon)
+        {
+            DisplayGameCard();
 
-        displayScreen.SetActive(true);
+            WE.weaponList.Add(playerWeapon);
+            WE.weaponNumber++;
+            WE.isEquipped = true;
 
-        WE.weaponList.Add(playerWeapon);
-        WE.weaponNumber++;
-        WE.isEquipped = true;
+            yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.KeypadEnter));
 
-        yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.KeypadEnter));
+            ResetGame();
+        }
+        else if (!gameOn && !gameWon)
+        {
+            winLoseText.text = "YOU LOSE!";
 
-        ResetGame();
-        displayScreen.SetActive(false);
+            yield return new WaitForSeconds(2);
+            ResetGame();
+        }
     }
 
     public IEnumerator CountDownTimer()
@@ -335,9 +390,11 @@ public class GameBooth : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
+    #region TAROT CARD MECHANICS
     //
-    // TAROT CARD SYSTEM
+    // TAROT CARDS
 
     //Show the card that was won
     public void DisplayGameCard()
@@ -364,7 +421,8 @@ public class GameBooth : MonoBehaviour
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
         //Display the current weapon card
-        menu.DisplayWeaponCard();
-        //Menu.Instance.DisplayWeaponCard();
+        //menu.DisplayWeaponCard();
+        Menu.Instance.DisplayWeaponCard();
     }
+    #endregion
 }

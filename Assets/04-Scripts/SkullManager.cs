@@ -27,11 +27,11 @@ public class SkullManager : MonoBehaviour
         GameObject skullHeld;
 
         //Pool the amount of targets needed and hold them in a list.
-        while (pooledSkulls.Count < poolAmount)
+        while (pooledSkulls.Count -1 < poolAmount)
         {
-            skullHeld = Instantiate(skullPrefab, skullParent, instantiateInWorldSpace: false) as GameObject; //Instantiate the gameobject
-            skullHeld.SetActive(false); //Hide the gameobject
-            skullHeld.transform.parent = skullParent; //Parent the gameobjects to the skullParent transform
+            skullHeld = Instantiate(skullPrefab, skullParent, instantiateInWorldSpace: false) as GameObject; //Instantiate the skull
+            skullHeld.SetActive(false); //Hide the instantiated skull
+            skullHeld.transform.parent = skullParent; //Parent the skulls to the skullParent transform
             pooledSkulls.Add(skullHeld); //Add the gameobject to the pooledSkulls list
 
             //Turn off gravity and collider for the skulls in inventory

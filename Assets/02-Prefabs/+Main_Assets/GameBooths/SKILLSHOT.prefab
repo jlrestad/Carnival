@@ -6798,7 +6798,7 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   timerText: {fileID: 0}
   winLoseText: {fileID: 0}
-  scoreLimit: 20
+  scoreLimit: 2
   score: 0
   timeCounter: 60
   timeLeft: 0
@@ -6813,14 +6813,15 @@ MonoBehaviour:
   isPaused: 0
   playerWeapon: {fileID: 0}
   gameplayPosition: {fileID: 1883155276}
+  minigameAudio: {fileID: 0}
+  minigameLight: {fileID: 8850762238060242703}
+  menu: {fileID: 0}
   WE: {fileID: 0}
   targetFlipped: 0
   reachedEnd: 0
   gameJustPlayed: 0
   gameOver: 0
   movingTarget: []
-  minigameAudio: {fileID: 0}
-  minigameLight: {fileID: 8850762238060242703}
 --- !u!65 &558215313
 BoxCollider:
   m_ObjectHideFlags: 0

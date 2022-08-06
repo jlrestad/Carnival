@@ -93,14 +93,13 @@ public class Head : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //For Casket Baskets game
-        //if (other.CompareTag("Bucket"))
-        //{
-        //    //Debug.Log("Head trigger working");
-        //    other.GetComponentInParent<GameCardManager>().critterList.Add(other.transform.gameObject);
+        if (other.CompareTag("Goal"))
+        {
+            //If skull hits the bucket then hide it from the scene.
+            playerWeapon.skull.SetActive(false);
 
-        //    //If skull hits the bucket then hide it from the scene.
-        //    playerWeapon.skull.SetActive(false);
-        //}
+            CasketBasketsGameManager.Instance.score++;
+        }
 
         if (other.CompareTag("BossHeart"))
         {

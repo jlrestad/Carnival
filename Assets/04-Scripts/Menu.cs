@@ -29,9 +29,11 @@ public class Menu : MonoBehaviour
     public static Menu Instance;
 
     GameManager GM;
+    WeaponEquip WE;
+
     CarnivalSmashGameManager carnivalSmashGM;
     SkillShotGameManager skillShotGM;
-    WeaponEquip WE;
+    CasketBasketsGameManager casketbasketGM;
 
     [Header("AUDIO")]
     //public AudioMixer audioMixer;
@@ -55,8 +57,8 @@ public class Menu : MonoBehaviour
     public GameObject[] gameCardSlots;
     public GameObject gameCardBG;
     public GameObject gameCard;
-    public Sprite cardImage;
-    public Sprite bgImage;
+    public Sprite inactiveWeapon;
+    public Sprite activeWeapon;
     public int BGCount;
     [SerializeField] bool settingsOn;
 
@@ -98,8 +100,10 @@ public class Menu : MonoBehaviour
     private void Update()
     {
         if (controllerArray == null) { controllerArray = Input.GetJoystickNames(); }
+
         carnivalSmashGM = FindObjectOfType<CarnivalSmashGameManager>();
         skillShotGM = FindObjectOfType<SkillShotGameManager>();
+        casketbasketGM = FindObjectOfType<CasketBasketsGameManager>();
         WE = FindObjectOfType<WeaponEquip>();
 
         //Set Player
@@ -143,14 +147,20 @@ public class Menu : MonoBehaviour
         {
             if (WE.gameName == "MeleeGame")
             {
-                cardImage = carnivalSmashGM.inactiveCardSprite;
-                bgImage = carnivalSmashGM.activeCardSprite;
+                inactiveWeapon = carnivalSmashGM.inactiveCardSprite;
+                activeWeapon = carnivalSmashGM.activeCardSprite;
                 return;
             }
             else if (WE.gameName == "ShootingGame")
             {
-                cardImage = skillShotGM.inactiveCardSprite;
-                bgImage = skillShotGM.activeCardSprite;
+                inactiveWeapon = skillShotGM.inactiveCardSprite;
+                activeWeapon = skillShotGM.activeCardSprite;
+                return;
+            }
+            else if (WE.gameName == "ThrowingGame")
+            {
+                inactiveWeapon = casketbasketGM.inactiveCardSprite;
+                activeWeapon = casketbasketGM.activeCardSprite;
                 return;
             }
         }
@@ -331,11 +341,11 @@ public class Menu : MonoBehaviour
 
                 //Turn on card image
                 gameCard.GetComponent<Image>().enabled = true; //enable the image component
-                gameCard.GetComponent<Image>().sprite = cardImage; //set the image sprite to the game card that was won
+                gameCard.GetComponent<Image>().sprite = inactiveWeapon; //set the image sprite to the game card that was won
 
                 //Turn on cardBG image
                 gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
-                gameCardBG.GetComponent<Image>().sprite = bgImage;
+                gameCardBG.GetComponent<Image>().sprite = activeWeapon;
 
                 //Turn off previous BG
                 if (i > 0)

@@ -18,9 +18,9 @@ public class SkillShotGameManager : GameBooth
 
     public MovingTarget[] movingTarget;
     
-    [Header("AUDIO & LIGHTS")]
-    public AudioSource minigameAudio;
-    public GameObject minigameLight;
+    //[Header("AUDIO & LIGHTS")]
+    //public AudioSource minigameAudio;
+    //public GameObject minigameLight;
 
     bool runOnce; //Controls pickupweapon
 
@@ -62,9 +62,6 @@ public class SkillShotGameManager : GameBooth
             //TIMER
             StartCoroutine(CountDownTimer());
 
-            //AUDIO
-            PlayGameAudio();
-
             //SCORE
             ScoreDisplay();
 
@@ -80,7 +77,7 @@ public class SkillShotGameManager : GameBooth
             StartCoroutine(ShutDownGame());
         }
 
-        //GAME WON
+        //GAME WIN / LOSE
         if (gameWon && gameOn)
         {
             //WIN/LOSE
@@ -163,42 +160,42 @@ public class SkillShotGameManager : GameBooth
         //}
     }
 
-    public void PlayGameAudio()
-    {
-        if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
-        {
-            minigameLight.SetActive(true);
+    //public void PlayGameAudio()
+    //{
+    //    if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
+    //    {
+    //        minigameLight.SetActive(true);
 
-            if (minigameAudio.volume == 0)
-            {
-                minigameAudio.volume = 0.7f;
-            }
-            minigameAudio.Play();
-        }
-    }
+    //        if (minigameAudio.volume == 0)
+    //        {
+    //            minigameAudio.volume = 0.7f;
+    //        }
+    //        minigameAudio.Play();
+    //    }
+    //}
 
-    IEnumerator ShutDownGame()
-    {
-        yield return new WaitForSeconds(0.5f);
+    //IEnumerator ShutDownGame()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
 
-        //Turn off the light 
-        minigameLight.SetActive(false);
+    //    //Turn off the light 
+    //    minigameLight.SetActive(false);
 
-        yield return new WaitForSeconds(1.0f);
+    //    yield return new WaitForSeconds(1.0f);
 
-        float audio = minigameAudio.volume;
-        float speed = 0.01f;
+    //    float audio = minigameAudio.volume;
+    //    float speed = 0.01f;
 
-        for (float i = audio; i > 0; i -= speed)
-        {
-            minigameAudio.volume = i;
-            yield return null;
-        }
+    //    for (float i = audio; i > 0; i -= speed)
+    //    {
+    //        minigameAudio.volume = i;
+    //        yield return null;
+    //    }
 
-        minigameAudio.Stop();
+    //    minigameAudio.Stop();
 
-        minigameAudio.volume = 0.7f;
-    }
+    //    minigameAudio.volume = 0.7f;
+    //}
 
     
     //public void DisplayTextUI()

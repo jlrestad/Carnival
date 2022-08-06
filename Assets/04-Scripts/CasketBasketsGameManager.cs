@@ -33,12 +33,12 @@ public class CasketBasketsGameManager : GameBooth
     [Header("PLUG-IN")]
     [Tooltip("The scripts attached to each individual coffin go here so their methods can be accessed individually.")]
     public List<CasketManager> casketList = new List<CasketManager>();
-    [Tooltip("The gameobjects holding the lights and music for the minigame.")]
-    public GameObject boothFX;
+    //[Tooltip("The gameobjects holding the lights and music for the minigame.")]
+    //public GameObject boothFX;
     [Space(20)]
     [Tooltip("The AudioSource used for playing minigame-wide sounds, such as the spook-loop or lose buzzer.")]
     [SerializeField] AudioSource tentAudio;
-    [SerializeField] AudioClip CBBuzzer;
+    [SerializeField] AudioSource CBBuzzer;
     [SerializeField] AudioClip CBSpook;
     [SerializeField] AudioClip CBSpookFail;
     [SerializeField] AudioClip CBLose;
@@ -72,6 +72,7 @@ public class CasketBasketsGameManager : GameBooth
         //Get the sprite from the tarot cards
         inactiveCardSprite = GetInactiveCardSprite();
         activeCardSprite = GetActiveCardSprite();
+
         //Set timer info
         timeLeft = GetTimeCounter();
     }
@@ -80,34 +81,35 @@ public class CasketBasketsGameManager : GameBooth
     private void Update()
     {
         //When the game turns on, run GameStart
-        if (gameOn & !isRunning)
+        if (gameOn/* && !isRunning*/)
         {
-            GameStart();
-        }
+            //Set text for this game
+            scoreText = GetScoreText();
+            timerText = GetTimerText();
+            winLoseText = GetWinLoseText();
 
-        //When the game ends, run GameEnd (win/lose handled inside there)
-        if (!gameOn & isRunning)
+            GameStart();
+
+            //Pause
+            if (Input.GetButtonDown("Menu")) //pausing during minigame
+            {
+                ShowGameRules();
+            }
+        }
+        else if (!gameOn && isRunning)
         {
             GameEnd();
+            StartCoroutine(WinLoseDisplay());
         }
 
-        if (isRunning && Input.GetButtonDown("Menu")) //pausing during minigame
-        {
-            ShowGameRules();
-        }
-
-        //Timer formatting
-        if (timeLeft >= 10)
-        {
-            timerText.text = ("00:" + (int)timeLeft);
-        }
-        else
-        {
-            timerText.text = ("00:0" + (int)timeLeft);
-        }
+        //GAME WIN / LOSE
+        //if (gameWon && gameOn)
+        //{
+        //    StartCoroutine(WinLoseDisplay());
+        //}
 
         //-----Intensity effects-----
-        if(score >= 1 && score < casketList.Count) //if score is within range
+        if (score >= 1 && score < casketList.Count) //if score is within range
         {
             if(tentAudio.clip != CBSpook) //if the sfx isn't playing (to prevent infinite loop)
             {
@@ -121,8 +123,6 @@ public class CasketBasketsGameManager : GameBooth
         {
             tentAudio.clip = null;
         }
-
-
 
         //-----Below handles whether the player wins or loses the minigame-----
         // NOTE: score is used to track how many coffins are open at once
@@ -139,31 +139,39 @@ public class CasketBasketsGameManager : GameBooth
         }
     }
     #endregion
+
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
     #region CUSTOM METHODS
     //--------------------------------------------------|GameStart|
+
     public void GameStart()
     {
-        boothFX.SetActive(true); //turn on lights and music
-        tentAudio.PlayOneShot(CBBuzzer); //play the buzzer sfx
-        gameWon = false;
-        isRunning = true; //so that this doesn't get called multiple times from update
-        playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+        ScoreDisplay();
         StartCoroutine(CountDownTimer()); //start game timer
-        StartCoroutine(PickTimer()); //start picking coffins to open up
-        foreach(CasketManager CM in casketList)
+
+        playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+
+        if (!isRunning)
         {
-            CM.CoffinStart(); //tell each coffin to start moving
+            foreach (CasketManager CM in casketList)
+            {
+                CBBuzzer.Play();
+                StartCoroutine(PickTimer()); //start picking coffins to open up
+                CM.CoffinStart(); //tell each coffin to start moving
+            }
         }
+        isRunning = true; //so that this doesn't get called multiple times from update
     }
 
     //--------------------------------------------------|GameEnd|
     public void GameEnd()
     {
-        boothFX.SetActive(false); //turn off lights and music
-        isRunning = false; //so that this doesn't get called multiple times from update
+        gameOn = false;
+        isRunning = false; //stop the coffin movement
+
+        //Better way of doing this: control the coroutine you want to stop with a bool. That way it doesn't affect other coroutines.
         StopAllCoroutines(); //keep the script from opening any more coffins
         foreach(CasketManager CM in casketList)
         {
@@ -173,6 +181,7 @@ public class CasketBasketsGameManager : GameBooth
         }
         if (gameWon)
         {
+            //Using audioclips doesn't allow them to be controlled through the audio mixer. Should be on it's own audioSource component.
             tentAudio.PlayOneShot(CBWin);
             WE.weaponList.Add(playerWeapon);
         }
@@ -181,6 +190,8 @@ public class CasketBasketsGameManager : GameBooth
             tentAudio.PlayOneShot(CBLose);
             playerWeapon.transform.GetChild(0).gameObject.SetActive(false);
         }
+
+        StartCoroutine(ShutDownGame());
     }
 
     //--------------------------------------------------|RegisterHit|
@@ -207,6 +218,7 @@ public class CasketBasketsGameManager : GameBooth
         StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
     }
     #endregion
+
     //==================================================
     //=========================|COROUTINES|
     //==================================================
