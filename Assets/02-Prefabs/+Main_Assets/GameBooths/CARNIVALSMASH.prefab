@@ -1658,7 +1658,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4793427717140430483}
-  - component: {fileID: 1387369116836205943}
   - component: {fileID: 952988462}
   - component: {fileID: 952988461}
   m_Layer: 0
@@ -1687,31 +1686,6 @@ Transform:
   m_Father: {fileID: 3183166738633725612}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1387369116836205943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5318326405545255977}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1e8cb40d3e09f49b7ec3816620030a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  WE: {fileID: 0}
-  skillshotGM: {fileID: 0}
-  whackemGM: {fileID: 0}
-  critterArray:
-  - {fileID: 0}
-  - {fileID: 7375994265678108515}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  critterList: []
-  cardDisplay: {fileID: 0}
-  cardWon: {fileID: 3457787426874225867}
 --- !u!65 &952988462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1720,7 +1694,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5318326405545255977}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3, y: 2, z: 1}
@@ -1757,6 +1731,7 @@ MonoBehaviour:
   isPaused: 0
   playerWeapon: {fileID: 0}
   gameplayPosition: {fileID: 28901857}
+  menu: {fileID: 0}
   WE: {fileID: 0}
 --- !u!1 &5790997602376419568
 GameObject:
@@ -3492,14 +3467,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bad278024da1074b8e8995e16213780, type: 3}
---- !u!224 &2726730787430956981 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5072581680830807393, guid: 4bad278024da1074b8e8995e16213780, type: 3}
-  m_PrefabInstance: {fileID: 7183845166168638164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3457787426874225867 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5498510615612093983, guid: 4bad278024da1074b8e8995e16213780, type: 3}
+  m_PrefabInstance: {fileID: 7183845166168638164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2726730787430956981 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5072581680830807393, guid: 4bad278024da1074b8e8995e16213780, type: 3}
   m_PrefabInstance: {fileID: 7183845166168638164}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1175532159

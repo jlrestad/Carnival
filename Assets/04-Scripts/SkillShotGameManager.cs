@@ -48,39 +48,25 @@ public class SkillShotGameManager : GameBooth
 
     private void Update()
     {
-        //When the game is on, player is holding the skull and can bring up the game rules menu.
+        //GAMEON
         if (gameOn)
         {
+            //Set text for this game
+            scoreText = GetScoreText();
             timerText = GetTimerText();
+            winLoseText = GetWinLoseText();
 
-            //
             //WEAPON
             playerWeapon.SetActive(true); //Show player holding weapon
 
-            //
             //TIMER
             StartCoroutine(CountDownTimer());
-            if (timeLeft >= 10)
-            {
-                timerText.text = ("00:" + (int)timeLeft);
-            }
-            else
-            {
-                timerText.text = ("00:0" + (int)timeLeft);
-            }
 
-            //
             //AUDIO
-            if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
-            {
-                minigameLight.SetActive(true);
+            PlayGameAudio();
 
-                if (minigameAudio.volume == 0)
-                {
-                    minigameAudio.volume = 0.7f;
-                }
-                minigameAudio.Play();
-            }
+            //SCORE
+            ScoreDisplay();
 
             //
             //PAUSE - Game Rules Menu
@@ -94,6 +80,12 @@ public class SkillShotGameManager : GameBooth
             StartCoroutine(ShutDownGame());
         }
 
+        //GAME WON
+        if (gameWon && gameOn)
+        {
+            //WIN/LOSE
+            StartCoroutine(WinLoseDisplay());
+        }
 
 
         //if (gameOn)
@@ -169,6 +161,20 @@ public class SkillShotGameManager : GameBooth
         //{
         //    StartCoroutine(ShutDownGame());
         //}
+    }
+
+    public void PlayGameAudio()
+    {
+        if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
+        {
+            minigameLight.SetActive(true);
+
+            if (minigameAudio.volume == 0)
+            {
+                minigameAudio.volume = 0.7f;
+            }
+            minigameAudio.Play();
+        }
     }
 
     IEnumerator ShutDownGame()
@@ -349,7 +355,7 @@ public class SkillShotGameManager : GameBooth
 
         while(i < pooledTargets.Count)
         {
-            if(gameOn && WE.haveGun)
+            if(gameOn)
             {
                 //if target at beginning or end, turn off
                 if (pooledTargets[i].transform.position == parentPos.position || pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)

@@ -55,7 +55,7 @@ public class MovingTarget : MonoBehaviour
     void Update()
     {
 
-        if (!skillshotGM.gameOver && !skillshotGM.gameWon && weaponEquip.haveGun)
+        if (!skillshotGM.gameOver && !skillshotGM.gameWon/* && weaponEquip.haveGun*/)
         {
             
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));

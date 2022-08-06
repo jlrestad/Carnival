@@ -20,7 +20,7 @@ public class GameBooth : MonoBehaviour
 
     [Header("SCORE")]
     public int scoreLimit; //the amount needed to win
-    [HideInInspector] public int score; //the player kills
+    public int score; //the player kills
 
     [Header("TIMER")]
     public float timeCounter; //used to count down the time
@@ -43,12 +43,15 @@ public class GameBooth : MonoBehaviour
     //public Component gameManagerScript;
 
     [Header("SCRIPTS")]
+    public Menu menu;
     public WeaponEquip WE;
-    //public Component className;
+   
 
     private void Awake()
     {
         Instance = this;
+
+        menu = FindObjectOfType<Menu>();
     }
 
     //Constructor sets the default values.
@@ -103,10 +106,24 @@ public class GameBooth : MonoBehaviour
 
     // * * *
     //GETTERS
+    public TextMeshProUGUI GetScoreText()
+    {
+        MinigameHUD[] elements = FindObjectsOfType<MinigameHUD>();
+
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].CompareTag("ScoreText"))
+            {
+                scoreText = elements[i].GetComponent<TextMeshProUGUI>();
+            }
+        }
+        scoreText.text = (score + "/" + scoreLimit);
+
+        return scoreText;
+    }
 
     public TextMeshProUGUI GetTimerText()
     {
-        string _isCorrectText = minigameHUD.GetComponentInChildren<MinigameHUD>().tag;
         MinigameHUD[] elements = FindObjectsOfType<MinigameHUD>();
 
         for (int i = 0; i < elements.Length; i++)
@@ -117,6 +134,20 @@ public class GameBooth : MonoBehaviour
             }   
         }
         return timerText;
+    }
+
+    public TextMeshProUGUI GetWinLoseText()
+    {
+        MinigameHUD[] elements = FindObjectsOfType<MinigameHUD>();
+
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].CompareTag("WinLoseText"))
+            {
+                winLoseText = elements[i].GetComponent<TextMeshProUGUI>();
+            }
+        }
+        return winLoseText;
     }
 
     public Sprite GetActiveCardSprite()
@@ -145,7 +176,7 @@ public class GameBooth : MonoBehaviour
     }
 
     // * * *
-    //GAME METHODS
+    //SHARED GAME METHODS
     public void ShowGameRules()
     {
         ShowCursor();
@@ -245,10 +276,45 @@ public class GameBooth : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void ScoreDisplay()
+    {
+        if (score >= scoreLimit)
+        {
+            score = scoreLimit;
+            gameWon = true;
+        }
+        if (score < 0)
+        {
+            score = 0;
+        }
+    }
+
+    public IEnumerator WinLoseDisplay()
+    {
+        gameOn = false;
+
+        displayScreen.SetActive(true);
+
+        WE.weaponList.Add(playerWeapon);
+        WE.weaponNumber++;
+        WE.isEquipped = true;
+
+        yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.KeypadEnter));
+
+        ResetGame();
+        displayScreen.SetActive(false);
+    }
 
     public IEnumerator CountDownTimer()
     {
-        timerText.text = ("00:" + (int)timeLeft);
+        if (timeLeft >= 10)
+        {
+            timerText.text = ("00:" + (int)timeLeft);
+        }
+        else
+        {
+            timerText.text = ("00:0" + (int)timeLeft);
+        }
 
         //Wait so that the starting number is displayed.
         yield return new WaitForSeconds(0.5f);
@@ -268,5 +334,37 @@ public class GameBooth : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    //
+    // TAROT CARD SYSTEM
+
+    //Show the card that was won
+    public void DisplayGameCard()
+    {
+        //Display the card that was won
+        displayScreen.SetActive(true);
+
+        //Transition from card display to weapon card
+        StartCoroutine(DisplayCardWon());
+    }
+
+    //Transition from displayed card to weapon indicator card
+    public IEnumerator DisplayCardWon()
+    {
+        //Wait 1 second before being able to click so the card won screen isn't exited by accident.
+        yield return new WaitForSeconds(1);
+        //After the wait a click will close the card won screen and return movement to the player.
+        yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
+
+        //Turn off card won display screen
+        displayScreen.SetActive(false);
+
+        //Let player move when the display screen is off.
+        FPSController.Instance.GetComponent<CharacterController>().enabled = true;
+
+        //Display the current weapon card
+        menu.DisplayWeaponCard();
+        //Menu.Instance.DisplayWeaponCard();
     }
 }

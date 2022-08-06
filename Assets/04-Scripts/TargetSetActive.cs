@@ -7,8 +7,8 @@ public class TargetSetActive : MonoBehaviour
 {
     public static TargetSetActive Instance;
 
-    MovingTarget movingTarget;
-    SkillShotGameManager skillshotGM;
+    public MovingTarget movingTarget;
+    public SkillShotGameManager skillshotGM;
 
     //[HideInInspector] public MeshRenderer meshRenderer;
 
