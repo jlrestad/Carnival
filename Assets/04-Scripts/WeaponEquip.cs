@@ -60,7 +60,7 @@ public class WeaponEquip : MonoBehaviour
     private Weapon newWeapon;
     Head head; //Get the Head script for skull
 
-    [HideInInspector] RaycastHit hit;
+    [HideInInspector] public RaycastHit hit;
     [SerializeField] int maxHitDistance = 10;
     public Menu menu;
     GameBooth gameBooth = new GameBooth();
@@ -112,6 +112,7 @@ public class WeaponEquip : MonoBehaviour
             haveSkull = true;
         }
 
+        //RAYCAST
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
         {
             Transform hitTransform = hit.transform;
@@ -156,56 +157,25 @@ public class WeaponEquip : MonoBehaviour
             }
         }
 
-            //if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
-            //{
-            //    Debug.Log(hit.transform.name);
+        if (isEquipped)
+        {
+            //Show crosshair only if weapon is equipped.
+            crossHair.SetActive(true);
+        }
 
-            //    //Find distance of the game to the player
-            //    distanceToPlayer = (hit.transform.position - transform.position);
+        //*
+        //* Use the CB Game Manager to add skull to the weapon list if the game is won.
+        //if (holdingSkull)
+        //{
+        //    //Add skulls to weapon list.
+        //    if (!weaponList.Contains(skullParent))
+        //    {
+        //        weaponList.Add(skullParent);
+        //    }
+        //}
 
-            //    if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
-            //    {
-            //        //IF RAYCAST HITS SKILLSHOT
-            //        if (hit.transform.gameObject.tag == GameObject.Find("SSGame").tag && !SSManager.gameOn)
-            //        {
-            //            Debug.Log("This code works!");
-            //            actionPrompt.SetActive(true);
-
-            //            //AND IF THE ACTION PROMPT IS DISPLAYED AND ACTION BUTTON IS PRESSED
-            //            if (actionPrompt.activeSelf == true && Input.GetButtonDown("ActionButton"))
-            //            {
-            //                //SkillShotGameManager.Instance.ShowGameRules();
-            //                SSManager.ShowGameRules();
-
-            //                actionPrompt.SetActive(false);
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        actionPrompt.SetActive(false);
-            //    }
-            //}
-
-            if (isEquipped)
-            {
-                //Show crosshair only if weapon is equipped.
-                crossHair.SetActive(true);
-            }
-
-            //*
-            //* Use the CB Game Manager to add skull to the weapon list if the game is won.
-            //if (holdingSkull)
-            //{
-            //    //Add skulls to weapon list.
-            //    if (!weaponList.Contains(skullParent))
-            //    {
-            //        weaponList.Add(skullParent);
-            //    }
-            //}
-
-            // * * *
-            //RETICLE DISPLAY -- Only show crosshair if a weapon is equipped.
+        // * * *
+        //RETICLE DISPLAY -- Only show crosshair if a weapon is equipped.
     }
 
     // * * *

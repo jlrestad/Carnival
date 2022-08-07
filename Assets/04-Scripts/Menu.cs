@@ -143,26 +143,48 @@ public class Menu : MonoBehaviour
         }
 
         //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
-        if (WE != null)
+        if (WE != null && WE.hit.transform != null)
         {
-            if (WE.gameName == "MeleeGame")
+            //inactiveWeapon = GameBooth.Instance.GetInactiveCardSprite();
+            //activeWeapon = GameBooth.Instance.GetActiveCardSprite();
+
+            if (WE.hit.transform.CompareTag("ShootingGame"))
             {
-                inactiveWeapon = carnivalSmashGM.inactiveCardSprite;
-                activeWeapon = carnivalSmashGM.activeCardSprite;
-                return;
+                inactiveWeapon = skillShotGM.GetInactiveCardSprite();
+                activeWeapon = skillShotGM.GetActiveCardSprite();
             }
-            else if (WE.gameName == "ShootingGame")
+            else if (WE.hit.transform.CompareTag("MeleeGame"))
             {
-                inactiveWeapon = skillShotGM.inactiveCardSprite;
-                activeWeapon = skillShotGM.activeCardSprite;
-                return;
+                inactiveWeapon = carnivalSmashGM.GetInactiveCardSprite();
+                activeWeapon = carnivalSmashGM.GetActiveCardSprite();
             }
-            else if (WE.gameName == "ThrowingGame")
+            else if (WE.hit.transform.CompareTag("ThrowingGame"))
             {
-                inactiveWeapon = casketbasketGM.inactiveCardSprite;
-                activeWeapon = casketbasketGM.activeCardSprite;
-                return;
+                inactiveWeapon = casketbasketGM.GetInactiveCardSprite();
+                activeWeapon = casketbasketGM.GetActiveCardSprite();
             }
+            //if (WE.gameName == "MeleeGame")
+            //{
+            //    inactiveWeapon = carnivalSmashGM.inactiveCardSprite;
+            //    activeWeapon = carnivalSmashGM.activeCardSprite;
+            //    return;
+            //}
+            //else if (WE.gameName == "ShootingGame")
+            //{
+            //    inactiveWeapon = skillShotGM.inactiveCardSprite;
+            //    activeWeapon = skillShotGM.activeCardSprite;
+            //    return;
+            //}
+            //else if (WE.gameName == "ThrowingGame")
+            //{
+            //    inactiveWeapon = casketbasketGM.inactiveCardSprite;
+            //    activeWeapon = casketbasketGM.activeCardSprite;
+            //    return;
+            //}
+        }
+        else
+        {
+            return;
         }
     }
 

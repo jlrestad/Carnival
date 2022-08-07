@@ -343,11 +343,15 @@ public class GameBooth : MonoBehaviour
         {
             DisplayGameCard();
 
-            WE.weaponList.Add(playerWeapon);
-            WE.weaponNumber++;
-            WE.isEquipped = true;
+            //Add weapon to the weapon list if it isn't already there.
+            if (!WE.weaponList.Contains(playerWeapon))
+            {
+                WE.weaponList.Add(playerWeapon);
+                WE.weaponNumber++;
+                WE.isEquipped = true;
+            }
 
-            yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.KeypadEnter));
+            yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Return));
 
             ResetGame();
         }
