@@ -97,7 +97,6 @@ public class WeaponEquip : MonoBehaviour
     void Update()
     {
         FindClosestWeapon();
-        //DetectMiniGames();
 
         if (isEquipped || inInventory)
         {
@@ -113,6 +112,24 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //RAYCAST
+        DetectMiniGames();
+
+        //CROSSHAIR/RETICLE
+        if (isEquipped)
+        {
+            //Show crosshair only if weapon is equipped.
+            crossHair.SetActive(true);
+        }
+        else
+        {
+            crossHair.SetActive(false);
+        }
+    }
+
+    // 
+    //DETECTS THE GAME, SHOWS THE PROMPT, AND ACTIVATES THE GAME RULES MENU WHEN ACTION BUTTON IS PRESSED.
+    public void DetectMiniGames()
+    {
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxHitDistance))
         {
             Transform hitTransform = hit.transform;
@@ -128,24 +145,24 @@ public class WeaponEquip : MonoBehaviour
 
             if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
             {
-             
+
                 if (isCS && !CSManager.gameOn)
                 {
                     actionPrompt.SetActive(true);
 
                     if (Input.GetButtonDown("ActionButton"))
-                    CSManager.ShowGameRules();
+                        CSManager.ShowGameRules();
                 }
                 else if (isCB && !CBManager.gameOn)
                 {
-                    actionPrompt.SetActive(true);
+                        actionPrompt.SetActive(true);
 
                     if (Input.GetButtonDown("ActionButton"))
-                    CBManager.ShowGameRules();
+                        CBManager.ShowGameRules();
                 }
                 else if (isSS && !SSManager.gameOn)
                 {
-                    actionPrompt.SetActive(true);
+                        actionPrompt.SetActive(true);
 
                     if (Input.GetButtonDown("ActionButton"))
                         SSManager.ShowGameRules();
@@ -156,33 +173,6 @@ public class WeaponEquip : MonoBehaviour
                 actionPrompt.SetActive(false);
             }
         }
-
-        if (isEquipped)
-        {
-            //Show crosshair only if weapon is equipped.
-            crossHair.SetActive(true);
-        }
-
-        //*
-        //* Use the CB Game Manager to add skull to the weapon list if the game is won.
-        //if (holdingSkull)
-        //{
-        //    //Add skulls to weapon list.
-        //    if (!weaponList.Contains(skullParent))
-        //    {
-        //        weaponList.Add(skullParent);
-        //    }
-        //}
-
-        // * * *
-        //RETICLE DISPLAY -- Only show crosshair if a weapon is equipped.
-    }
-
-    // * * *
-    //RAYCAST INFO
-    public void DetectMiniGames()
-    {
-
     }
 
     // FIND WEAPON GAME OBJECT CLOSEST TO PLAYER
@@ -370,7 +360,6 @@ public class WeaponEquip : MonoBehaviour
         {
             currentWeapon = malletHold;
             prevWeapon = closestWeapon;
-            //EquipWeapon(); //Equip picked up weapon
         }
     }
 

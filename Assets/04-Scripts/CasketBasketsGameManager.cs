@@ -100,12 +100,6 @@ public class CasketBasketsGameManager : GameBooth
             GameEnd();
         }
 
-        //GAME WIN / LOSE
-        //if (gameWon && gameOn)
-        //{
-        //    StartCoroutine(WinLoseDisplay());
-        //}
-
         //-----Intensity effects-----
         if (score >= 1 && score < casketList.Count) //if score is within range
         {
@@ -186,7 +180,6 @@ public class CasketBasketsGameManager : GameBooth
         {
             StartCoroutine(WinLoseDisplay());
             tentAudio.PlayOneShot(CBLose);
-            //playerWeapon.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         StartCoroutine(ShutDownGame());

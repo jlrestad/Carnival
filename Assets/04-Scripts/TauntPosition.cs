@@ -29,7 +29,7 @@ public class TauntPosition : MonoBehaviour
     void Start()
     {
         //Enemy parent game object to get position from
-        thisEnemy = GetComponentInParent<WhackEmEnemy>().gameObject;
+        thisEnemy = GetComponentInParent<CarnivalSmashGameManager>().gameObject;
 
 
         //Original position of the enemy

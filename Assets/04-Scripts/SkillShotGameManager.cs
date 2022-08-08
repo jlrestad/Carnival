@@ -75,7 +75,8 @@ public class SkillShotGameManager : GameBooth
         }
     }
 
-    
+    //
+    //CREATES A POOL OF TARGETS
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {
         GameObject target;
@@ -93,6 +94,8 @@ public class SkillShotGameManager : GameBooth
         }
     }
 
+    //
+    //IF TARGET HAS REACHED THE END THEN GO BACK TO THE BEGINNING
     public void SendOneHome(GameObject trgt, Transform parentPos)
     {
         trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
@@ -101,7 +104,8 @@ public class SkillShotGameManager : GameBooth
         trgt.transform.position = parentPos.position;
     } 
 
-    //Move target; give time between each target
+    //
+    //CONTROLS THE TARGET MOVEMENT
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
         int i = 0; //undo to here!

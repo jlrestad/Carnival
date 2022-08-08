@@ -46,6 +46,11 @@ public class GameBooth : MonoBehaviour
     public AudioSource minigameAudio;
     public GameObject minigameLight;
 
+    [Header("TRACK GAMES WON")]
+    public bool ssWon;
+    public bool csWon;
+    public bool cbWon;
+
     [Header("SCRIPTS")]
     public Menu menu;
     public WeaponEquip WE;
@@ -194,6 +199,7 @@ public class GameBooth : MonoBehaviour
         if (gameOn)
         {
             isPaused = true;
+            WE.isEquipped = false; //Hides the crosshair during pause
         }
 
         FPSController.Instance.canMove = false;
@@ -210,6 +216,7 @@ public class GameBooth : MonoBehaviour
             gameOn = true;
             minigameHUD.SetActive(true);
             gameRules.SetActive(false);
+            WE.isEquipped = true; //Shows the crosshair
 
             LockPlayerOnPlay(); //Puts player into game play position.
             HideCursor();
@@ -219,6 +226,7 @@ public class GameBooth : MonoBehaviour
         {
             gameRules.SetActive(false);
             WE.gameRulesDisplayed = false;
+
             LockPlayerOnPlay();
             HideCursor();
         }
@@ -246,6 +254,7 @@ public class GameBooth : MonoBehaviour
     //RESETS THE GAME BACK TO DEFAULT
     public void ResetGame()
     {
+        //Reset bools
         gameOn = false;
         isPaused = false;
         showLostText = false;
@@ -257,12 +266,10 @@ public class GameBooth : MonoBehaviour
 
         FPSController.Instance.canMove = true;
 
-        //Reset Score
+        //Reset values
         score = 0;
-
-        //Reset Time
         timeLeft = timeCounter;
-        //timerText.text = ("00:" + (int)timeLeft);
+        if (winLoseText != null) { winLoseText.text = ""; }
 
         StartCoroutine(ShutDownGame());
         HideCursor();
@@ -426,6 +433,7 @@ public class GameBooth : MonoBehaviour
     {
         //Display the card that was won
         displayScreen.SetActive(true);
+        WE.crossHair.SetActive(false);
 
         //Transition from card display to weapon card
         StartCoroutine(DisplayCardWon());
@@ -441,6 +449,7 @@ public class GameBooth : MonoBehaviour
 
         //Turn off card won display screen
         displayScreen.SetActive(false);
+        WE.crossHair.SetActive(true);
 
         //Let player move when the display screen is off.
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;

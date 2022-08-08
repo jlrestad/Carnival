@@ -14,7 +14,7 @@ public class MeleeSwing : MonoBehaviour
 
     CharacterController characterController;
     //public int health;
-    GameCardManager cardManager;
+    //GameCardManager cardManager;
     //public Transform spawnTransform;
 
     //[SerializeField] WhackEmEnemy newWhackEm;
@@ -24,7 +24,7 @@ public class MeleeSwing : MonoBehaviour
     //[SerializeField] float meleeRange = 3.0f;
     //[SerializeField] int damage;
 
-    [SerializeField] WhackEmGameManager whackemGM;
+    [SerializeField] CarnivalSmashGameManager carnivalsmashGM;
     [SerializeField] bool canSwing;
     [SerializeField] float force = 10.0f;
     [HideInInspector] RaycastHit hit;
@@ -60,8 +60,6 @@ public class MeleeSwing : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerCamera = player.GetComponentInChildren<Camera>();
         characterController = player.GetComponent<CharacterController>();
-        //whackEmEnemy = FindObjectsOfType<WhackEmEnemy>();
-        whackemGM = FindObjectOfType<WhackEmGameManager>();
         //spawnTransform = GetComponentInChildren<Transform>();
 
         canSwing = true;
@@ -92,7 +90,9 @@ public class MeleeSwing : MonoBehaviour
                 //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
 
                 Transform target = hit.transform.GetComponent<Transform>(); //For breakable
-                WhackEmEnemy enemy = hit.transform.GetComponent<WhackEmEnemy>(); //For critters
+                GameObject enemyTransform = hit.transform.gameObject;
+                CritterEnemy enemy = enemyTransform.GetComponent<CritterEnemy>();
+                carnivalsmashGM = enemyTransform.GetComponentInParent<CarnivalSmashGameManager>();
 
                 enemyCollider = hit.collider;
 
@@ -110,26 +110,26 @@ public class MeleeSwing : MonoBehaviour
                 }
 
                 //FOR CRITTERS
-                if (enemy != null)
+                if (enemyTransform != null)
                 {
                     //Show hit VFX to let player know it has been hit.
-                    GameObject hitVfx = Instantiate(hitVfxPrefab, enemy.transform.position, Quaternion.identity);
+                    GameObject hitVfx = Instantiate(hitVfxPrefab, enemyTransform.transform.position, Quaternion.identity);
                     Destroy(hitVfx, 0.5f);
                     enemy.hasBeenHit = true;
 
                     hitSound.Play();
 
-                    cardManager = enemy.GetComponentInParent<GameCardManager>();
+                    //cardManager = enemy.GetComponentInParent<GameCardManager>();
 
                     //Increase speed after each hit
-                    whackemGM.IncreaseSpeed();
+                    carnivalsmashGM.IncreaseSpeed();
                     //Turn off enemy after hit
                     enemy.HitEnemy();
 
                     //Add to the score
-                    if (!whackemGM.isTaunting)
+                    if (!carnivalsmashGM.isTaunting)
                     {
-                        whackemGM.score++;
+                        carnivalsmashGM.score++;
                     }
                     else
                     {
@@ -138,7 +138,7 @@ public class MeleeSwing : MonoBehaviour
                     }
 
                     //Add enemy to the list
-                    cardManager.critterList.Add(enemy.gameObject);
+                    //cardManager.critterList.Add(enemy.gameObject);
 
                     //Spawn the head used as throwing object
                     //SpawnHead();
@@ -200,7 +200,7 @@ public class MeleeSwing : MonoBehaviour
     IEnumerator SwingMallet()
     {
         //Keep player from clicking the card screen off by accident. 
-        if (WhackEmGameManager.Instance.displayPickupScreen.activeInHierarchy)
+        if (CarnivalSmashGameManager.Instance.displayScreen.activeInHierarchy)
         {
             canSwing = false;
             yield return new WaitForSeconds(1);

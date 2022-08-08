@@ -10,9 +10,9 @@ public class Target : MonoBehaviour
     public static Target Instance;
 
     BezierFollow moveAlongCurve;
-    GameCardManager cardManager;
+    //GameCardManager cardManager;
 
-    [HideInInspector] public WhackEmEnemy spawnHead;
+    [HideInInspector] public CarnivalSmashGameManager spawnHead;
 
     public float health = 100f;
 
@@ -29,7 +29,7 @@ public class Target : MonoBehaviour
 
     private void Start()
     {
-        cardManager = GetComponentInParent<GameCardManager>();
+        //cardManager = GetComponentInParent<GameCardManager>();
         moveAlongCurve = GetComponent<BezierFollow>();
     }
 
@@ -43,7 +43,7 @@ public class Target : MonoBehaviour
         if (targetHit)
         {
             //Add game object to Moving Target array.
-            cardManager.critterList.Add(this.gameObject);
+            //cardManager.critterList.Add(this.gameObject);
 
             //Stop the target from moving after it's shot.
             moveAlongCurve.speedModifier = 0f;
