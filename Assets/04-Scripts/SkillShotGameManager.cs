@@ -17,10 +17,6 @@ public class SkillShotGameManager : GameBooth
     [HideInInspector] public bool gameOver;
 
     public MovingTarget[] movingTarget;
-    
-    //[Header("AUDIO & LIGHTS")]
-    //public AudioSource minigameAudio;
-    //public GameObject minigameLight;
 
     bool runOnce; //Controls pickupweapon
 
@@ -28,9 +24,7 @@ public class SkillShotGameManager : GameBooth
     {
         Instance = this;
 
-        //levelLoaded = true;
         WE = GetWEScript();
-
     }
 
     private void Start()
@@ -65,6 +59,9 @@ public class SkillShotGameManager : GameBooth
             //SCORE
             ScoreDisplay();
 
+            //WIN/LOSE
+            StartCoroutine(WinLoseDisplay());
+
             //
             //PAUSE - Game Rules Menu
             if (Input.GetButtonDown("Menu"))
@@ -72,253 +69,12 @@ public class SkillShotGameManager : GameBooth
                 ShowGameRules();
             }
         }
-        else
+        else if (!gameOn && showLostText)
         {
             StartCoroutine(ShutDownGame());
         }
-
-        //GAME WIN / LOSE
-        if (gameWon && gameOn)
-        {
-            //WIN/LOSE
-            StartCoroutine(WinLoseDisplay());
-        }
-
-
-        //if (gameOn)
-        //{
-        //    weaponEquip.actionPrompt.SetActive(false);
-
-        //    weaponEquip.skillshotActive = true;
-
-        //    if (!weaponEquip.haveGun && !runOnce)
-        //    {
-        //        runOnce = true;
-        //        weaponEquip.haveGun = true;
-        //        weaponEquip.crossHair.SetActive(true);
-        //    }
-
-        //    if (! minigameAudio.isPlaying || ! minigameLight.activeInHierarchy)
-        //    {
-        //        minigameLight.SetActive(true);
-
-        //        if (minigameAudio.volume == 0)
-        //        {
-        //            minigameAudio.volume = 0.7f;
-        //        }
-        //        minigameAudio.Play();
-        //    }
-
-        //    // fixes bug causing mouse to appear when critter pops up
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //}
-
-        //Run this when the WhackEm game is on.
-        //if (gameOn && weaponEquip.haveGun)
-        //{
-        //    //Display the game UI
-        //    DisplayTextUI();
-
-        //    //Begin the game timer
-        //    StartCoroutine(CountDownTimer());
-        //    if (timeLeft >= 10)
-        //    {
-        //        timerText.text = ("00:" + (int)timeLeft);
-        //    }
-        //    else
-        //    {
-        //        timerText.text = ("00:0" + (int)timeLeft);
-        //    }
-
-        //    //Display Win/Lose
-        //    if (score >= scoreLimit && timeLeft > 0 && !gameOver)
-        //    {
-        //        gameWon = true;
-        //        StartCoroutine(WinLoseUI());
-        //    }
-        //    else if (score < scoreLimit && timeLeft <= 0 && !gameOver)
-        //    {
-        //        gameWon = false;
-        //        StartCoroutine(WinLoseUI());
-        //    }
-
-        //    //Update ticket count
-        //    //ticketsText.text = ("Tickets: " + HudManager.Instance.redTickets);
-
-        //    if (HudManager.Instance.redTickets < 0)
-        //    {
-        //        HudManager.Instance.redTickets = 0;
-        //        //winLoseText.text = "NEED TICKETS";
-
-        //        //Ticket is needed in order to play...
-        //        gameOn = false;
-        //    }
-        //}
-        //else if (gameOver)
-        //{
-        //    StartCoroutine(ShutDownGame());
-        //}
     }
 
-    //public void PlayGameAudio()
-    //{
-    //    if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
-    //    {
-    //        minigameLight.SetActive(true);
-
-    //        if (minigameAudio.volume == 0)
-    //        {
-    //            minigameAudio.volume = 0.7f;
-    //        }
-    //        minigameAudio.Play();
-    //    }
-    //}
-
-    //IEnumerator ShutDownGame()
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    //Turn off the light 
-    //    minigameLight.SetActive(false);
-
-    //    yield return new WaitForSeconds(1.0f);
-
-    //    float audio = minigameAudio.volume;
-    //    float speed = 0.01f;
-
-    //    for (float i = audio; i > 0; i -= speed)
-    //    {
-    //        minigameAudio.volume = i;
-    //        yield return null;
-    //    }
-
-    //    minigameAudio.Stop();
-
-    //    minigameAudio.volume = 0.7f;
-    //}
-
-    
-    //public void DisplayTextUI()
-    //{
-    //    //Display the scoreUI
-    //    minigameHUD.SetActive(true);
-    //    scoreText.text = (score + "/" + scoreLimit);
-
-    //    //Display the timerUI
-    //    timerText.enabled = true; ;
-    //}
-
-    //public void ResetGame()
-    //{
-    //    if (!gameWon)
-    //    {
-    //        //* Put weapon back
-    //        WE.haveGun = false;
-    //        WE.crossHair.SetActive(false);
-    //        gameWeapon.SetActive(true);
-    //        playerWeapon.SetActive(false);
-    //    }
-
-    //    runOnce = false;
-    //    gameJustPlayed = true;
-    //    WE.skillshotActive = false;
-
-    //    //Score
-    //    score = 0;
-    //    scoreText.text = (score + "/" + scoreLimit);
-
-    //    //Time
-    //    timeLeft = resetTime;
-    //    timerText.text = ("00:" + (int)timeLeft);
-    //}
-
-
-    //IEnumerator CountDownTimer()
-    //{
-    //    //Wait so that the starting number is displayed.
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    timeLeft -= Time.deltaTime;
-    //    if (timeLeft <= 0f)
-    //    {
-    //        timeLeft = 0f;
-    //    }
-    //    else
-    //    {
-    //        yield return null;
-    //    }
-    //}
-
-    //IEnumerator WinLoseUI()
-    //{
-    //    //Display lose message
-    //    winLoseText.enabled = true;
-
-    //    if (gameWon)
-    //    {
-    //        winLoseText.text = "YOU WIN!";
-
-    //        if (!WE.weaponList.Contains(currentWeapon))
-    //        {
-    //            WE.weaponList.Add(currentWeapon);
-    //            WE.currentWeapon = currentWeapon;
-    //            WE.weaponNumber++;
-    //            WE.isEquipped = true;
-    //        }
-
-    //        DisplayGameCard();
-    //    }
-    //    else
-    //    {
-    //        winLoseText.text = "YOU LOSE...";
-    //        ResetGame();
-    //    }
-
-    //    gameOn = false;
-    //    gameJustPlayed = true;
-    //    //weaponEquip.skillshotActive = false;
-    //    timerText.enabled = false;
-      
-    //    yield return new WaitForSeconds(2);
-
-    //    // lock player here until WinLoseUI done--
-    //    //if player leaves trigger area before this loop finishes, cannot win replay
-    //    //Clear and turn off lose message
-        
-    //    CarnivalSmashTrigger.Instance.UnLockPlayer();
-    //    winLoseText.text = (" ");
-    //    winLoseText.enabled = false;
-    //    gameOver = true;
-    //    minigameHUD.SetActive(false);
-    //}
-
-    //public void DisplayGameCard()
-    //{
-    //    //Display the card that was won
-    //    displayScreen.SetActive(true);
-
-    //    //Transition from card display back to game display
-    //    StartCoroutine(DisplayCardWon());
-    //}
-
-    ////Transition from displayed card to weapon indicator card
-    //public IEnumerator DisplayCardWon()
-    //{
-    //     //Wait 1 second before being able to click so the card won screen isn't exited by accident.
-    //    yield return new WaitForSeconds(1);
-    //    //After the wait a click will close the card won screen and return movement to the player.
-    //    yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
-
-    //    //Turn off card won display screen
-    //    displayScreen.SetActive(false);
-        
-    //    //Let player move when the display screen is off.
-    //    FPSController.Instance.GetComponent<CharacterController>().enabled = true;
-
-    //    //Display the current weapon card
-    //    Menu.Instance.DisplayWeaponCard();
-
-    //}
     
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {

@@ -168,7 +168,7 @@ public class CasketManager : MonoBehaviour
         //-----
         //sfx
         isOpen = true;
-        CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
+        //CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
     }
 
     //--------------------------------------------------|AddSpeed|

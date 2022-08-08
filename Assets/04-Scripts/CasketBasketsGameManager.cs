@@ -52,7 +52,6 @@ public class CasketBasketsGameManager : GameBooth
     [SerializeField] int CBAmount;
     [Tooltip("tracks whether the game has ended or not, to allow effects to play properly.")]
     [SerializeField] bool hasEnded = false;
-    [SerializeField] bool gamePaused = false;
     #endregion
     //==================================================
     //=========================|BUILT-IN METHODS|
@@ -81,7 +80,7 @@ public class CasketBasketsGameManager : GameBooth
     private void Update()
     {
         //When the game turns on, run GameStart
-        if (gameOn/* && !isRunning*/)
+        if (gameOn)
         {
             //Set text for this game
             scoreText = GetScoreText();
@@ -99,7 +98,6 @@ public class CasketBasketsGameManager : GameBooth
         else if (!gameOn && isRunning)
         {
             GameEnd();
-            StartCoroutine(WinLoseDisplay());
         }
 
         //GAME WIN / LOSE
@@ -168,7 +166,6 @@ public class CasketBasketsGameManager : GameBooth
     //--------------------------------------------------|GameEnd|
     public void GameEnd()
     {
-        gameOn = false;
         isRunning = false; //stop the coffin movement
 
         //Better way of doing this: control the coroutine you want to stop with a bool. That way it doesn't affect other coroutines.
@@ -181,14 +178,15 @@ public class CasketBasketsGameManager : GameBooth
         }
         if (gameWon)
         {
-            //Using audioclips doesn't allow them to be controlled through the audio mixer. Should be on it's own audioSource component.
+
+            StartCoroutine(WinLoseDisplay());
             tentAudio.PlayOneShot(CBWin);
-            WE.weaponList.Add(playerWeapon);
         }
-        else if (!gameWon)
+        else
         {
+            StartCoroutine(WinLoseDisplay());
             tentAudio.PlayOneShot(CBLose);
-            playerWeapon.transform.GetChild(0).gameObject.SetActive(false);
+            //playerWeapon.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         StartCoroutine(ShutDownGame());

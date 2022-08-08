@@ -37,6 +37,7 @@ public class GameBooth : MonoBehaviour
     [Header("GAME SETUP")]
     public bool gameOn;
     public bool gameWon;
+    public bool showLostText;
     public bool isPaused;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
@@ -247,12 +248,14 @@ public class GameBooth : MonoBehaviour
     {
         gameOn = false;
         isPaused = false;
+        showLostText = false;
 
         gameRules.SetActive(false);
         WE.gameRulesDisplayed = false;
         WE.actionPrompt.SetActive(false);
-        FPSController.Instance.canMove = true;
         minigameHUD.SetActive(false);
+
+        FPSController.Instance.canMove = true;
 
         //Reset Score
         score = 0;
@@ -261,6 +264,7 @@ public class GameBooth : MonoBehaviour
         timeLeft = timeCounter;
         //timerText.text = ("00:" + (int)timeLeft);
 
+        StartCoroutine(ShutDownGame());
         HideCursor();
         UnLockPlayer();
 
@@ -303,14 +307,34 @@ public class GameBooth : MonoBehaviour
 
     public void ScoreDisplay()
     {
+        //Set the score boundary.
         if (score >= scoreLimit)
         {
             score = scoreLimit;
-            gameWon = true;
+
+            if (timeLeft > 0)
+            {
+                gameWon = true;
+                showLostText = false;
+                gameOn = false;
+            }
         }
-        if (score < 0)
+        else if (score <= 0)
         {
             score = 0;
+
+            if (timeLeft == 0)
+            {
+                gameWon = false;
+                showLostText = true;
+                gameOn = false;
+            }
+        }
+        else if (score < scoreLimit && timeLeft == 0)
+        {
+            gameWon = false;
+            showLostText = true;
+            gameOn = false;
         }
     }
 
@@ -350,12 +374,9 @@ public class GameBooth : MonoBehaviour
                 WE.weaponNumber++;
                 WE.isEquipped = true;
             }
-
-            yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Return));
-
-            ResetGame();
+            //yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.anyKeyDown);
         }
-        else if (!gameOn && !gameWon)
+        else if (showLostText)
         {
             winLoseText.text = "YOU LOSE!";
 
@@ -416,7 +437,7 @@ public class GameBooth : MonoBehaviour
         //Wait 1 second before being able to click so the card won screen isn't exited by accident.
         yield return new WaitForSeconds(1);
         //After the wait a click will close the card won screen and return movement to the player.
-        yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
+        yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.anyKeyDown);
 
         //Turn off card won display screen
         displayScreen.SetActive(false);
@@ -427,6 +448,7 @@ public class GameBooth : MonoBehaviour
         //Display the current weapon card
         //menu.DisplayWeaponCard();
         Menu.Instance.DisplayWeaponCard();
+        ResetGame();
     }
     #endregion
 }
