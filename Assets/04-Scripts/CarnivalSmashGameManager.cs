@@ -22,16 +22,16 @@ public class CarnivalSmashGameManager : GameBooth
     public bool gameJustFinished;
     [HideInInspector] public bool tauntCritVisible;
 
-    [HideInInspector] public bool popUp;
-    [HideInInspector] public bool critterIsVisible;
-    [HideInInspector] public bool gameIsRunning;
-    [HideInInspector] public bool isTaunting = false;
+    /*[HideInInspector] */public bool popUp;
+    /*[HideInInspector] */public bool critterIsVisible;
+    /*[HideInInspector] */public bool isTaunting = false;
+    /*[HideInInspector] */public bool gameIsRunning;
 
     public GameObject[] critters;
     public GameObject[] taunts;
 
     public bool levelLoaded; //Allows coroutine to be called from Start
-    [HideInInspector] bool stopPopUp;
+    public bool stopPopUp;
 
     private void Awake()
     {
@@ -49,6 +49,7 @@ public class CarnivalSmashGameManager : GameBooth
 
         //Set timer info
         timeLeft = GetTimeCounter();
+        stopPopUp = false;
 
         StartCoroutine(EnemyPopUp());
     }
@@ -80,16 +81,25 @@ public class CarnivalSmashGameManager : GameBooth
             if (Input.GetButtonDown("Menu"))
             {
                 ShowGameRules();
+                stopPopUp = true;
             }
         }
         else if (!gameOn && showLostText)
         {
-            StartCoroutine(ShutDownGame());
+            stopPopUp = true;
+            StartCoroutine(ShutDownGameMusicAndLights());
         }
     }
 
+    //Increases the speed that the critters appear.
     public void IncreaseSpeed()
     {
+        //Throw error if denominator is smaller than numerator.
+        if (divideSpeedBy < minRando)
+        {
+            Debug.LogError("DivideBySpeed must be larger than the minRando speed of CarnivalSmashGameManager.cs.");
+        }
+
         if ((minRando / divideSpeedBy) > speedCap)
         {
             minRando /= divideSpeedBy;
@@ -105,10 +115,7 @@ public class CarnivalSmashGameManager : GameBooth
         {
             while (gameOn && !stopPopUp) //But don't do anything until the game is on.
             {
-                // create queue of custom class (params to call)
-                //Debug.Log("Entered Game");
-
-                while (!gameJustFinished && !gameWon)
+                while (/*!gameJustFinished && */!gameWon)
                 {
                     WhackEmRoutine routine = new WhackEmRoutine(); //Uses contructor to pick random enemy.
                     int critUp = routine.up; //Random enemy that is up
@@ -117,26 +124,27 @@ public class CarnivalSmashGameManager : GameBooth
 
                     //Check if the critter has shown itself.
                     critterIsVisible = critters[critUp].GetComponent<CritterEnemy>().isVis; //check if current critter is visible
-                    tauntCritVisible = critters[critTaunt].GetComponent<CritterEnemy>().isVis; //check if taunt critter is visible
-
+                    tauntCritVisible = taunts[critTaunt].GetComponent<TauntPosition>().isVis; //check if taunt critter is visible
+             
                     //Get random times that critter will be visible
                     randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
                     randomTauntTime = randomStayTime / 2;
                     randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
 
-                    //if main creature is not visible
+                    //POP-UP CRITTER
                     if (!critterIsVisible)
                     {
                         //raise main creature
                         yield return new WaitForSeconds(randomPopUpTime);
-
+                        //make critter visible
                         critters[critUp].SetActive(true);
                         critterIsVisible = true;
 
-                        //check if specified taunt creat bool is on and its not visible already (not main creat)
+                        //TAUNT CRITTER
+                        //check if specified taunt critter bool is on and that it's not visible already (not main critter)
                         if (tauntBool && !tauntCritVisible)
                         {
-                            TauntPosition position = taunts[critTaunt].GetComponentInChildren<TauntPosition>(); //Finds the taunt position of the taunt enemy
+                            TauntPosition position = taunts[critTaunt].GetComponent<TauntPosition>(); //Finds the taunt position of the taunt enemy
 
                             taunts[critTaunt].SetActive(true);
                             taunts[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
@@ -154,10 +162,8 @@ public class CarnivalSmashGameManager : GameBooth
                         critterIsVisible = false;
                         critters[critUp].SetActive(false);
                     }
-                    //Debug.Log("score = " + score + " game won " + gameWon);
                 }
             }
-
             yield return null;
         }
     }

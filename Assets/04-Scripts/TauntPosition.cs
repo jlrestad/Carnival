@@ -11,10 +11,11 @@ public class TauntPosition : MonoBehaviour
     public Transform tauntPosition;
     public Transform enemyPosition;
     private GameObject thisEnemy;
+    public bool isVis;
 
     public void OnValidate()
     {
-        notes = "Drag this parent Critter to the Enemy Position. Taunt Position is automatically filled.";
+        notes = "Drag the Critter from CrittersGroup to the Enemy Position. Taunt Position is automatically filled.";
     }
 
     void Awake()

@@ -9,20 +9,14 @@ public class CritterEnemy : MonoBehaviour
 
     AudioSource hitFX;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void HitEnemy()
     {
+        if (hasBeenHit)
+        {
+            gameObject.SetActive(false); //hide the enemy
+            hasBeenHit = false; //reset the bool
+        }
 
+        //isVis = false;
     }
 }

@@ -71,7 +71,7 @@ public class SkillShotGameManager : GameBooth
         }
         else if (!gameOn && showLostText)
         {
-            StartCoroutine(ShutDownGame());
+            StartCoroutine(ShutDownGameMusicAndLights());
         }
     }
 

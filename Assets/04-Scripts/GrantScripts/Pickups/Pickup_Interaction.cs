@@ -56,7 +56,7 @@ public class Pickup_Interaction : MonoBehaviour
         RaycastHit hit; //declare a raycast to use
         if (Physics.Raycast(gameObject.transform.position, transform.TransformDirection(Vector3.forward), out hit, raycastDistance)) //fire out a raycast
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow); //show me the raycast
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow); //show the raycast
             if(hit.collider.tag == "Pickup") //if hitting a collider with the "pickup" tag...
             {
                 Ticket_Pickups pickupID;

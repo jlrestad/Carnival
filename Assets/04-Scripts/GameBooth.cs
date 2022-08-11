@@ -271,7 +271,7 @@ public class GameBooth : MonoBehaviour
         timeLeft = timeCounter;
         if (winLoseText != null) { winLoseText.text = ""; }
 
-        StartCoroutine(ShutDownGame());
+        StartCoroutine(ShutDownGameMusicAndLights());
         HideCursor();
         UnLockPlayer();
 
@@ -345,7 +345,7 @@ public class GameBooth : MonoBehaviour
         }
     }
 
-    public IEnumerator ShutDownGame()
+    public IEnumerator ShutDownGameMusicAndLights()
     {
         yield return new WaitForSeconds(0.5f);
 

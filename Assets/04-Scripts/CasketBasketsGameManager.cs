@@ -182,7 +182,7 @@ public class CasketBasketsGameManager : GameBooth
             tentAudio.PlayOneShot(CBLose);
         }
 
-        StartCoroutine(ShutDownGame());
+        StartCoroutine(ShutDownGameMusicAndLights());
     }
 
     //--------------------------------------------------|RegisterHit|

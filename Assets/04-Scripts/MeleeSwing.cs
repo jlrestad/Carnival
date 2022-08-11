@@ -8,30 +8,26 @@ public class MeleeSwing : MonoBehaviour
 {
     public static MeleeSwing Instance;
 
-    public Transform player;
-    public Camera playerCamera;
+    private Transform player;
+    private Camera playerCamera;
     [SerializeField] float range = 5f;
 
     CharacterController characterController;
-    //public int health;
-    //GameCardManager cardManager;
-    //public Transform spawnTransform;
 
-    //[SerializeField] WhackEmEnemy newWhackEm;
-    //[SerializeField] GameObject closestWhackEm;
-    //[SerializeField] WhackEmEnemy[] whackEmEnemy;
-    //[SerializeField] GameObject headPrefab;
-    //[SerializeField] float meleeRange = 3.0f;
-    //[SerializeField] int damage;
-
-    [SerializeField] CarnivalSmashGameManager carnivalsmashGM;
     [SerializeField] bool canSwing;
     [SerializeField] float force = 10.0f;
     [HideInInspector] RaycastHit hit;
-    [SerializeField] GameObject hitVfxPrefab;
-    public AudioSource hitSound;
 
-    public GameObject brokenCrate;
+    [Header("VFX")]
+    [SerializeField] GameObject hitEnemyVFX; //Enemy hit VFX prefab
+    [SerializeField] GameObject hitColliderVFX; //Collider hit VFX prefab
+    [Header("AUDIO")]
+    [SerializeField] AudioSource hitEnemySound; //Sound played when enemy is hit
+    [SerializeField] AudioSource hitColliderSound; //Sound played when collider is hit
+
+    [Header("SPAWNED OBJECTS")]
+    [SerializeField] GameObject brokenCrate; //Broken crate prefab
+    [SerializeField] GameObject VFXSpawnPoint; //GameObject where VFX will show on mallet
 
     Vector3 distanceToPlayer;
     
@@ -60,7 +56,6 @@ public class MeleeSwing : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerCamera = player.GetComponentInChildren<Camera>();
         characterController = player.GetComponent<CharacterController>();
-        //spawnTransform = GetComponentInChildren<Transform>();
 
         canSwing = true;
 
@@ -79,22 +74,23 @@ public class MeleeSwing : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
+
             //Physically swing the mallet.
             StartCoroutine(SwingMallet());
 
             //Send a raycast out from the player as far as the range.
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, range))
             {
                 //Debug.Log(hit.distance);
-                //Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward, Color.yellow); //Draw a line to show the direction of the raycast.
-                //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
+                Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
 
                 Transform target = hit.transform.GetComponent<Transform>(); //For breakable
-                GameObject enemyTransform = hit.transform.gameObject;
-                CritterEnemy enemy = enemyTransform.GetComponent<CritterEnemy>();
-                carnivalsmashGM = enemyTransform.GetComponentInParent<CarnivalSmashGameManager>();
+                CritterEnemy enemy = hit.transform.GetComponent<CritterEnemy>();
+                CarnivalSmashGameManager carnivalsmashGM = hit.transform.GetComponentInParent<CarnivalSmashGameManager>();
 
                 enemyCollider = hit.collider;
+                
 
                 //FOR BREAKABLES
                 if (target != null && target.CompareTag("CrateBreakable"))
@@ -110,40 +106,34 @@ public class MeleeSwing : MonoBehaviour
                 }
 
                 //FOR CRITTERS
-                if (enemyTransform != null)
+                if (target != null && enemy)
                 {
                     //Show hit VFX to let player know it has been hit.
-                    GameObject hitVfx = Instantiate(hitVfxPrefab, enemyTransform.transform.position, Quaternion.identity);
+                    GameObject hitVfx = Instantiate(hitEnemyVFX, enemy.transform.position, Quaternion.identity);
                     Destroy(hitVfx, 0.5f);
+
                     enemy.hasBeenHit = true;
 
-                    hitSound.Play();
+                    hitEnemySound.Play();
 
-                    //cardManager = enemy.GetComponentInParent<GameCardManager>();
-
-                    //Increase speed after each hit
-                    carnivalsmashGM.IncreaseSpeed();
                     //Turn off enemy after hit
                     enemy.HitEnemy();
 
+                    //Increase speed after each hit
+                    carnivalsmashGM.IncreaseSpeed();
+
+                   
                     //Add to the score
                     if (!carnivalsmashGM.isTaunting)
                     {
                         carnivalsmashGM.score++;
                     }
-                    else
-                    {
-                        //Taunting so no points given
-                        //Debug.Log("HAHA ~ No point!");
-                    }
-
-                    //Add enemy to the list
-                    //cardManager.critterList.Add(enemy.gameObject);
-
-                    //Spawn the head used as throwing object
-                    //SpawnHead();
-
-                    //Debug.Log("Smashed enemy!");
+                }
+                else if (hit.collider && !enemy)
+                {
+                    //Show hit VFX to let player know it has been hit.
+                    GameObject hitVfx = Instantiate(hitColliderVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
+                    Destroy(hitVfx, 0.5f);
                 }
                 //if minigames won and boss is active run this loop
                 // replace if line with this line after we don't need boss AI scene anymore
