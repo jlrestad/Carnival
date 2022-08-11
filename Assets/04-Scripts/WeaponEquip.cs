@@ -35,10 +35,10 @@ public class WeaponEquip : MonoBehaviour
 
     [Space(15)]
     public GameObject closestWeapon = null;
-    public GameObject prevWeapon = null;
+    public GameObject gameWeapon = null;
     [HideInInspector] public GameObject _closestWeapon = null;
     public GameObject currentWeapon = null;
-    public GameObject closestSkull = null;
+    //public GameObject closestSkull = null;
     [SerializeField] float pickUpRange = 1.5f;
     Vector3 distanceToPlayer;
 
@@ -145,8 +145,7 @@ public class WeaponEquip : MonoBehaviour
 
             if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
             {
-
-                if (isCS && !CSManager.gameOn)
+                if (isCS && (!CSManager.gameOn))
                 {
                     actionPrompt.SetActive(true);
 
@@ -155,14 +154,13 @@ public class WeaponEquip : MonoBehaviour
                 }
                 else if (isCB && !CBManager.gameOn)
                 {
-                        actionPrompt.SetActive(true);
-
+                    actionPrompt.SetActive(true);
                     if (Input.GetButtonDown("ActionButton"))
                         CBManager.ShowGameRules();
                 }
                 else if (isSS && !SSManager.gameOn)
                 {
-                        actionPrompt.SetActive(true);
+                    actionPrompt.SetActive(true);
 
                     if (Input.GetButtonDown("ActionButton"))
                         SSManager.ShowGameRules();
@@ -215,13 +213,15 @@ public class WeaponEquip : MonoBehaviour
         //SCROLL WHEEL FORWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 && isEquipped || Input.GetButtonDown("WeaponScroll+") && isEquipped)
         {
-            WeaponScrollPositive();
+            if (weaponList.Count > 1) //Don't scroll through weapons if 1 or no weapons are held.
+                WeaponScrollPositive();
         }
 
         //SCROLL WHEEL BACKWARD
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 && isEquipped || Input.GetButtonDown("WeaponScroll-") && isEquipped)
         {
-            WeaponScrollNegative();
+            if (weaponList.Count > 1)
+                WeaponScrollNegative();
         }
     }
 
@@ -245,7 +245,7 @@ public class WeaponEquip : MonoBehaviour
             holdingSkull = false;
         }
 
-        if (weaponList.Count > 1)
+        if (weaponList.Count >= 1)
         {
             //Move to the next weapon in the list.
             weaponNumber++;
@@ -271,7 +271,7 @@ public class WeaponEquip : MonoBehaviour
         if (currentWeapon == skullParent)
         {
             //Equip skull
-            skullParent.transform.GetChild(0).gameObject.SetActive(true); //Put in inventory.
+            skullParent.transform.GetChild(0).gameObject.SetActive(true); //Make the first pooled skull visible.
             holdingSkull = true;
         }
         else
@@ -322,36 +322,31 @@ public class WeaponEquip : MonoBehaviour
         currentWeapon = weaponList[weaponNumber];
 
         //Equip the weapon
-        //if (currentWeapon == skullParent)
-        //{
-        //    //Equip skull
-        //    skullParent.transform.GetChild(0).gameObject.SetActive(true);
-        //    holdingSkull = true;
-        //}
-        //else
-        //{
-        //    //Equip other weapon
-        //    currentWeapon.SetActive(true);
-        //    holdingSkull = false;
-        //}
+        if (currentWeapon == skullParent)
+        {
+            //Equip skull
+            skullParent.transform.GetChild(0).gameObject.SetActive(true);
+            holdingSkull = true;
+        }
+        else
+        {
+            //Equip other weapon
+            currentWeapon.SetActive(true);
+            holdingSkull = false;
+        }
     }
 
     /// ...EQUIP WEAPONS SECTION... ///
 
     public void PickUpWeapon()
     {
-        closestWeapon.SetActive(false); //Hide weapon from scene.
-
-        if (currentWeapon != null)
-            currentWeapon.SetActive(false);
+        //closestWeapon.SetActive(false); //Hide weapon from scene.
 
         //GUN
         //if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
         if (haveGun)
         {
             currentWeapon = gunHold;
-            prevWeapon = closestWeapon;
-            //EquipWeapon(); //Equip picked up weapon
         }
 
         //MALLET
@@ -359,7 +354,12 @@ public class WeaponEquip : MonoBehaviour
         if (haveMallet)
         {
             currentWeapon = malletHold;
-            prevWeapon = closestWeapon;
+        }
+
+        //SKULL
+        if (haveSkull)
+        {
+            currentWeapon = skullParent;
         }
     }
 

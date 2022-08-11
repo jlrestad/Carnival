@@ -216,8 +216,11 @@ public class GameBooth : MonoBehaviour
             gameOn = true;
             minigameHUD.SetActive(true);
             gameRules.SetActive(false);
+            
+            WE.gameWeapon = WE.closestWeapon;
             WE.isEquipped = true; //Shows the crosshair
-
+            WE.closestWeapon.SetActive(false); //Hide weapon from scene.
+            
             LockPlayerOnPlay(); //Puts player into game play position.
             HideCursor();
             PlayGameAudio();

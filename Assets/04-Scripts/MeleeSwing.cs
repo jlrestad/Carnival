@@ -162,30 +162,8 @@ public class MeleeSwing : MonoBehaviour
                 //Look into spherecast to see if this will be better 
 
             }
-            //}
-
-
         }
-
-        //Find ClosestWhackEm script
-        //Doesn't update when player moves -- need to fix!
-        //foreach (WhackEmEnemy whackEm in whackEmEnemy)
-        //{
-        //    distanceToPlayer = transform.position - whackEm.transform.position;
-
-        //    if (distanceToPlayer.magnitude <= meleeRange)
-        //    {
-        //        health = whackEm.GetComponent<WhackEmEnemy>().health;
-        //    }
-        //}
-
     }
-
-    //public void SpawnHead()
-    //{
-    //    //Spawn the head used as throwing object
-    //    Instantiate(headPrefab, spawnTransform.position, Quaternion.identity);
-    //}
 
     IEnumerator SwingMallet()
     {

@@ -45,6 +45,10 @@ public class SkillShotGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
+            //Hide weapon, if holding one, before holding new weapon.
+            if (WE.currentWeapon != null)
+                WE.currentWeapon.SetActive(false);
+
             //Set text for this game
             scoreText = GetScoreText();
             timerText = GetTimerText();
@@ -68,10 +72,22 @@ public class SkillShotGameManager : GameBooth
             {
                 ShowGameRules();
             }
+
+            if (gameWon)
+            {
+                WE.haveSkull = true;
+                WE.gameWeapon = null;
+                WE.PickUpWeapon();
+            }
         }
         else if (!gameOn && showLostText)
         {
             StartCoroutine(ShutDownGameMusicAndLights());
+
+            if (!gameWon)
+            {
+                WE.gameWeapon.SetActive(true); //Hide weapon from scene.
+            }
         }
     }
 

@@ -82,6 +82,10 @@ public class CasketBasketsGameManager : GameBooth
         //When the game turns on, run GameStart
         if (gameOn)
         {
+            //Hide weapon, if holding one, before holding new weapon.
+            if (WE.currentWeapon != null)
+                WE.currentWeapon.SetActive(false);
+
             //Set text for this game
             scoreText = GetScoreText();
             timerText = GetTimerText();
@@ -94,10 +98,22 @@ public class CasketBasketsGameManager : GameBooth
             {
                 ShowGameRules();
             }
+
+            if (gameWon)
+            {
+                WE.haveSkull = true;
+                WE.PickUpWeapon();
+                WE.gameWeapon = null;
+            }
         }
         else if (!gameOn && isRunning)
         {
             GameEnd();
+
+            if (!gameWon)
+            {
+                WE.gameWeapon.SetActive(true); //Hide weapon from scene.
+            }
         }
 
         //-----Intensity effects-----

@@ -59,6 +59,10 @@ public class CarnivalSmashGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
+            //Hide weapon, if holding one, before holding new weapon.
+            if (WE.currentWeapon != null)
+                WE.currentWeapon.SetActive(false);
+
             //Set text for this game
             scoreText = GetScoreText();
             timerText = GetTimerText();
@@ -83,11 +87,23 @@ public class CarnivalSmashGameManager : GameBooth
                 ShowGameRules();
                 stopPopUp = true;
             }
+
+            if (gameWon)
+            {
+                WE.haveMallet = true;
+                WE.PickUpWeapon();
+                WE.gameWeapon = null;
+            }
         }
         else if (!gameOn && showLostText)
         {
             stopPopUp = true;
             StartCoroutine(ShutDownGameMusicAndLights());
+
+            if (!gameWon)
+            {
+                WE.gameWeapon.SetActive(true); //Put the weapon back
+            }
         }
     }
 
