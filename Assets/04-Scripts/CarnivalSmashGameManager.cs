@@ -10,16 +10,17 @@ public class CarnivalSmashGameManager : GameBooth
 
     //Bigger nums = slower speed
     [Header("ENEMY POPUP SPEED")]
-    public float minRando; private float minRandoTemp;
-    public float maxRando; private float maxRandoTemp;
+    public float minRando; /*private float minRandoTemp;*/
+    public float maxRando; /*private float maxRandoTemp;*/
     public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
     public float speedCap;
     float randomPopUpTime;
     float randomTauntTime;
     float randomStayTime;
 
-    int randomEnemy;
     public bool gameJustFinished;
+    public bool stopPopUp; //Used to pause the coroutine
+
     [HideInInspector] public bool tauntCritVisible;
 
     /*[HideInInspector] */public bool popUp;
@@ -31,7 +32,7 @@ public class CarnivalSmashGameManager : GameBooth
     public GameObject[] taunts;
 
     public bool levelLoaded; //Allows coroutine to be called from Start
-    public bool stopPopUp;
+    //int randomEnemy;
 
     private void Awake()
     {
@@ -60,7 +61,7 @@ public class CarnivalSmashGameManager : GameBooth
         if (gameOn)
         {
             //Hide weapon, if holding one, before holding new weapon.
-            if (WE.currentWeapon != null)
+            if (WE.currentWeapon != null && WE.currentWeapon != WE.malletHold)
                 WE.currentWeapon.SetActive(false);
 
             //Set text for this game
@@ -69,14 +70,15 @@ public class CarnivalSmashGameManager : GameBooth
             winLoseText = GetWinLoseText();
 
             //WEAPON
-            playerWeapon.SetActive(true); //Show player holding weapon
+            if (!WE.haveMallet)
+                playerWeapon.SetActive(true); //Show player holding weapon
 
             //TIMER
             StartCoroutine(CountDownTimer());
 
             //SCORE
             ScoreDisplay();
-
+                    
             //WIN/LOSE
             StartCoroutine(WinLoseDisplay());
 
@@ -86,22 +88,25 @@ public class CarnivalSmashGameManager : GameBooth
             {
                 ShowGameRules();
                 stopPopUp = true;
+            } 
+            else if (!isPaused)
+            {
+                stopPopUp = false;   
             }
 
             if (gameWon)
             {
+                csWon = true;
                 WE.haveMallet = true;
-                WE.PickUpWeapon();
+                WE.WinAndAssignWeapon();
                 WE.gameWeapon = null;
             }
         }
-        else if (!gameOn && showLostText)
+        else if (!gameOn/* && showLostText*/)
         {
-            stopPopUp = true;
-            StartCoroutine(ShutDownGameMusicAndLights());
-
-            if (!gameWon)
+            if (!gameWon && showLostText)
             {
+                stopPopUp = true;
                 WE.gameWeapon.SetActive(true); //Put the weapon back
             }
         }
@@ -131,54 +136,52 @@ public class CarnivalSmashGameManager : GameBooth
         {
             while (gameOn && !stopPopUp) //But don't do anything until the game is on.
             {
-                while (/*!gameJustFinished && */!gameWon)
-                {
-                    WhackEmRoutine routine = new WhackEmRoutine(); //Uses contructor to pick random enemy.
-                    int critUp = routine.up; //Random enemy that is up
-                    int critTaunt = routine.taunt; //Random enemy that is taunting
-                    bool tauntBool = routine.addTaunt;
+                WhackEmRoutine routine = new WhackEmRoutine(); //Uses contructor to pick random enemy.
+                int critUp = routine.up; //Random enemy that is up
+                int critTaunt = routine.taunt; //Random enemy that is taunting
+                bool tauntBool = routine.addTaunt;
 
-                    //Check if the critter has shown itself.
-                    critterIsVisible = critters[critUp].GetComponent<CritterEnemy>().isVis; //check if current critter is visible
-                    tauntCritVisible = taunts[critTaunt].GetComponent<TauntPosition>().isVis; //check if taunt critter is visible
+                //Check if the critter has shown itself.
+                critterIsVisible = critters[critUp].GetComponent<CritterEnemy>().isVis; //check if current critter is visible
+                tauntCritVisible = taunts[critTaunt].GetComponent<TauntPosition>().isVis; //check if taunt critter is visible
              
-                    //Get random times that critter will be visible
-                    randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
-                    randomTauntTime = randomStayTime / 2;
-                    randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
+                //Get random times that critter will be visible
+                randomStayTime = UnityEngine.Random.Range(minRando * 1.5f, maxRando * 1.5f); //Amount of time enemy is up
+                randomTauntTime = randomStayTime / 2;
+                randomPopUpTime = UnityEngine.Random.Range(minRando, maxRando); //Amount of time between popping up
 
-                    //POP-UP CRITTER
-                    if (!critterIsVisible)
+                //POP-UP CRITTER
+                if (!critterIsVisible)
+                {
+                    //raise main creature
+                    yield return new WaitForSeconds(randomPopUpTime);
+                    //make critter visible
+                    critters[critUp].SetActive(true);
+                    critterIsVisible = true;
+
+                    //TAUNT CRITTER
+                    //check if specified taunt critter bool is on and that it's not visible already (not main critter)
+                    if (tauntBool && !tauntCritVisible)
                     {
-                        //raise main creature
-                        yield return new WaitForSeconds(randomPopUpTime);
-                        //make critter visible
-                        critters[critUp].SetActive(true);
-                        critterIsVisible = true;
+                        TauntPosition position = taunts[critTaunt].GetComponent<TauntPosition>(); //Finds the taunt position of the taunt enemy
 
-                        //TAUNT CRITTER
-                        //check if specified taunt critter bool is on and that it's not visible already (not main critter)
-                        if (tauntBool && !tauntCritVisible)
-                        {
-                            TauntPosition position = taunts[critTaunt].GetComponent<TauntPosition>(); //Finds the taunt position of the taunt enemy
+                        taunts[critTaunt].SetActive(true);
+                        taunts[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
+                        tauntCritVisible = true;
 
-                            taunts[critTaunt].SetActive(true);
-                            taunts[critTaunt].transform.position = new Vector3(position.tauntPosition.position.x, position.tauntPosition.position.y, position.tauntPosition.position.z);
-                            tauntCritVisible = true;
+                        yield return new WaitForSeconds(randomTauntTime);
 
-                            yield return new WaitForSeconds(randomTauntTime);
-
-                            tauntCritVisible = false;
-                            taunts[critTaunt].SetActive(false);
-                        }
-
-                        //bring both down
-                        yield return new WaitForSeconds(randomStayTime);
-
-                        critterIsVisible = false;
-                        critters[critUp].SetActive(false);
+                        tauntCritVisible = false;
+                        taunts[critTaunt].SetActive(false);
                     }
+
+                    //bring both down
+                    yield return new WaitForSeconds(randomStayTime);
+
+                    critterIsVisible = false;
+                    critters[critUp].SetActive(false);
                 }
+                yield return null;
             }
             yield return null;
         }

@@ -32,6 +32,7 @@ public class SkullManager : MonoBehaviour
             skullHeld = Instantiate(skullPrefab, skullParent, instantiateInWorldSpace: false) as GameObject; //Instantiate the skull
             skullHeld.SetActive(false); //Hide the instantiated skull
             skullHeld.transform.parent = skullParent; //Parent the skulls to the skullParent transform
+
             pooledSkulls.Add(skullHeld); //Add the gameobject to the pooledSkulls list
 
             //Turn off gravity and collider for the skulls in inventory

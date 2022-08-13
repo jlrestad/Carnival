@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class CritterEnemy : MonoBehaviour
 {
+    public static CritterEnemy Instance;
+
     public bool isVis;
     public bool hasBeenHit;
 
-    AudioSource hitFX;
+    //AudioSource audiosource;
+
+    private void Awake()
+    {
+        Instance = this;
+        isVis = false;
+    }
 
     public void HitEnemy()
     {
@@ -16,7 +24,5 @@ public class CritterEnemy : MonoBehaviour
             gameObject.SetActive(false); //hide the enemy
             hasBeenHit = false; //reset the bool
         }
-
-        //isVis = false;
     }
 }

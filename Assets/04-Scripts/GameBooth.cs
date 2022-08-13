@@ -52,7 +52,7 @@ public class GameBooth : MonoBehaviour
     public bool cbWon;
 
     [Header("SCRIPTS")]
-    public Menu menu;
+    //public Menu menu;
     public WeaponEquip WE;
    
 
@@ -60,7 +60,7 @@ public class GameBooth : MonoBehaviour
     {
         Instance = this;
 
-        menu = FindObjectOfType<Menu>();
+        //menu = FindObjectOfType<Menu>();
     }
 
     #region CONTRUCTORS
@@ -217,25 +217,26 @@ public class GameBooth : MonoBehaviour
             minigameHUD.SetActive(true);
             gameRules.SetActive(false);
             
-            WE.gameWeapon = WE.closestWeapon;
+            WE.gameWeapon = WE.closestWeapon; //Save the game object before it's turned off so it can be returned if game is lost.
             WE.isEquipped = true; //Shows the crosshair
             WE.closestWeapon.SetActive(false); //Hide weapon from scene.
-            
+
             LockPlayerOnPlay(); //Puts player into game play position.
             HideCursor();
-            PlayGameAudio();
+            GameBoothAudioAndLights();
         }
         else
         {
             gameRules.SetActive(false);
             WE.gameRulesDisplayed = false;
+            WE.isEquipped = true; //Show the crosshair again.
 
             LockPlayerOnPlay();
             HideCursor();
         }
     }
 
-    public void PlayGameAudio()
+    public void GameBoothAudioAndLights()
     {
         if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
         {
@@ -282,7 +283,10 @@ public class GameBooth : MonoBehaviour
         if (!gameWon)
         {
             playerWeapon.SetActive(false);
+            WE.gameWeapon.SetActive(true);
         }
+
+        gameWon = false;
     }
 
     public void LockPlayerOnPlay()

@@ -83,13 +83,20 @@ public class CasketBasketsGameManager : GameBooth
         if (gameOn)
         {
             //Hide weapon, if holding one, before holding new weapon.
-            if (WE.currentWeapon != null)
+            if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
                 WE.currentWeapon.SetActive(false);
 
             //Set text for this game
             scoreText = GetScoreText();
             timerText = GetTimerText();
             winLoseText = GetWinLoseText();
+
+            //WEAPON
+            if (!WE.haveSkull)
+            {
+                playerWeapon.SetActive(true); //Show player holding weapon
+                playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+            }
 
             GameStart();
 
@@ -102,18 +109,18 @@ public class CasketBasketsGameManager : GameBooth
             if (gameWon)
             {
                 WE.haveSkull = true;
-                WE.PickUpWeapon();
-                WE.gameWeapon = null;
+                WE.WinAndAssignWeapon();
+                //WE.gameWeapon = null;
             }
         }
         else if (!gameOn && isRunning)
         {
             GameEnd();
 
-            if (!gameWon)
-            {
-                WE.gameWeapon.SetActive(true); //Hide weapon from scene.
-            }
+            //if (!gameWon && showLostText)
+            //{
+            //    WE.gameWeapon.SetActive(true); //Hide weapon from scene.
+            //}
         }
 
         //-----Intensity effects-----
@@ -138,6 +145,7 @@ public class CasketBasketsGameManager : GameBooth
         {
             hasEnded = true;
             gameWon = true; //the game is marked as being won!
+            cbWon = true;
         }
         if (timeLeft > 1 && score >= casketList.Count && !hasEnded) //if all coffins are open at once and the game isn't almost over...
         {
@@ -159,8 +167,6 @@ public class CasketBasketsGameManager : GameBooth
         ScoreDisplay();
         StartCoroutine(CountDownTimer()); //start game timer
 
-        playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
-
         if (!isRunning)
         {
             foreach (CasketManager CM in casketList)
@@ -177,6 +183,8 @@ public class CasketBasketsGameManager : GameBooth
     public void GameEnd()
     {
         isRunning = false; //stop the coffin movement
+
+        StartCoroutine(ShutDownGameMusicAndLights());
 
         //Better way of doing this: control the coroutine you want to stop with a bool. That way it doesn't affect other coroutines.
         StopAllCoroutines(); //keep the script from opening any more coffins
@@ -197,8 +205,6 @@ public class CasketBasketsGameManager : GameBooth
             StartCoroutine(WinLoseDisplay());
             tentAudio.PlayOneShot(CBLose);
         }
-
-        StartCoroutine(ShutDownGameMusicAndLights());
     }
 
     //--------------------------------------------------|RegisterHit|

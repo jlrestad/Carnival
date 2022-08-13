@@ -16,8 +16,8 @@ public class WeaponEquip : MonoBehaviour
     int BGCount;
 
     [Space(15)]
-    [SerializeField] GameObject gunHold;
-    [SerializeField] GameObject malletHold;
+    public GameObject gunHold;
+    public GameObject malletHold;
     public GameObject skullParent; //This holds the skulls (now changed to 1 infinite skull)
     //public GameObject skullHold; //This identifies the weapon
     [HideInInspector] public int addToCount;
@@ -39,7 +39,7 @@ public class WeaponEquip : MonoBehaviour
     [HideInInspector] public GameObject _closestWeapon = null;
     public GameObject currentWeapon = null;
     //public GameObject closestSkull = null;
-    [SerializeField] float pickUpRange = 1.5f;
+    //[SerializeField] float pickUpRange = 1.5f;
     Vector3 distanceToPlayer;
 
     [Space(15)]
@@ -51,19 +51,19 @@ public class WeaponEquip : MonoBehaviour
     /*[HideInInspector] */
     public bool haveGun, haveMallet, haveSkull, holdingSkull;
 
-    public bool whackEmActive = false;
-    public bool skillshotActive = false;
+    //public bool whackEmActive = false;
+    //public bool skillshotActive = false;
     public bool gameRulesDisplayed;
 
     [Space(15)]
     public string gameName;
     private Weapon newWeapon;
-    Head head; //Get the Head script for skull
+    //Head head; //Get the Head script for skull
 
     [HideInInspector] public RaycastHit hit;
     [SerializeField] int maxHitDistance = 10;
     public Menu menu;
-    GameBooth gameBooth = new GameBooth();
+    //GameBooth gameBooth = new GameBooth();
     CasketBasketsGameManager CBManager;
     SkillShotGameManager SSManager;
     CarnivalSmashGameManager CSManager;
@@ -103,17 +103,13 @@ public class WeaponEquip : MonoBehaviour
             ChangeWeapon();
         }
 
-        //FOR SKULL PICKUP * * *
-        if (currentWeapon == skullParent)
-        {
-            //Get Head.cs from the closest skull
-            head = currentWeapon.GetComponent<Head>();
-            haveSkull = true;
-        }
-
         //RAYCAST
         DetectMiniGames();
 
+    }
+
+    public void DisplayCrossHair()
+    {
         //CROSSHAIR/RETICLE
         if (isEquipped)
         {
@@ -145,22 +141,26 @@ public class WeaponEquip : MonoBehaviour
 
             if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
             {
-                if (isCS && (!CSManager.gameOn))
+                if (isCS && !CSManager.gameOn && !CSManager.isPaused)
                 {
                     actionPrompt.SetActive(true);
+                    crossHair.SetActive(true);
 
                     if (Input.GetButtonDown("ActionButton"))
                         CSManager.ShowGameRules();
                 }
-                else if (isCB && !CBManager.gameOn)
+                else if (isCB && !CBManager.gameOn && !CBManager.isPaused)
                 {
                     actionPrompt.SetActive(true);
+                    crossHair.SetActive(true);
+
                     if (Input.GetButtonDown("ActionButton"))
                         CBManager.ShowGameRules();
                 }
-                else if (isSS && !SSManager.gameOn)
+                else if (isSS && !SSManager.gameOn && !SSManager.isPaused)
                 {
                     actionPrompt.SetActive(true);
+                    crossHair.SetActive(true);
 
                     if (Input.GetButtonDown("ActionButton"))
                         SSManager.ShowGameRules();
@@ -231,19 +231,19 @@ public class WeaponEquip : MonoBehaviour
         weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
-        if (weaponList.Count > 1 && currentWeapon != skullParent)
+        if (weaponList.Count > 0 /*&& currentWeapon != skullParent*/)
         {
             //If there is already a weapon equipped, hide it.
             currentWeapon.SetActive(false);
 
             //Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false; //* This turns off 2nd card, leaves 1st card on
         }
-        if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
-        {
-            //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
-            skullParent.transform.GetChild(0).gameObject.SetActive(false);
-            holdingSkull = false;
-        }
+        //if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
+        //{
+        //    //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
+        //    skullParent.transform.GetChild(0).gameObject.SetActive(false);
+        //    holdingSkull = false;
+        //}
 
         if (weaponList.Count >= 1)
         {
@@ -338,10 +338,9 @@ public class WeaponEquip : MonoBehaviour
 
     /// ...EQUIP WEAPONS SECTION... ///
 
-    public void PickUpWeapon()
+    //If weapon is won, then sets the current weapon to the newly won weapon.
+    public void WinAndAssignWeapon()
     {
-        //closestWeapon.SetActive(false); //Hide weapon from scene.
-
         //GUN
         //if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
         if (haveGun)

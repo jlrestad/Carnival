@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 887310906049672617}
   - component: {fileID: 887310906049672621}
   - component: {fileID: 594462070351438474}
-  - component: {fileID: 6707903325209212652}
   m_Layer: 11
   m_Name: Skull
   m_TagString: Head
@@ -143,11 +142,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  playerWeapon: {fileID: 0}
+  WE: {fileID: 0}
+  flameVFX: {fileID: 0}
   menu: {fileID: 0}
   throwSpeed: 12
   pickUpRange: 2
   returnSkullTime: 1.5
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  skull: {fileID: 0}
+  skullParent: {fileID: 0}
   canThrow: 0
 --- !u!82 &594462070351438474
 AudioSource:
@@ -245,18 +249,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6707903325209212652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 887310906049672663}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5107978965197969449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -270,6 +262,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5843291122989445314, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
@@ -283,6 +291,14 @@ PrefabInstance:
     - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 5843291122989445340, guid: da3efd0e3e6edbd41a40b72c740532b1, type: 3}
       propertyPath: VelocityModule.speedModifier.scalar

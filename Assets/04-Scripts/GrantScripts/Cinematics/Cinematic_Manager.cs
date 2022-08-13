@@ -28,6 +28,7 @@ public class Cinematic_Manager : MonoBehaviour
 
     void Update()
     {
+        // *** Mouse 0 is already set to Fire1 -- set "Advance" to something else. ***
         if(Input.GetButton("Advance"))
         {
             myAnimator.SetBool("dismiss", true);

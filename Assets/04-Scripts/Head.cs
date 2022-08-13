@@ -8,7 +8,8 @@ public class Head : MonoBehaviour
 
     BossHeart bossHeart;
     [SerializeField] GameObject player;
-    [SerializeField] WeaponEquip playerWeapon;
+    [SerializeField] WeaponEquip WE;
+    [SerializeField] ParticleSystem flameVFX;
     [SerializeField] Menu menu;
     [SerializeField] int throwSpeed = 5;
     [SerializeField] int pickUpRange;
@@ -17,72 +18,56 @@ public class Head : MonoBehaviour
     Vector3 distanceToPlayer;
 
     MeshRenderer heartMR; //MeshRenderer of the Boss' heart.
-    Rigidbody rb;
-    Collider collider;
-    GameObject skull;
-    Transform skullParent;
+    public Rigidbody rb;
+    public Collider collider;
+    public GameObject skull;
+    public Transform skullParent;
     
 
     public bool canThrow;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
-        Instance = this;
-
         canThrow = true;
 
         menu = GameObject.Find("GameManager").GetComponent<Menu>();
         player = GameObject.FindGameObjectWithTag("Player");
-        playerWeapon = player.GetComponent<WeaponEquip>();
+        WE = FindObjectOfType<WeaponEquip>();
         collider = GetComponent<Collider>();
-        skullParent = playerWeapon.skullParent.transform;
+        flameVFX = GetComponentInChildren<ParticleSystem>();
+        skullParent = WE.skullParent.transform;
 
         SetSkullWeapon();
-    }   
 
-    private void FixedUpdate()
-    {
-        // For Controller:
-        //if (Input.GetAxis("RtTrigger") > 0)
-        //{
-        //    canThrow = false;
-        //}
-        //else
-        //{
-        //    canThrow = true;
-        //}
+        skull = WE.skull;
 
-        //Get the rigidbody and collider from the player's skull-weapon.
-        if (playerWeapon.skull != null)
-        {
-            rb = playerWeapon.skull.GetComponent<Rigidbody>();
-            collider = playerWeapon.skull.GetComponent<Collider>();
-        }
-
-        //Get the distance the skull is from the player.
-        distanceToPlayer = player.transform.position - transform.position;
-
-        //PICKUP SKULL
-        if (distanceToPlayer.magnitude <= pickUpRange && Input.GetButtonDown("ActionButton"))
-        {
-            //If holding a weapon, put it away.
-            if (playerWeapon.isEquipped && playerWeapon.currentWeapon != skullParent)
-            {
-                playerWeapon.currentWeapon.SetActive(false);
-            }
-
-            PickUpSkull();
-        }
-
-        
+        //Get the rigidbody and collider of the 1st index of the pooled skull list.
+        rb = skull.GetComponent<Rigidbody>();
+        collider = skull.GetComponent<Collider>();
     }
 
     private void Update()
     {
-        //THROW SKULL
-        if (Input.GetButtonDown("Fire1") && playerWeapon.holdingSkull || Input.GetAxis("RtTrigger") > 0 && playerWeapon.holdingSkull && canThrow)
+        // For Controller:
+        if (Input.GetAxis("RtTrigger") > 0)
         {
+            canThrow = false;
+        }
+        else
+        {
+            canThrow = true;
+        }
+
+        //THROW SKULL
+        if (Input.GetButtonDown("Fire1") && WE.holdingSkull || Input.GetAxis("RtTrigger") > 0 && WE.holdingSkull && canThrow)
+        {
+            Debug.Log("this code is reachable");
+
             ThrowSkull();
             canThrow = false;
         }
@@ -96,7 +81,7 @@ public class Head : MonoBehaviour
         if (other.CompareTag("Goal"))
         {
             //If skull hits the bucket then hide it from the scene.
-            playerWeapon.skull.SetActive(false);
+            WE.skull.SetActive(false);
 
             CasketBasketsGameManager.Instance.score++;
         }
@@ -113,25 +98,14 @@ public class Head : MonoBehaviour
         }
     }
 
-    //
-    // PICKUP SKULL
-    public void PickUpSkull() 
-    {
-        this.gameObject.SetActive(false);  //Turn off skull in scene
-
-        //skullParent.gameObject.SetActive(true);  //Turn on player's skullParent
-
-        SetSkullWeapon();
-    }
-
     public void SetSkullWeapon()
     {
-        playerWeapon.currentWeapon = skullParent.gameObject; //Set current weapon
-        playerWeapon.skull = skullParent.transform.GetChild(0).gameObject; //Set the skull that is held
-        playerWeapon.skull.transform.gameObject.SetActive(true); //Make the skull visible
+        WE.currentWeapon = skullParent.gameObject; //Set current weapon
+        WE.skull = skullParent.transform.GetChild(0).gameObject; //Set the skull that is held
+        WE.skull.SetActive(true); //Make the skull visible
 
-        playerWeapon.holdingSkull = true;
-        playerWeapon.inInventory = false;
+        WE.holdingSkull = true;
+        //WE.inInventory = false;
     }
 
     //
@@ -140,19 +114,24 @@ public class Head : MonoBehaviour
     {
         //Debug.Log("Skull Thrown");
 
-        playerWeapon.skull.transform.parent = null; //Detach from parent
+        skull.transform.parent = null; //Detach from parent
+        //WE.skullParent.transform.GetChild(0).gameObject.transform.parent = null;
+        ///*WE.*/skullParent.GetComponent<SkullManager>().pooledSkullsList[0].transform.parent = null;
+
 
         //Use gravity so the skull can use physics movement
-        rb.isKinematic = false;
         rb.useGravity = true;
+        rb.isKinematic = false;
         collider.enabled = true;
 
         // Throw
-        rb.velocity = skullParent.transform.forward * throwSpeed;
+        rb.velocity = skull.transform.forward * throwSpeed;
 
-        playerWeapon.holdingSkull = false;
-        playerWeapon.inInventory = false;
-        playerWeapon.isEquipped = true;
+        flameVFX.Play();
+
+        WE.holdingSkull = false;
+        //playerWeapon.inInventory = false;
+        //playerWeapon.isEquipped = true;
 
         //Infinite skulls
         StartCoroutine(ReturnSkullToInventory());
@@ -195,6 +174,7 @@ public class Head : MonoBehaviour
                 collider.enabled = false;
                 rb.isKinematic = true;
                 rb.useGravity = false;
+                WE.holdingSkull = true;
 
                 skulls[i].SetActive(false);  //Hide the skull in inventory
             }
@@ -207,7 +187,7 @@ public class Head : MonoBehaviour
         }
 
         //If the weapon is switched after the skull has been thrown, hide the skull that returns to the players hand.
-        if (playerWeapon.currentWeapon != playerWeapon.skullParent)
+        if (WE.currentWeapon != WE.skullParent)
         {
             skullParent.transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -216,11 +196,11 @@ public class Head : MonoBehaviour
     void NextSkull()
     {
         //After skull is thrown, make the next skull visible
-        playerWeapon.skull = skullParent.transform.GetChild(0).gameObject; //Make the 0th child a current skull that is held.
-        playerWeapon.skull.transform.gameObject.SetActive(true); //Make it visible
+        WE.skull = skullParent.transform.GetChild(0).gameObject; //Make the 0th child a current skull that is held.
+        WE.skull.transform.gameObject.SetActive(true); //Make it visible
 
-        playerWeapon.holdingSkull = true;
-        playerWeapon.isEquipped = true;
+        WE.holdingSkull = true;
+        WE.isEquipped = true;
     }
 
 }
