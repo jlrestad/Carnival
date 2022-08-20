@@ -73,12 +73,12 @@ public class SkillShotGameManager : GameBooth
                 ShowGameRules();
             }
 
-            if (gameWon)
+            if (this.gameWon)
             {
                 ssWon = true;
                 WE.haveGun = true;
                 WE.gameWeapon = null;
-                WE.WinAndAssignWeapon();
+                WE.currentWeapon = WE.gunHold;
             }
         }
         else if (!gameOn && showLostText)

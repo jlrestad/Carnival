@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377461589856123431}
   m_LocalRotation: {x: 0.14071654, y: -0.00823994, z: 0.16865684, w: 0.9755439}
-  m_LocalPosition: {x: -0.13293193, y: 0.40148667, z: 0.14424941}
+  m_LocalPosition: {x: -0.076, y: 0.39, z: -0.002}
   m_LocalScale: {x: 0.5, y: 0.49999994, z: 0.49999994}
   m_Children: []
   m_Father: {fileID: 4892844315231502418}
@@ -730,7 +730,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743390831600175032}
-  m_LocalRotation: {x: -0, y: 0.9998638, z: -0, w: -0.016506143}
+  m_LocalRotation: {x: 0, y: 0.99986374, z: -0, w: -0.016509954}
   m_LocalPosition: {x: 74.5, y: -9.16, z: 10.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -836,18 +836,14 @@ MonoBehaviour:
   inInventory: 0
   isEquipped: 0
   closestWeapon: {fileID: 0}
-  prevWeapon: {fileID: 0}
+  gameWeapon: {fileID: 0}
   _closestWeapon: {fileID: 0}
   currentWeapon: {fileID: 0}
-  closestSkull: {fileID: 0}
-  pickUpRange: 5
   skull: {fileID: 0}
   haveGun: 0
   haveMallet: 0
   haveSkull: 0
   holdingSkull: 0
-  whackEmActive: 0
-  skillshotActive: 0
   gameRulesDisplayed: 0
   gameName: 
   maxHitDistance: 10
@@ -2177,8 +2173,8 @@ MonoBehaviour:
   range: 2
   canSwing: 0
   force: 10
-  hitEnemyVFX: {fileID: 1377461589856123431}
-  hitColliderVFX: {fileID: 1499710142571375960, guid: 49356463c2b89a64384af5d8ec7e77cd, type: 3}
+  hitEnemyVFX: {fileID: 6372032561208037292, guid: e901cb2dffd2f9d478b5c8da355ad3cb, type: 3}
+  hitColliderVFX: {fileID: 6372032561208037292, guid: e8389b23f7c599f4aa9d90d6e3523b8c, type: 3}
   hitEnemySound: {fileID: 1692367753102884753}
   hitColliderSound: {fileID: 1377461590868220498}
   brokenCrate: {fileID: 3278272139761628569, guid: a4fb38424d6658e4884d0afb4f0ea3bd, type: 3}
@@ -2414,7 +2410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7714120820106782641
 Transform:
   m_ObjectHideFlags: 0
@@ -2422,13 +2418,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7714120820106782642}
-  m_LocalRotation: {x: -0.11320323, y: 0, z: 0, w: 0.9935719}
-  m_LocalPosition: {x: -0, y: 0, z: 2.5}
+  m_LocalRotation: {x: -0.10907681, y: -0.029406285, z: 0.0053461357, w: 0.99358386}
+  m_LocalPosition: {x: 0.30599993, y: 0, z: 1.1549995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1743390829978060825}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: -13, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -12.5, y: -3.5, z: 1}
 --- !u!114 &7246164539587582604
 MonoBehaviour:
   m_ObjectHideFlags: 0

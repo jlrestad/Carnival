@@ -235,15 +235,7 @@ public class WeaponEquip : MonoBehaviour
         {
             //If there is already a weapon equipped, hide it.
             currentWeapon.SetActive(false);
-
-            //Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false; //* This turns off 2nd card, leaves 1st card on
         }
-        //if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
-        //{
-        //    //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
-        //    skullParent.transform.GetChild(0).gameObject.SetActive(false);
-        //    holdingSkull = false;
-        //}
 
         if (weaponList.Count >= 1)
         {
@@ -271,10 +263,11 @@ public class WeaponEquip : MonoBehaviour
         if (currentWeapon == skullParent)
         {
             //Equip skull
-            skullParent.transform.GetChild(0).gameObject.SetActive(true); //Make the first pooled skull visible.
+            skullParent.SetActive(true); //Make the first pooled skull visible.
+            skullParent.transform.GetChild(0).gameObject.SetActive(true);
             holdingSkull = true;
         }
-        else
+        if (currentWeapon != skullParent)
         {
             //Equip other weapon
             currentWeapon.SetActive(true); //show the weapon
@@ -288,19 +281,13 @@ public class WeaponEquip : MonoBehaviour
         weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
-        if (weaponList.Count > 1 && currentWeapon != skullParent)
+        if (weaponList.Count > 0 /*&& currentWeapon != skullParent*/)
         {
             //If there is already a weapon equipped, hide it.
             currentWeapon.SetActive(false);
         }
-        if (weaponList.Count > 1 && currentWeapon == skullParent && holdingSkull)
-        {
-            //Hide the child of skulls parent, not the parent (which is the current weapon) so that more skulls may be collected.
-            skullParent.transform.GetChild(0).gameObject.SetActive(false); //Put in inventory.
-            holdingSkull = false;
-        }
 
-        //** WEAPONNUMBER BOUNDS
+        //** WEAPON NUMBER BOUNDS
         //Check bounds of weapon number.
         if (weaponNumber > weaponList.Count - 1)
         {
@@ -325,10 +312,11 @@ public class WeaponEquip : MonoBehaviour
         if (currentWeapon == skullParent)
         {
             //Equip skull
+            skullParent.SetActive(true); //Make the first pooled skull visible.
             skullParent.transform.GetChild(0).gameObject.SetActive(true);
             holdingSkull = true;
         }
-        else
+        if (currentWeapon != skullParent)
         {
             //Equip other weapon
             currentWeapon.SetActive(true);
@@ -339,28 +327,28 @@ public class WeaponEquip : MonoBehaviour
     /// ...EQUIP WEAPONS SECTION... ///
 
     //If weapon is won, then sets the current weapon to the newly won weapon.
-    public void WinAndAssignWeapon()
-    {
-        //GUN
-        //if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
-        if (haveGun)
-        {
-            currentWeapon = gunHold;
-        }
+    //public void WinAndAssignWeapon()
+    //{
+    //    //GUN
+    //    //if (closestWeapon.CompareTag("Gun") && !haveGun && skillshotActive)
+    //    if (haveGun)
+    //    {
+    //        currentWeapon = gunHold;
+    //    }
 
-        //MALLET
-        //if (closestWeapon.CompareTag("Mallet") && !haveMallet && whackEmActive)
-        if (haveMallet)
-        {
-            currentWeapon = malletHold;
-        }
+    //    //MALLET
+    //    //if (closestWeapon.CompareTag("Mallet") && !haveMallet && whackEmActive)
+    //    if (haveMallet)
+    //    {
+    //        currentWeapon = malletHold;
+    //    }
 
-        //SKULL
-        if (haveSkull)
-        {
-            currentWeapon = skullParent;
-        }
-    }
+    //    //SKULL
+    //    if (haveSkull)
+    //    {
+    //        currentWeapon = skullParent;
+    //    }
+    //}
 
     // Bring weapon out of inventory:
     void EquipWeapon()

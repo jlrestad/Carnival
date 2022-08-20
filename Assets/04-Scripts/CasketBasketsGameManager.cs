@@ -100,27 +100,31 @@ public class CasketBasketsGameManager : GameBooth
 
             GameStart();
 
+            //WIN/LOSE
+            StartCoroutine(WinLoseDisplay());
+
             //Pause
             if (Input.GetButtonDown("Menu")) //pausing during minigame
             {
                 ShowGameRules();
             }
 
-            if (gameWon)
+            if (this.gameWon)
             {
+                cbWon = true;
                 WE.haveSkull = true;
-                WE.WinAndAssignWeapon();
-                //WE.gameWeapon = null;
+                WE.gameWeapon = null;
+                WE.currentWeapon = WE.skullParent;
             }
         }
         else if (!gameOn && isRunning)
         {
             GameEnd();
 
-            //if (!gameWon && showLostText)
-            //{
-            //    WE.gameWeapon.SetActive(true); //Hide weapon from scene.
-            //}
+            if (!gameWon && showLostText)
+            {
+                WE.holdingSkull = false;
+            }
         }
 
         //-----Intensity effects-----
@@ -139,20 +143,26 @@ public class CasketBasketsGameManager : GameBooth
             tentAudio.clip = null;
         }
 
+        //*** NOT UNDERSTANDING THIS LOGIC
+        //*** WHY DOES THE SCORE NEED TO BE LESS THAN 4 BASKETS IN ORDER TO WIN? ***
+        //*** IF THE SCORE LIMIT IS 20 - HOW CAN IT BE USED TO DETERMINE IF 4 CASKETS ARE OPEN? ***
+        //*** AND WHY DOES THE TIME LIMIT HAVE TO BE GREATER THAN 1 IN ORDER TO LOSE? ***
+        //*** THERE IS ALREADY A WIN/LOSE METHOD IN GAMEBOOTH.CS ***
+
         //-----Below handles whether the player wins or loses the minigame-----
         // NOTE: score is used to track how many coffins are open at once
-        if (timeLeft <= 1 && score < casketList.Count && !hasEnded) //if we've reached the end and the coffins are not all open...
-        {
-            hasEnded = true;
-            gameWon = true; //the game is marked as being won!
-            cbWon = true;
-        }
-        if (timeLeft > 1 && score >= casketList.Count && !hasEnded) //if all coffins are open at once and the game isn't almost over...
-        {
-            hasEnded = true;
-            gameWon = false; //the player has lost the game.
-            StartCoroutine(PlayLoseFX()); //start playing the lose FX before the game ends
-        }
+        //if (timeLeft <= 1 && score < casketList.Count && !hasEnded) //if we've reached the end and the coffins are not all open...
+        //{
+        //    hasEnded = true;
+        //    gameWon = true; //the game is marked as being won!
+        //    cbWon = true;
+        //}
+        //if (timeLeft > 1 && score >= casketList.Count && !hasEnded) //if all coffins are open at once and the game isn't almost over...
+        //{
+        //    hasEnded = true;
+        //    gameWon = false; //the player has lost the game.
+        //    StartCoroutine(PlayLoseFX()); //start playing the lose FX before the game ends
+        //}
     }
     #endregion
 

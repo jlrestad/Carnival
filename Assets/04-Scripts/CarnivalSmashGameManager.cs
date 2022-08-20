@@ -94,12 +94,12 @@ public class CarnivalSmashGameManager : GameBooth
                 stopPopUp = false;   
             }
 
-            if (gameWon)
+            if (this.gameWon)
             {
                 csWon = true;
                 WE.haveMallet = true;
-                WE.WinAndAssignWeapon();
                 WE.gameWeapon = null;
+                WE.currentWeapon = WE.malletHold;
             }
         }
         else if (!gameOn/* && showLostText*/)

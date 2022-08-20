@@ -168,6 +168,8 @@ public class CasketManager : MonoBehaviour
         //-----
         //sfx
         isOpen = true;
+
+        //*** HAD TO COMMENT THIS OUT BECAUSE IT WAS CAUSING THE SCORE TO INCREASE WITHOUT THROWING THE SKULL ***
         //CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
     }
 

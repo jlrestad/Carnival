@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28901856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: 0.962, z: 0.69}
+  m_LocalPosition: {x: 0.07, y: 1.3, z: 0.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3183166738633725612}
@@ -1569,7 +1569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4976218523301054383
 Transform:
   m_ObjectHideFlags: 0
@@ -1729,9 +1729,9 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   timerText: {fileID: 0}
   winLoseText: {fileID: 0}
-  scoreLimit: 2
+  scoreLimit: 5
   score: 0
-  timeCounter: 10
+  timeCounter: 15
   timeLeft: 0
   resetTime: 0
   displayScreen: {fileID: 0}
@@ -1750,13 +1750,13 @@ MonoBehaviour:
   ssWon: 0
   csWon: 0
   cbWon: 0
-  menu: {fileID: 0}
   WE: {fileID: 0}
   minRando: 0.3
   maxRando: 1
-  divideSpeedBy: 1.01
+  divideSpeedBy: 1.05
   speedCap: 0.8
   gameJustFinished: 0
+  stopPopUp: 0
   tauntCritVisible: 0
   popUp: 0
   critterIsVisible: 0

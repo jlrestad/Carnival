@@ -4292,9 +4292,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 852898857119470768}
-  m_Layer: 0
+  - component: {fileID: 67970311}
+  m_Layer: 8
   m_Name: Holster02
-  m_TagString: ShootingGame
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4314,6 +4315,18 @@ Transform:
   m_Father: {fileID: 9163966986754603274}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &67970311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2718281955428074585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2788178079750001802
 GameObject:
   m_ObjectHideFlags: 0
@@ -4731,7 +4744,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9163966986754603274}
-  - component: {fileID: 223953691}
   m_Layer: 0
   m_Name: GunObjectsGroup
   m_TagString: ShootingGame
@@ -4756,18 +4768,6 @@ Transform:
   m_Father: {fileID: 2877533452663726924}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &223953691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3123361609999097289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666215c8974bab14bb80a4ec3db7d279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3140236321328941237
 GameObject:
   m_ObjectHideFlags: 0
@@ -6800,7 +6800,7 @@ MonoBehaviour:
   winLoseText: {fileID: 0}
   scoreLimit: 2
   score: 0
-  timeCounter: 60
+  timeCounter: 10
   timeLeft: 0
   resetTime: 0
   displayScreen: {fileID: 0}
@@ -6810,12 +6810,15 @@ MonoBehaviour:
   activeCardSprite: {fileID: 0}
   gameOn: 0
   gameWon: 0
+  showLostText: 0
   isPaused: 0
   playerWeapon: {fileID: 0}
   gameplayPosition: {fileID: 1883155276}
   minigameAudio: {fileID: 0}
   minigameLight: {fileID: 8850762238060242703}
-  menu: {fileID: 0}
+  ssWon: 0
+  csWon: 0
+  cbWon: 0
   WE: {fileID: 0}
   targetFlipped: 0
   reachedEnd: 0
