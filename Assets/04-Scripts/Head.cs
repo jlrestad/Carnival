@@ -66,7 +66,7 @@ public class Head : MonoBehaviour
         //THROW SKULL
         if (Input.GetButtonDown("Fire1") && WE.holdingSkull || Input.GetAxis("RtTrigger") > 0 && WE.holdingSkull && canThrow)
         {
-            Debug.Log("this code is reachable");
+            //Debug.Log("this code is reachable");
 
             ThrowSkull();
             canThrow = false;

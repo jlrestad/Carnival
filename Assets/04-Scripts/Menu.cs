@@ -163,24 +163,6 @@ public class Menu : MonoBehaviour
                 inactiveWeapon = casketbasketGM.GetInactiveCardSprite();
                 activeWeapon = casketbasketGM.GetActiveCardSprite();
             }
-            //if (WE.gameName == "MeleeGame")
-            //{
-            //    inactiveWeapon = carnivalSmashGM.inactiveCardSprite;
-            //    activeWeapon = carnivalSmashGM.activeCardSprite;
-            //    return;
-            //}
-            //else if (WE.gameName == "ShootingGame")
-            //{
-            //    inactiveWeapon = skillShotGM.inactiveCardSprite;
-            //    activeWeapon = skillShotGM.activeCardSprite;
-            //    return;
-            //}
-            //else if (WE.gameName == "ThrowingGame")
-            //{
-            //    inactiveWeapon = casketbasketGM.inactiveCardSprite;
-            //    activeWeapon = casketbasketGM.activeCardSprite;
-            //    return;
-            //}
         }
         else
         {
@@ -359,7 +341,7 @@ public class Menu : MonoBehaviour
             if (gameCard.GetComponent<Image>().sprite == null)
             {
                 //
-                //ug.Log("Sprite is null");
+                //Debug.Log("Sprite is null");
 
                 //Turn on card image
                 gameCard.GetComponent<Image>().enabled = true; //enable the image component

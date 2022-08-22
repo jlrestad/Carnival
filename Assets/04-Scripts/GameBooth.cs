@@ -203,20 +203,21 @@ public class GameBooth : MonoBehaviour
         }
 
         FPSController.Instance.canMove = false;
-        WeaponEquip.Instance.gameRulesDisplayed = true;
+        WeaponEquip.Instance.gameMenuDisplayed = true;
         gameRules.SetActive(true);
     }
 
     public void PlayGame()
     {
         isPaused = false;
+        
 
         if (!gameOn)
         {
             gameOn = true;
             minigameHUD.SetActive(true);
             gameRules.SetActive(false);
-            
+
             WE.gameWeapon = WE.closestWeapon; //Save the game object before it's turned off so it can be returned if game is lost.
             WE.isEquipped = true; //Shows the crosshair
             WE.closestWeapon.SetActive(false); //Hide weapon from scene.
@@ -228,7 +229,7 @@ public class GameBooth : MonoBehaviour
         else
         {
             gameRules.SetActive(false);
-            WE.gameRulesDisplayed = false;
+            WE.gameMenuDisplayed = false;
             WE.isEquipped = true; //Show the crosshair again.
 
             LockPlayerOnPlay();
@@ -264,7 +265,7 @@ public class GameBooth : MonoBehaviour
         showLostText = false;
 
         gameRules.SetActive(false);
-        WE.gameRulesDisplayed = false;
+        WE.gameMenuDisplayed = false;
         WE.actionPrompt.SetActive(false);
         minigameHUD.SetActive(false);
 
@@ -379,7 +380,7 @@ public class GameBooth : MonoBehaviour
     {
         if (gameWon)
         {
-            DisplayGameCard();
+            //DisplayGameCard();
 
             //Add weapon to the weapon list if it isn't already there.
             if (!WE.weaponList.Contains(playerWeapon))
@@ -388,7 +389,6 @@ public class GameBooth : MonoBehaviour
                 WE.weaponNumber++;
                 WE.isEquipped = true;
             }
-            //yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.anyKeyDown);
         }
         else if (showLostText)
         {
@@ -453,6 +453,7 @@ public class GameBooth : MonoBehaviour
         yield return new WaitForSeconds(1);
         //After the wait a click will close the card won screen and return movement to the player.
         yield return new WaitUntil(() => Input.GetButtonDown("Fire1") || Input.anyKeyDown);
+        WE.gameMenuDisplayed = false;
 
         //Turn off card won display screen
         displayScreen.SetActive(false);

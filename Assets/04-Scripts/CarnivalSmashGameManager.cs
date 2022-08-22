@@ -94,8 +94,17 @@ public class CarnivalSmashGameManager : GameBooth
                 stopPopUp = false;   
             }
 
-            if (this.gameWon)
+            if (gameWon)
             {
+                if (!csWon)
+                {
+                    DisplayGameCard();
+                }
+                else
+                {
+                    ResetGame();
+                }
+
                 csWon = true;
                 WE.haveMallet = true;
                 WE.gameWeapon = null;

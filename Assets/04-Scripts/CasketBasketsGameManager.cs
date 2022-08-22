@@ -109,13 +109,14 @@ public class CasketBasketsGameManager : GameBooth
                 ShowGameRules();
             }
 
-            if (this.gameWon)
-            {
-                cbWon = true;
-                WE.haveSkull = true;
-                WE.gameWeapon = null;
-                WE.currentWeapon = WE.skullParent;
-            }
+            //* This info is now in GameEnd()
+            //if (gameWon)
+            //{
+            //    cbWon = true;
+            //    WE.haveSkull = true;
+            //    WE.gameWeapon = null;
+            //    WE.currentWeapon = WE.skullParent;
+            //}
         }
         else if (!gameOn && isRunning)
         {
@@ -206,6 +207,22 @@ public class CasketBasketsGameManager : GameBooth
         }
         if (gameWon)
         {
+            //When game is played after being won, this will keep the win description screen from being displayed again.
+            //* Can't click out of win screen... *
+            if (!cbWon)
+            {
+                DisplayGameCard();
+                Debug.Log("CB is WON");
+            }
+            else
+            {
+                ResetGame();
+            }
+
+            cbWon = true;
+            WE.haveSkull = true;
+            WE.gameWeapon = null;
+            WE.currentWeapon = WE.skullParent;
 
             StartCoroutine(WinLoseDisplay());
             tentAudio.PlayOneShot(CBWin);

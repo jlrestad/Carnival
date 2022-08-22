@@ -53,7 +53,7 @@ public class WeaponEquip : MonoBehaviour
 
     //public bool whackEmActive = false;
     //public bool skillshotActive = false;
-    public bool gameRulesDisplayed;
+    public bool gameMenuDisplayed;
 
     [Space(15)]
     public string gameName;
@@ -139,7 +139,7 @@ public class WeaponEquip : MonoBehaviour
             //Find distance of the game to the player
             distanceToPlayer = (hitTransform.position - transform.position);
 
-            if (!gameRulesDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
+            if (!gameMenuDisplayed && distanceToPlayer.sqrMagnitude < maxHitDistance)
             {
                 if (isCS && !CSManager.gameOn && !CSManager.isPaused)
                 {

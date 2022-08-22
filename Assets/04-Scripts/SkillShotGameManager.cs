@@ -73,8 +73,17 @@ public class SkillShotGameManager : GameBooth
                 ShowGameRules();
             }
 
-            if (this.gameWon)
+            if (gameWon)
             {
+                if (!ssWon)
+                {
+                    DisplayGameCard();
+                }
+                else
+                {
+                    ResetGame();
+                }
+
                 ssWon = true;
                 WE.haveGun = true;
                 WE.gameWeapon = null;
