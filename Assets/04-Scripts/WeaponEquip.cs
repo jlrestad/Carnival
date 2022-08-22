@@ -98,7 +98,7 @@ public class WeaponEquip : MonoBehaviour
     {
         FindClosestWeapon();
 
-        if (isEquipped || inInventory)
+        if (isEquipped && !CBManager.gameOn && !SSManager.gameOn && !CSManager.gameOn)
         {
             ChangeWeapon();
         }
@@ -227,7 +227,7 @@ public class WeaponEquip : MonoBehaviour
 
     void WeaponScrollPositive()
     {
-        //Turn off previous weapon BG
+        //Turn off current weapon BG
         weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
@@ -253,7 +253,7 @@ public class WeaponEquip : MonoBehaviour
             weaponNumber = weaponList.Count;
         }
 
-        //Turn on new weapon BG
+        //Turn on next weapon BG
         weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
 
         //Change current weapon to the next weapon in the list.
@@ -277,7 +277,7 @@ public class WeaponEquip : MonoBehaviour
 
     void WeaponScrollNegative()
     {
-        //Turn off previous weapon BG
+        //Turn off current weapon BG
         weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
