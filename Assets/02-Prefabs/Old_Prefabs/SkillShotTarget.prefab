@@ -128,9 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc043c125ed5ec94b88d030461fd747b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingTarget: {fileID: 0}
+  skillshotGM: {fileID: 0}
   hideSpot: {fileID: 8887548058049208305}
   targetParent: {fileID: 5404032245932627344}
-  flipTime: 0.8
+  flipTime: 0.9
   shakeTime: 0
   reachedEnd: 0
   targetHit: 0

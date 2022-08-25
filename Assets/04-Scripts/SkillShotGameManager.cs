@@ -8,13 +8,11 @@ using UnityEngine.UI;
 public class SkillShotGameManager : GameBooth
 {
     public static SkillShotGameManager Instance;
-
+    public bool gameOver;
     public bool targetFlipped;
     public bool reachedEnd;
     public bool gameJustPlayed;
     //bool levelLoaded;
-
-    [HideInInspector] public bool gameOver;
 
     public MovingTarget[] movingTarget;
 
@@ -134,9 +132,9 @@ public class SkillShotGameManager : GameBooth
     //CONTROLS THE TARGET MOVEMENT
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
-        int i = 0; //undo to here!
+        int i = 0; 
 
-        while(i < pooledTargets.Count)
+        while(i < pooledTargets.Count && !isPaused)
         {
             if(gameOn)
             {

@@ -55,11 +55,18 @@ public class MovingTarget : MonoBehaviour
     void Update()
     {
 
-        if (!skillshotGM.gameOver && !skillshotGM.gameWon/* && weaponEquip.haveGun*/)
+        if (!skillshotGM.gameOver && !skillshotGM.gameWon /* && weaponEquip.haveGun*/)
         {
-            
+            int count = 0;
+            count++;
+            Debug.Log("move targets " + count);
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
-
+            
+        }
+        
+        if (!skillshotGM.gameOn)
+        {
+            ResetTargets();
         }
     }
 
@@ -68,7 +75,10 @@ public class MovingTarget : MonoBehaviour
         //Debug.Log("left game area, resetting");
         foreach (GameObject target in pooledTargets)
         {
-            target.GetComponentInChildren<TargetSetActive>().hasGone = false;
+            if (target.GetComponentInChildren<TargetSetActive>().hasGone == true)
+            {
+                target.GetComponentInChildren<TargetSetActive>().hasGone = false;
+            }
         }
     }
 }

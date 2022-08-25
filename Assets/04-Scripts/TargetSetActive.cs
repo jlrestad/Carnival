@@ -61,7 +61,7 @@ public class TargetSetActive : MonoBehaviour
     //Flip target from front to back within the flip time set
     public IEnumerator FlipAround()
     {
-        while (skillshotGM.gameOn)
+        while (skillshotGM.gameOn && !skillshotGM.isPaused)
         {
             //If Positive
             if (!isFlipped && !skillshotGM.gameOver)
@@ -86,7 +86,7 @@ public class TargetSetActive : MonoBehaviour
                 targetHit = false;
             }
 
-            if (skillshotGM.gameOver || !skillshotGM.gameOn)
+            if (skillshotGM.gameOver || !skillshotGM.gameOn && !skillshotGM.isPaused)
             {
                 //targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
                 animator.SetBool("isNeg", true);
