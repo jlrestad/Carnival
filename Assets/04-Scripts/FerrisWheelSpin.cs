@@ -7,7 +7,7 @@ public class FerrisWheelSpin : MonoBehaviour
     [SerializeField] private int degrees = 20;
     public GameObject pivot;
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.RotateAround(pivot.transform.position, Vector3.forward, degrees * Time.deltaTime);
     }

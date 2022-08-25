@@ -222,6 +222,7 @@ public class GameBooth : MonoBehaviour
             WE.isEquipped = true; //Shows the crosshair
             WE.closestWeapon.SetActive(false); //Hide weapon from scene.
 
+            HudManager.Instance.HealthTicket(1); //Cost to play game.
             LockPlayerOnPlay(); //Puts player into game play position.
             HideCursor();
             GameBoothAudioAndLights();
@@ -259,6 +260,9 @@ public class GameBooth : MonoBehaviour
     //RESETS THE GAME BACK TO DEFAULT
     public void ResetGame()
     {
+        //Check if there are tickets/health
+        HudManager.Instance.GameOverCheck();
+
         //Reset bools
         gameOn = false;
         isPaused = false;

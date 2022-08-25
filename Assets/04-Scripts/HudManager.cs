@@ -262,10 +262,13 @@ public class HudManager : MonoBehaviour
             redGainFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
             redLoseFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //take the other effect with also
             redGainFX.SetActive(true); //play the needed particle effects
+
             yield return new WaitForSeconds(0.2f); //wait while the first part of the animation plays
+
             redTixDisplay++; //add one to the bar
             DisplayTicketAmount(); //update the bar to show the new ticket
             myAudio.PlayOneShot(gainRedTicket);
+
             yield return new WaitForSeconds(0.3f); //wait for the animation to finish playing
         }
     }
@@ -280,11 +283,14 @@ public class HudManager : MonoBehaviour
             Debug.Log("Subtract Red");
             for (int i = 0; i < tixAmt; i++) //take the tickets off one by one until they reach the proper amount
             {
-                redLoseFX.SetActive(true); //play the needed particle effects
                 redTixDisplay--; //remove one from the bar
-                DisplayTicketAmount(); //update the bar to show fewer tickets
+                redLoseFX.SetActive(true); //play the needed particle effects
                 myAudio.PlayOneShot(loseRedTicket);
+
+                DisplayTicketAmount(); //update the bar to show fewer tickets
+
                 yield return new WaitForSeconds(0.5f); //wait for the animation to play
+
                 redLoseFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
                 redGainFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //take the other effect with also
             }

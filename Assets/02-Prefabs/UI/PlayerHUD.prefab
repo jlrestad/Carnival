@@ -1133,6 +1133,7 @@ MonoBehaviour:
   lightOn: {fileID: 0}
   lightOff: {fileID: 0}
   gameOverScreen: {fileID: 8690517805211518189}
+  gameOverText: {fileID: 8690517805610798797}
   myAudio: {fileID: 0}
   gainRedTicket: {fileID: 0}
   loseRedTicket: {fileID: 0}
@@ -13712,3 +13713,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 246037674456989577, guid: 53eca227f46a0804ca1b02e383fdf249, type: 3}
   m_PrefabInstance: {fileID: 8930904213195078501}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8690517805610798797 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 246037674050958760, guid: 53eca227f46a0804ca1b02e383fdf249, type: 3}
+  m_PrefabInstance: {fileID: 8930904213195078501}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
