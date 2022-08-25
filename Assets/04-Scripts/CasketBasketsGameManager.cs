@@ -124,7 +124,13 @@ public class CasketBasketsGameManager : GameBooth
 
             if (!gameWon && showLostText)
             {
+                //StartCoroutine(ShutDownGameMusicAndLights());
                 WE.holdingSkull = false;
+            }
+
+            if (!cbWon)
+            {
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
             }
         }
 

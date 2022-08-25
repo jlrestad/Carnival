@@ -98,7 +98,7 @@ public class SkillShotGameManager : GameBooth
             // If the game has never been won, then the player does not keep the weapon.
             if (!ssWon)
             {
-                playerWeapon.SetActive(false); //Remove from player
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
             }
         }
     }

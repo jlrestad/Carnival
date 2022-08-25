@@ -121,7 +121,7 @@ public class CarnivalSmashGameManager : GameBooth
 
             if (!csWon)
             {
-                playerWeapon.SetActive(false);
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
             }
         }
     }

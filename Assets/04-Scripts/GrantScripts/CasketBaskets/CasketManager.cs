@@ -151,7 +151,7 @@ public class CasketManager : MonoBehaviour
     {
         //animation (close doors)
         //-----DEBUG ONLY-----
-        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
+        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
         //-----
         //sfx
         isOpen = false;
@@ -164,7 +164,7 @@ public class CasketManager : MonoBehaviour
     {
         //animation (open doors)
         //-----DEBUG ONLY-----
-        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.white;
+        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.white;
         //-----
         //sfx
         isOpen = true;
@@ -213,7 +213,7 @@ public class CasketManager : MonoBehaviour
         StopAllCoroutines();
         currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
         //-----DEBUG ONLY-----
-        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
+        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
         //-----
         //animation (close doors)
         currentSpeed = baseMoveSpeed; //set speed to base
@@ -236,7 +236,7 @@ public class CasketManager : MonoBehaviour
     {
         //animation (shake)
         //-----DEBUG ONLY-----
-        coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.red;
         myAudio.PlayOneShot(CBShake);
         //-----
         //sfx
