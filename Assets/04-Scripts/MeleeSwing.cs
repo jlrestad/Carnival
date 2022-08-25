@@ -13,6 +13,7 @@ public class MeleeSwing : MonoBehaviour
     [SerializeField] float range = 5f;
 
     CharacterController characterController;
+    Animator animator;
 
     [SerializeField] bool canSwing;
     [SerializeField] float force = 10.0f;
@@ -21,6 +22,7 @@ public class MeleeSwing : MonoBehaviour
     [Header("VFX")]
     [SerializeField] GameObject hitEnemyVFX; //Enemy hit VFX prefab
     [SerializeField] GameObject hitColliderVFX; //Collider hit VFX prefab
+
     [Header("AUDIO")]
     [SerializeField] AudioSource hitEnemySound; //Sound played when enemy is hit
     [SerializeField] AudioSource hitColliderSound; //Sound played when collider is hit
@@ -28,6 +30,7 @@ public class MeleeSwing : MonoBehaviour
     [Header("SPAWNED OBJECTS")]
     [SerializeField] GameObject brokenCrate; //Broken crate prefab
     [SerializeField] GameObject VFXSpawnPoint; //GameObject where VFX will show on mallet
+    [SerializeField] TrailRenderer swingTrailVFX; //Gives the appearance of motion.
 
     Vector3 distanceToPlayer;
     
@@ -56,6 +59,8 @@ public class MeleeSwing : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerCamera = player.GetComponentInChildren<Camera>();
         characterController = player.GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        swingTrailVFX = GetComponentInChildren<TrailRenderer>();
 
         canSwing = true;
 
@@ -131,10 +136,12 @@ public class MeleeSwing : MonoBehaviour
                 }
                 else if (hit.collider && !enemy)
                 {
-                    //Show hit VFX to let player know it has been hit.
+                    //Show hit VFX to let player know something has been hit.
                     GameObject hitVfx = Instantiate(hitColliderVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
                     Destroy(hitVfx, 0.5f);
                 }
+
+                //FOR BOSS
                 //if minigames won and boss is active run this loop
                 // replace if line with this line after we don't need boss AI scene anymore
                 // if (skillshotGM.gameWon && whackemGM.gameWon && boss.activeInHierarchy)
@@ -172,16 +179,23 @@ public class MeleeSwing : MonoBehaviour
         {
             canSwing = false;
             yield return new WaitForSeconds(1);
-            canSwing = true;
+            //canSwing = true;
         }
 
-        transform.Rotate(Vector3.right, 60f);
+        //transform.Rotate(Vector3.right, 60f);
+        animator.SetBool("Swing", true);
+        swingTrailVFX.emitting = true; //Only emit when the mallet is swung.
         canSwing = false;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
-        transform.Rotate(Vector3.right, -60f);
+        //transform.Rotate(Vector3.right, -60f);
         canSwing = true;
+        animator.SetBool("Swing", false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        swingTrailVFX.emitting = false; //Don't allow emit during idle.
     }
 
     //void MeleeAttack()

@@ -111,12 +111,17 @@ public class CarnivalSmashGameManager : GameBooth
                 WE.currentWeapon = WE.malletHold;
             }
         }
-        else if (!gameOn/* && showLostText*/)
+        else if (!gameOn)
         {
             if (!gameWon && showLostText)
             {
                 stopPopUp = true;
-                WE.gameWeapon.SetActive(true); //Put the weapon back
+                StartCoroutine(ShutDownGameMusicAndLights());
+            }
+
+            if (!csWon)
+            {
+                playerWeapon.SetActive(false);
             }
         }
     }

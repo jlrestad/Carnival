@@ -287,7 +287,6 @@ public class GameBooth : MonoBehaviour
         //Hide the weapon if the game was not won.
         if (!gameWon)
         {
-            playerWeapon.SetActive(false);
             WE.gameWeapon.SetActive(true);
         }
 

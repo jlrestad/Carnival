@@ -978,7 +978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2864562019227970518}
   m_LocalRotation: {x: -1.1641531e-10, y: -0, z: -0.000000041271047, w: 1}
-  m_LocalPosition: {x: -0.0002696663, y: -0.029630866, z: -0.000119656645}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8995060110629993066}
@@ -997,7 +997,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.43616968, y: 1.4464841, z: 0.45}
-  m_Center: {x: -0.029123936, y: 0.2108905, z: -0.041710682}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &2864562019227970516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1620,7 +1620,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4976218523674954402}
   m_LocalRotation: {x: -0.64536774, y: -0.17416878, z: 0.7291057, w: 0.14686961}
-  m_LocalPosition: {x: 1.281, y: 0.8, z: 1.185}
+  m_LocalPosition: {x: 1.29, y: 1.62, z: 1.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2864562019227970517}
@@ -2771,7 +2771,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mallet_Final
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5281088687890924619, guid: c83073d70e8e1a2498c0c4d10ceaf190, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c83073d70e8e1a2498c0c4d10ceaf190, type: 3}
 --- !u!4 &8995060110629993066 stripped
 Transform:

@@ -88,13 +88,17 @@ public class SkillShotGameManager : GameBooth
                 WE.currentWeapon = WE.gunHold;
             }
         }
-        else if (!gameOn && showLostText)
+        else if (!gameOn)
         {
-            StartCoroutine(ShutDownGameMusicAndLights());
-
-            if (!gameWon)
+            if (showLostText)
             {
-                WE.gameWeapon.SetActive(true); //Hide weapon from scene.
+                StartCoroutine(ShutDownGameMusicAndLights());
+            }
+
+            // If the game has never been won, then the player does not keep the weapon.
+            if (!ssWon)
+            {
+                playerWeapon.SetActive(false); //Remove from player
             }
         }
     }
