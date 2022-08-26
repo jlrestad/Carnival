@@ -154,11 +154,11 @@ public class FPSController : MonoBehaviour
         float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxisRaw("Horizontal") : 0;
 
         // Change the speed if player is sliding.
-        if (isSliding)
-        {
-            curSpeedX = slideSpeed * Input.GetAxisRaw("Vertical");
-            curSpeedZ = slideSpeed * Input.GetAxisRaw("Horizontal");
-        }
+        //if (isSliding)
+        //{
+        //    curSpeedX = slideSpeed * Input.GetAxisRaw("Vertical");
+        //    curSpeedZ = slideSpeed * Input.GetAxisRaw("Horizontal");
+        //}
 
         float moveDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
@@ -201,19 +201,19 @@ public class FPSController : MonoBehaviour
         }
 
         // Sliding
-        if (slidingAllowed && isSliding)
-        {
-            StartCoroutine(Slide());
-        }
+        //if (slidingAllowed && isSliding)
+        //{
+        //    StartCoroutine(Slide());
+        //}
 
-        if (Input.GetButtonUp("Slide") && !slidingAllowed)
-        {
-            StartCoroutine(Slide());
-        }
-        if (Input.GetButtonUp("Slide") && !slidingAllowed)
-        {
-            slidingAllowed = true;
-        }
+        //if (Input.GetButtonUp("Slide") && !slidingAllowed)
+        //{
+        //    StartCoroutine(Slide());
+        //}
+        //if (Input.GetButtonUp("Slide") && !slidingAllowed)
+        //{
+        //    slidingAllowed = true;
+        //}
 
         // Crouching
         //if (isCrouching)

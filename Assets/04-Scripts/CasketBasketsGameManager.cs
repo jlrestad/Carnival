@@ -214,11 +214,10 @@ public class CasketBasketsGameManager : GameBooth
         if (gameWon)
         {
             //When game is played after being won, this will keep the win description screen from being displayed again.
-            //* Can't click out of win screen... *
             if (!cbWon)
             {
                 DisplayGameCard();
-                Debug.Log("CB is WON");
+                //Debug.Log("CB is WON");
             }
             else
             {

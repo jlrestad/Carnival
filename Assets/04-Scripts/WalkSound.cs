@@ -27,11 +27,11 @@ public class WalkSound : MonoBehaviour
                 PlayRunSound();
             }
 
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R) && slide.isPlaying == false)
-            {
-                run.Stop();
-                PlaySlideSound();
-            }
+            //if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R) && slide.isPlaying == false)
+            //{
+            //    run.Stop();
+            //    PlaySlideSound();
+            //}
 
             if (walk.isPlaying == false)
             {

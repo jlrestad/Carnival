@@ -40,6 +40,7 @@ public class CasketManager : MonoBehaviour
     [SerializeField] GameObject coffinModel;
     [Space(20)]
     //insert reference to animator
+    [SerializeField] Animator animator;
     [Tooltip("Any functional AudioSource inside the parent object. Must be set to loop to work properly.")]
     [SerializeField] AudioSource myAudio;
     [SerializeField] AudioClip CBClose;
@@ -76,6 +77,8 @@ public class CasketManager : MonoBehaviour
     private void Start()
     {
         currentGoal = transform.position;
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     //--------------------------------------------------|Update|
@@ -150,10 +153,13 @@ public class CasketManager : MonoBehaviour
     public void CloseFinish()
     {
         //animation (close doors)
+        animator.SetBool("open", false);
+
         //-----DEBUG ONLY-----
         //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
         //-----
         //sfx
+
         isOpen = false;
         CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
         CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
@@ -163,10 +169,14 @@ public class CasketManager : MonoBehaviour
     public void OpenFinish()
     {
         //animation (open doors)
+        animator.SetBool("open", true);
+        animator.SetBool("shaking", false);
+
         //-----DEBUG ONLY-----
         //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.white;
         //-----
         //sfx
+
         isOpen = true;
 
         //*** HAD TO COMMENT THIS OUT BECAUSE IT WAS CAUSING THE SCORE TO INCREASE WITHOUT THROWING THE SKULL ***
@@ -205,6 +215,11 @@ public class CasketManager : MonoBehaviour
         
         StartCoroutine(goalShiftTimer());
         StartCoroutine(CoffinClosedTimer());
+
+        //Set the bools to start the Animator.
+        animator.SetBool("open", false);
+        animator.SetBool("shaking", true);
+
     }
 
     //--------------------------------------------------|CoffinReset|
@@ -219,6 +234,9 @@ public class CasketManager : MonoBehaviour
         currentSpeed = baseMoveSpeed; //set speed to base
         currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
         currentClosedTimer = closedTimer; //set closed timer to base
+
+        //Reset the bool
+        animator.SetBool("open", false);
     }
     #endregion
     //==================================================
@@ -235,6 +253,8 @@ public class CasketManager : MonoBehaviour
     private IEnumerator OpenStart()
     {
         //animation (shake)
+        //animator.SetBool("shaking", true); //* This is turning the caskets sideways..
+
         //-----DEBUG ONLY-----
         //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.red;
         myAudio.PlayOneShot(CBShake);
