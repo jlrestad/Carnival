@@ -146,6 +146,8 @@ public class CasketManager : MonoBehaviour
         if(canOpen && !isOpen) //if the coffin is closed and the closed timer has run to zero...
         {
             StartCoroutine("OpenStart");
+            animator.SetBool("open", false);
+            animator.SetBool("shaking", true);
         }
     }
 
@@ -161,6 +163,7 @@ public class CasketManager : MonoBehaviour
         //sfx
 
         isOpen = false;
+        
         CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
         CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
     }
@@ -215,11 +218,6 @@ public class CasketManager : MonoBehaviour
         
         StartCoroutine(goalShiftTimer());
         StartCoroutine(CoffinClosedTimer());
-
-        //Set the bools to start the Animator.
-        animator.SetBool("open", false);
-        animator.SetBool("shaking", true);
-
     }
 
     //--------------------------------------------------|CoffinReset|
@@ -231,12 +229,11 @@ public class CasketManager : MonoBehaviour
         //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
         //-----
         //animation (close doors)
+        animator.SetBool("open", false);
+
         currentSpeed = baseMoveSpeed; //set speed to base
         currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
         currentClosedTimer = closedTimer; //set closed timer to base
-
-        //Reset the bool
-        animator.SetBool("open", false);
     }
     #endregion
     //==================================================
@@ -253,7 +250,8 @@ public class CasketManager : MonoBehaviour
     private IEnumerator OpenStart()
     {
         //animation (shake)
-        //animator.SetBool("shaking", true); //* This is turning the caskets sideways..
+        animator.SetBool("shaking", true);
+        animator.SetBool("open", false);
 
         //-----DEBUG ONLY-----
         //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.red;

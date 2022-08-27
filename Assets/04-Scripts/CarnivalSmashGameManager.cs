@@ -28,8 +28,8 @@ public class CarnivalSmashGameManager : GameBooth
     /*[HideInInspector] */public bool isTaunting = false;
     /*[HideInInspector] */public bool gameIsRunning;
 
-    public GameObject[] critters;
-    public GameObject[] taunts;
+    [SerializeField] GameObject[] critters;
+    [SerializeField] GameObject[] taunts;
 
     public bool levelLoaded; //Allows coroutine to be called from Start
     //int randomEnemy;
