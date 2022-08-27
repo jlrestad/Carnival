@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1530186449
 Transform:
   m_ObjectHideFlags: 0
@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530186448}
   m_LocalRotation: {x: 0.7052789, y: -0.050811134, z: 0.050811134, w: 0.7052789}
-  m_LocalPosition: {x: 0, y: 2.2399998, z: 0}
+  m_LocalPosition: {x: -0.15, y: 1.59, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3483664625622458532}
@@ -74,7 +74,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.96605206, b: 0.8820755, a: 1}
-  m_Intensity: 15
+  m_Intensity: 10
   m_Range: 5
   m_SpotAngle: 179
   m_InnerSpotAngle: 0
@@ -1114,7 +1114,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483664625622458533}
-  m_LocalRotation: {x: -0, y: 0.75608903, z: -0, w: 0.65446883}
+  m_LocalRotation: {x: 0, y: 0.75608766, z: 0, w: 0.6544704}
   m_LocalPosition: {x: 25.15, y: -8.09, z: 27.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2645,7 +2645,7 @@ GameObject:
   - component: {fileID: 7262355383041544081}
   - component: {fileID: 1511595087361022976}
   m_Layer: 0
-  m_Name: casketBasket_proxy
+  m_Name: Casket
   m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2688,6 +2688,7 @@ MonoBehaviour:
   bottomPosition: {fileID: 5731919658784864653}
   topPosition: {fileID: 5731919659265772062}
   coffinModel: {fileID: 1909453185139232001}
+  animator: {fileID: 0}
   myAudio: {fileID: 1511595087361022976}
   CBClose: {fileID: 8300000, guid: 75950a7248e13cb47b75bda126caf0ef, type: 3}
   CBOpen: {fileID: 8300000, guid: 3d7dd8ffc8f6add43b299422cc94322a, type: 3}
@@ -3265,7 +3266,7 @@ GameObject:
   - component: {fileID: 7967686082892222908}
   - component: {fileID: 2207250078444945965}
   m_Layer: 0
-  m_Name: casketBasket_proxy
+  m_Name: Casket
   m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3308,6 +3309,7 @@ MonoBehaviour:
   bottomPosition: {fileID: 5030564175235524512}
   topPosition: {fileID: 5030564175724041267}
   coffinModel: {fileID: 6930371991232280315}
+  animator: {fileID: 0}
   myAudio: {fileID: 2207250078444945965}
   CBClose: {fileID: 8300000, guid: 75950a7248e13cb47b75bda126caf0ef, type: 3}
   CBOpen: {fileID: 8300000, guid: 3d7dd8ffc8f6add43b299422cc94322a, type: 3}
@@ -3476,7 +3478,7 @@ GameObject:
   - component: {fileID: 7663861717735517652}
   - component: {fileID: 1903003560969272901}
   m_Layer: 0
-  m_Name: casketBasket_proxy
+  m_Name: Casket
   m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3519,6 +3521,7 @@ MonoBehaviour:
   bottomPosition: {fileID: 4690866873128082376}
   topPosition: {fileID: 4690866873575417947}
   coffinModel: {fileID: 7190285033931135979}
+  animator: {fileID: 0}
   myAudio: {fileID: 1903003560969272901}
   CBClose: {fileID: 8300000, guid: 75950a7248e13cb47b75bda126caf0ef, type: 3}
   CBOpen: {fileID: 8300000, guid: 3d7dd8ffc8f6add43b299422cc94322a, type: 3}
@@ -5506,7 +5509,7 @@ GameObject:
   - component: {fileID: 6687901436286465183}
   - component: {fileID: 3234535521931405070}
   m_Layer: 0
-  m_Name: casketBasket_proxy
+  m_Name: Casket
   m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5549,6 +5552,7 @@ MonoBehaviour:
   bottomPosition: {fileID: 8616228166409159299}
   topPosition: {fileID: 8616228167036104976}
   coffinModel: {fileID: 7838617413903909975}
+  animator: {fileID: 0}
   myAudio: {fileID: 3234535521931405070}
   CBClose: {fileID: 8300000, guid: 75950a7248e13cb47b75bda126caf0ef, type: 3}
   CBOpen: {fileID: 8300000, guid: 3d7dd8ffc8f6add43b299422cc94322a, type: 3}

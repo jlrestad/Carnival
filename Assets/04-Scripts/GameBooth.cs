@@ -39,6 +39,7 @@ public class GameBooth : MonoBehaviour
     public bool gameWon;
     public bool showLostText;
     public bool isPaused;
+    public bool playerDead;
     public GameObject playerWeapon;
     public Transform gameplayPosition;
 
@@ -242,7 +243,9 @@ public class GameBooth : MonoBehaviour
     {
         if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
         {
+            //Make sure light is on - and turn it higher when game is in play.
             minigameLight.SetActive(true);
+            minigameLight.GetComponent<Light>().intensity = 45;
 
             if (minigameAudio.volume == 0)
             {
@@ -360,8 +363,11 @@ public class GameBooth : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        //Turn the light lower when game is not in play.
+        minigameLight.GetComponent<Light>().intensity = 10;
+
         //Turn off the light 
-        minigameLight.SetActive(false);
+        //minigameLight.SetActive(false);
 
         yield return new WaitForSeconds(1.0f);
 

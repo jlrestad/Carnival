@@ -713,8 +713,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102302524760487526}
-  m_LocalRotation: {x: 0.424614, y: -0.000000013969837, z: -0.00957522, w: 0.9053238}
-  m_LocalPosition: {x: -0.15, y: 0, z: -6.78}
+  m_LocalRotation: {x: 0.24698642, y: -4.440892e-16, z: -0.000000014901161, w: 0.96901894}
+  m_LocalPosition: {x: -0.08, y: 2.34, z: -3.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2469962988113161902}
@@ -733,7 +733,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 50
-  m_Range: 10
+  m_Range: 5
   m_SpotAngle: 150
   m_InnerSpotAngle: 80
   m_CookieSize: 10
@@ -775,7 +775,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 4000
+  m_ColorTemperature: 8952
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -1383,7 +1383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4976218522670786506
 Transform:
   m_ObjectHideFlags: 0
@@ -1392,7 +1392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4976218522670786507}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.041, y: 2.85, z: 1.805}
+  m_LocalPosition: {x: 0.041, y: 3.11, z: 1.805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3183166738633725612}
@@ -1409,10 +1409,10 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.9811321, g: 0.8964117, b: 0.66180134, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.8018868, g: 0.7517689, b: 0.6014151, a: 1}
+  m_Intensity: 10
   m_Range: 3
-  m_SpotAngle: 50
+  m_SpotAngle: 88
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
@@ -1503,7 +1503,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8867924, g: 0.8656033, b: 0.649199, a: 1}
-  m_Intensity: 5.5
+  m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 122.473694
   m_InnerSpotAngle: 75.36842
@@ -2108,7 +2108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6653959223595026616
 Transform:
   m_ObjectHideFlags: 0

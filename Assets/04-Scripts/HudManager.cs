@@ -48,7 +48,11 @@ public class HudManager : MonoBehaviour
     [SerializeField] AudioClip gainBlueTicket;
     [SerializeField] AudioClip loseBlueTicket;
     [SerializeField] AudioClip gainTarot;
-    [SerializeField] AudioMixer myMixer;
+    [SerializeField] public AudioMixer myMixer;
+    public float musicVolume; //The original set audio value
+    public float sfxVolume; //The original set audio value
+    public float playerVolume; //The original set audio value
+    [SerializeField] float audioMute = -80f; //Mute the audio
     //-----Visual Effects-----
     [SerializeField] GameObject redGainFX;
     [SerializeField] GameObject redLoseFX;
@@ -94,6 +98,12 @@ public class HudManager : MonoBehaviour
 
         //Once everything is set up, show how many tickets we have (should be none at the start)
         DisplayTicketAmount();
+
+        //Store the original audio values before muting.
+        GetMusicVolume();
+        GetSFXVolume();
+        GetPlayerVolume();
+
     }
     #endregion
     //==================================================
@@ -188,6 +198,12 @@ public class HudManager : MonoBehaviour
         {
             if(blueTickets <= 0 && ! playerInvincible)//If the player is out of blue tickets and not invincible...
             {
+                //Player still moves...
+                FPSController.Instance.canMove = false; //keep the player from moving
+                                                        //FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+
+                //Turn off the action prompt when the game is over.
+                WeaponEquip.Instance.actionPrompt.SetActive(false);
                 playGameOver();
             }
             else //If the player still has blue tickets left...
@@ -197,15 +213,45 @@ public class HudManager : MonoBehaviour
         }
     }
 
+    //VOLUME GETTERS
+    //Stores the original audio values for game reset.
+    public float GetMusicVolume()
+    {
+        myMixer.GetFloat("MusicVolume", out musicVolume);
+        //Debug.Log(musicVolume);
+        return musicVolume;
+    }
+
+    public float GetSFXVolume()
+    {
+        myMixer.GetFloat("MusicVolume", out sfxVolume);
+
+        return sfxVolume;
+    }
+
+    public float GetPlayerVolume()
+    {
+        myMixer.GetFloat("MusicVolume", out playerVolume);
+
+        return playerVolume;
+    }
+
     //--------------------------------------------------|playGameOver|
     //The result of a successful GameOverCheck. Starts the Game Over Sequence.
     //Currently does nothing, as the Game Over sequence is not designed yet.
     public void playGameOver()
     {
-        FPSController.Instance.canMove = false; //keep the player from moving
-        myMixer.SetFloat("MusicVolume", -80); //set all the sound mixers to muted except for the GameOver to muted
-        myMixer.SetFloat("SFXVolume", -80);
-        myMixer.SetFloat("PlayerVolume", -80);
+        ////Player still moves...
+        //FPSController.Instance.canMove = false; //keep the player from moving
+        ////FPSController.Instance.GetComponent<CharacterController>().enabled = false;
+        
+        ////Turn off the action prompt when the game is over.
+        //WeaponEquip.Instance.actionPrompt.SetActive(false);
+
+        myMixer.SetFloat("MusicVolume", audioMute); //set all the sound mixers to muted except for the GameOver to muted
+        myMixer.SetFloat("SFXVolume", audioMute);
+        myMixer.SetFloat("PlayerVolume", audioMute);
+
         //-----Below just takes the game over text and randomizes it from a few options-----
         int textroll = Random.Range(0, 10);
         if (textroll <= 0) gameOverText.text = "YOU   aRe   oNE   OF   US   Now";
