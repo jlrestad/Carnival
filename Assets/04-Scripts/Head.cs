@@ -81,9 +81,7 @@ public class Head : MonoBehaviour
         if (other.CompareTag("Goal"))
         {
             //If skull hits the bucket then hide it from the scene.
-            WE.skull.SetActive(false);
-
-            CasketBasketsGameManager.Instance.score++;
+            //WE.skull.SetActive(false);
         }
 
         if (other.CompareTag("BossHeart"))

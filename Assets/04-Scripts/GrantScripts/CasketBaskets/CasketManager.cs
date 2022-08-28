@@ -157,14 +157,12 @@ public class CasketManager : MonoBehaviour
         //animation (close doors)
         animator.SetBool("open", false);
 
-        //-----DEBUG ONLY-----
-        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
-        //-----
         //sfx
 
         isOpen = false;
         
-        CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
+        CasketBasketsGameManager.Instance.score -= 1; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
+        Debug.Log("Coffin Hit");
         CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
     }
 
@@ -175,15 +173,11 @@ public class CasketManager : MonoBehaviour
         animator.SetBool("open", true);
         animator.SetBool("shaking", false);
 
-        //-----DEBUG ONLY-----
-        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.white;
-        //-----
         //sfx
 
         isOpen = true;
 
-        //*** HAD TO COMMENT THIS OUT BECAUSE IT WAS CAUSING THE SCORE TO INCREASE WITHOUT THROWING THE SKULL ***
-        //CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
+        CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
     }
 
     //--------------------------------------------------|AddSpeed|
@@ -225,10 +219,6 @@ public class CasketManager : MonoBehaviour
     {
         StopAllCoroutines();
         currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
-        //-----DEBUG ONLY-----
-        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.black;
-        //-----
-        //animation (close doors)
         animator.SetBool("open", false);
 
         currentSpeed = baseMoveSpeed; //set speed to base
@@ -254,7 +244,6 @@ public class CasketManager : MonoBehaviour
         animator.SetBool("open", false);
 
         //-----DEBUG ONLY-----
-        //coffinModel.gameObject.GetComponent<Renderer>().material.color = Color.red;
         myAudio.PlayOneShot(CBShake);
         //-----
         //sfx
