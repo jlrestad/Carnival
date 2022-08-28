@@ -185,6 +185,8 @@ public class Menu : MonoBehaviour
     public IEnumerator LoadLevel()
     {
         counter = 0;
+        //Restart the index of gameCardsSlots[] to 0
+
         titleScreen.SetActive(false);
 
         loadScreen.SetActive(true);
@@ -326,6 +328,29 @@ public class Menu : MonoBehaviour
     //{
     //    PlayerPrefs.SetString("QuitTime", "The application last closed at: " + System.DateTime.Now);
     //}
+
+    //
+    //RESETS THE PLAYERHUD BACK TO THE STARTING PREFS
+    public void ResetPlayerHud()
+    {
+        for (int i = 0; i < gameCardSlots.Length; i++)
+        {
+            //Remove the Tarot card sprites.
+            gameCardSlots[i].GetComponentInChildren<Image>().sprite = null;
+            gameCardSlots[i].GetComponentInChildren<Image>().enabled = false;
+
+            gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().sprite = null;
+            gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+        }
+
+        //Clear the saved images
+        inactiveWeapon = null;
+        activeWeapon = null;
+        gameCard = null;
+        gameCardBG = null;
+
+        //Turn off Tarot card images (menu does not work, must use the Instance of Menu to clear the values)
+    }
 
     //Displays the card that was just won in the first most available spot, left to right.
     public void DisplayWeaponCard()

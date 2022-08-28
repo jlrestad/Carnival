@@ -193,6 +193,11 @@ public class GameBooth : MonoBehaviour
     #region GAMEPLAY METHODS
     // * * *
     //SHARED GAMEPLAY METHODS
+    
+    //* Method to Win 3 red + 1 blue if minigame is won
+
+    //* Method to reset gameWon bools, weapon bools
+
     public void ShowGameRules()
     {
         //If the main pause menu is not visible, then show the game rules.

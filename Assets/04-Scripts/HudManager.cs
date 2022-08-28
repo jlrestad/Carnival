@@ -21,7 +21,9 @@ public class HudManager : MonoBehaviour
     //==================================================
     #region FIELDS
     public static HudManager Instance;
-    FPSController fpsController;
+
+    public FPSController fpsController;
+    public Menu menu;
 
     //-------------------------
     [Header ("STATS")]
@@ -33,6 +35,7 @@ public class HudManager : MonoBehaviour
     public int maxBlueTix = 3;
     [Tooltip("The amount of blue tickets (tix) the player starts the game with.")]
     public int startingBlueTix = 0;
+
     //-------------------------
     [Header("PLUG-INS")]
     public UnityEngine.UI.Slider redSlider;
@@ -42,7 +45,7 @@ public class HudManager : MonoBehaviour
     [Tooltip("Put in here the 'game over screen' prefab. It will be enabled when the player loses.")]
     public GameObject gameOverScreen;
     [Tooltip("Put in here the 'creepyText' nested under the game over screen prefab.")]
-    public Text gameOverText;
+    public TextMeshProUGUI gameOverText;
 
     //-----Sound Effects-----
     [SerializeField] AudioSource myAudio;
@@ -96,6 +99,8 @@ public class HudManager : MonoBehaviour
         //Get the FPSController
         fpsController = GameObject.FindGameObjectWithTag("Player").GetComponent<FPSController>();
 
+        menu = GameObject.FindObjectOfType<Menu>();
+
         //Set the starting amounts when the scene starts, then display the amounts on the sliders
         redTickets = startingRedTix;
         blueTickets = startingBlueTix;
@@ -115,12 +120,32 @@ public class HudManager : MonoBehaviour
         GetPlayerVolume();
 
     }
+
+    private void Update()
+    {
+        if (gameOverScreen.activeInHierarchy)
+        {
+            //Allow cursor to appear
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+            UnityEngine.Cursor.visible = true;
+
+            //Lock Player movement
+            fpsController.canMove = false;
+
+            //Turn off the prompt 
+            WeaponEquip.Instance.actionPrompt.SetActive(false);
+
+            menu.ResetPlayerHud();
+
+        }
+    }
     #endregion
 
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
     #region CUSTOM METHODS
+
     //--------------------------------------------------|DisplayTicketAmount|
     public void DisplayTicketAmount()
     {
@@ -209,10 +234,6 @@ public class HudManager : MonoBehaviour
         {
             if(blueTickets <= 0 && ! playerInvincible)//If the player is out of blue tickets and not invincible...
             {
-                //Player still moves...
-                FPSController.Instance.canMove = false; //keep the player from moving
-                                                        //FPSController.Instance.GetComponent<CharacterController>().enabled = false;
-
                 //Turn off the action prompt when the game is over.
                 WeaponEquip.Instance.actionPrompt.SetActive(false);
                 playGameOver();
@@ -272,8 +293,8 @@ public class HudManager : MonoBehaviour
         gameOverScreen.SetActive(true); //open up the game over screen
 
         //Player still moves...
-        fpsController.canMove = false; //keep the player from moving
-        fpsController.GetComponent<CharacterController>().enabled = false;
+        //fpsController.canMove = false; //keep the player from moving
+        //fpsController.GetComponent<CharacterController>().enabled = false;
 
         ////Turn off the action prompt when the game is over.
         WeaponEquip.Instance.actionPrompt.SetActive(false);

@@ -26,23 +26,8 @@ public class Reset_To_Title : MonoBehaviour
         menu.counter = -1;
 
         ShowCursor();
-        ResetPlayerHud();
         ResetAudioPrefs();
         ResetToTitle();
-    }
-
-    //RESETS THE PLAYERHUD BACK TO THE STARTING PREFS
-    public void ResetPlayerHud()
-    {
-        //Turn off Tarot card images (menu does not work, must use the Instance of Menu to clear the values)
-        Menu.Instance.gameCard.GetComponent<Image>().enabled = false;
-        Menu.Instance.gameCardBG.GetComponent<Image>().enabled = false;
-
-        //Remove the Tarot card sprites.
-        if (Menu.Instance.gameCard.GetComponent<Image>().sprite != null)
-            Menu.Instance.inactiveWeapon = null;
-        if (Menu.Instance.gameCardBG.GetComponent<Image>().sprite != null)
-            Menu.Instance.activeWeapon = null;
     }
 
     //RESETS THE AUDIO TO ORIGINAL LEVELS
