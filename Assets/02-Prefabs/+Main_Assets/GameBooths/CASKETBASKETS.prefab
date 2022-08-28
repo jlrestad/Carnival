@@ -145,9 +145,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1434,7 +1434,7 @@ MonoBehaviour:
   winLoseText: {fileID: 0}
   scoreLimit: 5
   score: 0
-  timeCounter: 15
+  timeCounter: 10
   timeLeft: 0
   resetTime: 0
   displayScreen: {fileID: 0}
@@ -1446,6 +1446,7 @@ MonoBehaviour:
   gameWon: 0
   showLostText: 0
   isPaused: 0
+  playerDead: 0
   playerWeapon: {fileID: 0}
   gameplayPosition: {fileID: 845597369}
   minigameAudio: {fileID: 0}
@@ -1454,9 +1455,9 @@ MonoBehaviour:
   csWon: 0
   cbWon: 0
   WE: {fileID: 0}
-  speedChange: 0.01
-  goalShiftChange: 0.01
-  closedTimeChange: 0.01
+  speedChange: 0.02
+  goalShiftChange: 0.02
+  closedTimeChange: 0.005
   coffinPickerWaitTime: 2
   waitTimeReduction: 0.01
   casketList:
@@ -1473,6 +1474,7 @@ MonoBehaviour:
   isRunning: 0
   CBAmount: 0
   hasEnded: 0
+  delty: 0
 --- !u!65 &2113151319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1506,8 +1508,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 30
+  MinDistance: 0
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -2714,7 +2716,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19881259, y: 0.50958526, z: 0.06712121}
+  m_Size: {x: 0.2, y: 0.3, z: 0.05}
   m_Center: {x: -0.0000988394, y: -0.038788855, z: -0.04744208}
 --- !u!82 &1511595087361022976
 AudioSource:
@@ -2737,7 +2739,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 30
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -3335,7 +3337,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19881259, y: 0.50958526, z: 0.06712121}
+  m_Size: {x: 0.2, y: 0.3, z: 0.05}
   m_Center: {x: -0.0000988394, y: -0.038788855, z: -0.04744208}
 --- !u!82 &2207250078444945965
 AudioSource:
@@ -3358,7 +3360,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 30
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -3547,7 +3549,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19881259, y: 0.50958526, z: 0.06712121}
+  m_Size: {x: 0.2, y: 0.3, z: 0.05}
   m_Center: {x: -0.0000988394, y: -0.038788855, z: -0.04744208}
 --- !u!82 &1903003560969272901
 AudioSource:
@@ -3570,7 +3572,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 30
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -5578,8 +5580,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19881259, y: 0.50958526, z: 0.06712121}
-  m_Center: {x: -0.0000988394, y: -0.038788855, z: -0.04744208}
+  m_Size: {x: 0.2, y: 0.3, z: 0.05}
+  m_Center: {x: -0.000098837176, y: -0.028263092, z: -0.04744208}
 --- !u!82 &3234535521931405070
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5601,7 +5603,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

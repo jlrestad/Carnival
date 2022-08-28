@@ -33,8 +33,6 @@ public class CasketBasketsGameManager : GameBooth
     [Header("PLUG-IN")]
     [Tooltip("The scripts attached to each individual coffin go here so their methods can be accessed individually.")]
     public List<CasketManager> casketList = new List<CasketManager>();
-    //[Tooltip("The gameobjects holding the lights and music for the minigame.")]
-    //public GameObject boothFX;
     [Space(20)]
     [Tooltip("The AudioSource used for playing minigame-wide sounds, such as the spook-loop or lose buzzer.")]
     [SerializeField] AudioSource tentAudio;
@@ -52,6 +50,7 @@ public class CasketBasketsGameManager : GameBooth
     [SerializeField] int CBAmount;
     [Tooltip("tracks whether the game has ended or not, to allow effects to play properly.")]
     [SerializeField] bool hasEnded = false;
+    public float delty = 0f;
     #endregion
     //==================================================
     //=========================|BUILT-IN METHODS|
@@ -80,13 +79,14 @@ public class CasketBasketsGameManager : GameBooth
     private void Update()
     {
         //When the game turns on, run GameStart
-        if (gameOn)
+        if (gameOn && !isRunning)
         {
             //Hide weapon, if holding one, before holding new weapon.
             if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
                 WE.currentWeapon.SetActive(false);
 
             //Set text for this game
+            
             scoreText = GetScoreText();
             timerText = GetTimerText();
             winLoseText = GetWinLoseText();
@@ -124,7 +124,6 @@ public class CasketBasketsGameManager : GameBooth
 
             if (!gameWon && showLostText)
             {
-                //StartCoroutine(ShutDownGameMusicAndLights());
                 WE.holdingSkull = false;
             }
 
@@ -158,18 +157,24 @@ public class CasketBasketsGameManager : GameBooth
 
         //-----Below handles whether the player wins or loses the minigame-----
         // NOTE: score is used to track how many coffins are open at once
-        //if (timeLeft <= 1 && score < casketList.Count && !hasEnded) //if we've reached the end and the coffins are not all open...
-        //{
-        //    hasEnded = true;
-        //    gameWon = true; //the game is marked as being won!
-        //    cbWon = true;
-        //}
-        //if (timeLeft > 1 && score >= casketList.Count && !hasEnded) //if all coffins are open at once and the game isn't almost over...
-        //{
-        //    hasEnded = true;
-        //    gameWon = false; //the player has lost the game.
-        //    StartCoroutine(PlayLoseFX()); //start playing the lose FX before the game ends
-        //}
+        if (timeLeft <= 1 && score < casketList.Count && !hasEnded) //if we've reached the end and the coffins are not all open...
+        {
+            hasEnded = true;
+            gameWon = true; //the game is marked as being won!
+            cbWon = true;
+        }
+        if (timeLeft > 1 && score >= casketList.Count && !hasEnded) //if all coffins are open at once and the game isn't almost over...
+        {
+            hasEnded = true;
+            gameWon = false; //the player has lost the game.
+            StartCoroutine(PlayLoseFX()); //start playing the lose FX before the game ends
+        }
+        if(timeLeft <= 0 && gameOn)
+        {
+            gameOn = false; //end the game
+            DisplayGameCard(); //show the player their prize!
+        }
+        StartCoroutine(CountDownTimer()); //start game timer every frame which is dangerous but this is how we're doing it I guess
     }
     #endregion
 
@@ -182,18 +187,19 @@ public class CasketBasketsGameManager : GameBooth
     public void GameStart()
     {
         ScoreDisplay();
-        StartCoroutine(CountDownTimer()); //start game timer
-
+        
+        
+        
+        CBBuzzer.Play();
         if (!isRunning)
         {
             foreach (CasketManager CM in casketList)
             {
-                CBBuzzer.Play();
-                StartCoroutine(PickTimer()); //start picking coffins to open up
                 CM.CoffinStart(); //tell each coffin to start moving
             }
         }
         isRunning = true; //so that this doesn't get called multiple times from update
+        StartCoroutine(PickTimer()); //start picking coffins to open up
     }
 
     //--------------------------------------------------|GameEnd|
@@ -204,7 +210,7 @@ public class CasketBasketsGameManager : GameBooth
         StartCoroutine(ShutDownGameMusicAndLights());
 
         //Better way of doing this: control the coroutine you want to stop with a bool. That way it doesn't affect other coroutines.
-        StopAllCoroutines(); //keep the script from opening any more coffins
+        StopCoroutine(PickTimer()); //keep the script from opening any more coffins
         foreach(CasketManager CM in casketList)
         {
             CM.CoffinReset(); //reset each coffin to its original state
@@ -278,8 +284,11 @@ public class CasketBasketsGameManager : GameBooth
 
     public IEnumerator PickTimer()
     {
-        yield return new WaitForSeconds(coffinPickerWaitTime);
-        PickCoffin();
+        if(isRunning)
+        {
+            yield return new WaitForSeconds(coffinPickerWaitTime);
+            PickCoffin();
+        }
     }
     #endregion
 }
