@@ -195,23 +195,30 @@ public class GameBooth : MonoBehaviour
     //SHARED GAMEPLAY METHODS
     public void ShowGameRules()
     {
-        ShowCursor();
-
-        if (gameOn)
+        //If the main pause menu is not visible, then show the game rules.
+        if (Menu.Instance.counter != 1)
         {
-            isPaused = true;
-            WE.isEquipped = false; //Hides the crosshair during pause
-        }
+            ShowCursor();
 
-        FPSController.Instance.canMove = false;
-        WeaponEquip.Instance.gameMenuDisplayed = true;
-        gameRules.SetActive(true);
+            Menu.Instance.counter = -1;
+
+            if (gameOn)
+            {
+                isPaused = true;
+
+                WE.isEquipped = false; //Hides the crosshair during pause
+            }
+
+            FPSController.Instance.canMove = false;
+            WeaponEquip.Instance.gameMenuDisplayed = true;
+            gameRules.SetActive(true);
+        }
     }
 
     public void PlayGame()
     {
         isPaused = false;
-        
+        Menu.Instance.counter = -1;
 
         if (!gameOn)
         {
@@ -265,6 +272,7 @@ public class GameBooth : MonoBehaviour
     {
         //Check if there are tickets/health
         HudManager.Instance.GameOverCheck();
+        Menu.Instance.counter = 0;
 
         //Reset bools
         gameOn = false;
@@ -288,14 +296,14 @@ public class GameBooth : MonoBehaviour
         UnLockPlayer();
 
         //Hide the weapon if the game was not won.
-        if (!gameWon)
+        if (!gameWon && WE.gameWeapon)
         {
             WE.gameWeapon.SetActive(true);
         }
 
         gameWon = false;
     }
-
+        
     public void LockPlayerOnPlay()
     {
         FPSController.Instance.canMove = true;

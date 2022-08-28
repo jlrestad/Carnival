@@ -21,6 +21,8 @@ public class HudManager : MonoBehaviour
     //==================================================
     #region FIELDS
     public static HudManager Instance;
+    FPSController fpsController;
+
     //-------------------------
     [Header ("STATS")]
     [Tooltip("The maximum amount of red tickets (tix) the player can have.")]
@@ -41,6 +43,7 @@ public class HudManager : MonoBehaviour
     public GameObject gameOverScreen;
     [Tooltip("Put in here the 'creepyText' nested under the game over screen prefab.")]
     public Text gameOverText;
+
     //-----Sound Effects-----
     [SerializeField] AudioSource myAudio;
     [SerializeField] AudioClip gainRedTicket;
@@ -53,12 +56,14 @@ public class HudManager : MonoBehaviour
     public float sfxVolume; //The original set audio value
     public float playerVolume; //The original set audio value
     [SerializeField] float audioMute = -80f; //Mute the audio
+
     //-----Visual Effects-----
     [SerializeField] GameObject redGainFX;
     [SerializeField] GameObject redLoseFX;
     [SerializeField] GameObject blueGainFX;
     [SerializeField] GameObject blueLoseFX;
     [SerializeField] GameObject gainTarotFX;
+
     //All the below are references to scripts attached to the Visual Effects Game Objects. 
     //These scripts allow them to play every particle effect parented under them.
     //-------------------------
@@ -74,6 +79,7 @@ public class HudManager : MonoBehaviour
     [Tooltip("A utility bool that allows the player to not lose tickets when necessary")]
     public bool playerInvincible = false;
     #endregion
+
     //==================================================
     //=========================|BUILT-IN METHODS|
     //==================================================
@@ -83,9 +89,13 @@ public class HudManager : MonoBehaviour
     {
         Instance = this;
     }
+
     //--------------------------------------------------|Start|
     private void Start()
     {
+        //Get the FPSController
+        fpsController = GameObject.FindGameObjectWithTag("Player").GetComponent<FPSController>();
+
         //Set the starting amounts when the scene starts, then display the amounts on the sliders
         redTickets = startingRedTix;
         blueTickets = startingBlueTix;
@@ -106,6 +116,7 @@ public class HudManager : MonoBehaviour
 
     }
     #endregion
+
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
@@ -241,13 +252,6 @@ public class HudManager : MonoBehaviour
     //Currently does nothing, as the Game Over sequence is not designed yet.
     public void playGameOver()
     {
-        ////Player still moves...
-        //FPSController.Instance.canMove = false; //keep the player from moving
-        ////FPSController.Instance.GetComponent<CharacterController>().enabled = false;
-        
-        ////Turn off the action prompt when the game is over.
-        //WeaponEquip.Instance.actionPrompt.SetActive(false);
-
         myMixer.SetFloat("MusicVolume", audioMute); //set all the sound mixers to muted except for the GameOver to muted
         myMixer.SetFloat("SFXVolume", audioMute);
         myMixer.SetFloat("PlayerVolume", audioMute);
@@ -266,6 +270,17 @@ public class HudManager : MonoBehaviour
         if (textroll >= 9) gameOverText.text = "Another   PRizE   f0r   me?";
         //-----
         gameOverScreen.SetActive(true); //open up the game over screen
+
+        //Player still moves...
+        fpsController.canMove = false; //keep the player from moving
+        fpsController.GetComponent<CharacterController>().enabled = false;
+
+        ////Turn off the action prompt when the game is over.
+        WeaponEquip.Instance.actionPrompt.SetActive(false);
+
+        //Show cursor
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+        UnityEngine.Cursor.visible = true;
 
     }
 

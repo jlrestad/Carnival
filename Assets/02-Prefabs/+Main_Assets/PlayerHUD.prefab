@@ -447,6 +447,7 @@ GameObject:
   - component: {fileID: 4274037456892439133}
   - component: {fileID: 5696492763102628910}
   - component: {fileID: 5786292529669382364}
+  - component: {fileID: 3562702015560567806}
   - component: {fileID: 771492943}
   m_Layer: 5
   m_Name: PlayerHUD
@@ -587,6 +588,39 @@ MonoBehaviour:
   redTixDisplay: 0
   blueTixDisplay: 0
   playerInvincible: 0
+--- !u!114 &3562702015560567806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895242984513860036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244d0cb2f2d6d2a43ace5e3fdcfd39ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introAudio: {fileID: 0}
+  titleScreen: {fileID: 0}
+  titleCamera: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  settingsMenu: {fileID: 0}
+  gameCardSlots: []
+  gameCardBG: {fileID: 0}
+  gameCard: {fileID: 0}
+  inactiveWeapon: {fileID: 0}
+  activeWeapon: {fileID: 0}
+  BGCount: 0
+  settingsOn: 0
+  controllerArray: []
+  sceneLight: {fileID: 0}
+  usingJoystick: 0
+  loadScreen: {fileID: 0}
+  loadBar: {fileID: 0}
+  loadPercentText: {fileID: 0}
+  controllerPrompt: {fileID: 0}
+  keyboardPrompt: {fileID: 0}
+  counter: -1
 --- !u!82 &771492943
 AudioSource:
   m_ObjectHideFlags: 0
