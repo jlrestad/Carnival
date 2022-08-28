@@ -86,7 +86,6 @@ public class CasketBasketsGameManager : GameBooth
                 WE.currentWeapon.SetActive(false);
 
             //Set text for this game
-            
             scoreText = GetScoreText();
             timerText = GetTimerText();
             winLoseText = GetWinLoseText();
@@ -174,6 +173,7 @@ public class CasketBasketsGameManager : GameBooth
             gameOn = false; //end the game
             DisplayGameCard(); //show the player their prize!
         }
+        if (gameOn)
         StartCoroutine(CountDownTimer()); //start game timer every frame which is dangerous but this is how we're doing it I guess
     }
     #endregion
