@@ -110,14 +110,6 @@ public class CasketBasketsGameManager : GameBooth
                 ShowGameRules();
             }
 
-            //* This info is now in GameEnd()
-            //if (gameWon)
-            //{
-            //    cbWon = true;
-            //    WE.haveSkull = true;
-            //    WE.gameWeapon = null;
-            //    WE.currentWeapon = WE.skullParent;
-            //}
         }
         else if (!gameOn && isRunning)
         {
@@ -131,15 +123,15 @@ public class CasketBasketsGameManager : GameBooth
             }
 
             //If the game is lost
-            //if (!gameWon && showLostText)
-            //{
-            //    WE.holdingSkull = false;
-            //}
+            if (!gameWon && showLostText)
+            {
+                WE.holdingSkull = false;
+            }
 
-            //if (!cbWon)
-            //{
-            //    playerWeapon.SetActive(false); //Remove weapon from player's hands.
-            //}
+            if (!cbWon)
+            {
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
+            }
         }
 
         //-----Intensity effects-----
@@ -191,6 +183,7 @@ public class CasketBasketsGameManager : GameBooth
 
     public void GameStart()
     {
+        hasEnded = false;
         ScoreDisplay();
         
         CBBuzzer.Play();
@@ -238,12 +231,10 @@ public class CasketBasketsGameManager : GameBooth
             WE.gameWeapon = null;
             WE.currentWeapon = WE.skullParent;
 
-            //StartCoroutine(WinLoseDisplay()); //* This coroutine is already called in Update. 
             tentAudio.PlayOneShot(CBWin);
         }
         else
         {
-            //StartCoroutine(WinLoseDisplay()); //* This coroutine is already called in Update.
             tentAudio.PlayOneShot(CBLose);
             ResetGame();
         }

@@ -228,6 +228,8 @@ public class CasketManager : MonoBehaviour
         currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
         animator.SetBool("open", false);
 
+        canOpen = true;
+        isOpen = false;
         currentSpeed = baseMoveSpeed; //set speed to base
         currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
         currentClosedTimer = closedTimer; //set closed timer to base
