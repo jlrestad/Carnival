@@ -79,60 +79,64 @@ public class CasketBasketsGameManager : GameBooth
     private void Update()
     {
         //When the game turns on, run GameStart
-        if (gameOn && !isRunning)
+        if (gameOn)
         {
-            //Hide weapon, if holding one, before holding new weapon.
-            if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
-                WE.currentWeapon.SetActive(false);
-
-            //Game UI
-            scoreText = GetScoreText(); 
-            timerText = GetTimerText();
-            winLoseText = GetWinLoseText();
-
-            scoreText.text = "SURVIVE";
-
-            //WEAPON
-            if (!WE.haveSkull)
-            {
-                playerWeapon.SetActive(true); //Show player holding weapon
-                playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
-            }
-
-            GameStart();
-
-            //WIN/LOSE
+            //WIN/LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
             StartCoroutine(WinLoseDisplay());
-
-            //Pause
-            if (Input.GetButtonDown("Menu")) //pausing during minigame
+            
+            if (!isRunning)
             {
-                ShowGameRules();
-            }
+                //Hide weapon, if holding one, before holding new weapon.
+                if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
+                    WE.currentWeapon.SetActive(false);
 
+                //Game UI
+                scoreText = GetScoreText(); 
+                timerText = GetTimerText();
+                winLoseText = GetWinLoseText();
+
+                scoreText.text = "SURVIVE";
+
+                //WEAPON - Player holds weapon to play game
+                if (!WE.haveSkull)
+                {
+                    playerWeapon.SetActive(true); //Show player holding weapon
+                    playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+                }
+
+                GameStart();
+
+                //Pause
+                if (Input.GetButtonDown("Menu")) //pausing during minigame
+                {
+                    ShowGameRules();
+                }
+            }
         }
         else if (!gameOn && isRunning)
         {
+            ////If the game has never been won then put the skulls back.
+            //if (!gameWon && !cbWon)
+            //{
+            //    WE.holdingSkull = false;
+            //    playerWeapon.SetActive(false);
+            //}
+
+            ////If the game is lost
+            //if (!gameWon && showLostText)
+            //{
+            //    WE.holdingSkull = false;
+            //}
+
             GameEnd();
-            
-            //If the game has never been won then put the skulls back.
-            if (!gameWon && !cbWon)
-            {
-                WE.holdingSkull = false;
-                playerWeapon.SetActive(false);
-            }
-
-            //If the game is lost
-            if (!gameWon && showLostText)
-            {
-                WE.holdingSkull = false;
-            }
-
-            if (!cbWon)
-            {
-                playerWeapon.SetActive(false); //Remove weapon from player's hands.
-            }
         }
+
+        if (!gameOn && !cbWon)
+        {
+            playerWeapon.SetActive(false); //Remove weapon from player's hands.
+            WE.holdingSkull = false;
+        }
+
 
         //-----Intensity effects-----
         if (score >= 1 && score < casketList.Count) //if score is within range

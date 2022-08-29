@@ -12,7 +12,7 @@ public class WeaponEquip : MonoBehaviour
     [Header("UI")]
     public GameObject crossHair;
     public GameObject actionPrompt;
-    public List<GameObject> weaponCardBG;
+    public List<GameObject> weaponCards;
     int BGCount;
 
     [Space(15)]
@@ -228,7 +228,7 @@ public class WeaponEquip : MonoBehaviour
     void WeaponScrollPositive()
     {
         //Turn off current weapon BG
-        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+        weaponCards[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
         if (weaponList.Count > 0 /*&& currentWeapon != skullParent*/)
@@ -254,7 +254,7 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //Turn on next weapon BG
-        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
+        weaponCards[weaponNumber].GetComponent<Image>().enabled = true;
 
         //Change current weapon to the next weapon in the list.
         currentWeapon = weaponList[weaponNumber];
@@ -278,7 +278,7 @@ public class WeaponEquip : MonoBehaviour
     void WeaponScrollNegative()
     {
         //Turn off current weapon BG
-        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = false;
+        weaponCards[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
         if (weaponList.Count > 0 /*&& currentWeapon != skullParent*/)
@@ -303,7 +303,7 @@ public class WeaponEquip : MonoBehaviour
         }
 
         //Turn on previous weapon BG
-        weaponCardBG[weaponNumber].GetComponent<Image>().enabled = true;
+        weaponCards[weaponNumber].GetComponent<Image>().enabled = true;
 
         //Change current weapon to the previous weapon in the list.
         currentWeapon = weaponList[weaponNumber];

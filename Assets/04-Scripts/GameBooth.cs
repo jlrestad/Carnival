@@ -408,6 +408,7 @@ public class GameBooth : MonoBehaviour
             if (!WE.weaponList.Contains(playerWeapon))
             {
                 WE.weaponList.Add(playerWeapon);
+                //Debug.Log("Code is reaching here, adding the player weapon to the array.");
                 WE.weaponNumber++;
                 WE.isEquipped = true;
             }

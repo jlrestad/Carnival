@@ -55,8 +55,8 @@ public class Menu : MonoBehaviour
     
     [Header("TAROT UI")]
     public GameObject[] gameCardSlots;
-    public GameObject gameCardBG;
-    public GameObject gameCard;
+    public GameObject gameCardActive;
+    public GameObject gameCardInactive;
     public Sprite inactiveWeapon;
     public Sprite activeWeapon;
     public int BGCount;
@@ -150,18 +150,18 @@ public class Menu : MonoBehaviour
 
             if (WE.hit.transform.CompareTag("ShootingGame"))
             {
-                inactiveWeapon = skillShotGM.GetInactiveCardSprite();
-                activeWeapon = skillShotGM.GetActiveCardSprite();
+                inactiveWeapon = skillShotGM.inactiveCardSprite;
+                activeWeapon = skillShotGM.activeCardSprite;
             }
             else if (WE.hit.transform.CompareTag("MeleeGame"))
             {
-                inactiveWeapon = carnivalSmashGM.GetInactiveCardSprite();
-                activeWeapon = carnivalSmashGM.GetActiveCardSprite();
+                inactiveWeapon = carnivalSmashGM.inactiveCardSprite;
+                activeWeapon = carnivalSmashGM.activeCardSprite;
             }
             else if (WE.hit.transform.CompareTag("ThrowingGame"))
             {
-                inactiveWeapon = casketbasketGM.GetInactiveCardSprite();
-                activeWeapon = casketbasketGM.GetActiveCardSprite();
+                inactiveWeapon = casketbasketGM.inactiveCardSprite;
+                activeWeapon = casketbasketGM.activeCardSprite;
             }
         }
         else
@@ -336,18 +336,19 @@ public class Menu : MonoBehaviour
         for (int i = 0; i < gameCardSlots.Length; i++)
         {
             //Remove the Tarot card sprites.
-            gameCardSlots[i].GetComponentInChildren<Image>().sprite = null;
-            gameCardSlots[i].GetComponentInChildren<Image>().enabled = false;
+            gameCardSlots[i].GetComponentInChildren<GameCard>().GetComponent<Image>().sprite = null; //gameCardActive
+            gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().sprite = null; //gameCardInactive
 
-            gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().sprite = null;
-            gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+            //Disable the Image components.
+            gameCardSlots[i].GetComponentInChildren<GameCard>().GetComponent<Image>().enabled = false; //gameCardActive
+            gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false; //gameCardInactive
         }
 
         //Clear the saved images
         inactiveWeapon = null;
         activeWeapon = null;
-        gameCard = null;
-        gameCardBG = null;
+        gameCardInactive = null;
+        gameCardActive = null;
 
         //Turn off Tarot card images (menu does not work, must use the Instance of Menu to clear the values)
     }
@@ -358,33 +359,33 @@ public class Menu : MonoBehaviour
         for (int i = 0; i < gameCardSlots.Length; i++)
         {
             //Set the game card UI
-            gameCard = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject; //Get the gamecard Gameobject to be displayed at the bottom
-            gameCardBG = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
+            gameCardActive = gameCardSlots[i].GetComponentInChildren<GameCard>().gameObject; //Get the gamecard Gameobject to be displayed at the bottom
+            gameCardInactive = gameCardSlots[i].GetComponentInChildren<WeaponCardBackground>().gameObject;
 
 
             //If the first cardslot space is not enabled then enable it
-            if (gameCard.GetComponent<Image>().sprite == null)
+            if (gameCardActive.GetComponent<Image>().sprite == null)
             {
                 //
                 //Debug.Log("Sprite is null");
 
                 //Turn on card image
-                gameCard.GetComponent<Image>().enabled = true; //enable the image component
-                gameCard.GetComponent<Image>().sprite = inactiveWeapon; //set the image sprite to the game card that was won
+                gameCardActive.GetComponent<Image>().enabled = true; //enable the image component
+                gameCardActive.GetComponent<Image>().sprite = activeWeapon; //set the image sprite to the game card that was won
 
                 //Turn on cardBG image
-                gameCardBG.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
-                gameCardBG.GetComponent<Image>().sprite = activeWeapon;
+                gameCardInactive.GetComponent<Image>().enabled = true; //enables the background image to show that this weapon is equipped
+                gameCardInactive.GetComponent<Image>().sprite = inactiveWeapon;
 
                 //Turn off previous BG
                 if (i > 0)
                 {
-                    if (gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled == true)
+                    if (gameCardSlots[i - 1].GetComponentInChildren<GameCard>().GetComponent<Image>().enabled == true)
                     {
-                        gameCardSlots[i - 1].GetComponentInChildren<WeaponCardBackground>().GetComponent<Image>().enabled = false;
+                        gameCardSlots[i - 1].GetComponentInChildren<GameCard>().GetComponent<Image>().enabled = false;
                     }
                 }
-                WE.weaponCardBG.Add(gameCardBG); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
+                WE.weaponCards.Add(gameCardActive); //Add background to the list in WeaponEquip so it can be turned on/off when scrolling through weapons
                 
                 break; //break out because we've done what we want (no need to continue the iteration)
             }
