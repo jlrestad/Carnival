@@ -135,8 +135,8 @@ public class HudManager : MonoBehaviour
             //Turn off the prompt 
             WeaponEquip.Instance.actionPrompt.SetActive(false);
 
-            menu.ResetPlayerHud();
-
+            //Reset Tarot info
+            menu.ResetTarotCards();
         }
     }
     #endregion

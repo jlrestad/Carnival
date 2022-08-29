@@ -199,6 +199,9 @@ public class GameBooth : MonoBehaviour
     {
         StartCoroutine(HudManager.Instance.RedTixAddFX(3));
         StartCoroutine(HudManager.Instance.BlueTixAddFX(1));
+
+        HudManager.Instance.redTickets += 3;
+        HudManager.Instance.blueTickets += 1;
     }
 
 

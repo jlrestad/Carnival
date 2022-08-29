@@ -331,7 +331,7 @@ public class Menu : MonoBehaviour
 
     //
     //RESETS THE PLAYERHUD BACK TO THE STARTING PREFS
-    public void ResetPlayerHud()
+    public void ResetTarotCards()
     {
         for (int i = 0; i < gameCardSlots.Length; i++)
         {
