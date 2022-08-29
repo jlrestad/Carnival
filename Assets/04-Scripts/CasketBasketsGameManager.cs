@@ -283,6 +283,7 @@ public class CasketBasketsGameManager : GameBooth
         tentAudio.Stop();
         tentAudio.PlayOneShot(CBSpookFail);
         yield return new WaitForSeconds(2); //let the lose FX play
+        GameEnd();
         //ResetGame(); //end the game //* This doesn't seem to be doing anything. Moved it to the bottom of GameEnd().
     }
 
