@@ -336,7 +336,7 @@ public class HudManager : MonoBehaviour
     #region COROUTINES
     //--------------------------------------------------|RedTixAddFX|
     //Plays effects and changes the visual for the red ticket bar when adding tickets
-    private IEnumerator RedTixAddFX(int tixAmt)
+    public IEnumerator RedTixAddFX(int tixAmt)
     {
         Debug.Log("Add Red");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
@@ -381,7 +381,7 @@ public class HudManager : MonoBehaviour
 
     //--------------------------------------------------|BlueTixAddFX|
     //Plays effects and changes the visual for the blue ticket bar when adding tickets
-    private IEnumerator BlueTixAddFX(int tixAmt)
+    public IEnumerator BlueTixAddFX(int tixAmt)
     {
         Debug.Log("Add Blue");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount

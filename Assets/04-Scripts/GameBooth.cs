@@ -195,8 +195,12 @@ public class GameBooth : MonoBehaviour
     //SHARED GAMEPLAY METHODS
     
     //* Method to Win 3 red + 1 blue if minigame is won
+    public void WinTickets()
+    {
+        StartCoroutine(HudManager.Instance.RedTixAddFX(3));
+        StartCoroutine(HudManager.Instance.BlueTixAddFX(1));
+    }
 
-    //* Method to reset gameWon bools, weapon bools
 
     public void ShowGameRules()
     {
@@ -402,7 +406,7 @@ public class GameBooth : MonoBehaviour
     {
         if (gameWon)
         {
-            //DisplayGameCard();
+            WinTickets();
 
             //Add weapon to the weapon list if it isn't already there.
             if (!WE.weaponList.Contains(playerWeapon))
