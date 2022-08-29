@@ -85,10 +85,12 @@ public class CasketBasketsGameManager : GameBooth
             if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
                 WE.currentWeapon.SetActive(false);
 
-            //Set text for this game
-            scoreText = GetScoreText();
+            //Game UI
+            scoreText = GetScoreText(); 
             timerText = GetTimerText();
             winLoseText = GetWinLoseText();
+
+            scoreText.text = "SURVIVE";
 
             //WEAPON
             if (!WE.haveSkull)
@@ -120,16 +122,24 @@ public class CasketBasketsGameManager : GameBooth
         else if (!gameOn && isRunning)
         {
             GameEnd();
-
-            if (!gameWon && showLostText)
+            
+            //If the game has never been won then put the skulls back.
+            if (!gameWon && !cbWon)
             {
                 WE.holdingSkull = false;
+                playerWeapon.SetActive(false);
             }
 
-            if (!cbWon)
-            {
-                playerWeapon.SetActive(false); //Remove weapon from player's hands.
-            }
+            //If the game is lost
+            //if (!gameWon && showLostText)
+            //{
+            //    WE.holdingSkull = false;
+            //}
+
+            //if (!cbWon)
+            //{
+            //    playerWeapon.SetActive(false); //Remove weapon from player's hands.
+            //}
         }
 
         //-----Intensity effects-----
@@ -148,19 +158,12 @@ public class CasketBasketsGameManager : GameBooth
             tentAudio.clip = null;
         }
 
-        //*** NOT UNDERSTANDING THIS LOGIC
-        //*** WHY DOES THE SCORE NEED TO BE LESS THAN 4 BASKETS IN ORDER TO WIN? ***
-        //*** IF THE SCORE LIMIT IS 20 - HOW CAN IT BE USED TO DETERMINE IF 4 CASKETS ARE OPEN? ***
-        //*** AND WHY DOES THE TIME LIMIT HAVE TO BE GREATER THAN 1 IN ORDER TO LOSE? ***
-        //*** THERE IS ALREADY A WIN/LOSE METHOD IN GAMEBOOTH.CS ***
-
         //-----Below handles whether the player wins or loses the minigame-----
         // NOTE: score is used to track how many coffins are open at once
         if (timeLeft <= 1 && score < casketList.Count && !hasEnded) //if we've reached the end and the coffins are not all open...
         {
             hasEnded = true;
             gameWon = true; //the game is marked as being won!
-            cbWon = true;
         }
         if (timeLeft > 1 && score >= casketList.Count && !hasEnded) //if all coffins are open at once and the game isn't almost over...
         {
@@ -171,7 +174,9 @@ public class CasketBasketsGameManager : GameBooth
         if(timeLeft <= 0 && gameOn)
         {
             gameOn = false; //end the game
-            DisplayGameCard(); //show the player their prize!
+
+            //* This is already being called under GameEnd()
+            //DisplayGameCard(); //show the player their prize!
         }
         if (gameOn)
         StartCoroutine(CountDownTimer()); //start game timer every frame which is dangerous but this is how we're doing it I guess
@@ -187,8 +192,6 @@ public class CasketBasketsGameManager : GameBooth
     public void GameStart()
     {
         ScoreDisplay();
-        
-        
         
         CBBuzzer.Play();
         if (!isRunning)
@@ -209,17 +212,17 @@ public class CasketBasketsGameManager : GameBooth
 
         StartCoroutine(ShutDownGameMusicAndLights());
 
-        //Better way of doing this: control the coroutine you want to stop with a bool. That way it doesn't affect other coroutines.
         StopCoroutine(PickTimer()); //keep the script from opening any more coffins
+
         foreach(CasketManager CM in casketList)
         {
             CM.CoffinReset(); //reset each coffin to its original state
             score = 0; //reset score to zero
-
         }
+
         if (gameWon)
         {
-            //When game is played after being won, this will keep the win description screen from being displayed again.
+            //* When game is played after being won, this will keep the win description screen from being displayed again.
             if (!cbWon)
             {
                 DisplayGameCard();
@@ -235,13 +238,14 @@ public class CasketBasketsGameManager : GameBooth
             WE.gameWeapon = null;
             WE.currentWeapon = WE.skullParent;
 
-            StartCoroutine(WinLoseDisplay());
+            //StartCoroutine(WinLoseDisplay()); //* This coroutine is already called in Update. 
             tentAudio.PlayOneShot(CBWin);
         }
         else
         {
-            StartCoroutine(WinLoseDisplay());
+            //StartCoroutine(WinLoseDisplay()); //* This coroutine is already called in Update.
             tentAudio.PlayOneShot(CBLose);
+            ResetGame();
         }
     }
 
@@ -279,7 +283,7 @@ public class CasketBasketsGameManager : GameBooth
         tentAudio.Stop();
         tentAudio.PlayOneShot(CBSpookFail);
         yield return new WaitForSeconds(2); //let the lose FX play
-        ResetGame(); //end the game
+        //ResetGame(); //end the game //* This doesn't seem to be doing anything. Moved it to the bottom of GameEnd().
     }
 
     public IEnumerator PickTimer()

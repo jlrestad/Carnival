@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CasketManager : MonoBehaviour
 {
+    public static CasketManager Instance;
+
     /*
      * This script manages the functions for the caskets in the minigame "Casket Baskets," including movement and interactivity
      * Note that this script only manages these functions for the individual gameobject it is attached to.
@@ -74,6 +76,11 @@ public class CasketManager : MonoBehaviour
     //==================================================
     #region BUILT-IN METHODS
     //--------------------------------------------------|Start|
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         currentGoal = transform.position;
