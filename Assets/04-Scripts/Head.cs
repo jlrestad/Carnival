@@ -14,7 +14,7 @@ public class Head : MonoBehaviour
     [SerializeField] int throwSpeed = 5;
     [SerializeField] int pickUpRange;
 
-    public float returnSkullTime = 1.0f;
+    public float skullLifetime = 0.8f;
     Vector3 distanceToPlayer;
 
     MeshRenderer heartMR; //MeshRenderer of the Boss' heart.
@@ -113,10 +113,7 @@ public class Head : MonoBehaviour
         //Debug.Log("Skull Thrown");
 
         skull.transform.parent = null; //Detach from parent
-        //WE.skullParent.transform.GetChild(0).gameObject.transform.parent = null;
-        ///*WE.*/skullParent.GetComponent<SkullManager>().pooledSkullsList[0].transform.parent = null;
-
-
+       
         //Use gravity so the skull can use physics movement
         rb.useGravity = true;
         rb.isKinematic = false;
@@ -128,9 +125,7 @@ public class Head : MonoBehaviour
         flameVFX.Play();
 
         WE.holdingSkull = false;
-        //playerWeapon.inInventory = false;
-        //playerWeapon.isEquipped = true;
-
+       
         //Infinite skulls
         StartCoroutine(ReturnSkullToInventory());
 
@@ -146,7 +141,7 @@ public class Head : MonoBehaviour
 
         //
         //GET THE NEXT SKULL FROM THE POOL
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(skullLifetime);
 
         NextSkull();
 
@@ -158,8 +153,8 @@ public class Head : MonoBehaviour
         {
             if (skulls[i].transform.parent == null)
             {
-                yield return new WaitForSeconds(Head.Instance.returnSkullTime);
-
+                yield return new WaitForSeconds(0.1f);
+                
                 //Bring the thrown skull back into the inventory under SkullParent of FPSPlayer
                 skulls[i].transform.parent = skullParent;
                 skulls[i].transform.position = skullParent.position;

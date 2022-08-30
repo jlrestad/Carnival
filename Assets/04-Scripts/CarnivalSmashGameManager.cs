@@ -70,8 +70,13 @@ public class CarnivalSmashGameManager : GameBooth
             winLoseText = GetWinLoseText();
 
             //WEAPON
-            if (!WE.haveMallet)
-                playerWeapon.SetActive(true); //Show player holding weapon
+            playerWeapon.SetActive(true); //Show player holding weapon
+            WE.currentWeapon = playerWeapon;
+            //Display Proper Tarot if a different weapon was in hand during game start.
+            if (WE.haveMallet)
+            {
+                EnableActiveCard();
+            }
 
             //TIMER
             StartCoroutine(CountDownTimer());

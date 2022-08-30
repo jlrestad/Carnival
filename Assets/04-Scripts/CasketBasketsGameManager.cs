@@ -81,7 +81,7 @@ public class CasketBasketsGameManager : GameBooth
         //When the game turns on, run GameStart
         if (gameOn)
         {
-            //WIN/LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
+            ///LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
             StartCoroutine(WinLoseDisplay());
             
             if (!isRunning)
@@ -98,10 +98,17 @@ public class CasketBasketsGameManager : GameBooth
                 scoreText.text = "SURVIVE";
 
                 //WEAPON - Player holds weapon to play game
-                if (!WE.haveSkull)
+                //if (!WE.holdingSkull)
+                //{
+                playerWeapon.SetActive(true); //Show player holding weapon
+                playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+                WE.currentWeapon = playerWeapon;
+                WE.holdingSkull = true;
+                //}
+                //Display Proper Tarot if a different weapon was in hand during game start.
+                if (WE.haveSkull)
                 {
-                    playerWeapon.SetActive(true); //Show player holding weapon
-                    playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+                    EnableActiveCard();
                 }
 
                 GameStart();
@@ -115,19 +122,6 @@ public class CasketBasketsGameManager : GameBooth
         }
         else if (!gameOn && isRunning)
         {
-            ////If the game has never been won then put the skulls back.
-            //if (!gameWon && !cbWon)
-            //{
-            //    WE.holdingSkull = false;
-            //    playerWeapon.SetActive(false);
-            //}
-
-            ////If the game is lost
-            //if (!gameWon && showLostText)
-            //{
-            //    WE.holdingSkull = false;
-            //}
-
             GameEnd();
         }
 
@@ -219,6 +213,8 @@ public class CasketBasketsGameManager : GameBooth
 
         if (gameWon)
         {
+            WinTickets(3, 1);
+
             //* When game is played after being won, this will keep the win description screen from being displayed again.
             if (!cbWon)
             {

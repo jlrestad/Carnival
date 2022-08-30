@@ -195,10 +195,10 @@ public class GameBooth : MonoBehaviour
     //SHARED GAMEPLAY METHODS
     
     //* Method to Win 3 red + 1 blue if minigame is won
-    public void WinTickets()
+    public void WinTickets(int redAmount, int blueAmount)
     {
-        HudManager.Instance.HealthTicket(-3);
-        HudManager.Instance.ContinueTicket(-1);
+        HudManager.Instance.HealthTicket(-redAmount);
+        HudManager.Instance.ContinueTicket(-blueAmount);
     }
 
 
@@ -253,6 +253,16 @@ public class GameBooth : MonoBehaviour
             LockPlayerOnPlay();
             HideCursor();
         }
+    }
+
+    //Displays the tarot for the game being played (if this tarot has been earned and the game was started while holding a different game weapon).
+    public void EnableActiveCard()
+    {
+        //Hide previous active weapon card
+        WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
+        //Show new active weapon card
+        int index = WE.weaponList.IndexOf(playerWeapon);
+        WE.weaponCards[index].GetComponent<Image>().enabled = true;
     }
 
     public void GameBoothAudioAndLights()
@@ -406,8 +416,6 @@ public class GameBooth : MonoBehaviour
     {
         if (gameWon)
         {
-            WinTickets();
-
             //Add weapon to the weapon list if it isn't already there.
             if (!WE.weaponList.Contains(playerWeapon))
             {

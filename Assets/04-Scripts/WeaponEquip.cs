@@ -227,7 +227,7 @@ public class WeaponEquip : MonoBehaviour
 
     void WeaponScrollPositive()
     {
-        //Turn off current weapon BG
+        //Turn off current weapon card
         weaponCards[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
@@ -253,7 +253,7 @@ public class WeaponEquip : MonoBehaviour
             weaponNumber = weaponList.Count;
         }
 
-        //Turn on next weapon BG
+        //Turn on next weapon card
         weaponCards[weaponNumber].GetComponent<Image>().enabled = true;
 
         //Change current weapon to the next weapon in the list.
@@ -277,7 +277,7 @@ public class WeaponEquip : MonoBehaviour
 
     void WeaponScrollNegative()
     {
-        //Turn off current weapon BG
+        //Turn off current weapon card
         weaponCards[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
@@ -302,7 +302,7 @@ public class WeaponEquip : MonoBehaviour
             weaponNumber--;
         }
 
-        //Turn on previous weapon BG
+        //Turn on previous weapon card
         weaponCards[weaponNumber].GetComponent<Image>().enabled = true;
 
         //Change current weapon to the previous weapon in the list.
@@ -322,6 +322,13 @@ public class WeaponEquip : MonoBehaviour
             currentWeapon.SetActive(true);
             holdingSkull = false;
         }
+    }
+
+    public void ChangeTarot()
+    {
+        //Need the weapon number in the list
+        //int index = weaponList.IndexOf()
+        //weaponCards[weaponNumber].GetComponent<Image>().enabled = true;
     }
 
     /// ...EQUIP WEAPONS SECTION... ///
@@ -351,55 +358,55 @@ public class WeaponEquip : MonoBehaviour
     //}
 
     // Bring weapon out of inventory:
-    void EquipWeapon()
-    {
-        if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
+    //void EquipWeapon()
+    //{
+    //    if (weaponNumber > weaponList.Count) { weaponNumber = weaponList.Count - 1; }
 
-        //Equip weapon (except for skull)
-        if (currentWeapon != skullParent && holdingSkull)
-        {
-            holdingSkull = false;
+    //    //Equip weapon (except for skull)
+    //    if (currentWeapon != skullParent && holdingSkull)
+    //    {
+    //        holdingSkull = false;
 
-            //Put away skulls before equiping weapon.
-            skullParent.transform.GetChild(0).gameObject.SetActive(false);
+    //        //Put away skulls before equiping weapon.
+    //        skullParent.transform.GetChild(0).gameObject.SetActive(false);
 
-            //Equip weapon
-            currentWeapon.SetActive(true);
-        }
-        else if (currentWeapon != skullParent)
-        {
-            currentWeapon.SetActive(true); //show held weapon 
-        }
+    //        //Equip weapon
+    //        currentWeapon.SetActive(true);
+    //    }
+    //    else if (currentWeapon != skullParent)
+    //    {
+    //        currentWeapon.SetActive(true); //show held weapon 
+    //    }
 
-        //Equip skull
-        if (currentWeapon == skullParent)
-        {
-            skullParent.transform.GetChild(0).gameObject.SetActive(true); //Make skull visible
-            holdingSkull = true;
-        }
-    }
+    //    //Equip skull
+    //    if (currentWeapon == skullParent)
+    //    {
+    //        skullParent.transform.GetChild(0).gameObject.SetActive(true); //Make skull visible
+    //        holdingSkull = true;
+    //    }
+    //}
 
 
-    //Put weapon in inventory:
-    public void UnequipWeapon()
-    {
-        isEquipped = false;
+    ////Put weapon in inventory:
+    //public void UnequipWeapon()
+    //{
+    //    isEquipped = false;
 
-        if (weaponNumber < 0) { weaponNumber = 0;  }
+    //    if (weaponNumber < 0) { weaponNumber = 0;  }
         
-        if (currentWeapon != skullParent)
-        {
-            currentWeapon.SetActive(false); //hide held weapon
-            inInventory = true;
-        }
-        else
-        {
-            if (holdingSkull)
-            {
-                skullParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
-                holdingSkull = false;
-                inInventory = true;
-            }
-        }
-    }
+    //    if (currentWeapon != skullParent)
+    //    {
+    //        currentWeapon.SetActive(false); //hide held weapon
+    //        inInventory = true;
+    //    }
+    //    else
+    //    {
+    //        if (holdingSkull)
+    //        {
+    //            skullParent.transform.GetChild(0).gameObject.SetActive(false); //hide the skull
+    //            holdingSkull = false;
+    //            inInventory = true;
+    //        }
+    //    }
+    //}
 }

@@ -47,6 +47,7 @@ public class SkillShotGameManager : GameBooth
             if (WE.currentWeapon != null && WE.currentWeapon != WE.gunHold)
                 WE.currentWeapon.SetActive(false);
 
+
             //Set text for this game
             scoreText = GetScoreText();
             timerText = GetTimerText();
@@ -54,6 +55,12 @@ public class SkillShotGameManager : GameBooth
 
             //WEAPON
             playerWeapon.SetActive(true); //Show player holding weapon
+            WE.currentWeapon = playerWeapon;
+            //Display Proper Tarot if a different weapon was in hand during game start.
+            if (WE.haveGun)
+            {
+               EnableActiveCard();
+            }
 
             //TIMER
             StartCoroutine(CountDownTimer());

@@ -179,7 +179,7 @@ public class MeleeSwing : MonoBehaviour
         {
             canSwing = false;
             yield return new WaitForSeconds(1);
-            //canSwing = true;
+            canSwing = true;
         }
 
         //transform.Rotate(Vector3.right, 60f);

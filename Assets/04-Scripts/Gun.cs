@@ -32,6 +32,10 @@ public class Gun : MonoBehaviour
         canShoot = true;
     }
 
+    private void Start()
+    {
+        canShoot = true;
+    }
     void Update()
     {
         if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
