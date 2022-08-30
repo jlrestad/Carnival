@@ -37,7 +37,8 @@ public class Menu : MonoBehaviour
 
     [Header("AUDIO")]
     //public AudioMixer audioMixer;
-    public AudioSource introAudio;
+    [SerializeField] AudioSource introAudio;
+    [SerializeField] AudioSource introAmbiance;
     //public AudioSource pauseSound;
     //public string exposedParam;
 
@@ -293,6 +294,13 @@ public class Menu : MonoBehaviour
     public void StopIntroMusic()
     {
         introAudio.enabled = false;
+        introAmbiance.enabled = false;
+    }
+
+    public void PlayIntroMusic()
+    {
+        introAudio.enabled = true;
+        introAmbiance.enabled = true;
     }
 
     //public void DelayQuit() 

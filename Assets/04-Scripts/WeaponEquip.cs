@@ -105,7 +105,7 @@ public class WeaponEquip : MonoBehaviour
 
         //RAYCAST
         DetectMiniGames();
-
+        
     }
 
     public void DisplayCrossHair()

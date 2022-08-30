@@ -416,7 +416,7 @@ public class HudManager : MonoBehaviour
                 blueLoseFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //move 0.55 units on X to the left (to the previous ticket in the sequence)
                 blueGainFX.gameObject.transform.localPosition -= new Vector3(0.55f, 0, 0); //take the other effect with also
             }
-            HealthTicket(-1 * maxRedTix); //refill the player's red tickets to full!
+            HealthTicket(-1 * maxRedTix/2); //refill the player's red tickets to half full!
         }
     }
     #endregion

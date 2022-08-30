@@ -197,11 +197,8 @@ public class GameBooth : MonoBehaviour
     //* Method to Win 3 red + 1 blue if minigame is won
     public void WinTickets()
     {
-        StartCoroutine(HudManager.Instance.RedTixAddFX(3));
-        StartCoroutine(HudManager.Instance.BlueTixAddFX(1));
-
-        HudManager.Instance.redTickets += 3;
-        HudManager.Instance.blueTickets += 1;
+        HudManager.Instance.HealthTicket(-3);
+        HudManager.Instance.ContinueTicket(-1);
     }
 
 

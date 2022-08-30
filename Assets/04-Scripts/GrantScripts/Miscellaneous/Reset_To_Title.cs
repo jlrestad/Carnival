@@ -25,9 +25,11 @@ public class Reset_To_Title : MonoBehaviour
         //Reset counter for pause screen
         menu.counter = -1;
 
-        ShowCursor();
-        ResetAudioPrefs();
-        ResetToTitle();
+        ShowCursor(); //Allows the cursor to be used on the Title menu
+        ResetAudioPrefs(); //Sets the audio back to original levels
+        ResetToTitle(); //Turns on the Title screen and camera of the Intro scene, and unloads the game scene.
+        menu.ClearButton(); //Clears button into in Event System so that the 1st button of the menu is highlighted.
+        menu.PlayIntroMusic(); //Play the Title audio
     }
 
     //RESETS THE AUDIO TO ORIGINAL LEVELS
