@@ -1432,9 +1432,9 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   timerText: {fileID: 0}
   winLoseText: {fileID: 0}
-  scoreLimit: 5
+  scoreLimit: 4
   score: 0
-  timeCounter: 10
+  timeCounter: 60
   timeLeft: 0
   resetTime: 0
   displayScreen: {fileID: 0}
@@ -1455,8 +1455,8 @@ MonoBehaviour:
   csWon: 0
   cbWon: 0
   WE: {fileID: 0}
-  speedChange: 0.02
-  goalShiftChange: 0.02
+  speedChange: 0.01
+  goalShiftChange: 0.01
   closedTimeChange: 0.005
   coffinPickerWaitTime: 2
   waitTimeReduction: 0.01

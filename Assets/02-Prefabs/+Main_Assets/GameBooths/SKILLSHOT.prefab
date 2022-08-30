@@ -6367,8 +6367,8 @@ MonoBehaviour:
   leftPos: {fileID: 1677671100010958054}
   rightPos: {fileID: 1677671100572900122}
   parentPos: {fileID: 0}
-  moveSpeed: 1
-  timeBetweenTargets: 2
+  moveSpeed: 0.75
+  timeBetweenTargets: 4
   direction: 0
   moveLeft: 0
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
@@ -6561,8 +6561,8 @@ MonoBehaviour:
   leftPos: {fileID: 1677671100833701764}
   rightPos: {fileID: 1677671100277883136}
   parentPos: {fileID: 0}
-  moveSpeed: 1
-  timeBetweenTargets: 2
+  moveSpeed: 1.25
+  timeBetweenTargets: 5
   direction: 0
   moveLeft: 1
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
@@ -6813,9 +6813,9 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   timerText: {fileID: 0}
   winLoseText: {fileID: 0}
-  scoreLimit: 2
+  scoreLimit: 20
   score: 0
-  timeCounter: 10
+  timeCounter: 60
   timeLeft: 0
   resetTime: 0
   displayScreen: {fileID: 0}
@@ -6827,6 +6827,7 @@ MonoBehaviour:
   gameWon: 0
   showLostText: 0
   isPaused: 0
+  playerDead: 0
   playerWeapon: {fileID: 0}
   gameplayPosition: {fileID: 1883155276}
   minigameAudio: {fileID: 0}
@@ -6905,8 +6906,8 @@ MonoBehaviour:
   leftPos: {fileID: 4919458860668806269}
   rightPos: {fileID: 4919458858842335274}
   parentPos: {fileID: 0}
-  moveSpeed: 1
-  timeBetweenTargets: 2
+  moveSpeed: 0.5
+  timeBetweenTargets: 3
   direction: 0
   moveLeft: 1
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
@@ -9923,14 +9924,14 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8850762238060242703}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5e94f3d51023c5446b59f52c71e0cade, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1096771d01c56314c831615fcf059de0, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1.5
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
