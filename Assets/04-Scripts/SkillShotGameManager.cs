@@ -45,8 +45,10 @@ public class SkillShotGameManager : GameBooth
         {
             //Hide weapon, if holding one, before holding new weapon.
             if (WE.currentWeapon != null && WE.currentWeapon != WE.gunHold)
+            {
                 WE.currentWeapon.SetActive(false);
-
+                DisablePreviousActiveCard();
+            }
 
             //Set text for this game
             scoreText = GetScoreText();

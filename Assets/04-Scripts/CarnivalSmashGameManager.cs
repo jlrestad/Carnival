@@ -62,7 +62,10 @@ public class CarnivalSmashGameManager : GameBooth
         {
             //Hide weapon, if holding one, before holding new weapon.
             if (WE.currentWeapon != null && WE.currentWeapon != WE.malletHold)
+            {
                 WE.currentWeapon.SetActive(false);
+                DisablePreviousActiveCard();
+            }
 
             //Set text for this game
             scoreText = GetScoreText();

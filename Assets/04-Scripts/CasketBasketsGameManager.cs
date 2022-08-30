@@ -88,7 +88,10 @@ public class CasketBasketsGameManager : GameBooth
             {
                 //Hide weapon, if holding one, before holding new weapon.
                 if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
+                {
                     WE.currentWeapon.SetActive(false);
+                    DisablePreviousActiveCard();
+                }
 
                 //Game UI
                 scoreText = GetScoreText(); 

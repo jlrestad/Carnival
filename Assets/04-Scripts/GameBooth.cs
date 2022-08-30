@@ -265,6 +265,11 @@ public class GameBooth : MonoBehaviour
         WE.weaponCards[index].GetComponent<Image>().enabled = true;
     }
 
+    public void DisablePreviousActiveCard()
+    {
+        WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
+    }
+
     public void GameBoothAudioAndLights()
     {
         if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
@@ -498,9 +503,8 @@ public class GameBooth : MonoBehaviour
         FPSController.Instance.GetComponent<CharacterController>().enabled = true;
 
         //Display the current weapon card
-        //menu.DisplayWeaponCard();
-        Menu.Instance.DisplayWeaponCard();
-        ResetGame();
+        Menu.Instance.DisplayWeaponCard(); //Show won card and make it active
+        ResetGame(); //Reset the minigame
     }
     #endregion
 }
