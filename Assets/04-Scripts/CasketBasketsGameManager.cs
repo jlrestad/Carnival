@@ -83,14 +83,25 @@ public class CasketBasketsGameManager : GameBooth
         {
             ///LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
             StartCoroutine(WinLoseDisplay());
-            
+
+            //Pause
+            if (Input.GetButtonDown("Menu")) //pausing during minigame
+            {
+                ShowGameRules();
+            }
+
             if (!isRunning)
             {
                 //Hide weapon, if holding one, before holding new weapon.
-                if (WE.currentWeapon != null && WE.currentWeapon != WE.skullParent)
+                if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
                 {
+                    //DisablePreviousActiveCard();
+
+                    ////Get the index of the current weapon that isnt this game's weapon so it can be disabled.
+                    weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon);
+                    WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false;
                     WE.currentWeapon.SetActive(false);
-                    DisablePreviousActiveCard();
+
                 }
 
                 //Game UI
@@ -101,26 +112,19 @@ public class CasketBasketsGameManager : GameBooth
                 scoreText.text = "SURVIVE";
 
                 //WEAPON - Player holds weapon to play game
-                //if (!WE.holdingSkull)
-                //{
                 playerWeapon.SetActive(true); //Show player holding weapon
                 playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
                 WE.currentWeapon = playerWeapon;
                 WE.holdingSkull = true;
-                //}
+                //if (WE.haveSkull) EnableGameActiveCard();
                 //Display Proper Tarot if a different weapon was in hand during game start.
-                if (WE.haveSkull)
+                if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
                 {
-                    EnableActiveCard();
+                   
+                    EnableGameActiveCard();
                 }
-
+            
                 GameStart();
-
-                //Pause
-                if (Input.GetButtonDown("Menu")) //pausing during minigame
-                {
-                    ShowGameRules();
-                }
             }
         }
         else if (!gameOn && isRunning)

@@ -61,7 +61,7 @@ public class SkillShotGameManager : GameBooth
             //Display Proper Tarot if a different weapon was in hand during game start.
             if (WE.haveGun)
             {
-               EnableActiveCard();
+               EnableGameActiveCard();
             }
 
             //TIMER
@@ -82,6 +82,8 @@ public class SkillShotGameManager : GameBooth
 
             if (gameWon)
             {
+                WinTickets(3, 1);
+
                 if (!ssWon)
                 {
                     DisplayGameCard();

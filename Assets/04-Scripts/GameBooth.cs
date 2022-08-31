@@ -33,6 +33,7 @@ public class GameBooth : MonoBehaviour
     public GameObject inactiveCard; //Game card for inactive weapon - manually set in Unity game manager scrit
     public Sprite inactiveCardSprite;
     public Sprite activeCardSprite;
+    public int weaponListIndex;
 
     [Header("GAME SETUP")]
     public bool gameOn;
@@ -115,11 +116,25 @@ public class GameBooth : MonoBehaviour
         get { return gameRules; }
         set { gameRules = value; }
     }
-#endregion
+
+    public int WeaponListIndex
+    {
+        get { return weaponListIndex; }
+        set { weaponListIndex = GetWeaponListIndex(); }
+    }
+    #endregion
 
     #region GETTERS
     // * * *
     //GETTERS
+
+    public int GetWeaponListIndex()
+    {
+        //Find the index value of the playerWeapon
+        int index = WE.weaponNumber;
+        return index;
+    }
+
     public TextMeshProUGUI GetScoreText()
     {
         MinigameHUD[] elements = FindObjectsOfType<MinigameHUD>();
@@ -256,10 +271,8 @@ public class GameBooth : MonoBehaviour
     }
 
     //Displays the tarot for the game being played (if this tarot has been earned and the game was started while holding a different game weapon).
-    public void EnableActiveCard()
+    public void EnableGameActiveCard()
     {
-        //Hide previous active weapon card
-        WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
         //Show new active weapon card
         int index = WE.weaponList.IndexOf(playerWeapon);
         WE.weaponCards[index].GetComponent<Image>().enabled = true;
@@ -267,6 +280,9 @@ public class GameBooth : MonoBehaviour
 
     public void DisablePreviousActiveCard()
     {
+        //Store the old index number to turn it off when different weapon game is played.
+        weaponListIndex = WE.weaponNumber;
+        //Hide previous active weapon card
         WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
     }
 

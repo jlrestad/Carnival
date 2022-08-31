@@ -78,7 +78,7 @@ public class CarnivalSmashGameManager : GameBooth
             //Display Proper Tarot if a different weapon was in hand during game start.
             if (WE.haveMallet)
             {
-                EnableActiveCard();
+                EnableGameActiveCard();
             }
 
             //TIMER
@@ -104,6 +104,8 @@ public class CarnivalSmashGameManager : GameBooth
 
             if (gameWon)
             {
+                WinTickets(3, 1);
+
                 if (!csWon)
                 {
                     DisplayGameCard();
