@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 //** THIS CLASS INHERITS FROM THE GameBooth.cs SCRIPT **//
 
@@ -60,27 +62,48 @@ public class CarnivalSmashGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
-            //Hide weapon, if holding one, before holding new weapon.
-            if (WE.currentWeapon != null && WE.currentWeapon != WE.malletHold)
+            ////Hide weapon, if holding one, before holding new weapon.
+            //if (WE.currentWeapon != null && WE.currentWeapon != WE.malletHold)
+            //{
+            //    WE.currentWeapon.SetActive(false);
+            //    DisablePreviousActiveCard();
+            //}
+            ////WEAPON
+            //playerWeapon.SetActive(true); //Show player holding weapon
+            //WE.currentWeapon = playerWeapon;
+            ////Display Proper Tarot if a different weapon was in hand during game start.
+            //if (WE.haveMallet)
+            //{
+            //    EnableGameActiveCard();
+            //    //WE.currentWeapon = WE.malletHold; //Set the current weapon to this game's weapon.
+            //}
+
+            //WEAPON EQUIP
+            //1. Hide weapon, if holding one, before holding this weapon & disable the active Tarot card for it.
+            if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
             {
-                WE.currentWeapon.SetActive(false);
-                DisablePreviousActiveCard();
+                weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
+                Debug.Log("Index of current weapon = " + weaponListIndex);
+                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
+                WE.currentWeapon.SetActive(false); //Hide the weapon
+            }
+            //2. Equip this game's weapon & assign to current weapon
+            playerWeapon.SetActive(true); //Show player holding weapon
+            WE.currentWeapon = playerWeapon;
+            Debug.Log("Current weapon = " + WE.currentWeapon); //gunhold
+            //3. Display proper Tarot for this weapon if game was won.
+            if (WE.haveMallet)
+            {
+                //EnableGameActiveCard();
+                int index = WE.weaponList.IndexOf(playerWeapon); //Get the index of this weapon in the list
+                Debug.Log("Index = " + index); //0
+                WE.weaponCards[index].GetComponent<Image>().enabled = true; //Show the Tarot for this weapon
             }
 
             //Set text for this game
             scoreText = GetScoreText();
             timerText = GetTimerText();
             winLoseText = GetWinLoseText();
-
-            //WEAPON
-            playerWeapon.SetActive(true); //Show player holding weapon
-            WE.currentWeapon = playerWeapon;
-            //Display Proper Tarot if a different weapon was in hand during game start.
-            if (WE.haveMallet)
-            {
-                EnableGameActiveCard();
-                WE.currentWeapon = WE.malletHold; //Set the current weapon to this game's weapon.
-            }
 
             //TIMER
             StartCoroutine(CountDownTimer());
@@ -133,6 +156,9 @@ public class CarnivalSmashGameManager : GameBooth
             if (!csWon)
             {
                 playerWeapon.SetActive(false); //Remove weapon from player's hands.
+
+                //If the game is lost and the weapon list is empty, set the current weapon to null.
+                if (WE.weaponList.Count == 0) { WE.currentWeapon = null; }
             }
         }
     }

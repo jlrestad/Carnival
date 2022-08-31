@@ -338,7 +338,7 @@ public class HudManager : MonoBehaviour
     //Plays effects and changes the visual for the red ticket bar when adding tickets
     public IEnumerator RedTixAddFX(int tixAmt)
     {
-        Debug.Log("Add Red");
+        //Debug.Log("Add Red");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
         {
             redGainFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)
@@ -362,7 +362,7 @@ public class HudManager : MonoBehaviour
     {
         if(! playerInvincible)
         {
-            Debug.Log("Subtract Red");
+            //Debug.Log("Subtract Red");
             for (int i = 0; i < tixAmt; i++) //take the tickets off one by one until they reach the proper amount
             {
                 redTixDisplay--; //remove one from the bar
@@ -383,7 +383,7 @@ public class HudManager : MonoBehaviour
     //Plays effects and changes the visual for the blue ticket bar when adding tickets
     public IEnumerator BlueTixAddFX(int tixAmt)
     {
-        Debug.Log("Add Blue");
+        //Debug.Log("Add Blue");
         for (int i = 0; i < tixAmt; i++) //add the tickets on one by one until they reach the proper amount
         {
             blueGainFX.gameObject.transform.localPosition += new Vector3(0.55f, 0, 0); //move 0.55 units on X to the right (to the next ticket in the sequence)

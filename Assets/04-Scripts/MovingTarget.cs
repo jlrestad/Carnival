@@ -59,7 +59,7 @@ public class MovingTarget : MonoBehaviour
         {
             int count = 0;
             count++;
-            Debug.Log("move targets " + count);
+            //Debug.Log("move targets " + count);
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
             
         }

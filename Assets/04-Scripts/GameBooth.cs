@@ -216,7 +216,6 @@ public class GameBooth : MonoBehaviour
         HudManager.Instance.ContinueTicket(-blueAmount);
     }
 
-
     public void ShowGameRules()
     {
         //If the main pause menu is not visible, then show the game rules.
@@ -285,7 +284,8 @@ public class GameBooth : MonoBehaviour
             //Store the old index number to turn it off when different weapon game is played.
             weaponListIndex = WE.weaponNumber;
             //Hide previous active weapon card
-            WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
+            WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false;
+            //WE.currentWeapon = WE.weaponList[weaponListIndex];
         }
     }
 
@@ -410,6 +410,30 @@ public class GameBooth : MonoBehaviour
         }
     }
 
+    public void LastHeldWeapon()
+    {
+        //If the player had a weapon before playing the game, and LOST, show that weapon again & make its tarot card active.
+        if (WE.weaponList.Count > 0)
+        {
+            WE.weaponList[WE.weaponNumber].SetActive(true);
+            WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = true;
+            WE.currentWeapon = WE.weaponList[WE.weaponNumber];
+        }
+    }
+
+    public void KeepWeaponInHand()
+    {
+        //If the player already has this weapon, and WINS, then keep this weapon equipped.
+        if (WE.weaponList.Contains(WE.currentWeapon))
+        {
+            //Get the index of this weapon in the list & set weapon number to this value.
+            int index = WE.weaponList.IndexOf(WE.currentWeapon);
+            WE.weaponNumber = index;
+        }
+    }
+    #endregion
+
+    #region COROUTINES
     public IEnumerator ShutDownGameMusicAndLights()
     {
         yield return new WaitForSeconds(0.5f);
@@ -448,6 +472,7 @@ public class GameBooth : MonoBehaviour
                 WE.weaponNumber++;
                 WE.isEquipped = true;
             }
+            KeepWeaponInHand(); //Keep this weapon equipped 
         }
         else if (showLostText)
         {
@@ -455,18 +480,8 @@ public class GameBooth : MonoBehaviour
 
             yield return new WaitForSeconds(2);
 
-            ShowWeaponFromInventory();
+            //LastHeldWeapon(); //Show last held weapon if there is one.
             ResetGame();
-        }
-    }
-
-    public void ShowWeaponFromInventory()
-    {
-        //If the player had a weapon before playing the game, and LOST, show that weapon again & make its tarot card active.
-        if (WE.weaponList.Count > 0)
-        {
-            WE.weaponList[WE.weaponNumber].SetActive(true);
-            WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = true;
         }
     }
 

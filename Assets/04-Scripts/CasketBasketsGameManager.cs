@@ -125,7 +125,7 @@ public class CasketBasketsGameManager : GameBooth
                 if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
                 {
                     EnableGameActiveCard();
-                    WE.currentWeapon = WE.skullParent; //Set the current weapon to this game's weapon.
+                    //WE.currentWeapon = WE.skullParent; //Set the current weapon to this game's weapon.
                 }
 
                 GameStart();

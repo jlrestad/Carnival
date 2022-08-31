@@ -169,7 +169,7 @@ public class CasketManager : MonoBehaviour
         isOpen = false;
         
         CasketBasketsGameManager.Instance.score -= 1; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
-        Debug.Log("Coffin Hit");
+        //Debug.Log("Coffin Hit");
         CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
     }
 
