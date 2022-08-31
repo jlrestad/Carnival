@@ -80,6 +80,7 @@ public class Pickup_Interaction : MonoBehaviour
                         ActionIcon_Keyboard.SetActive(false); //turn all action icons off
                         ActionIcon_Controller.SetActive(false);
                         infoText.gameObject.SetActive(false);
+                        hit.collider.enabled = false;
                     }
                 }
                 else

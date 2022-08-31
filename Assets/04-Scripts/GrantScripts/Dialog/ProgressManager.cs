@@ -49,6 +49,9 @@ public class ProgressManager : MonoBehaviour
     public AudioSource playerBGM;
     public AudioClip forestMusic;
     public AudioClip carnivalMusic;
+    [Space(10)]
+    public GameObject GunScreen, MalletScreen, SkullScreen;
+    public bool ScreensUp = false;
 
     [Header("INTERNAL/DEBUG")]
     [SerializeField] int dialogNumber = 0;
@@ -75,7 +78,17 @@ public class ProgressManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //-----Below allows the advancement text to only appear after the pickups screens are dismissed-----
+        if (GunScreen.activeInHierarchy || MalletScreen.activeInHierarchy || SkullScreen.activeInHierarchy)
+        {
+            ScreensUp = true;
+        }
+        else
+        {
+            ScreensUp = false;
+        }
         CheckProgress();
+        
     }
 
     void CheckProgress()
@@ -118,17 +131,17 @@ public class ProgressManager : MonoBehaviour
             dialogNumber = 1; //mark that we've activated the first dialog point
             FirstDialog.SetActive(true); //activate the first dialog point
         }
-        if(dialogNumber == 1 && CompleteCounter == 1) //when one game has been won
+        if(dialogNumber == 1 && CompleteCounter == 1 && !ScreensUp) //when one game has been won and the pickup window is dismissed
         {
             dialogNumber = 2; //mark that we've activated the second dialog point
             SecondDialog.SetActive(true); //activate the second dialog point
         }
-        if(dialogNumber == 2 && CompleteCounter == 2) //when two games have been won
+        if(dialogNumber == 2 && CompleteCounter == 2 && !ScreensUp) //when two games have been won and the pickup window is dismissed
         {
             dialogNumber = 3; //mark that we've activated the third dialog point
             ThirdDialog.SetActive(true); //play dialog
         }
-        if(dialogNumber == 3 && CompleteCounter == 3) //when all three games have been won
+        if(dialogNumber == 3 && CompleteCounter == 3 && !ScreensUp) //when all three games have been won and the pickup window is dismissed
         {
             dialogNumber = 4; //mark that we've activated the fourth dialog point
             FourthDialog.SetActive(true); //play dialog
