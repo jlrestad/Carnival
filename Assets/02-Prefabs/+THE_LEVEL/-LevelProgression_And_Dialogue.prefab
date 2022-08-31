@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4bc232e2c40c94f99b9ab209fee356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spokenDialog: '"Log 19: At least one game booth still operational. I''ve beaten
+  spokenDialog: '"Log 19: At least one game booth is still operational. I''ve beaten
     its game and it awarded me with a tarot card."
 
 
@@ -714,8 +714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4bc232e2c40c94f99b9ab209fee356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spokenDialog: '"Log 18: I''ve found the source, just like you said. Out front there''s
-    a big open gate."
+  spokenDialog: '"Log 18: I''ve found the source, just like you said. There''s an
+    old gate out front and lots of tickets scattered around."
 
 
 '
@@ -1885,9 +1885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4bc232e2c40c94f99b9ab209fee356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spokenDialog: '"Log 21: Another tarot card from another game. I can''t pull the
-    weapons away from their tents unless I am carrying their cards, so I''ll have
-    to keep these with me."
+  spokenDialog: '"Log 21: Another card won. The weapons won''t let me take them without
+    the cards, so I''ll have to keep them with me.
 
 
 '
@@ -2056,6 +2055,10 @@ MonoBehaviour:
   playerBGM: {fileID: 0}
   forestMusic: {fileID: 8300000, guid: ff09c6858e636407286ab113506e8feb, type: 3}
   carnivalMusic: {fileID: 8300000, guid: 77aa2c7f124bbd94fa99799dae590df4, type: 3}
+  GunScreen: {fileID: 0}
+  MalletScreen: {fileID: 0}
+  SkullScreen: {fileID: 0}
+  ScreensUp: 0
   dialogNumber: 0
   ticketsCollected: 0
   gateState: 0
