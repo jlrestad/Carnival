@@ -132,7 +132,7 @@ MonoBehaviour:
   skillshotGM: {fileID: 0}
   hideSpot: {fileID: 8887548058049208305}
   targetParent: {fileID: 5404032245932627344}
-  flipTime: 0.9
+  flipTime: 1
   shakeTime: 0
   reachedEnd: 0
   targetHit: 0
@@ -144,6 +144,8 @@ MonoBehaviour:
   badHitSound: {fileID: 8300000, guid: c3d00501598052f4484e4cf083f088eb, type: 3}
   flipSound: {fileID: 8300000, guid: b76b68f18e09f9048a9b61bf4948878d, type: 3}
   shakeSound: {fileID: 8300000, guid: fb95192e8eeecd24d94d3281ccc5a908, type: 3}
+  Flippable: 1
+  OGFlipTime: 0
 --- !u!82 &2308178632848984674
 AudioSource:
   m_ObjectHideFlags: 0

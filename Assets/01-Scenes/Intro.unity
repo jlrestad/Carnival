@@ -3480,6 +3480,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2918316463199672714, guid: eba1bddf3dc6d7e43bbe2d1f9e52cfaa, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918316463199672714, guid: eba1bddf3dc6d7e43bbe2d1f9e52cfaa, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -3557,7 +3561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391874072444160272, guid: eba1bddf3dc6d7e43bbe2d1f9e52cfaa, type: 3}
       propertyPath: m_Layer
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7647229724464870465, guid: eba1bddf3dc6d7e43bbe2d1f9e52cfaa, type: 3}
       propertyPath: m_SortingOrder
@@ -4087,7 +4091,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Controls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a94ab3b0bac04e94e92cb4b9c117880c, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 5d99a510cf7c99b49b82c7a772ff154c, type: 2}
@@ -9452,7 +9456,7 @@ GameObject:
   - component: {fileID: 2080781628}
   - component: {fileID: 2080781630}
   - component: {fileID: 2080781629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FXCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9490,7 +9494,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 128
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
