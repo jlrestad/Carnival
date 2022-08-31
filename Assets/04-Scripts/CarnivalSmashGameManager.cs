@@ -79,6 +79,7 @@ public class CarnivalSmashGameManager : GameBooth
             if (WE.haveMallet)
             {
                 EnableGameActiveCard();
+                WE.currentWeapon = WE.malletHold; //Set the current weapon to this game's weapon.
             }
 
             //TIMER

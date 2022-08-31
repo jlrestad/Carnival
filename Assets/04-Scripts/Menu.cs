@@ -123,6 +123,9 @@ public class Menu : MonoBehaviour
         if (controllerArray == null)
         {
             usingJoystick = false;
+            //Show cursor
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
         }
         else if (controllerArray.Length > 0 /*&& controllerArray[0] != ""*/)
         {

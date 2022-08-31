@@ -159,17 +159,17 @@ public class Head : MonoBehaviour
                 skulls[i].transform.parent = skullParent;
                 skulls[i].transform.position = skullParent.position;
                 skulls[i].transform.rotation = skullParent.rotation;
+                skulls[i].SetActive(false);
 
                 //Set Rigidbody and Collider
                 rb = skulls[i].GetComponent<Rigidbody>();
                 Collider collider = skulls[i].GetComponent<Collider>();
 
+                //Set physics and such for throwing
                 collider.enabled = false;
                 rb.isKinematic = true;
                 rb.useGravity = false;
                 WE.holdingSkull = true;
-
-                skulls[i].SetActive(false);  //Hide the skull in inventory
             }
         }
 
@@ -177,12 +177,6 @@ public class Head : MonoBehaviour
         if (bossHeart != null) 
         { 
             bossHeart.canDamage = true;
-        }
-
-        //If the weapon is switched after the skull has been thrown, hide the skull that returns to the players hand.
-        if (WE.currentWeapon != WE.skullParent)
-        {
-            skullParent.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 

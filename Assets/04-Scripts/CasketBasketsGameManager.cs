@@ -81,9 +81,13 @@ public class CasketBasketsGameManager : GameBooth
         //When the game turns on, run GameStart
         if (gameOn)
         {
-            ///LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
+            ///WIN/LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
             StartCoroutine(WinLoseDisplay());
 
+            //Timer
+            if (isRunning)
+                StartCoroutine(CountDownTimer());
+            
             //Pause
             if (Input.GetButtonDown("Menu")) //pausing during minigame
             {
@@ -97,7 +101,7 @@ public class CasketBasketsGameManager : GameBooth
                 {
                     //DisablePreviousActiveCard();
 
-                    ////Get the index of the current weapon that isnt this game's weapon so it can be disabled.
+                    //Get the index of the current weapon that isnt this game's weapon so it can be disabled.
                     weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon);
                     WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false;
                     WE.currentWeapon.SetActive(false);
@@ -120,10 +124,10 @@ public class CasketBasketsGameManager : GameBooth
                 //Display Proper Tarot if a different weapon was in hand during game start.
                 if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
                 {
-                   
                     EnableGameActiveCard();
+                    WE.currentWeapon = WE.skullParent; //Set the current weapon to this game's weapon.
                 }
-            
+
                 GameStart();
             }
         }
@@ -166,6 +170,7 @@ public class CasketBasketsGameManager : GameBooth
         {
             hasEnded = true;
             gameWon = false; //the player has lost the game.
+            showLostText = true; //Allows the lose condition to play in WinLoseDisplay()
             StartCoroutine(PlayLoseFX()); //start playing the lose FX before the game ends
         }
         if(timeLeft <= 0 && gameOn)
@@ -175,9 +180,7 @@ public class CasketBasketsGameManager : GameBooth
             //* This is already being called under GameEnd()
             //DisplayGameCard(); //show the player their prize!
         }
-        if (gameOn)
-        StartCoroutine(CountDownTimer()); //start game timer every frame which is dangerous but this is how we're doing it I guess
-    }
+    }   
     #endregion
 
     //==================================================

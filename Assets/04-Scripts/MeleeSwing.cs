@@ -15,7 +15,7 @@ public class MeleeSwing : MonoBehaviour
     CharacterController characterController;
     Animator animator;
 
-    [SerializeField] bool canSwing;
+    public bool canSwing;
     [SerializeField] float force = 10.0f;
     [HideInInspector] RaycastHit hit;
 

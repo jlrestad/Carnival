@@ -280,10 +280,13 @@ public class GameBooth : MonoBehaviour
 
     public void DisablePreviousActiveCard()
     {
-        //Store the old index number to turn it off when different weapon game is played.
-        weaponListIndex = WE.weaponNumber;
-        //Hide previous active weapon card
-        WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
+        if (WE.weaponList.Count > 0)
+        {
+            //Store the old index number to turn it off when different weapon game is played.
+            weaponListIndex = WE.weaponNumber;
+            //Hide previous active weapon card
+            WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = false;
+        }
     }
 
     public void GameBoothAudioAndLights()
@@ -451,7 +454,19 @@ public class GameBooth : MonoBehaviour
             winLoseText.text = "YOU LOSE!";
 
             yield return new WaitForSeconds(2);
+
+            ShowWeaponFromInventory();
             ResetGame();
+        }
+    }
+
+    public void ShowWeaponFromInventory()
+    {
+        //If the player had a weapon before playing the game, and LOST, show that weapon again & make its tarot card active.
+        if (WE.weaponList.Count > 0)
+        {
+            WE.weaponList[WE.weaponNumber].SetActive(true);
+            WE.weaponCards[WE.weaponNumber].GetComponent<Image>().enabled = true;
         }
     }
 

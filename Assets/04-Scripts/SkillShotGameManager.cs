@@ -62,6 +62,7 @@ public class SkillShotGameManager : GameBooth
             if (WE.haveGun)
             {
                EnableGameActiveCard();
+               WE.currentWeapon = WE.gunHold; //Set the current weapon to this game's weapon.
             }
 
             //TIMER
