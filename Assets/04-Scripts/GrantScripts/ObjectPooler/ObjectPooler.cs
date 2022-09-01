@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
@@ -44,6 +45,7 @@ public class ObjectPooler : MonoBehaviour
             for(int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab); //instantiate all the gameobjects needed to fill up the pool
+                SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByBuildIndex(1));
                 obj.SetActive(false); //sets the object inactive so it isn't visible
                 objectPool.Enqueue(obj); //put the object we just created into the queue
             }

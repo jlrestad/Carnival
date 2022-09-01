@@ -30,6 +30,12 @@ public class Ticket_Generator : MonoBehaviour
     public void Start()
     {
          myPooler = ObjectPooler.PoolInstance;
+        attemptDrop();
+    }
+
+    private void OnEnable()
+    {
+        attemptDrop();
     }
     //==================================================
     //=========================|CUSTOM METHODS|
@@ -46,6 +52,7 @@ public class Ticket_Generator : MonoBehaviour
     //WARNING: Will throw errors if run at Start, since the Object Pooler has not been assigned yet.
     public void dropItem()
     {
-        myPooler.SpawnFromPool(dropType, transform.position, Quaternion.identity); //pull the required object from the pool and spawn it here.
+        GameObject obj = myPooler.SpawnFromPool(dropType, transform.position, Quaternion.identity); //pull the required object from the pool and spawn it here.
+        obj.transform.parent = null;
     }
 }
