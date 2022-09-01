@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class SkillShotGameManager : GameBooth
 {
     public static SkillShotGameManager Instance;
+
     public bool gameOver;
     public bool targetFlipped;
     public bool reachedEnd;
     public bool gameJustPlayed;
     //bool levelLoaded;
+    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
     public MovingTarget[] movingTarget;
 
@@ -44,13 +46,14 @@ public class SkillShotGameManager : GameBooth
         if (gameOn)
         {
             //WEAPON EQUIP
-            //1. Hide weapon, if holding one, before holding this weapon & disable the active Tarot card for it.
+            //1. Hide weapon, if holding one, before holding this game's weapon, & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
             {
                 weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
                 //Debug.Log("Index of current weapon = " + weaponListIndex);
                 WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
                 WE.currentWeapon.SetActive(false); //Hide the weapon
+                saveCurrentWeapon = WE.currentWeapon; //Store this so it can be equipped
             }
             //2. Equip this game's weapon & assign to current weapon
             playerWeapon.SetActive(true); //Show player holding weapon
@@ -110,15 +113,24 @@ public class SkillShotGameManager : GameBooth
             if (showLostText)
             {
                 StartCoroutine(ShutDownGameMusicAndLights());
-            }
+                // If the game has never been won, then the player does not keep the weapon.
+                if (!ssWon)
+                {
+                    playerWeapon.SetActive(false); //Remove weapon from player's hands.
 
-            // If the game has never been won, then the player does not keep the weapon.
-            if (!ssWon)
-            {
-                playerWeapon.SetActive(false); //Remove weapon from player's hands.
-
-                //If the game is lost and the weapon list is empty, set the current weapon to null.
-                if(WE.weaponList.Count == 0) { WE.currentWeapon = null; }
+                    //If the game is lost and the weapon list is empty, set the current weapon to null.
+                    if(WE.weaponList.Count == 0) 
+                    { 
+                        WE.currentWeapon = null; 
+                    }
+                    //If the game is lost and player has weapons, then equip the last held weapon.
+                    else 
+                    {
+                        WE.currentWeapon = saveCurrentWeapon; 
+                        WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                        WE.currentWeapon.SetActive(true); //Show the last held weapon
+                    }
+                }
             }
         }
     }
