@@ -81,6 +81,12 @@ public class CasketBasketsGameManager : GameBooth
         //When the game turns on, run GameStart
         if (gameOn)
         {
+            //turn on audio
+            if (! tentAudio.enabled)
+            {
+                tentAudio.enabled = true;
+            }
+
             ///WIN/LOSE - If Won: Adds weapon to the array of weapons; If Lost: Runs ResetGame()
             StartCoroutine(WinLoseDisplay());
 
@@ -134,6 +140,12 @@ public class CasketBasketsGameManager : GameBooth
         else if (!gameOn && isRunning)
         {
             GameEnd();
+            //turn off audio
+            if (tentAudio.enabled)
+            {
+                tentAudio.enabled = false;
+            }
+
         }
 
         if (!gameOn && !cbWon)

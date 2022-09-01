@@ -2030,6 +2030,7 @@ MonoBehaviour:
   inactiveCard: {fileID: 3457787426874225867}
   inactiveCardSprite: {fileID: 0}
   activeCardSprite: {fileID: 0}
+  weaponListIndex: 0
   gameOn: 0
   gameWon: 0
   showLostText: 0
@@ -2043,10 +2044,10 @@ MonoBehaviour:
   csWon: 0
   cbWon: 0
   WE: {fileID: 0}
-  minRando: 0.3
-  maxRando: 1
-  divideSpeedBy: 1.08
-  speedCap: 0.5
+  minRando: 0.1
+  maxRando: 2
+  divideSpeedBy: 1.04
+  speedCap: 0.75
   gameJustFinished: 0
   stopPopUp: 0
   tauntCritVisible: 0
