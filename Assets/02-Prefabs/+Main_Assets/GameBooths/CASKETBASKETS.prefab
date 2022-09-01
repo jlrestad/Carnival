@@ -1443,6 +1443,7 @@ MonoBehaviour:
   inactiveCard: {fileID: 7499283775065588057}
   inactiveCardSprite: {fileID: 0}
   activeCardSprite: {fileID: 0}
+  weaponListIndex: 0
   gameOn: 0
   gameWon: 0
   showLostText: 0
@@ -6312,15 +6313,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2626466830842927614, guid: b5c19fe1a01b78a4e803fb12ed39bea8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.102
+      value: 3.26
       objectReference: {fileID: 0}
     - target: {fileID: 2626466830842927614, guid: b5c19fe1a01b78a4e803fb12ed39bea8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.507
+      value: -2.52
       objectReference: {fileID: 0}
     - target: {fileID: 2626466830842927614, guid: b5c19fe1a01b78a4e803fb12ed39bea8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.582
+      value: -2.63
       objectReference: {fileID: 0}
     - target: {fileID: 2626466830842927614, guid: b5c19fe1a01b78a4e803fb12ed39bea8, type: 3}
       propertyPath: m_LocalRotation.w
