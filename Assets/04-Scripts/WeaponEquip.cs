@@ -134,7 +134,8 @@ public class WeaponEquip : MonoBehaviour
             bool isCS = hitTransform.CompareTag("MeleeGame");
             bool isCB = hitTransform.CompareTag("ThrowingGame");
 
-            //Debug.Log(hitTransform.tag);
+            Debug.Log(hitTransform.tag);
+            Debug.DrawRay(transform.position, transform.forward);
 
             //Find distance of the game to the player
             distanceToPlayer = (hitTransform.position - transform.position);

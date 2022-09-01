@@ -293,6 +293,8 @@ public class GameBooth : MonoBehaviour
     {
         if (!minigameAudio.isPlaying || !minigameLight.activeInHierarchy)
         {
+            Menu.Instance.sceneMusic.enabled = false; //Turn off the game music
+
             //Make sure light is on - and turn it higher when game is in play.
             minigameLight.SetActive(true);
             minigameLight.GetComponent<Light>().intensity = 45;
@@ -436,7 +438,7 @@ public class GameBooth : MonoBehaviour
     #region COROUTINES
     public IEnumerator ShutDownGameMusicAndLights()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         //Turn the light lower when game is not in play.
         minigameLight.GetComponent<Light>().intensity = 10;
@@ -456,6 +458,7 @@ public class GameBooth : MonoBehaviour
         }
 
         minigameAudio.Stop();
+        Menu.Instance.sceneMusic.enabled = true; //Turn on the game music
 
         minigameAudio.volume = 0.7f;
     }

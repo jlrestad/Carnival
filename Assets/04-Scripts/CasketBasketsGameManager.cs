@@ -97,7 +97,7 @@ public class CasketBasketsGameManager : GameBooth
             //Pause
             if (Input.GetButtonDown("Menu")) //pausing during minigame
             {
-                ShowGameRules();
+                //ShowGameRules();
             }
 
             if (!isRunning)

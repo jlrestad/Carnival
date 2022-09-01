@@ -37,8 +37,10 @@ public class Menu : MonoBehaviour
 
     [Header("AUDIO")]
     //public AudioMixer audioMixer;
-    [SerializeField] AudioSource introAudio;
-    [SerializeField] AudioSource introAmbiance;
+    [SerializeField] AudioSource titleMusic;
+    [SerializeField] AudioSource titleAmbiance;
+    public AudioSource sceneMusic;
+    [SerializeField] AudioSource sceneAmbiance;
     //public AudioSource pauseSound;
     //public string exposedParam;
 
@@ -149,9 +151,6 @@ public class Menu : MonoBehaviour
         //Get the correct tarot card image from the carnival game manager scripts. Uses the closest weapon method to get the game name.
         if (WE != null && WE.hit.transform != null)
         {
-            //inactiveWeapon = GameBooth.Instance.GetInactiveCardSprite();
-            //activeWeapon = GameBooth.Instance.GetActiveCardSprite();
-
             if (WE.hit.transform.CompareTag("ShootingGame"))
             {
                 inactiveWeapon = skillShotGM.inactiveCardSprite;
@@ -186,12 +185,13 @@ public class Menu : MonoBehaviour
         //Debug.Log(GM.GameState);
     }
 
+    //Called from an OnClick function Quit button of Pause menu
     public void ResetGame()
     {
         counter = -1; //Keeps pause menu from showing on Title screen
         ShowCursor();
         ClearButton();
-        PlayIntroMusic();
+        PlayTitleMusic();
 
         //Actiate Title screen and Title camera of Intro scene
         titleScreen.SetActive(true);
@@ -205,12 +205,8 @@ public class Menu : MonoBehaviour
         HudManager.Instance.myMixer.SetFloat("MusicVolume", HudManager.Instance.musicVolume);
         HudManager.Instance.myMixer.SetFloat("SFXVolume", HudManager.Instance.sfxVolume);
         HudManager.Instance.myMixer.SetFloat("PlayerVolume", HudManager.Instance.playerVolume);
-    }
 
-    public void ShowCursor()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
+        StopSceneMusic();
     }
 
     public IEnumerator LoadLevel()
@@ -237,6 +233,8 @@ public class Menu : MonoBehaviour
         loadScreen.SetActive(false);
         titleCamera.SetActive(false);
 
+        //PlaySceneMusic(); //This is now triggered at the gate
+
         //sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
         //sceneLight = GameObject.Find("MoonLight").GetComponent<Light>();
     }
@@ -253,6 +251,7 @@ public class Menu : MonoBehaviour
     //    Cursor.visible = false;
     //}
 
+    #region PAUSE/UNPAUSE
     //
     //PAUSE GAME
     public void PauseGame()
@@ -281,6 +280,7 @@ public class Menu : MonoBehaviour
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
     }
+    #endregion
 
     //
     //EXIT THE SETTINGS MENU AND RETURN TO PREVIOUS MENU
@@ -312,6 +312,13 @@ public class Menu : MonoBehaviour
         //Debug.Log("Brightness: " + brightnessValue);
     }
 
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
+    //Clears and sets the first button of a menu screen
     public void ClearButton()
     {
         //Clear button selected
@@ -321,53 +328,33 @@ public class Menu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
-    public void StopIntroMusic()
+    #region STOPPING & STARTING MUSIC BETWEEN SCENES
+    public void StopTitleMusic()
     {
-        introAudio.enabled = false;
-        introAmbiance.enabled = false;
+        titleMusic.enabled = false;
+        titleAmbiance.enabled = false;
     }
 
-    public void PlayIntroMusic()
+    public void PlayTitleMusic()
     {
-        introAudio.enabled = true;
-        introAmbiance.enabled = true;
+        titleMusic.enabled = true;
+        titleAmbiance.enabled = true;
     }
 
-    //public void DelayQuit() 
-    //{
-    //    #if UNITY_EDITOR
-    //            UnityEditor.EditorApplication.isPlaying = false;
-    //    #endif
-    //    Invoke("Quit", 2f);
-    //}
-
-    public void Quit()
+    public void StopSceneMusic()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        //StartCoroutine(DelayQuit());
-
-        Application.Quit();
+        sceneMusic.enabled = false;
+        sceneAmbiance.enabled = false;
     }
 
-    IEnumerator DelayQuit()
+    public void PlaySceneMusic()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        yield return new WaitForSeconds(0.5f);
-
-        Application.Quit();
+        sceneMusic.enabled = true;
+        sceneAmbiance.enabled = true;
     }
+    #endregion
 
-    // Store player preferences
-    //private void OnApplicationQuit()
-    //{
-    //    PlayerPrefs.SetString("QuitTime", "The application last closed at: " + System.DateTime.Now);
-    //}
-
-    //
+    #region TAROT CARD SETTING AND RESETTING
     //RESETS THE PLAYERHUD BACK TO THE STARTING PREFS
     public void ResetTarotCards()
     {
@@ -427,8 +414,35 @@ public class Menu : MonoBehaviour
                 
                 break; //break out because we've done what we want (no need to continue the iteration)
             }
-
         }   
     }
+    #endregion
 
+    #region ENDING GAME / SAVING PLAYER PREFS
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        //StartCoroutine(DelayQuit());
+
+        Application.Quit();
+    }
+
+    IEnumerator DelayQuit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        yield return new WaitForSeconds(0.5f);
+
+        Application.Quit();
+    }
+
+    // Store player preferences
+    //private void OnApplicationQuit()
+    //{
+    //    PlayerPrefs.SetString("QuitTime", "The application last closed at: " + System.DateTime.Now);
+    //}
+    #endregion
 }
