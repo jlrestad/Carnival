@@ -89,7 +89,7 @@ public class Pickup_Interaction : MonoBehaviour
                 }
                 
             }
-            else //if hitting anything else or nothing at all...
+            else //if hitting anything else...
             {
                 if (pickupInFocus)
                 {
@@ -99,6 +99,13 @@ public class Pickup_Interaction : MonoBehaviour
                     infoText.gameObject.SetActive(false);
                 }
             }
+        }
+        else //if hitting nothing at all...
+        {
+            pickupInFocus = false; //turn pickupInFocus off
+            ActionIcon_Keyboard.SetActive(false); //turn all action icons off
+            ActionIcon_Controller.SetActive(false);
+            infoText.gameObject.SetActive(false);
         }
     }
 }
