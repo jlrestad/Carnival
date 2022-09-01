@@ -66,6 +66,7 @@ public class ProgressManager : MonoBehaviour
     [SerializeField] bool CSComplete = false;
     [SerializeField] bool CBComplete = false;
     [SerializeField] int CompleteCounter = 0;
+    public Menu menu;
     //=========================|METHODS|=========================
     // Start is called before the first frame update
     void Start()
@@ -73,6 +74,8 @@ public class ProgressManager : MonoBehaviour
         SS_GM = SS_game.GetComponent<SkillShotGameManager>();
         CS_GM = CS_game.GetComponent<CarnivalSmashGameManager>();
         CB_GM = CB_game.GetComponent<CasketBasketsGameManager>();
+
+        menu = GameObject.FindObjectOfType<Menu>();
     }
 
     // Update is called once per frame
@@ -157,6 +160,8 @@ public class ProgressManager : MonoBehaviour
 
     void playEnding()
     {
+        menu.ResetTarotCards();
+        
         //keep player from moving
         FPSController.Instance.canMove = false;
         //mute all other audio groups
