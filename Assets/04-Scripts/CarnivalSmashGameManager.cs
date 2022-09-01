@@ -20,15 +20,15 @@ public class CarnivalSmashGameManager : GameBooth
     float randomTauntTime;
     float randomStayTime;
 
+    [HideInInspector] public bool tauntCritVisible;
     public bool gameJustFinished;
     public bool stopPopUp; //Used to pause the coroutine
-
-    [HideInInspector] public bool tauntCritVisible;
-
     /*[HideInInspector] */public bool popUp;
     /*[HideInInspector] */public bool critterIsVisible;
     /*[HideInInspector] */public bool isTaunting = false;
     /*[HideInInspector] */public bool gameIsRunning;
+
+    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
     [SerializeField] GameObject[] critters;
     [SerializeField] GameObject[] taunts;
@@ -83,20 +83,21 @@ public class CarnivalSmashGameManager : GameBooth
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
             {
                 weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
-                Debug.Log("Index of current weapon = " + weaponListIndex);
+                //Debug.Log("Index of current weapon = " + weaponListIndex);
                 WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
                 WE.currentWeapon.SetActive(false); //Hide the weapon
+                saveCurrentWeapon = WE.currentWeapon; //Store this so it can be equipped
             }
             //2. Equip this game's weapon & assign to current weapon
             playerWeapon.SetActive(true); //Show player holding weapon
             WE.currentWeapon = playerWeapon;
-            Debug.Log("Current weapon = " + WE.currentWeapon); //gunhold
+            //Debug.Log("Current weapon = " + WE.currentWeapon); //gunhold
             //3. Display proper Tarot for this weapon if game was won.
             if (WE.haveMallet)
             {
                 //EnableGameActiveCard();
                 int index = WE.weaponList.IndexOf(playerWeapon); //Get the index of this weapon in the list
-                Debug.Log("Index = " + index); //0
+                //Debug.Log("Index = " + index); //0
                 WE.weaponCards[index].GetComponent<Image>().enabled = true; //Show the Tarot for this weapon
             }
 
@@ -110,7 +111,7 @@ public class CarnivalSmashGameManager : GameBooth
 
             //SCORE
             ScoreDisplay();
-                    
+
             //WIN/LOSE
             StartCoroutine(WinLoseDisplay());
 
@@ -120,10 +121,10 @@ public class CarnivalSmashGameManager : GameBooth
             {
                 ShowGameRules();
                 stopPopUp = true;
-            } 
+            }
             else if (!isPaused)
             {
-                stopPopUp = false;   
+                stopPopUp = false;
             }
 
             if (gameWon)
@@ -151,14 +152,23 @@ public class CarnivalSmashGameManager : GameBooth
             {
                 stopPopUp = true;
                 StartCoroutine(ShutDownGameMusicAndLights());
-            }
+                if (!csWon)
+                {
+                    playerWeapon.SetActive(false); //Remove weapon from player's hands.
 
-            if (!csWon)
-            {
-                playerWeapon.SetActive(false); //Remove weapon from player's hands.
-
-                //If the game is lost and the weapon list is empty, set the current weapon to null.
-                if (WE.weaponList.Count == 0) { WE.currentWeapon = null; }
+                    //If the game is lost and the weapon list is empty, set the current weapon to null.
+                    if (WE.weaponList.Count == 0)
+                    {
+                        WE.currentWeapon = null;
+                    }
+                    //If the game is lost and player has weapons, then equip the last held weapon.
+                    else
+                    {
+                        WE.currentWeapon = saveCurrentWeapon;
+                        WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                        WE.currentWeapon.SetActive(true); //Show the last held weapon
+                    }
+                }
             }
         }
     }
