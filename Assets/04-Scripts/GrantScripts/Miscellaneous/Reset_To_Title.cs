@@ -6,11 +6,17 @@ using UnityEngine.UI;
 
 public class Reset_To_Title : MonoBehaviour
 {
+    public static Reset_To_Title Instance;
+
     public GameObject titleMenu;
     public GameObject titleCam;
     public Menu menu;
     [SerializeField] HudManager hudManager;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         menu = FindObjectOfType<Menu>();

@@ -186,6 +186,33 @@ public class Menu : MonoBehaviour
         //Debug.Log(GM.GameState);
     }
 
+    public void ResetGame()
+    {
+        counter = -1; //Keeps pause menu from showing on Title screen
+        ShowCursor();
+        ClearButton();
+        PlayIntroMusic();
+
+        //Actiate Title screen and Title camera of Intro scene
+        titleScreen.SetActive(true);
+        titleCamera.SetActive(true);
+
+        //Remove the loaded game level.
+        SceneManager.SetActiveScene(SceneManager.GetSceneAt(0));
+        SceneManager.UnloadSceneAsync(1);
+
+        //Reset audio to original levels
+        HudManager.Instance.myMixer.SetFloat("MusicVolume", HudManager.Instance.musicVolume);
+        HudManager.Instance.myMixer.SetFloat("SFXVolume", HudManager.Instance.sfxVolume);
+        HudManager.Instance.myMixer.SetFloat("PlayerVolume", HudManager.Instance.playerVolume);
+    }
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
     public IEnumerator LoadLevel()
     {
         counter = 0;
