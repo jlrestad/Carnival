@@ -32,11 +32,6 @@ public class Ticket_Generator : MonoBehaviour
          myPooler = ObjectPooler.PoolInstance;
         attemptDrop();
     }
-
-    private void OnEnable()
-    {
-        attemptDrop();
-    }
     //==================================================
     //=========================|CUSTOM METHODS|
     //==================================================
