@@ -829,7 +829,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 246037675090178966}
         m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
-        m_MethodName: ResetToTitle
+        m_MethodName: ResetGamePrefs
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -853,3 +853,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleMenu: {fileID: 0}
   titleCam: {fileID: 0}
+  menu: {fileID: 0}
+  hudManager: {fileID: 0}
