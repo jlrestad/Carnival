@@ -27,7 +27,7 @@ public class TargetSetActive : MonoBehaviour
     public GameObject bigHitFX;
     public AudioSource targetAudio;
     public AudioClip goodHitSound, badHitSound, flipSound, shakeSound;
-    public bool Flippable = true;
+    public bool flippable;
     public float OGFlipTime;
 
     //Unneeded since more than one target uses this script.
@@ -38,6 +38,7 @@ public class TargetSetActive : MonoBehaviour
 
     private void Start()
     {
+        flippable = true;
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
         movingTarget = GetComponentInParent<MovingTarget>();
         animator = GetComponentInParent<Animator>();
@@ -47,7 +48,7 @@ public class TargetSetActive : MonoBehaviour
 
     private void Update()
     {
-        if(Flippable)
+        if(flippable)
         {
             flipTime = OGFlipTime * Random.Range(0.2f, 3f);
             StartCoroutine(FlipAround());
@@ -67,11 +68,10 @@ public class TargetSetActive : MonoBehaviour
     //Flip target from front to back within the flip time set
     public IEnumerator FlipAround()
     {
-        Flippable = false;
-        while (skillshotGM.gameOn && !skillshotGM.isPaused)
+        while (skillshotGM.gameOn)
         {
             //If Positive
-            if (!isFlipped && !skillshotGM.gameOver)
+            if (!isFlipped && !skillshotGM.gameOver && !skillshotGM.isPaused)
             {
                 yield return new WaitForSeconds(flipTime);
 
@@ -79,6 +79,8 @@ public class TargetSetActive : MonoBehaviour
                 animator.SetBool("isNeg", true);
 
                 isFlipped = true;
+                flippable = false;
+
             }
 
             //If Negative
@@ -100,7 +102,7 @@ public class TargetSetActive : MonoBehaviour
                 isFlipped = true;
             }
 
-            Flippable = true;
+            flippable = true;
             yield return null;
         }
     }

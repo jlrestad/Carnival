@@ -28,8 +28,8 @@ public class Reset_To_Title : MonoBehaviour
     //CALLS THE METHODS TO SET RESET THE GAME
     public void ResetGamePrefs()
     {
-        //Reset counter for pause screen
-        menu.counter = -1;
+        menu.counter = -1; //Reset counter for pause screen
+        menu.controllerArray = null; //Clear the array
         menu.ClearButton(); //Clears button in Event System so that the 1st button of the menu is highlighted.
 
         ShowCursor(); //Allows the cursor to be used on the Title menu

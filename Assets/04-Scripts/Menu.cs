@@ -92,7 +92,8 @@ public class Menu : MonoBehaviour
         GM = GameManager.Instance;
         GM.OnStateChange += HandleOnStateChange;
 
-        controllerArray = Input.GetJoystickNames();
+        if (controllerArray != null)
+            controllerArray = Input.GetJoystickNames();
     }
 
     public void HandleOnStateChange()
@@ -189,6 +190,7 @@ public class Menu : MonoBehaviour
     public void ResetGame()
     {
         counter = -1; //Keeps pause menu from showing on Title screen
+        controllerArray = null;
         ShowCursor();
         ClearButton();
         PlayTitleMusic();
@@ -200,6 +202,8 @@ public class Menu : MonoBehaviour
         //Remove the loaded game level.
         SceneManager.SetActiveScene(SceneManager.GetSceneAt(0));
         SceneManager.UnloadSceneAsync(1);
+
+        ResetTarotCards();
 
         //Reset audio to original levels
         HudManager.Instance.myMixer.SetFloat("MusicVolume", HudManager.Instance.musicVolume);
