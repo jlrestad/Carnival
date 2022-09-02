@@ -218,8 +218,6 @@ public class GameBooth : MonoBehaviour
 
     public void ShowGameRules()
     {
-        Menu.Instance.ClearButton();
-
         //If the main pause menu is not visible, then show the game rules.
         if (Menu.Instance.counter != 1)
         {
@@ -236,6 +234,8 @@ public class GameBooth : MonoBehaviour
 
             FPSController.Instance.canMove = false;
             WeaponEquip.Instance.gameMenuDisplayed = true;
+            Menu.Instance.ClearButton();
+
             gameRules.SetActive(true);
         }
     }
