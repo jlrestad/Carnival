@@ -23,7 +23,7 @@ public class PlayCarnivalMusic : MonoBehaviour
             //menu.PlaySceneMusic();
             if (fadingIn)
             {
-                StartCoroutine(FadeIn(menu.sceneMusic, 0.1f, 1));
+                StartCoroutine(FadeIn(menu.sceneMusic, 0.1f, 0.3f));
             }
 
             //* Fade out could be triggered by play and then the music would stay off inside the carnival. So won't use it for now.
