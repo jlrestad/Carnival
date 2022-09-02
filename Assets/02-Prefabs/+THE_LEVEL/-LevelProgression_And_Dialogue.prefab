@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1908208335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1908208336}
+  - component: {fileID: 1908208338}
+  - component: {fileID: 1908208337}
+  m_Layer: 0
+  m_Name: CarnivalMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1908208336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908208335}
+  m_LocalRotation: {x: -0, y: -0.023698365, z: -0, w: 0.9997192}
+  m_LocalPosition: {x: -8.48, y: -9.1, z: 37.30021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3476616678222750389}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: -2.716, z: 0}
+--- !u!65 &1908208338
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908208335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 7.063883, z: 20.157335}
+  m_Center: {x: 0, y: 3.0319414, z: 0.18456554}
+--- !u!114 &1908208337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908208335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4dd344e78171346a5cd8f01bc6b3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 0}
+  fadingIn: 0
 --- !u!1 &3476616676659448105
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3476616677168661561
 Transform:
   m_ObjectHideFlags: 0
@@ -2022,6 +2081,7 @@ Transform:
   - {fileID: 2885867130545413703}
   - {fileID: 2885867131796139782}
   - {fileID: 1563126306870689939}
+  - {fileID: 1908208336}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2066,6 +2126,7 @@ MonoBehaviour:
   CSComplete: 0
   CBComplete: 0
   CompleteCounter: 0
+  menu: {fileID: 0}
 --- !u!1 &3476616678324597433
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,14 +2816,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1672615252325522502, guid: 3c49934fd8cc82e459d5ad3b44d4941f, type: 3}
   m_PrefabInstance: {fileID: 3476616678239343170}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6560743957816488910 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7724550412142289292, guid: 3c49934fd8cc82e459d5ad3b44d4941f, type: 3}
-  m_PrefabInstance: {fileID: 3476616678239343170}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2885867131796139782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1743953737242164548, guid: 3c49934fd8cc82e459d5ad3b44d4941f, type: 3}
+  m_PrefabInstance: {fileID: 3476616678239343170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6560743957816488910 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7724550412142289292, guid: 3c49934fd8cc82e459d5ad3b44d4941f, type: 3}
   m_PrefabInstance: {fileID: 3476616678239343170}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &712240766008154355

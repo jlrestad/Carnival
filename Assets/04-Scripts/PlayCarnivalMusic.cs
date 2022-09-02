@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayCarnivalMusic : MonoBehaviour
 {
-    Menu menu;
+    public Menu menu;
     [SerializeField] bool fadingIn;
 
 
@@ -19,6 +19,7 @@ public class PlayCarnivalMusic : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Entered Trigger Zone");
             //menu.PlaySceneMusic();
             if (fadingIn)
             {
