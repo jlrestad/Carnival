@@ -366,6 +366,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1981401920}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
+        m_MethodName: ResetAudioPrefs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &18021059958116062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,9 +1797,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7417012473816126014}
         m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
-        m_MethodName: ResetToTitle
+        m_MethodName: ResetGamePrefs
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1797,13 +1809,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
+      - m_Target: {fileID: 7417012473816126014}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
+        m_MethodName: ResetAudioPrefs
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 199ff3f7b40b9674295d327d550a822c, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2861,6 +2873,7 @@ RectTransform:
   - {fileID: 8250705981387382218}
   - {fileID: 4844136976939006973}
   - {fileID: 6508545342451064825}
+  - {fileID: 7572080636119007515}
   m_Father: {fileID: 7651125084999834783}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8230,7 +8243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3908507892113123619
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12435,13 +12448,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'This pile of odd, baseball-sized skulls was won from the "Casket Baskets"
-    game. Some invisible force keeps them chomping their jaws hard enough to chew
-    through steel. Handle with care.
+  m_Text: 'This pile of baseballs was painted to look like skulls. THough cold to
+    the touch, they immediately ignite when thrown.
 
 
-    They feel real, but what kind of creature
-    would they belong to?'
+    They feel alive somehow...'
 --- !u!1 &3908507892883318289
 GameObject:
   m_ObjectHideFlags: 0
@@ -16031,3 +16042,105 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9165939978902403813}
   m_CullTransparentMesh: 1
+--- !u!1001 &3908507892936749858
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3908507891057696916}
+    m_Modifications:
+    - target: {fileID: 1744985372860333753, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_Name
+      value: Flashlight_F
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -39.599976
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 96.599976
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6500813a45699044804cffd790ffff4, type: 3}
+--- !u!224 &7572080636119007515 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
+  m_PrefabInstance: {fileID: 3908507892936749858}
+  m_PrefabAsset: {fileID: 0}

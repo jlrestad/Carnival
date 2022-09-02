@@ -16,6 +16,7 @@ public class CarnivalSmashGameManager : GameBooth
     public float maxRando; /*private float maxRandoTemp;*/
     public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
     public float speedCap;
+    float maxRandoSaver;
     float randomPopUpTime;
     float randomTauntTime;
     float randomStayTime;
@@ -54,6 +55,7 @@ public class CarnivalSmashGameManager : GameBooth
         timeLeft = GetTimeCounter();
         stopPopUp = false;
 
+        maxRandoSaver = maxRando; //Save this value so it can be returned
         StartCoroutine(EnemyPopUp());
     }
 
@@ -62,22 +64,6 @@ public class CarnivalSmashGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
-            ////Hide weapon, if holding one, before holding new weapon.
-            //if (WE.currentWeapon != null && WE.currentWeapon != WE.malletHold)
-            //{
-            //    WE.currentWeapon.SetActive(false);
-            //    DisablePreviousActiveCard();
-            //}
-            ////WEAPON
-            //playerWeapon.SetActive(true); //Show player holding weapon
-            //WE.currentWeapon = playerWeapon;
-            ////Display Proper Tarot if a different weapon was in hand during game start.
-            //if (WE.haveMallet)
-            //{
-            //    EnableGameActiveCard();
-            //    //WE.currentWeapon = WE.malletHold; //Set the current weapon to this game's weapon.
-            //}
-
             //WEAPON EQUIP
             //1. Hide weapon, if holding one, before holding this weapon & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
@@ -148,6 +134,8 @@ public class CarnivalSmashGameManager : GameBooth
         }
         else if (!gameOn)
         {
+            maxRando = maxRandoSaver;
+
             if (!gameWon && showLostText)
             {
                 stopPopUp = true;
