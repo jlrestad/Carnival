@@ -72,6 +72,12 @@ public class MeleeSwing : MonoBehaviour
 
     private void Update()
     {
+        //Fix Mallet not being able to swing when a new game is won or lost while holding the mallet.
+        if (WeaponEquip.Instance.malletHold.activeInHierarchy)
+        {
+            canSwing = true;
+        }
+
         //can remove from full game.
         // need to comment these two lines when in boss AI scene, and check the boxes for these bools in the inspector
         //if (skillshotGM.gameWon) ssWon = true;

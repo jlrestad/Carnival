@@ -1010,9 +1010,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponEquip: {fileID: 541327498332730302}
-  walkSpeed: 3
-  runSpeed: 8
-  jumpSpeed: 5.5
+  walkSpeed: 4
+  runSpeed: 9
+  jumpSpeed: 5
   lookSpeed: 100
   gravity: 9.8
   slideSpeed: 10
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   holdingSkull: 0
   gameMenuDisplayed: 0
   gameName: 
-  maxHitDistance: 10
+  maxHitDistance: 15
   menu: {fileID: 0}
 --- !u!114 &7986990732695270253
 MonoBehaviour:
