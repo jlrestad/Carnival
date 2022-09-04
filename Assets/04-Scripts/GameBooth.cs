@@ -299,7 +299,7 @@ public class GameBooth : MonoBehaviour
 
             //Make sure light is on - and turn it higher when game is in play.
             minigameLight.SetActive(true);
-            minigameLight.GetComponent<Light>().intensity = 45;
+            minigameLight.GetComponent<Light>().intensity = 55;
 
             if (minigameAudio.volume == 0)
             {
@@ -443,7 +443,7 @@ public class GameBooth : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         //Turn the light lower when game is not in play.
-        minigameLight.GetComponent<Light>().intensity = 10;
+        minigameLight.GetComponent<Light>().intensity = 20;
 
         //Turn off the light 
         //minigameLight.SetActive(false);

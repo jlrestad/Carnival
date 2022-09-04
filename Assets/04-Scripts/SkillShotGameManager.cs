@@ -117,20 +117,20 @@ public class SkillShotGameManager : GameBooth
                 if (!ssWon)
                 {
                     playerWeapon.SetActive(false); //Remove weapon from player's hands.
-
-                    //If the game is lost and the weapon list is empty, set the current weapon to null.
-                    if(WE.weaponList.Count == 0) 
-                    { 
-                        WE.currentWeapon = null; 
-                    }
-                    //If the game is lost and player has weapons, then equip the last held weapon.
-                    else 
-                    {
-                        WE.currentWeapon = saveCurrentWeapon; 
-                        WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
-                        WE.currentWeapon.SetActive(true); //Show the last held weapon
-                    }
                 }
+                //If the game is lost or quit and the weapon list is empty, set the current weapon to null.
+                if (WE.weaponList.Count > 0)
+                {
+                    WE.currentWeapon = saveCurrentWeapon;
+                    WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                    WE.currentWeapon.SetActive(true); //Show the last held weapon
+                }
+            }
+            //If the game is lost or quit and the weapon list is empty, set the current weapon to null.
+            if (WE.weaponList.Count == 0)
+            {
+                WE.currentWeapon = null;
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
             }
         }
     }

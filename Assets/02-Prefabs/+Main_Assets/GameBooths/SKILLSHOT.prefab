@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195199566}
   m_LocalRotation: {x: 0.2469864, y: -0, z: -0.000000014901163, w: 0.969019}
-  m_LocalPosition: {x: -3.38, y: 1.78, z: -4.01}
+  m_LocalPosition: {x: -3.57, y: 1.12, z: -3.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2233309240263389895}
@@ -43,7 +43,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 50
+  m_Intensity: 25
   m_Range: 5
   m_SpotAngle: 150
   m_InnerSpotAngle: 80
@@ -1454,6 +1454,7 @@ GameObject:
   - component: {fileID: 2977325199842622818}
   - component: {fileID: 1059861277010086312}
   - component: {fileID: 399310558}
+  - component: {fileID: 2318315112433927509}
   m_Layer: 0
   m_Name: gameSign_SkillShot (1)
   m_TagString: Untagged
@@ -1526,6 +1527,20 @@ MeshRenderer:
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &399310558
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564330475404617853}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 401627333635160932, guid: 28f2df4e449c0a140a5a8700e280628e, type: 3}
+--- !u!64 &2318315112433927509
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6387,7 +6402,7 @@ GameObject:
   - component: {fileID: 4919458860083039740}
   - component: {fileID: 4919458860083039738}
   - component: {fileID: 4919458860083039741}
-  - component: {fileID: 4919458860083039739}
+  - component: {fileID: 1850650847}
   m_Layer: 5
   m_Name: InactiveCard
   m_TagString: Untagged
@@ -6452,7 +6467,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4919458860083039739
+--- !u!114 &1850650847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6461,10 +6476,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4919458860083039743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3f47596634363499a18eb4faa61a5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 20318657c5e44184f92d42b56e1e5088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardWon: {fileID: 8910778627959794042}
 --- !u!1 &4919458860668806268
 GameObject:
   m_ObjectHideFlags: 0
@@ -6823,6 +6837,7 @@ MonoBehaviour:
   inactiveCard: {fileID: 4919458860083039743}
   inactiveCardSprite: {fileID: 0}
   activeCardSprite: {fileID: 0}
+  weaponListIndex: 0
   gameOn: 0
   gameWon: 0
   showLostText: 0
@@ -9867,7 +9882,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.96605206, b: 0.8820755, a: 1}
-  m_Intensity: 10
+  m_Intensity: 20
   m_Range: 5
   m_SpotAngle: 179
   m_InnerSpotAngle: 0
@@ -9910,7 +9925,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 4000
+  m_ColorTemperature: 4865
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -10024,7 +10039,7 @@ GameObject:
   - component: {fileID: 7254989800443989125}
   - component: {fileID: 4619881289999419534}
   - component: {fileID: 5325715176256286688}
-  - component: {fileID: 2996449677928884581}
+  - component: {fileID: 271994581}
   m_Layer: 5
   m_Name: ActiveCard
   m_TagString: Untagged
@@ -10089,7 +10104,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2996449677928884581
+--- !u!114 &271994581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10098,9 +10113,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8910778627959794042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20318657c5e44184f92d42b56e1e5088, type: 3}
+  m_Script: {fileID: 11500000, guid: ec3f47596634363499a18eb4faa61a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardWon: {fileID: 0}
 --- !u!1 &9154642183635791917
 GameObject:
   m_ObjectHideFlags: 0

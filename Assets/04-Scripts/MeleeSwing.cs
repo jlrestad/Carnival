@@ -29,6 +29,7 @@ public class MeleeSwing : MonoBehaviour
 
     [Header("SPAWNED OBJECTS")]
     [SerializeField] GameObject brokenCrate; //Broken crate prefab
+    [SerializeField] GameObject brokenBottle; //Broken crate prefab
     [SerializeField] GameObject VFXSpawnPoint; //GameObject where VFX will show on mallet
     [SerializeField] TrailRenderer swingTrailVFX; //Gives the appearance of motion.
 
@@ -85,7 +86,6 @@ public class MeleeSwing : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
-            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
 
             //Physically swing the mallet.
             StartCoroutine(SwingMallet());
@@ -93,10 +93,12 @@ public class MeleeSwing : MonoBehaviour
             //Send a raycast out from the player as far as the range.
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, range))
             {
+                Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
+
                 //Debug.Log(hit.distance);
                 Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
 
-                Transform target = hit.transform.GetComponent<Transform>(); //For breakable
+                Transform target = hit.collider.GetComponent<Transform>(); //For breakable
                 CritterEnemy enemy = hit.transform.GetComponent<CritterEnemy>();
                 CarnivalSmashGameManager carnivalsmashGM = hit.transform.GetComponentInParent<CarnivalSmashGameManager>();
 
@@ -114,6 +116,13 @@ public class MeleeSwing : MonoBehaviour
                 {
                     //Add force to the broken object rigidbody
                     hit.rigidbody.AddForce(target.up * force);
+                }
+                //
+                if (target != null && target.CompareTag("BottleBreakable"))
+                {
+                    //Swap unbroken for broken
+                    Instantiate(brokenBottle, target.transform.position, target.transform.rotation);
+                    Destroy(target.gameObject);
                 }
 
                 //FOR CRITTERS

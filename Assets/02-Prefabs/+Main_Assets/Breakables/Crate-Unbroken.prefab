@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8378292058963227684}
   m_Layer: 0
   m_Name: polySurface31
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4562547709735012276}
   m_Layer: 0
   m_Name: polySurface21
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 1803435164684360163}
   m_Layer: 0
   m_Name: polySurface29
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 7955495481892522509}
   m_Layer: 0
   m_Name: polySurface23
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -383,11 +383,11 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2886135565243524713}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e52fb17f9b1e7fd48b8955f1391d3688, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.88294333, y: 0.57983243, z: 0.5192318}
+  m_Size: {x: 0.9, y: 0.57983243, z: 0.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3594368502533724166
 GameObject:
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 3398642064224033123}
   m_Layer: 0
   m_Name: polySurface28
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 1513605549502568936}
   m_Layer: 0
   m_Name: polySurface20
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 6181975206690819964}
   m_Layer: 0
   m_Name: polySurface19
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 5627885723842398410}
   m_Layer: 0
   m_Name: polySurface27
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 7925046954619564252}
   m_Layer: 0
   m_Name: polySurface25
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 5563171751916939549}
   m_Layer: 0
   m_Name: polySurface24
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -789,7 +789,7 @@ GameObject:
   - component: {fileID: 37731871604267849}
   m_Layer: 0
   m_Name: polySurface26
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 6331059862136887655}
   m_Layer: 0
   m_Name: polySurface22
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 1031319439145113212}
   m_Layer: 0
   m_Name: Straps_M
-  m_TagString: Untagged
+  m_TagString: CrateBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
