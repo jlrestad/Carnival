@@ -55,7 +55,7 @@ public class MovingTarget : MonoBehaviour
     void Update()
     {
 
-        if (!skillshotGM.gameOver && !skillshotGM.gameWon /* && weaponEquip.haveGun*/)
+        if (!skillshotGM.gameOver && !skillshotGM.gameWon)
         {
             int count = 0;
             count++;
@@ -78,6 +78,10 @@ public class MovingTarget : MonoBehaviour
             if (target.GetComponentInChildren<TargetSetActive>().hasGone == true)
             {
                 target.GetComponentInChildren<TargetSetActive>().hasGone = false;
+            }
+            if (target.GetComponentInChildren<TargetSetActive>().isFlipped == true)
+            {
+                target.GetComponentInChildren<TargetSetActive>().isFlipped = false;
             }
         }
     }

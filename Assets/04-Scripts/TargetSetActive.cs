@@ -50,7 +50,7 @@ public class TargetSetActive : MonoBehaviour
     {
         if(flippable)
         {
-            flipTime = OGFlipTime * Random.Range(0.2f, 3f);
+            flipTime = OGFlipTime * Random.Range(0.3f, 3f);
             StartCoroutine(FlipAround());
         }
     }
@@ -62,13 +62,14 @@ public class TargetSetActive : MonoBehaviour
         {
             reachedEnd = true;
             hasGone = true;
+    
         }
     }
 
     //Flip target from front to back within the flip time set
     public IEnumerator FlipAround()
     {
-        while (skillshotGM.gameOn)
+        while (skillshotGM.gameOn && !skillshotGM.isPaused)
         {
             //If Positive
             if (!isFlipped && !skillshotGM.gameOver && !skillshotGM.isPaused)
@@ -79,7 +80,7 @@ public class TargetSetActive : MonoBehaviour
                 animator.SetBool("isNeg", true);
 
                 isFlipped = true;
-                flippable = false;
+                //flippable = false;
 
             }
 

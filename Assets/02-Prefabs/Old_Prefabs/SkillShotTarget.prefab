@@ -114,7 +114,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4275399, y: 0.4200433, z: 0.03937139}
+  m_Size: {x: 0.5, y: 0.5, z: 0.03937139}
   m_Center: {x: 0.0007436425, y: -0.0018268526, z: 0.00053698383}
 --- !u!114 &4229616649728400432
 MonoBehaviour:
@@ -132,7 +132,7 @@ MonoBehaviour:
   skillshotGM: {fileID: 0}
   hideSpot: {fileID: 8887548058049208305}
   targetParent: {fileID: 5404032245932627344}
-  flipTime: 1
+  flipTime: 2
   shakeTime: 0
   reachedEnd: 0
   targetHit: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   badHitSound: {fileID: 8300000, guid: c3d00501598052f4484e4cf083f088eb, type: 3}
   flipSound: {fileID: 8300000, guid: b76b68f18e09f9048a9b61bf4948878d, type: 3}
   shakeSound: {fileID: 8300000, guid: fb95192e8eeecd24d94d3281ccc5a908, type: 3}
-  Flippable: 1
+  flippable: 0
   OGFlipTime: 0
 --- !u!82 &2308178632848984674
 AudioSource:

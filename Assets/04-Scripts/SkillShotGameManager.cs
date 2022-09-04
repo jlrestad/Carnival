@@ -142,7 +142,7 @@ public class SkillShotGameManager : GameBooth
         GameObject target;
         poolAmount = (int)timeCounter - 2;
         //Pool the amount of targets needed and hold them in a list.
-        while(pooledTargets.Count < poolAmount)
+        while(pooledTargets.Count < poolAmount && !isPaused)
         {
             target = Instantiate(targetPrefab, parentPos, instantiateInWorldSpace: false) as GameObject;
             target.SetActive(false);
@@ -170,10 +170,21 @@ public class SkillShotGameManager : GameBooth
     {
         int i = 0; 
 
-        while(i < pooledTargets.Count && !isPaused)
+        while(i < pooledTargets.Count)
         {
             if(gameOn)
             {
+                float moveSpeedHold = moveSpeed;
+
+                if (isPaused)
+                {
+                    moveSpeed = 0f;
+                }
+                else
+                {
+                    moveSpeed = moveSpeedHold;
+                }
+
                 //if target at beginning or end, turn off
                 if (pooledTargets[i].transform.position == parentPos.position || pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
                 {
@@ -181,7 +192,7 @@ public class SkillShotGameManager : GameBooth
                 }
 
                 //call translate while it hasn't reached end
-                if (!pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !pooledTargets[i].GetComponentInChildren<TargetSetActive>().hasGone)
+                if (!pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !pooledTargets[i].GetComponentInChildren<TargetSetActive>().hasGone/* && !isPaused*/)
                 {
                     pooledTargets[i].SetActive(true);
                     pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
@@ -189,7 +200,7 @@ public class SkillShotGameManager : GameBooth
 
                 yield return new WaitForSeconds(timeBetweenTargets);
 
-                if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
+                if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !isPaused)
                 {
                     SendOneHome(pooledTargets[i], parentPos);
                 }
