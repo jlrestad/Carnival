@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,11 +31,19 @@ public class Reset_To_Title : MonoBehaviour
     {
         menu.counter = -1; //Reset counter for pause screen
         menu.controllerArray = null; //Clear the array
-        menu.ClearButton(); //Clears button in Event System so that the 1st button of the menu is highlighted.
 
         ShowCursor(); //Allows the cursor to be used on the Title menu
         ResetAudioPrefs(); //Sets the audio back to original levels
         ResetToTitle(); //Turns on the Title screen and camera of the Intro scene, and unloads the game scene.
+    }
+
+    public void ClearButton()
+    {
+        //Clear button selected
+        EventSystem.current.SetSelectedGameObject(null);
+        //Set selected button
+        GameObject firstButton = GameObject.FindGameObjectWithTag("FirstButton");
+        EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     //RESETS THE AUDIO TO ORIGINAL LEVELS
