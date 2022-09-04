@@ -189,12 +189,6 @@ public class Menu : MonoBehaviour
     //Called from an OnClick function Quit button of Pause menu
     public void ResetGame()
     {
-        counter = -1; //Keeps pause menu from showing on Title screen
-        controllerArray = null;
-        ShowCursor();
-        ClearButton();
-        PlayTitleMusic();
-
         //Actiate Title screen and Title camera of Intro scene
         titleScreen.SetActive(true);
         titleCamera.SetActive(true);
@@ -202,7 +196,12 @@ public class Menu : MonoBehaviour
         //Remove the loaded game level.
         SceneManager.SetActiveScene(SceneManager.GetSceneAt(0));
         SceneManager.UnloadSceneAsync(1);
-
+       
+        counter = -1; //Keeps pause menu from showing on Title screen
+        controllerArray = null;
+        ShowCursor();
+        //ClearButton();
+        PlayTitleMusic();
         ResetTarotCards();
 
         //Reset audio to original levels
