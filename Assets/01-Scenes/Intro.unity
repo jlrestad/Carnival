@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 3740771}
   - component: {fileID: 3740770}
   - component: {fileID: 3740769}
+  - component: {fileID: 3740772}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -218,9 +219,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 583050339}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: ResetGame
+      - m_Target: {fileID: 3740772}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
+        m_MethodName: ResetGamePrefs
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -254,8 +255,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 583050339}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+      - m_Target: {fileID: 3740772}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
+        m_MethodName: ResetAudioPrefs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3740772}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
         m_MethodName: ClearButton
         m_Mode: 1
         m_Arguments:
@@ -304,6 +317,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3740767}
   m_CullTransparentMesh: 1
+--- !u!114 &3740772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c03480e2ff5fc48a28b247e29c6186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleMenu: {fileID: 142473345}
+  titleCam: {fileID: 1155654098}
+  menu: {fileID: 0}
+  hudManager: {fileID: 0}
 --- !u!1 &6135017
 GameObject:
   m_ObjectHideFlags: 0

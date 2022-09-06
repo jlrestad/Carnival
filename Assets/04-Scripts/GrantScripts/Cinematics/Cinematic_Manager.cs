@@ -9,16 +9,28 @@ public class Cinematic_Manager : MonoBehaviour
      * Grant Hargraves - June 2022
      */
     //=========================|FIELDS|=========================
+    public static Cinematic_Manager Instance;
+
     [Header("PLUG-INS")]
     [Tooltip("The gameobject that performs the animations handled here")]
     [SerializeField] GameObject myBlackbox; //the gameobject that performs the animations we handle here.
     private Animator myAnimator; //the animator attribute attached to myBlackBox-- assigned automatically.
     private CinHolder currentHolder; //the Cinholder attached to the object we most recently collided with.
+    public bool playingIntro;
 
 
     //=========================|METHODS|=========================
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
+        Menu.Instance.counter = 1;
+        playingIntro = true;
+
         myAnimator = myBlackbox.GetComponent<Animator>();
         if(myAnimator == null)
         {
@@ -28,10 +40,16 @@ public class Cinematic_Manager : MonoBehaviour
 
     void Update()
     {
-        // *** Mouse 0 is already set to Fire1 -- set "Advance" to something else. ***
-        if(Input.GetButton("Advance"))
+        if (Input.GetButton("Advance") || Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
         {
             myAnimator.SetBool("dismiss", true);
+
+            //Controls pause so that it can't be displayed during the intro.
+            if (playingIntro)
+            {
+                Menu.Instance.counter = 0;
+                playingIntro = false;
+            }
         }
     }
 
@@ -44,6 +62,7 @@ public class Cinematic_Manager : MonoBehaviour
             myAnimator.SetBool("dismiss", false);
             myAnimator.SetBool("showStart", false);
             myAnimator.SetBool("blackScreen", false);
+            playingIntro = true;
         }
         if(cinTitle.Equals("ShowcaseEnding"))
         {
@@ -68,6 +87,7 @@ public class Cinematic_Manager : MonoBehaviour
             if(currentHolder != null)
             {
                 playCinematic(currentHolder.CinematicTitle);
+                playingIntro = true;
             }
         }
     }

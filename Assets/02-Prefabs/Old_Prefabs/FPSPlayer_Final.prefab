@@ -932,6 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myBlackbox: {fileID: 0}
+  playingIntro: 0
 --- !u!1 &1743390831600175032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,6 +2416,7 @@ MonoBehaviour:
   hitEnemySound: {fileID: 1692367753102884753}
   hitColliderSound: {fileID: 1377461590868220498}
   brokenCrate: {fileID: 3278272139761628569, guid: a4fb38424d6658e4884d0afb4f0ea3bd, type: 3}
+  brokenBottle: {fileID: 0}
   VFXSpawnPoint: {fileID: 1377461589856123431}
   swingTrailVFX: {fileID: 0}
 --- !u!95 &1446349669
@@ -2480,8 +2482,8 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8867924, g: 0.8647063, b: 0.74875396, a: 1}
-  m_Intensity: 50
-  m_Range: 600
+  m_Intensity: 40
+  m_Range: 300
   m_SpotAngle: 90
   m_InnerSpotAngle: 20
   m_CookieSize: 10

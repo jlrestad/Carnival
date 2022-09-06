@@ -28,12 +28,13 @@ public class Menu : MonoBehaviour
 {
     public static Menu Instance;
 
-    GameManager GM;
-    WeaponEquip WE;
+    public GameManager GM;
+    public WeaponEquip WE;
+    public Cinematic_Manager CM;
 
-    CarnivalSmashGameManager carnivalSmashGM;
-    SkillShotGameManager skillShotGM;
-    CasketBasketsGameManager casketbasketGM;
+    public CarnivalSmashGameManager carnivalSmashGM;
+    public SkillShotGameManager skillShotGM;
+    public CasketBasketsGameManager casketbasketGM;
 
     [Header("AUDIO")]
     //public AudioMixer audioMixer;
@@ -103,16 +104,27 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        //Add the joystick to the array if there is one.
         if (controllerArray == null) { controllerArray = Input.GetJoystickNames(); }
 
-        carnivalSmashGM = FindObjectOfType<CarnivalSmashGameManager>();
-        skillShotGM = FindObjectOfType<SkillShotGameManager>();
-        casketbasketGM = FindObjectOfType<CasketBasketsGameManager>();
-        WE = FindObjectOfType<WeaponEquip>();
+        //Find these scripts if they haven't been found yet.
+        if (carnivalSmashGM == null)
+            carnivalSmashGM = FindObjectOfType<CarnivalSmashGameManager>();
+        
+        if (skillShotGM == null)
+            skillShotGM = FindObjectOfType<SkillShotGameManager>();
+        
+        if (casketbasketGM == null)
+            casketbasketGM = FindObjectOfType<CasketBasketsGameManager>();
+        
+        if (WE == null)
+            WE = FindObjectOfType<WeaponEquip>();
+        
+        if (CM == null)
+            CM = FindObjectOfType<Cinematic_Manager>();
 
-        //Set Player
-        //player = GameObject.FindGameObjectWithTag("Player");
 
+        //Keep pause menu from opening
         if (settingsMenu.activeInHierarchy == true)
         {
             settingsOn = true;
@@ -139,11 +151,11 @@ public class Menu : MonoBehaviour
             Cursor.visible = false;
         }
 
-        if (Input.GetButtonDown("Menu") && counter == 0 && !CasketBasketsGameManager.Instance.gameOn)
+        if (Input.GetButtonDown("Menu") && counter == 0 && !CasketBasketsGameManager.Instance.gameOn && !CM.playingIntro)
         {
             PauseGame();
         }
-        else if (Input.GetButtonDown("Menu") && counter == 1 && !settingsOn)
+        else if (Input.GetButtonDown("Menu") && counter == 1 && !settingsOn && !CM.playingIntro)
         {
             UnpauseGame();
             Cursor.visible = false;
@@ -214,9 +226,6 @@ public class Menu : MonoBehaviour
 
     public IEnumerator LoadLevel()
     {
-        counter = 0;
-        //Restart the index of gameCardsSlots[] to 0
-
         titleScreen.SetActive(false);
 
         loadScreen.SetActive(true);
@@ -241,18 +250,6 @@ public class Menu : MonoBehaviour
         //sceneLight = GameObject.FindGameObjectWithTag("SceneLight").GetComponent<Light>();
         //sceneLight = GameObject.Find("MoonLight").GetComponent<Light>();
     }
-
-    //public void AddScene(string name)
-    //{
-    //    //Clear button selected
-    //    EventSystem.current.SetSelectedGameObject(null);
-
-    //    SceneManager.LoadScene(name, LoadSceneMode.Additive);
-
-    //    //Hide mouse when new level loaded
-    //    Cursor.lockState = CursorLockMode.Locked;
-    //    Cursor.visible = false;
-    //}
 
     #region PAUSE/UNPAUSE
     //

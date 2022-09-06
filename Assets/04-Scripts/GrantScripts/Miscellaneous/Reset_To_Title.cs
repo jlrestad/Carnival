@@ -29,6 +29,7 @@ public class Reset_To_Title : MonoBehaviour
     //CALLS THE METHODS TO SET RESET THE GAME
     public void ResetGamePrefs()
     {
+        Time.timeScale = 1;
         menu.counter = -1; //Reset counter for pause screen
         menu.controllerArray = null; //Clear the array
 
