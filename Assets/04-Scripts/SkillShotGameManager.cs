@@ -139,15 +139,16 @@ public class SkillShotGameManager : GameBooth
     //CREATES A POOL OF TARGETS
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {
-        GameObject target;
+        GameObject gameTarget;
         poolAmount = (int)timeCounter - 2;
+
         //Pool the amount of targets needed and hold them in a list.
-        while(pooledTargets.Count < poolAmount && !isPaused)
+        while(pooledTargets.Count < poolAmount/* && !isPaused*/)
         {
-            target = Instantiate(targetPrefab, parentPos, instantiateInWorldSpace: false) as GameObject;
-            target.SetActive(false);
-            target.transform.parent = targetParent; //Set the targets inside this gameObject folder
-            pooledTargets.Add(target);
+            gameTarget = Instantiate(targetPrefab, parentPos, instantiateInWorldSpace: false) as GameObject;
+            gameTarget.SetActive(false);
+            gameTarget.transform.parent = targetParent; //Set the targets inside this gameObject folder
+            pooledTargets.Add(gameTarget);
 
             //Turn of the collider for the parent object.
             parentPos.GetComponent<BoxCollider>().enabled = false;
@@ -158,9 +159,12 @@ public class SkillShotGameManager : GameBooth
     //IF TARGET HAS REACHED THE END THEN GO BACK TO THE BEGINNING
     public void SendOneHome(GameObject trgt, Transform parentPos)
     {
+        //Reset bools
         trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
         trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+        //Turn off target
         trgt.SetActive(false);
+        //Move target to parent position
         trgt.transform.position = parentPos.position;
     } 
 
@@ -170,7 +174,7 @@ public class SkillShotGameManager : GameBooth
     {
         int i = 0; 
 
-        while(i < pooledTargets.Count)
+        while(i < pooledTargets.Count /*&& !isPaused*/)
         {
             if(gameOn)
             {
@@ -186,7 +190,7 @@ public class SkillShotGameManager : GameBooth
                 }
 
                 //if target at beginning or end, turn off
-                if (pooledTargets[i].transform.position == parentPos.position || pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
+                if (/*pooledTargets[i].transform.position == parentPos.position ||*/ pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
                 {
                     pooledTargets[i].SetActive(false);
                 }

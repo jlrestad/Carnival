@@ -28,7 +28,7 @@ public class TargetSetActive : MonoBehaviour
     public AudioSource targetAudio;
     public AudioClip goodHitSound, badHitSound, flipSound, shakeSound;
     public bool flippable;
-    public float OGFlipTime;
+    public float OGFlipTime; //* ??
 
     //Unneeded since more than one target uses this script.
     //private void Awake()
@@ -50,7 +50,7 @@ public class TargetSetActive : MonoBehaviour
     {
         if(flippable)
         {
-            flipTime = OGFlipTime * Random.Range(0.3f, 3f);
+            flipTime = /*OGFlipTime **/ Random.Range(2f, 3f);
             StartCoroutine(FlipAround());
         }
     }
@@ -72,35 +72,32 @@ public class TargetSetActive : MonoBehaviour
         while (skillshotGM.gameOn && !skillshotGM.isPaused)
         {
             //If Positive
-            if (!isFlipped && !skillshotGM.gameOver && !skillshotGM.isPaused)
+            if (isFlipped && !skillshotGM.gameOver && !skillshotGM.isPaused)
             {
                 yield return new WaitForSeconds(flipTime);
 
                 //Flip to negative
-                animator.SetBool("isNeg", true);
-
-                isFlipped = true;
-                //flippable = false;
-
-            }
-
-            //If Negative
-            if (isFlipped && !skillshotGM.gameOver)
-            {
-                yield return new WaitForSeconds(flipTime);
-
-                //Flip to positive
                 animator.SetBool("isNeg", false);
 
                 isFlipped = false;
                 targetHit = false;
             }
 
-            if (skillshotGM.gameOver || !skillshotGM.gameOn && !skillshotGM.isPaused)
+            //If Negative
+            if (!isFlipped && !skillshotGM.gameOver && !skillshotGM.isPaused)
             {
-                //targetParent.transform.rotation = Quaternion.Euler(0, 0, 0); //Turn all targets to the backside.
+                yield return new WaitForSeconds(flipTime);
+
+                //Flip to positive
                 animator.SetBool("isNeg", true);
+
                 isFlipped = true;
+            }
+
+            if (skillshotGM.gameOver /*|| !skillshotGM.gameOn && !skillshotGM.isPaused*/)
+            {
+                animator.SetBool("isNeg", false);
+                isFlipped = false;
             }
 
             flippable = true;
