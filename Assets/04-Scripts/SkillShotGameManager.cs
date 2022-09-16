@@ -178,16 +178,7 @@ public class SkillShotGameManager : GameBooth
         {
             if(gameOn)
             {
-                float moveSpeedHold = moveSpeed;
-
-                if (isPaused)
-                {
-                    moveSpeed = 0f;
-                }
-                else
-                {
-                    moveSpeed = moveSpeedHold;
-                }
+                float _moveSpeed = moveSpeed;
 
                 //if target at beginning or end, turn off
                 if (/*pooledTargets[i].transform.position == parentPos.position ||*/ pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
@@ -202,17 +193,28 @@ public class SkillShotGameManager : GameBooth
                     pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
                 }
 
+                if (isPaused)
+                {
+                    moveSpeed = 0f;
+                    yield return new WaitForSeconds(0.1f);
+                }
+                else
+                {
+                    moveSpeed = _moveSpeed;
+                    yield return new WaitForSeconds(0.1f);
+                }
+
                 yield return new WaitForSeconds(timeBetweenTargets);
 
-                if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !isPaused)
-                {
-                    SendOneHome(pooledTargets[i], parentPos);
-                }
+                //if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !isPaused)
+                //{
+                //    SendOneHome(pooledTargets[i], parentPos);
+                //}
                 i++;
             }
             else
-            {   
-                SendOneHome(pooledTargets[i], parentPos);
+            {
+                //SendOneHome(pooledTargets[i], parentPos);
                 i++;
             }
         }

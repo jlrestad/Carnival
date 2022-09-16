@@ -23,6 +23,8 @@ public class TargetSetActive : MonoBehaviour
     public bool targetHit;
     public bool isFlipped;
     public bool hasGone;
+    public bool hasBeenHit;
+
 
     public GameObject bigHitFX;
     public AudioSource targetAudio;
@@ -109,28 +111,22 @@ public class TargetSetActive : MonoBehaviour
     public void HitTarget()
     {
         //If Positive
-        //slide down and hide
-        if (isFlipped)
+        if (isFlipped && !hasBeenHit)
         {
             //Play FX and Audio
             bigHitFX.SetActive(true);
             targetAudio.PlayOneShot(goodHitSound);
 
-            //Move target to this position to hide
-            transform.position = Vector3.Lerp(transform.position, hideSpot.position, 1.0f * Time.deltaTime);
-        }
-
-        targetHit = true;
-
-        if (targetHit && isFlipped)
-        {
+            animator.SetBool("isHit", true);
             skillshotGM.score++;
+
+            hasBeenHit = true;
             //Debug.Log("Score is: " + skillshotGM.score);
         }
 
         //if the wrong side is hit, take a point
         // don't go below 0
-        if(targetHit && !isFlipped)
+        if (!isFlipped)
         {
             targetAudio.PlayOneShot(badHitSound);
             if(skillshotGM.score > 0)
