@@ -64,7 +64,6 @@ public class TargetSetActive : MonoBehaviour
         {
             reachedEnd = true;
             hasGone = true;
-    
         }
     }
 

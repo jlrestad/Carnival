@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 937091952074479005}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8887548058049208305}
   - {fileID: 1579592215666510318}
@@ -138,6 +138,7 @@ MonoBehaviour:
   targetHit: 0
   isFlipped: 0
   hasGone: 0
+  hasBeenHit: 0
   bigHitFX: {fileID: 1579592215666510317}
   targetAudio: {fileID: 2308178632848984674}
   goodHitSound: {fileID: 8300000, guid: bfb24df03ebd39248926f1bd42c61845, type: 3}

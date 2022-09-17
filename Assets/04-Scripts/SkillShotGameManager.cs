@@ -15,7 +15,7 @@ public class SkillShotGameManager : GameBooth
     public bool gameJustPlayed;
     //bool levelLoaded;
     GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
-
+    public List<GameObject> targetRows;
     public MovingTarget[] movingTarget;
 
     bool runOnce; //Controls pickupweapon
@@ -50,21 +50,20 @@ public class SkillShotGameManager : GameBooth
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
             {
                 weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
-                //Debug.Log("Index of current weapon = " + weaponListIndex);
                 WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
                 WE.currentWeapon.SetActive(false); //Hide the weapon
                 saveCurrentWeapon = WE.currentWeapon; //Store this so it can be equipped
             }
+
             //2. Equip this game's weapon & assign to current weapon
             playerWeapon.SetActive(true); //Show player holding weapon
             WE.currentWeapon = playerWeapon;
-            //Debug.Log("Current weapon = " + WE.currentWeapon); //gunhold
+            
             //3. Display proper Tarot for this weapon if game was won.
             if (WE.haveGun)
             {
                 //EnableGameActiveCard();
                 int index = WE.weaponList.IndexOf(playerWeapon); //Get the index of this weapon in the list
-                //Debug.Log("Index = " + index); //
                 WE.weaponCards[index].GetComponent<Image>().enabled = true; //Show the Tarot for this weapon
             }
 
@@ -157,67 +156,59 @@ public class SkillShotGameManager : GameBooth
 
     //
     //IF TARGET HAS REACHED THE END THEN GO BACK TO THE BEGINNING
-    public void SendOneHome(GameObject trgt, Transform parentPos)
-    {
-        //Reset bools
-        trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
-        trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
-        //Turn off target
-        trgt.SetActive(false);
-        //Move target to parent position
-        trgt.transform.position = parentPos.position;
-    } 
+    //public void SendOneHome(GameObject trgt, Transform parentPos)
+    //{
+    //    //Reset bools
+    //    trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
+    //    trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+    //    //Turn off target
+    //    trgt.SetActive(false);
+    //    //Move target to parent position
+    //    trgt.transform.position = parentPos.position;
+    //} 
 
     //
     //CONTROLS THE TARGET MOVEMENT
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
-        int i = 0; 
+        int i = 0;
+        float _moveSpeed = moveSpeed;
 
-        while(i < pooledTargets.Count /*&& !isPaused*/)
+        while (i < pooledTargets.Count && gameOn && !isPaused)
         {
-            if(gameOn)
-            {
-                float _moveSpeed = moveSpeed;
+            //call translate while it hasn't reached end
+              
+            pooledTargets[i].SetActive(true);
+            pooledTargets[i].transform.Translate(direction * Vector3.right * (_moveSpeed * Time.deltaTime), Space.Self);
+            yield return new WaitForSeconds(timeBetweenTargets);
 
-                //if target at beginning or end, turn off
-                if (/*pooledTargets[i].transform.position == parentPos.position ||*/ pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
-                {
-                    pooledTargets[i].SetActive(false);
-                }
-
-                //call translate while it hasn't reached end
-                if (!pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !pooledTargets[i].GetComponentInChildren<TargetSetActive>().hasGone/* && !isPaused*/)
-                {
-                    pooledTargets[i].SetActive(true);
-                    pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
-                }
-
-                if (isPaused)
-                {
-                    moveSpeed = 0f;
-                    yield return new WaitForSeconds(0.1f);
-                }
-                else
-                {
-                    moveSpeed = _moveSpeed;
-                    yield return new WaitForSeconds(0.1f);
-                }
-
-                yield return new WaitForSeconds(timeBetweenTargets);
-
-                //if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd && !isPaused)
-                //{
-                //    SendOneHome(pooledTargets[i], parentPos);
-                //}
-                i++;
-            }
-            else
+            if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
             {
                 //SendOneHome(pooledTargets[i], parentPos);
-                i++;
+                pooledTargets[i].SetActive(false);
             }
+            i++;
         }
+
+        //if (isPaused)
+        //{
+        //    _moveSpeed = 0;
+        //    //All movement stops
+        //}
+        //else
+        //{
+        //    _moveSpeed = moveSpeed;
+        //    //Resume movement
+
+        //    foreach (GameObject trgt in targetRows)
+        //    {
+        //        //If the target is active, then continu the movement
+        //        if (trgt.activeInHierarchy)
+        //        {
+        //            trgt.transform.Translate(direction * Vector3.right * (_moveSpeed * Time.deltaTime), Space.Self);
+        //        }
+        //    }
+        //}
     }
     
 

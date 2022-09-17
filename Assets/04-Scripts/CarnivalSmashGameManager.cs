@@ -69,21 +69,20 @@ public class CarnivalSmashGameManager : GameBooth
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
             {
                 weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
-                //Debug.Log("Index of current weapon = " + weaponListIndex);
                 WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
                 WE.currentWeapon.SetActive(false); //Hide the weapon
                 saveCurrentWeapon = WE.currentWeapon; //Store this so it can be equipped
             }
+           
             //2. Equip this game's weapon & assign to current weapon
             playerWeapon.SetActive(true); //Show player holding weapon
             WE.currentWeapon = playerWeapon;
-            //Debug.Log("Current weapon = " + WE.currentWeapon); //gunhold
+            
             //3. Display proper Tarot for this weapon if game was won.
             if (WE.haveMallet)
             {
                 //EnableGameActiveCard();
                 int index = WE.weaponList.IndexOf(playerWeapon); //Get the index of this weapon in the list
-                //Debug.Log("Index = " + index); //0
                 WE.weaponCards[index].GetComponent<Image>().enabled = true; //Show the Tarot for this weapon
             }
 
