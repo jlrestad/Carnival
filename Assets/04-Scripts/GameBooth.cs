@@ -234,9 +234,9 @@ public class GameBooth : MonoBehaviour
 
             FPSController.Instance.canMove = false;
             WeaponEquip.Instance.gameMenuDisplayed = true;
-            Menu.Instance.ClearButton();
-
+            
             gameRules.SetActive(true);
+            Menu.Instance.ClearButton();
         }
     }
 
