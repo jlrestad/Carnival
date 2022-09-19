@@ -57,11 +57,12 @@ public class MovingTarget : MonoBehaviour
 
         if (!skillshotGM.gameOver && !skillshotGM.gameWon)
         {
-            //int count = 0;
-            //count++;
-            //Debug.Log("move targets " + count);
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
-            
+            if (skillshotGM.isPaused)
+            {
+                //StopCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
+                StopAllCoroutines();
+            }
         }
         
         if (!skillshotGM.gameOn)

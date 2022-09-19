@@ -93,9 +93,14 @@ public class CasketManager : MonoBehaviour
     {
         if(gameObject.transform.position != currentGoal) //if not currently at our goal position...
         {
-            transform.position = Vector3.MoveTowards(transform.position, currentGoal, currentSpeed * Time.deltaTime); //move toward the goal at the speed of currentspeed
+            //Casket movement will stop when game is paused.
+            if (!CasketBasketsGameManager.Instance.isPaused)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, currentGoal, currentSpeed * Time.deltaTime); //move toward the goal at the speed of currentspeed
+            }
+
             //-----SOUND EFFECTS-----
-            if(!moving) //if we just started moving...
+            if (!moving) //if we just started moving...
             {
                 myAudio.clip = CBMove;
                 myAudio.Play(); //play the "moving" sound in a loop

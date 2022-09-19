@@ -142,7 +142,7 @@ public class SkillShotGameManager : GameBooth
         poolAmount = (int)timeCounter - 2;
 
         //Pool the amount of targets needed and hold them in a list.
-        while(pooledTargets.Count < poolAmount/* && !isPaused*/)
+        while(pooledTargets.Count < poolAmount)
         {
             gameTarget = Instantiate(targetPrefab, parentPos, instantiateInWorldSpace: false) as GameObject;
             gameTarget.SetActive(false);
@@ -172,14 +172,13 @@ public class SkillShotGameManager : GameBooth
     public IEnumerator MoveTargets(List<GameObject> pooledTargets, Transform parentPos, int direction, float moveSpeed, float timeBetweenTargets)
     {
         int i = 0;
-        float _moveSpeed = moveSpeed;
 
-        while (i < pooledTargets.Count && gameOn && !isPaused)
+        while (i < pooledTargets.Count && gameOn)
         {
             //call translate while it hasn't reached end
               
             pooledTargets[i].SetActive(true);
-            pooledTargets[i].transform.Translate(direction * Vector3.right * (_moveSpeed * Time.deltaTime), Space.Self);
+            pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
             yield return new WaitForSeconds(timeBetweenTargets);
 
             if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
@@ -189,27 +188,5 @@ public class SkillShotGameManager : GameBooth
             }
             i++;
         }
-
-        //if (isPaused)
-        //{
-        //    _moveSpeed = 0;
-        //    //All movement stops
-        //}
-        //else
-        //{
-        //    _moveSpeed = moveSpeed;
-        //    //Resume movement
-
-        //    foreach (GameObject trgt in targetRows)
-        //    {
-        //        //If the target is active, then continu the movement
-        //        if (trgt.activeInHierarchy)
-        //        {
-        //            trgt.transform.Translate(direction * Vector3.right * (_moveSpeed * Time.deltaTime), Space.Self);
-        //        }
-        //    }
-        //}
     }
-    
-
 }

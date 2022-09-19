@@ -153,7 +153,7 @@ public class Head : MonoBehaviour
         {
             if (skulls[i].transform.parent == null)
             {
-                yield return new WaitForSeconds(0.1f);
+                //yield return new WaitForSeconds(0.1f);
                 
                 //Bring the thrown skull back into the inventory under SkullParent of FPSPlayer
                 skulls[i].transform.parent = skullParent;

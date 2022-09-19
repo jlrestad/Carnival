@@ -52,8 +52,12 @@ public class TargetSetActive : MonoBehaviour
     {
         if(flippable)
         {
-            flipTime = /*OGFlipTime **/ Random.Range(2f, 3f);
+            flipTime = /*OGFlipTime **/ Random.Range(0.7f, 1.5f);
             StartCoroutine(FlipAround());
+            if (skillshotGM.isPaused)
+            {
+                StopAllCoroutines();
+            }
         }
     }
 

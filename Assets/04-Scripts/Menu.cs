@@ -251,6 +251,11 @@ public class Menu : MonoBehaviour
         //sceneLight = GameObject.Find("MoonLight").GetComponent<Light>();
     }
 
+    public void SetCounter(int num)
+    {
+        counter = num;
+    }
+
     #region PAUSE/UNPAUSE
     //
     //PAUSE GAME

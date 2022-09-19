@@ -126,26 +126,22 @@ public class CasketBasketsGameManager : GameBooth
                 playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
                 WE.currentWeapon = playerWeapon;
                 WE.holdingSkull = true;
-                //if (WE.haveSkull) EnableGameActiveCard();
+                
                 //Display Proper Tarot if a different weapon was in hand during game start.
                 if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
                 {
                     EnableGameActiveCard();
-                    //WE.currentWeapon = WE.skullParent; //Set the current weapon to this game's weapon.
                 }
 
-                GameStart();
+                if (!isPaused)
+                {
+                    GameStart();
+                }
             }
         }
         else if (!gameOn && isRunning)
         {
             GameEnd();
-            //turn off audio
-            if (tentAudio.enabled)
-            {
-                tentAudio.enabled = false;
-            }
-
         }
 
         if (!gameOn && !cbWon)
@@ -188,9 +184,6 @@ public class CasketBasketsGameManager : GameBooth
         if(timeLeft <= 0 && gameOn)
         {
             gameOn = false; //end the game
-
-            //* This is already being called under GameEnd()
-            //DisplayGameCard(); //show the player their prize!
         }
     }   
     #endregion
@@ -221,9 +214,7 @@ public class CasketBasketsGameManager : GameBooth
     //--------------------------------------------------|GameEnd|
     public void GameEnd()
     {
-        isRunning = false; //stop the coffin movement
-
-        StartCoroutine(ShutDownGameMusicAndLights());
+        //StartCoroutine(ShutDownGameMusicAndLights()); //* This is called in ResetGame
 
         StopCoroutine(PickTimer()); //keep the script from opening any more coffins
 
@@ -232,6 +223,8 @@ public class CasketBasketsGameManager : GameBooth
             CM.CoffinReset(); //reset each coffin to its original state
             score = 0; //reset score to zero
         }
+
+        isRunning = false; //stop the coffin movement
 
         if (gameWon)
         {
@@ -246,6 +239,10 @@ public class CasketBasketsGameManager : GameBooth
             else
             {
                 ResetGame();
+                if (tentAudio.enabled)
+                {
+                    tentAudio.enabled = false;
+                }
             }
 
             cbWon = true;
@@ -259,6 +256,10 @@ public class CasketBasketsGameManager : GameBooth
         {
             tentAudio.PlayOneShot(CBLose);
             ResetGame();
+            if (tentAudio.enabled)
+            {
+                tentAudio.enabled = false;
+            }
         }
     }
 
@@ -280,10 +281,13 @@ public class CasketBasketsGameManager : GameBooth
     //--------------------------------------------------|PickCoffin|
     public void PickCoffin()
     {
-        StopCoroutine(PickTimer()); //stops the coroutine this was called from in order to prevent infinite looping.
-        int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
-        casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
-        StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
+        //StopCoroutine(PickTimer()); //stops the coroutine this was called from in order to prevent infinite looping.
+        if (!isPaused)
+        {
+            int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
+            casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
+            StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
+        }
     }
     #endregion
 
@@ -296,7 +300,7 @@ public class CasketBasketsGameManager : GameBooth
         tentAudio.Stop();
         tentAudio.PlayOneShot(CBSpookFail);
         yield return new WaitForSeconds(2); //let the lose FX play
-        GameEnd();
+        //GameEnd(); //* being called in the update...
         //ResetGame(); //end the game //* This doesn't seem to be doing anything. Moved it to the bottom of GameEnd().
     }
 
