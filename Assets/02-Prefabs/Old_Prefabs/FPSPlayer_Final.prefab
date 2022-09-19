@@ -1025,6 +1025,7 @@ MonoBehaviour:
   playerCamera: {fileID: 1743390829978060827}
   lookXLimit: 90
   moveDirection: {x: 0, y: 0, z: 0}
+  gameOn: 0
   lightClick: {fileID: 7986990734022282514}
   canMove: 1
   run: 0
@@ -2416,7 +2417,7 @@ MonoBehaviour:
   hitEnemySound: {fileID: 1692367753102884753}
   hitColliderSound: {fileID: 1377461590868220498}
   brokenCrate: {fileID: 3278272139761628569, guid: a4fb38424d6658e4884d0afb4f0ea3bd, type: 3}
-  brokenBottle: {fileID: 0}
+  brokenBottle: {fileID: 3361973302387112765, guid: dc9ee034c5d4c1c45a163a793603c425, type: 3}
   VFXSpawnPoint: {fileID: 1377461589856123431}
   swingTrailVFX: {fileID: 0}
 --- !u!95 &1446349669

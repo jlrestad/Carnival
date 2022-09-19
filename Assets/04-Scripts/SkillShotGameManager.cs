@@ -45,6 +45,8 @@ public class SkillShotGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
+            FPSController.Instance.gameOn = gameOn;
+
             //WEAPON EQUIP
             //1. Hide weapon, if holding one, before holding this game's weapon, & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
@@ -111,6 +113,8 @@ public class SkillShotGameManager : GameBooth
         {
             if (showLostText)
             {
+                FPSController.Instance.gameOn = gameOn;
+
                 StartCoroutine(ShutDownGameMusicAndLights());
                 // If the game has never been won, then the player does not keep the weapon.
                 if (!ssWon)
@@ -156,16 +160,17 @@ public class SkillShotGameManager : GameBooth
 
     //
     //IF TARGET HAS REACHED THE END THEN GO BACK TO THE BEGINNING
-    //public void SendOneHome(GameObject trgt, Transform parentPos)
-    //{
-    //    //Reset bools
-    //    trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
-    //    trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
-    //    //Turn off target
-    //    trgt.SetActive(false);
-    //    //Move target to parent position
-    //    trgt.transform.position = parentPos.position;
-    //} 
+    public void SendOneHome(GameObject trgt, Transform parentPos)
+    {
+        //Reset bools
+        trgt.GetComponentInChildren<TargetSetActive>().isFlipped = false;
+        trgt.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+        trgt.GetComponentInChildren<TargetSetActive>().hasGone = false;
+        //Turn off target
+        trgt.SetActive(false);
+        //Move target to parent position
+        trgt.transform.position = parentPos.position;
+    }
 
     //
     //CONTROLS THE TARGET MOVEMENT

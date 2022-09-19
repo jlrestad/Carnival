@@ -39,6 +39,7 @@ public class FPSController : MonoBehaviour
     public float lookXLimit = 55.0f;
     [HideInInspector] public Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
+    [HideInInspector] public bool gameOn;
 
 
     [Header("AUDIO")]
@@ -51,6 +52,8 @@ public class FPSController : MonoBehaviour
     [HideInInspector] public bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     [HideInInspector] public bool slidingAllowed = true;
     [HideInInspector] public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn, canThrow = true;
+    string yRotationInput;
+    string xRotationInput;
 
     [Header("BOSS COMPONENTS")]
     public GameObject tent;
@@ -98,6 +101,8 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
+        GetTriggerUse();
+
         //Activate the boss
         if (cardCount == 3)
         {
@@ -111,8 +116,8 @@ public class FPSController : MonoBehaviour
         jump = Input.GetButtonDown("Jump");
         slide = Input.GetButtonDown("Slide");
         crouch = Input.GetButtonDown("Crouch");
-        useFlashlight = Input.GetAxis("Flashlight1") > 0 && !flashlightOn || Input.GetButtonDown("Flashlight2") && !flashlightOn;
-        dontUseFlashlight = Input.GetAxis("Flashlight1") > 0 && flashlightOn || Input.GetButtonDown("Flashlight2") && flashlightOn;
+        useFlashlight = Input.GetButtonDown("Flashlight1") && !flashlightOn || Input.GetButtonDown("Flashlight2") && !flashlightOn;
+        dontUseFlashlight = Input.GetButtonDown("Flashlight1") && flashlightOn || Input.GetButtonDown("Flashlight2") && flashlightOn;
  
         //
         //States
@@ -161,6 +166,7 @@ public class FPSController : MonoBehaviour
         //}
 
         float moveDirectionY = moveDirection.y;
+
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
 
         // Jumping
@@ -188,7 +194,7 @@ public class FPSController : MonoBehaviour
         }
 
         // Player and camera rotation
-        if (canMove && Time.timeScale != 0)
+        if (canMove && Time.timeScale != 0 && !gameOn)
         {
             //rotate at the lookSpeed
             rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed * Time.deltaTime;
@@ -198,6 +204,17 @@ public class FPSController : MonoBehaviour
             //have camera follow the rotation
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed * Time.deltaTime, 0);
+        }
+        else if (canMove && Time.timeScale != 0 && gameOn)
+        {
+            //rotate at the lookSpeed
+            rotationX += -Input.GetAxisRaw("LeftStick Y") * lookSpeed/1.5f * Time.deltaTime;
+            //rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
+            //stop rotate at the min and max degree limit
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            //have camera follow the rotation
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("LeftStick X") * lookSpeed/1.5f * Time.deltaTime, 0);
         }
 
         // Sliding

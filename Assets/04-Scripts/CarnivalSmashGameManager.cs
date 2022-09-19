@@ -64,6 +64,8 @@ public class CarnivalSmashGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
+            FPSController.Instance.gameOn = gameOn;
+
             //WEAPON EQUIP
             //1. Hide weapon, if holding one, before holding this weapon & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
@@ -137,6 +139,8 @@ public class CarnivalSmashGameManager : GameBooth
 
             if (!gameWon && showLostText)
             {
+                FPSController.Instance.gameOn = gameOn;
+
                 stopPopUp = true;
                 StartCoroutine(ShutDownGameMusicAndLights());
                 if (!csWon)

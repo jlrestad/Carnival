@@ -41,7 +41,7 @@ public class Gun : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
         {
             StartCoroutine(BurstFire());
-            GetTriggerUse();
+            StartCoroutine(GetTriggerUse());
         }
 
         if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
@@ -55,14 +55,12 @@ public class Gun : MonoBehaviour
     }
 
     //Used to control Joystick trigger from the ability to spam fire.
-    void GetTriggerUse()
+    IEnumerator GetTriggerUse()
     {
         if (Input.GetAxis("RtTrigger") > 0)
         {
             canShoot = false;
-        }
-        else
-        {
+            yield return new WaitForSeconds(0.5f);
             canShoot = true;
         }
     }

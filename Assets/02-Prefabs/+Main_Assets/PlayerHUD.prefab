@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 1814774694}
   m_Layer: 5
   m_Name: GameOverResetButton
-  m_TagString: Untagged
+  m_TagString: FirstButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,6 +369,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1981401920}
         m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
         m_MethodName: ResetAudioPrefs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1981401920}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
+        m_MethodName: ClearButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1690,7 +1702,7 @@ GameObject:
   - component: {fileID: 5620528427139289876}
   m_Layer: 5
   m_Name: GameWinResetButton
-  m_TagString: Untagged
+  m_TagString: FirstButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1812,6 +1824,18 @@ MonoBehaviour:
       - m_Target: {fileID: 7417012473816126014}
         m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
         m_MethodName: ResetAudioPrefs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7417012473816126014}
+        m_TargetAssemblyTypeName: Reset_To_Title, Assembly-CSharp
+        m_MethodName: ClearButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3321,8 +3345,8 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 3908507892852142683}
+    m_SelectOnRight: {fileID: 3908507892852142683}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
@@ -3736,7 +3760,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 3908507892112694584}
     m_SelectOnRight: {fileID: 3908507892112694584}
   m_Transition: 1
   m_Colors:
@@ -4838,7 +4862,7 @@ GameObject:
   - component: {fileID: 3908507891430923807}
   m_Layer: 5
   m_Name: PlayButton
-  m_TagString: FirstButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4919,7 +4943,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 3908507892076508083}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 3908507892076508083}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
@@ -8053,7 +8077,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 3908507891430923807}
     m_SelectOnRight: {fileID: 3908507891430923807}
   m_Transition: 1
   m_Colors:
@@ -8106,7 +8130,7 @@ GameObject:
   - component: {fileID: 3908507892112694584}
   m_Layer: 5
   m_Name: PlayButton
-  m_TagString: FirstButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8187,7 +8211,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 3908507891222044279}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 3908507891222044279}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
@@ -12251,7 +12275,7 @@ GameObject:
   - component: {fileID: 3908507892852142683}
   m_Layer: 5
   m_Name: PlayButton
-  m_TagString: FirstButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12331,8 +12355,8 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 3908507891143511939}
+    m_SelectOnRight: {fileID: 3908507891143511939}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
@@ -16119,11 +16143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.599976
+      value: -39.600098
       objectReference: {fileID: 0}
     - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 96.599976
+      value: 96.6001
       objectReference: {fileID: 0}
     - target: {fileID: 6856906355575550521, guid: c6500813a45699044804cffd790ffff4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

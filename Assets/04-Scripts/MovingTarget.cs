@@ -50,14 +50,13 @@ public class MovingTarget : MonoBehaviour
         weaponEquip = FindObjectOfType<WeaponEquip>();
     }
 
-    public bool sentHome = false;
-    
     void Update()
     {
 
         if (!skillshotGM.gameOver && !skillshotGM.gameWon)
         {
             StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
+            
             if (skillshotGM.isPaused)
             {
                 //StopCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
@@ -76,14 +75,12 @@ public class MovingTarget : MonoBehaviour
         //Debug.Log("left game area, resetting");
         foreach (GameObject target in pooledTargets)
         {
-            if (target.GetComponentInChildren<TargetSetActive>().hasGone == true)
-            {
-                target.GetComponentInChildren<TargetSetActive>().hasGone = false;
-            }
-            if (target.GetComponentInChildren<TargetSetActive>().isFlipped == true)
-            {
-                target.GetComponentInChildren<TargetSetActive>().isFlipped = false;
-            }
+           
+            target.GetComponentInChildren<TargetSetActive>().hasGone = false;
+            target.GetComponentInChildren<TargetSetActive>().isFlipped = false;
+            target.GetComponentInChildren<TargetSetActive>().reachedEnd = false;
+            target.transform.position = parentPos.position;
+            target.SetActive(false);
         }
     }
 }

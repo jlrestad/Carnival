@@ -66,8 +66,7 @@ public class TargetSetActive : MonoBehaviour
     {
         if (other.tag == "TargetHome")
         {
-            reachedEnd = true;
-            hasGone = true;
+            skillshotGM.SendOneHome(movingTarget.targetPrefab, movingTarget.parentPos);
         }
     }
 
