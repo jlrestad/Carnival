@@ -81,7 +81,7 @@ public class CasketBasketsGameManager : GameBooth
         //When the game turns on, run GameStart
         if (gameOn)
         {
-            FPSController.Instance.gameOn = gameOn;
+            //FPSController.Instance.gameOn = true;
 
             //turn on audio
             if (! tentAudio.enabled)
@@ -264,7 +264,7 @@ public class CasketBasketsGameManager : GameBooth
             }
         }
         
-        FPSController.Instance.gameOn = false;
+        //FPSController.Instance.gameOn = false;
 
     }
 

@@ -39,7 +39,7 @@ public class FPSController : MonoBehaviour
     public float lookXLimit = 55.0f;
     [HideInInspector] public Vector3 moveDirection = Vector3.zero; //set to 0
     float rotationX = 0.0f;
-    [HideInInspector] public bool gameOn;
+    public bool gameOn;
 
 
     [Header("AUDIO")]
@@ -52,8 +52,8 @@ public class FPSController : MonoBehaviour
     [HideInInspector] public bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     [HideInInspector] public bool slidingAllowed = true;
     [HideInInspector] public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn, canThrow = true;
-    string yRotationInput;
-    string xRotationInput;
+    public string yRotationInput = "";
+    public string xRotationInput = "";
 
     [Header("BOSS COMPONENTS")]
     public GameObject tent;
@@ -68,7 +68,6 @@ public class FPSController : MonoBehaviour
     public void OnValidate()
     {
         characterController = GetComponent<CharacterController>();
-
     }
 
     private void Awake()
@@ -79,8 +78,20 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
+        //Set default rotation to mouse.
+        if (yRotationInput == "")
+        {
+            yRotationInput = "Mouse Y";
+        }
+
+        if (xRotationInput == "")
+        {
+            xRotationInput = "Mouse X";
+        }
+
         weaponEquip = GetComponent<WeaponEquip>(); 
-        //characterController = GetComponent<CharacterController>();
+        //characterController = GetComponent<CharacterController>()
+
         capsule = GetComponentInChildren<Transform>();
 
         //Set the sensitivity of the mouse
@@ -101,8 +112,6 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
-        GetTriggerUse();
-
         //Activate the boss
         if (cardCount == 3)
         {
@@ -194,27 +203,16 @@ public class FPSController : MonoBehaviour
         }
 
         // Player and camera rotation
-        if (canMove && Time.timeScale != 0 && !gameOn)
+        if (canMove && Time.timeScale != 0)
         {
             //rotate at the lookSpeed
-            rotationX += -Input.GetAxisRaw("Mouse Y") * lookSpeed * Time.deltaTime;
+            rotationX += -Input.GetAxisRaw(yRotationInput) * lookSpeed * Time.deltaTime;
             //rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
             //stop rotate at the min and max degree limit
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             //have camera follow the rotation
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * lookSpeed * Time.deltaTime, 0);
-        }
-        else if (canMove && Time.timeScale != 0 && gameOn)
-        {
-            //rotate at the lookSpeed
-            rotationX += -Input.GetAxisRaw("LeftStick Y") * lookSpeed/1.5f * Time.deltaTime;
-            //rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
-            //stop rotate at the min and max degree limit
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            //have camera follow the rotation
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("LeftStick X") * lookSpeed/1.5f * Time.deltaTime, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw(xRotationInput) * lookSpeed * Time.deltaTime, 0);
         }
 
         // Sliding
@@ -245,7 +243,7 @@ public class FPSController : MonoBehaviour
 
     public void LockCamera()
     {
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse Y") * lookSpeed, 0);
     }
 
     // Limit the amount of time until slide is allowed
@@ -253,19 +251,6 @@ public class FPSController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);        
         slidingAllowed = true;
-    }
-
-    //Used to control Joystick trigger from the ability to spam fire.
-    void GetTriggerUse()
-    {
-        if (Input.GetAxis("RtTrigger") > 0)
-        {
-            canThrow = false;
-        }
-        else
-        {
-            canThrow = true;
-        }
     }
 
     // PUSHES RIDIDBODIES THAT PLAYER RUNS INTO

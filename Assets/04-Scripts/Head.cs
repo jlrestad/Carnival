@@ -53,23 +53,12 @@ public class Head : MonoBehaviour
 
     private void Update()
     {
-        // For Controller:
-        if (Input.GetAxis("RtTrigger") > 0)
-        {
-            canThrow = false;
-        }
-        else
-        {
-            canThrow = true;
-        }
-
         //THROW SKULL
         if (Input.GetButtonDown("Fire1") && WE.holdingSkull || Input.GetAxis("RtTrigger") > 0 && WE.holdingSkull && canThrow)
         {
             //Debug.Log("this code is reachable");
-
             ThrowSkull();
-            canThrow = false;
+            StartCoroutine(GetTriggerUse());
         }
     }
 
@@ -96,6 +85,16 @@ public class Head : MonoBehaviour
         }
     }
 
+    //Used to control Joystick trigger from the ability to spam fire.
+    IEnumerator GetTriggerUse()
+    {
+        if (Input.GetAxis("RtTrigger") > 0)
+        {
+            canThrow = false;
+            yield return new WaitForSeconds(0.1f);
+            canThrow = true;
+        }
+    }
     public void SetSkullWeapon()
     {
         WE.currentWeapon = skullParent.gameObject; //Set current weapon

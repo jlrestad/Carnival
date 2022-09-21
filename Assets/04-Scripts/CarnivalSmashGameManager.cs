@@ -12,22 +12,22 @@ public class CarnivalSmashGameManager : GameBooth
 
     //Bigger nums = slower speed
     [Header("ENEMY POPUP SPEED")]
-    public float minRando; /*private float minRandoTemp;*/
-    public float maxRando; /*private float maxRandoTemp;*/
-    public float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
-    public float speedCap;
+    [SerializeField] float minRando; /*private float minRandoTemp;*/
+    [SerializeField] float maxRando; /*private float maxRandoTemp;*/
+    [SerializeField] float divideSpeedBy; //The amount that the random number is divided by when enemy has been hit.
+    [SerializeField] float speedCap;
     float maxRandoSaver;
     float randomPopUpTime;
     float randomTauntTime;
     float randomStayTime;
 
-    [HideInInspector] public bool tauntCritVisible;
-    public bool gameJustFinished;
-    public bool stopPopUp; //Used to pause the coroutine
-    /*[HideInInspector] */public bool popUp;
-    /*[HideInInspector] */public bool critterIsVisible;
-    /*[HideInInspector] */public bool isTaunting = false;
-    /*[HideInInspector] */public bool gameIsRunning;
+    [SerializeField] bool tauntCritVisible;
+    [SerializeField] bool gameJustFinished;
+    [SerializeField] bool stopPopUp; //Used to pause the coroutine
+    [SerializeField] bool popUp;
+    [SerializeField] bool critterIsVisible;
+    public bool isTaunting = false;
+    [SerializeField] bool gameIsRunning;
 
     GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
@@ -64,8 +64,6 @@ public class CarnivalSmashGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
-            FPSController.Instance.gameOn = gameOn;
-
             //WEAPON EQUIP
             //1. Hide weapon, if holding one, before holding this weapon & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
@@ -139,8 +137,6 @@ public class CarnivalSmashGameManager : GameBooth
 
             if (!gameWon && showLostText)
             {
-                FPSController.Instance.gameOn = gameOn;
-
                 stopPopUp = true;
                 StartCoroutine(ShutDownGameMusicAndLights());
                 if (!csWon)

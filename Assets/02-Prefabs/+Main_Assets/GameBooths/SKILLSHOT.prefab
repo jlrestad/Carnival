@@ -6383,14 +6383,13 @@ MonoBehaviour:
   rightPos: {fileID: 1677671100572900122}
   parentPos: {fileID: 0}
   moveSpeed: 0.75
-  timeBetweenTargets: 2
+  timeBetweenTargets: 0.75
   direction: 0
   moveLeft: 0
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
   poolAmount: 8
   pooledTargets: []
   weaponEquip: {fileID: 0}
-  sentHome: 0
 --- !u!1 &4919458860083039743
 GameObject:
   m_ObjectHideFlags: 0
@@ -6576,14 +6575,13 @@ MonoBehaviour:
   rightPos: {fileID: 1677671100277883136}
   parentPos: {fileID: 0}
   moveSpeed: 1
-  timeBetweenTargets: 3
+  timeBetweenTargets: 1
   direction: 0
   moveLeft: 1
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
   poolAmount: 8
   pooledTargets: []
   weaponEquip: {fileID: 0}
-  sentHome: 0
 --- !u!1 &5039770460429365166
 GameObject:
   m_ObjectHideFlags: 0
@@ -6855,6 +6853,7 @@ MonoBehaviour:
   targetFlipped: 0
   reachedEnd: 0
   gameJustPlayed: 0
+  targetRows: []
   movingTarget: []
 --- !u!65 &558215313
 BoxCollider:
@@ -6922,14 +6921,13 @@ MonoBehaviour:
   rightPos: {fileID: 4919458858842335274}
   parentPos: {fileID: 0}
   moveSpeed: 1
-  timeBetweenTargets: 3
+  timeBetweenTargets: 1
   direction: 0
   moveLeft: 1
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
   poolAmount: 8
   pooledTargets: []
   weaponEquip: {fileID: 0}
-  sentHome: 0
 --- !u!1 &5268484723148095584
 GameObject:
   m_ObjectHideFlags: 0

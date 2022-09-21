@@ -60,7 +60,7 @@ public class Gun : MonoBehaviour
         if (Input.GetAxis("RtTrigger") > 0)
         {
             canShoot = false;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(coolDown);
             canShoot = true;
         }
     }

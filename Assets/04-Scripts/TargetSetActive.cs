@@ -25,18 +25,10 @@ public class TargetSetActive : MonoBehaviour
     public bool hasGone;
     public bool hasBeenHit;
 
-
     public GameObject bigHitFX;
     public AudioSource targetAudio;
     public AudioClip goodHitSound, badHitSound, flipSound, shakeSound;
     public bool flippable;
-    public float OGFlipTime; //* ??
-
-    //Unneeded since more than one target uses this script.
-    //private void Awake()
-    //{
-    //    Instance = this;
-    //}
 
     private void Start()
     {
@@ -44,15 +36,14 @@ public class TargetSetActive : MonoBehaviour
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
         movingTarget = GetComponentInParent<MovingTarget>();
         animator = GetComponentInParent<Animator>();
-        OGFlipTime = flipTime;
-        //meshRenderer = targetFace.GetComponent<MeshRenderer>();
     }
 
     private void Update()
     {
-        if(flippable)
+        flipTime = Random.Range(0.7f, 1.5f); //Random time to flip the target.
+        
+        if (flippable)
         {
-            flipTime = /*OGFlipTime **/ Random.Range(0.7f, 1.5f);
             StartCoroutine(FlipAround());
             if (skillshotGM.isPaused)
             {

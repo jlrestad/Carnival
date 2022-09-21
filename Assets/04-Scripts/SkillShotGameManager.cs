@@ -13,12 +13,9 @@ public class SkillShotGameManager : GameBooth
     public bool targetFlipped;
     public bool reachedEnd;
     public bool gameJustPlayed;
-    //bool levelLoaded;
-    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
     public List<GameObject> targetRows;
     public MovingTarget[] movingTarget;
-
-    bool runOnce; //Controls pickupweapon
+    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
     private void Awake()
     {
@@ -45,8 +42,6 @@ public class SkillShotGameManager : GameBooth
         //GAMEON
         if (gameOn)
         {
-            FPSController.Instance.gameOn = gameOn;
-
             //WEAPON EQUIP
             //1. Hide weapon, if holding one, before holding this game's weapon, & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
@@ -113,8 +108,6 @@ public class SkillShotGameManager : GameBooth
         {
             if (showLostText)
             {
-                FPSController.Instance.gameOn = gameOn;
-
                 StartCoroutine(ShutDownGameMusicAndLights());
                 // If the game has never been won, then the player does not keep the weapon.
                 if (!ssWon)

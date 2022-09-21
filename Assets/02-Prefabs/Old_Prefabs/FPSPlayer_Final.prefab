@@ -1043,6 +1043,8 @@ MonoBehaviour:
   isUp: 0
   flashlightOn: 0
   canThrow: 1
+  yRotationInput: 
+  xRotationInput: 
   tent: {fileID: 0}
   boss: {fileID: 0}
   cardCount: 0
@@ -1730,7 +1732,7 @@ MonoBehaviour:
   impactEffect: {fileID: 5891435055725004875, guid: 7742204c67d91b543b0609b07c529281, type: 3}
   force: 20
   burstAmount: 1
-  delayFire: 1
+  delayFire: 0.3
   rateOfFire: 1
   coolDown: 0.3
   canShoot: 1

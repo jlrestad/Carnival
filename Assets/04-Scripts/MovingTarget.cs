@@ -50,7 +50,7 @@ public class MovingTarget : MonoBehaviour
         weaponEquip = FindObjectOfType<WeaponEquip>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (!skillshotGM.gameOver && !skillshotGM.gameWon)
@@ -59,8 +59,11 @@ public class MovingTarget : MonoBehaviour
             
             if (skillshotGM.isPaused)
             {
-                //StopCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
                 StopAllCoroutines();
+            }
+            else
+            {
+                StartCoroutine(skillshotGM.MoveTargets(pooledTargets, parentPos, direction, moveSpeed, timeBetweenTargets));
             }
         }
         

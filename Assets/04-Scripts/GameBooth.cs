@@ -8,8 +8,6 @@ using JetBrains.Annotations;
 
 public class GameBooth : MonoBehaviour
 {
-    public static GameBooth Instance;
-
     [Header("UI")]
     public GameObject minigameHUD; //Manually set in Unity game manager script
     public GameObject gameRules; //Manually set in Unity game manager script
@@ -60,8 +58,6 @@ public class GameBooth : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
         //menu = FindObjectOfType<Menu>();
     }
 
@@ -233,7 +229,7 @@ public class GameBooth : MonoBehaviour
             }
 
             FPSController.Instance.canMove = false;
-            WeaponEquip.Instance.gameMenuDisplayed = true;
+            WE.gameMenuDisplayed = true;
             
             gameRules.SetActive(true);
             Menu.Instance.ClearButton();
@@ -244,6 +240,18 @@ public class GameBooth : MonoBehaviour
     {
         isPaused = false;
         Menu.Instance.counter = -1;
+
+        //Switch look movement to the left stick when playing a minigame.
+        if (Menu.Instance.usingJoystick)
+        {
+            FPSController.Instance.yRotationInput = "LeftStick Y";
+            FPSController.Instance.xRotationInput = "LeftStick X";
+        }
+        else
+        {
+            FPSController.Instance.yRotationInput = "Mouse Y";
+            FPSController.Instance.xRotationInput = "Mouse X";
+        }
 
         if (!gameOn)
         {
@@ -320,6 +328,9 @@ public class GameBooth : MonoBehaviour
         //Check if there are tickets/health
         HudManager.Instance.GameOverCheck();
         Menu.Instance.counter = 0;
+        //Switch the look rotation back to the other stick
+        FPSController.Instance.yRotationInput = "Mouse Y";
+        FPSController.Instance.xRotationInput = "Mouse X";
 
         //Reset bools
         gameOn = false;
