@@ -6383,11 +6383,11 @@ MonoBehaviour:
   rightPos: {fileID: 1677671100572900122}
   parentPos: {fileID: 0}
   moveSpeed: 0.75
-  timeBetweenTargets: 0.75
+  timeBetweenTargets: 0.88
   direction: 0
   moveLeft: 0
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
-  poolAmount: 8
+  poolAmount: 4
   pooledTargets: []
   weaponEquip: {fileID: 0}
 --- !u!1 &4919458860083039743
@@ -6574,12 +6574,12 @@ MonoBehaviour:
   leftPos: {fileID: 1677671100833701764}
   rightPos: {fileID: 1677671100277883136}
   parentPos: {fileID: 0}
-  moveSpeed: 1
-  timeBetweenTargets: 1
+  moveSpeed: 0.65
+  timeBetweenTargets: 0.75
   direction: 0
   moveLeft: 1
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
-  poolAmount: 8
+  poolAmount: 4
   pooledTargets: []
   weaponEquip: {fileID: 0}
 --- !u!1 &5039770460429365166
@@ -6920,12 +6920,12 @@ MonoBehaviour:
   leftPos: {fileID: 4919458860668806269}
   rightPos: {fileID: 4919458858842335274}
   parentPos: {fileID: 0}
-  moveSpeed: 1
-  timeBetweenTargets: 1
+  moveSpeed: 0.5
+  timeBetweenTargets: 0.75
   direction: 0
   moveLeft: 1
   targetPrefab: {fileID: 5404032245932627344, guid: 76c9840fede90524aa3363aa55c0dc89, type: 3}
-  poolAmount: 8
+  poolAmount: 4
   pooledTargets: []
   weaponEquip: {fileID: 0}
 --- !u!1 &5268484723148095584

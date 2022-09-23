@@ -118,6 +118,22 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
+    m_Name: Mouse X2
+    descriptiveName: Mouse Look X
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0
+    sensitivity: 0.1
+    snap: 0
+    invert: 0
+    type: 1
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Mouse X
     descriptiveName: Xbox RightStick Horizontal
     descriptiveNegativeName: 
@@ -134,8 +150,8 @@ InputManager:
     axis: 3
     joyNum: 0
   - serializedVersion: 3
-    m_Name: LeftStick X
-    descriptiveName: Xbox LeftStick Horizontal
+    m_Name: Mouse X2
+    descriptiveName: Xbox LeftStick X
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -166,6 +182,22 @@ InputManager:
     axis: 1
     joyNum: 0
   - serializedVersion: 3
+    m_Name: Mouse Y2
+    descriptiveName: Mouse Look Y
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 0.1
+    snap: 0
+    invert: 0
+    type: 1
+    axis: 1
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Mouse Y
     descriptiveName: Xbox RightStick Vertical
     descriptiveNegativeName: 
@@ -182,7 +214,7 @@ InputManager:
     axis: 4
     joyNum: 0
   - serializedVersion: 3
-    m_Name: LeftStick Y
+    m_Name: Mouse Y2
     descriptiveName: Xbox LeftStick Vertical
     descriptiveNegativeName: 
     negativeButton: 

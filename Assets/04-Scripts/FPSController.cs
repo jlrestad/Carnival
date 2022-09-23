@@ -52,8 +52,8 @@ public class FPSController : MonoBehaviour
     [HideInInspector] public bool run, jump, slide, crouch, useFlashlight, dontUseFlashlight;
     [HideInInspector] public bool slidingAllowed = true;
     [HideInInspector] public bool isGrounded, isJumping, isRunning, isSliding, isCrouching, isUp, flashlightOn, canThrow = true;
-    public string yRotationInput = "";
-    public string xRotationInput = "";
+    public string yInput;
+    public string xInput;
 
     [Header("BOSS COMPONENTS")]
     public GameObject tent;
@@ -78,16 +78,9 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
-        //Set default rotation to mouse.
-        if (yRotationInput == "")
-        {
-            yRotationInput = "Mouse Y";
-        }
-
-        if (xRotationInput == "")
-        {
-            xRotationInput = "Mouse X";
-        }
+        //Default camera rotation settings:
+        xInput = "Mouse X";
+        yInput = "Mouse Y";
 
         weaponEquip = GetComponent<WeaponEquip>(); 
         //characterController = GetComponent<CharacterController>()
@@ -164,8 +157,8 @@ public class FPSController : MonoBehaviour
         Vector3 right = transform.TransformDirection(Vector3.right);
         
         // If canMove is true and isRunning is true, then speed is runSpeed, else speed is walkSpeed.
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxisRaw("Vertical") : 0;
-        float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxisRaw("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedZ = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
 
         // Change the speed if player is sliding.
         //if (isSliding)
@@ -177,6 +170,18 @@ public class FPSController : MonoBehaviour
         float moveDirectionY = moveDirection.y;
 
         moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
+
+        // Player and camera rotation
+        if (canMove && Time.timeScale != 0 && Input.mousePresent)
+        {
+            //rotate at the lookSpeed
+            rotationX += -Input.GetAxis(yInput) * lookSpeed * Time.deltaTime;
+            //stop rotate at the min and max degree limit
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            //have camera follow the rotation
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis(xInput) * lookSpeed * Time.deltaTime, 0);
+        }
 
         // Jumping
         if (isJumping)
@@ -200,19 +205,6 @@ public class FPSController : MonoBehaviour
         if (characterController.enabled == true)
         {
             characterController.Move(moveDirection * Time.deltaTime);
-        }
-
-        // Player and camera rotation
-        if (canMove && Time.timeScale != 0)
-        {
-            //rotate at the lookSpeed
-            rotationX += -Input.GetAxisRaw(yRotationInput) * lookSpeed * Time.deltaTime;
-            //rotationX += Input.GetAxisRaw("Joystick Y") * lookSpeed;
-            //stop rotate at the min and max degree limit
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            //have camera follow the rotation
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw(xRotationInput) * lookSpeed * Time.deltaTime, 0);
         }
 
         // Sliding
@@ -243,7 +235,7 @@ public class FPSController : MonoBehaviour
 
     public void LockCamera()
     {
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Mouse Y") * lookSpeed, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Joystick Y") * lookSpeed, 0);
     }
 
     // Limit the amount of time until slide is allowed

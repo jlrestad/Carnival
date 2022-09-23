@@ -129,7 +129,7 @@ public class MeleeSwing : MonoBehaviour
                 if (target != null && enemy)
                 {
                     //Show hit VFX to let player know it has been hit.
-                    GameObject hitVfx = Instantiate(hitEnemyVFX, enemy.transform.position, Quaternion.identity);
+                    GameObject hitVfx = Instantiate(hitEnemyVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
                     Destroy(hitVfx, 0.5f);
 
                     enemy.hasBeenHit = true;
