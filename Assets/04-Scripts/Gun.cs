@@ -40,11 +40,11 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
         {
-            StartCoroutine(BurstFire());
+            //StartCoroutine(BurstFire());
             StartCoroutine(GetTriggerUse());
         }
 
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") > 0)
+        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") < 0.1f)
         {
             muzzleLight.GetComponent<Light>().enabled = false;
         }
@@ -57,12 +57,13 @@ public class Gun : MonoBehaviour
     //Used to control Joystick trigger from the ability to spam fire.
     IEnumerator GetTriggerUse()
     {
-        if (Input.GetAxis("RtTrigger") > 0)
-        {
+        //if (Input.GetAxis("RtTrigger") > 0 || Input.GetButtonDown("Fire1"))
+        //{
+            Shoot();
             canShoot = false;
             yield return new WaitForSeconds(coolDown);
             canShoot = true;
-        }
+        //}
     }
 
     IEnumerator BurstFire()

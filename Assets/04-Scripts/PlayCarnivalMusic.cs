@@ -19,7 +19,7 @@ public class PlayCarnivalMusic : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Entered Trigger Zone");
+            //Debug.Log("Entered Trigger Zone");
             //menu.PlaySceneMusic();
             if (fadingIn)
             {

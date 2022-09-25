@@ -10,6 +10,8 @@ public class CarnivalSmashGameManager : GameBooth
 {
     public static CarnivalSmashGameManager Instance;
 
+    [SerializeField] GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
+
     //Bigger nums = slower speed
     [Header("ENEMY POPUP SPEED")]
     [SerializeField] float minRando; /*private float minRandoTemp;*/
@@ -28,8 +30,6 @@ public class CarnivalSmashGameManager : GameBooth
     [SerializeField] bool critterIsVisible;
     public bool isTaunting = false;
     [SerializeField] bool gameIsRunning;
-
-    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
     [SerializeField] GameObject[] critters;
     [SerializeField] GameObject[] taunts;
@@ -155,6 +155,16 @@ public class CarnivalSmashGameManager : GameBooth
             {
                 WE.currentWeapon = null;
                 playerWeapon.SetActive(false); //Remove weapon from player's hands.
+            }
+            else if (WE.weaponList.Count > 0 && !csWon) 
+            {
+                //Re-equip the weapon that was held before playing new minigame.
+                if (saveCurrentWeapon != null)
+                {
+                    WE.currentWeapon = saveCurrentWeapon;
+                    WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                    WE.currentWeapon.SetActive(true); //Show the last held weapon
+                }
             }
         }
     }

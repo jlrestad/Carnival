@@ -32,10 +32,6 @@ public class Pickup_Interaction : MonoBehaviour
     //--------------------------------------------------|Start|
     private void Start()
     {
-        if(controlScript.usingJoystick)
-        {
-            usingController = true;
-        }
         //specify the control scheme being used here.
         if(myHUD == null)
         {
@@ -45,8 +41,9 @@ public class Pickup_Interaction : MonoBehaviour
     //--------------------------------------------------|Update|
     private void Update()
     {
+        usingController = Menu.Instance.usingJoystick;
+
         CheckPickup();
-        
     }
     //==================================================
     //=========================|CUSTOM METHODS|
@@ -69,7 +66,7 @@ public class Pickup_Interaction : MonoBehaviour
                         infoText.text = pickupID.myPrompt;
                         infoText.gameObject.SetActive(true);
                         if (usingController) ActionIcon_Controller.SetActive(true); //use the proper action icon
-                        if (!usingController) ActionIcon_Keyboard.SetActive(true);
+                        else if (!usingController) ActionIcon_Keyboard.SetActive(true);
                     }
                     if (Input.GetButtonDown("ActionButton")) //if hitting the action button while looking at a valid pickup...
                     {

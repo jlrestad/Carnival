@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPickupType: 0
   myValue: 1
-  myPrompt: Red Ticket ( 1 )
+  myPrompt: 
   myActiveGroup: {fileID: 7438954043489397627}
   myInActiveGroup: {fileID: 7438954043323906932}
   healthScript: {fileID: 570507253347281388, guid: 478890d35e7725744ab779859d8d0a27, type: 3}
@@ -63,8 +63,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 0.25
+  m_Radius: 0.5
+  m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7438954043323906932

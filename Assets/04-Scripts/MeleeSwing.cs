@@ -93,10 +93,10 @@ public class MeleeSwing : MonoBehaviour
             //Send a raycast out from the player as far as the range.
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, range))
             {
-                Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
+                //Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
 
                 //Debug.Log(hit.distance);
-                Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
+                //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
 
                 Transform target = hit.collider.GetComponent<Transform>(); //For breakable
                 CritterEnemy enemy = hit.transform.GetComponent<CritterEnemy>();

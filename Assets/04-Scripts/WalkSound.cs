@@ -21,7 +21,7 @@ public class WalkSound : MonoBehaviour
     {
         if (controller.isGrounded == true && controller.velocity.magnitude > 2f)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && run.isPlaying == false)
+            if (Input.GetButton("Run") && !run.isPlaying || Input.GetAxis("LtTrigger") > 0 && !run.isPlaying)
             {
                 walk.Stop();
                 PlayRunSound();
@@ -44,7 +44,7 @@ public class WalkSound : MonoBehaviour
     {
         //Debug.Log("WALKING");
 
-        walk.volume = Random.Range(0.4f, 0.5f);
+        walk.volume = Random.Range(0.2f, 0.5f);
         walk.pitch = Random.Range(1.3f, 1.5f);
         walk.Play();
     }
@@ -53,8 +53,8 @@ public class WalkSound : MonoBehaviour
     {
         //Debug.Log("RUNNING");
 
-        run.volume = Random.Range(0.1f, 0.3f);
-        run.pitch = Random.Range(1.4f, 1.6f);
+        run.volume = Random.Range(0.4f, 0.9f);
+        run.pitch = Random.Range(1.5f, 2.0f);
         run.Play();
 
         //breath.PlayDelayed(0.3f);        //breath.PlayDelayed(0.3f);

@@ -488,7 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPickupType: 2
   myValue: 1
-  myPrompt: Blue Ticket ( 1 )
+  myPrompt: 
   myActiveGroup: {fileID: 5949407760654315671}
   myInActiveGroup: {fileID: 5949407760023927565}
   healthScript: {fileID: 570507253347281388, guid: 478890d35e7725744ab779859d8d0a27, type: 3}
@@ -503,8 +503,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 0.25
+  m_Radius: 0.5
+  m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5949407760691406195

@@ -18,12 +18,12 @@ public class TargetSetActive : MonoBehaviour
     public GameObject targetParent;
 
     public float flipTime;
-    public float shakeTime;
+    [SerializeField] float shakeTime;
     public bool reachedEnd;
     public bool targetHit;
     public bool isFlipped;
     public bool hasGone;
-    public bool hasBeenHit;
+    [SerializeField] bool hasBeenHit;
 
     public GameObject bigHitFX;
     public AudioSource targetAudio;
@@ -32,6 +32,7 @@ public class TargetSetActive : MonoBehaviour
 
     private void Start()
     {
+        //flipTime = Random.Range(0.7f, 1.5f); //Random time to flip the target.
         flippable = true;
         skillshotGM = GetComponentInParent<SkillShotGameManager>();
         movingTarget = GetComponentInParent<MovingTarget>();
@@ -40,10 +41,10 @@ public class TargetSetActive : MonoBehaviour
 
     private void Update()
     {
-        flipTime = Random.Range(0.7f, 1.5f); //Random time to flip the target.
-        
         if (flippable)
         {
+            flipTime = UnityEngine.Random.Range(1.0f, 1.5f); //Random time to flip the target.
+
             StartCoroutine(FlipAround());
             if (skillshotGM.isPaused)
             {
@@ -67,15 +68,17 @@ public class TargetSetActive : MonoBehaviour
         while (skillshotGM.gameOn && !skillshotGM.isPaused)
         {
             //If Positive
-            if (isFlipped && !skillshotGM.gameOver && !skillshotGM.isPaused)
+            if (isFlipped && !skillshotGM.gameOver)
             {
                 yield return new WaitForSeconds(flipTime);
 
                 //Flip to negative
-                animator.SetBool("isNeg", false);
+                animator.SetBool("isNeg", true);
 
                 isFlipped = false;
                 targetHit = false;
+
+                yield return new WaitForSeconds(flipTime);
             }
 
             //If Negative
@@ -84,9 +87,10 @@ public class TargetSetActive : MonoBehaviour
                 yield return new WaitForSeconds(flipTime);
 
                 //Flip to positive
-                animator.SetBool("isNeg", true);
-
+                animator.SetBool("isNeg", false);
                 isFlipped = true;
+
+                yield return new WaitForSeconds(flipTime);
             }
 
             if (skillshotGM.gameOver /*|| !skillshotGM.gameOn && !skillshotGM.isPaused*/)
@@ -111,6 +115,7 @@ public class TargetSetActive : MonoBehaviour
             targetAudio.PlayOneShot(goodHitSound);
 
             animator.SetBool("isHit", true);
+
             skillshotGM.score++;
 
             hasBeenHit = true;

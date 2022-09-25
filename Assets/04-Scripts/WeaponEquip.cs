@@ -82,20 +82,12 @@ public class WeaponEquip : MonoBehaviour
     private void Start()
     {
         menu = FindObjectOfType<Menu>();
-
-        //Detect if joystick or keyboard is used and SET the correct prompt variable.
-        if (menu.usingJoystick)
-        {
-            actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
-        }
-        else
-        {
-            actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
-        }
     }
 
     void Update()
     {
+        GetActionPromptIcon();
+
         FindClosestWeapon();
 
         if (isEquipped && !CBManager.gameOn && !SSManager.gameOn && !CSManager.gameOn)
@@ -106,6 +98,19 @@ public class WeaponEquip : MonoBehaviour
         //RAYCAST
         DetectMiniGames();
         
+    }
+
+    void GetActionPromptIcon()
+    {
+        //Detect if joystick or keyboard is used and SET the correct prompt variable.
+        if (menu.usingJoystick)
+        {
+            actionPrompt = menu.controllerPrompt; //If a controller is detected set prompt for controller
+        }
+        else
+        {
+            actionPrompt = menu.keyboardPrompt; //If controller not detected set prompt for keyboard
+        }
     }
 
     public void DisplayCrossHair()
@@ -134,8 +139,8 @@ public class WeaponEquip : MonoBehaviour
             bool isCS = hitTransform.CompareTag("MeleeGame");
             bool isCB = hitTransform.CompareTag("ThrowingGame");
 
-            Debug.Log(hitTransform.tag);
-            Debug.DrawRay(transform.position, transform.forward);
+            //Debug.Log(hitTransform.tag);
+            //Debug.DrawRay(transform.position, transform.forward);
 
             //Find distance of the game to the player
             distanceToPlayer = (hitTransform.position - transform.position);
@@ -232,7 +237,7 @@ public class WeaponEquip : MonoBehaviour
         weaponCards[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
-        if (weaponList.Count > 0 /*&& currentWeapon != skullParent*/)
+        if (weaponList.Count > 0)
         {
             //If there is already a weapon equipped, hide it.
             currentWeapon.SetActive(false);
@@ -282,7 +287,7 @@ public class WeaponEquip : MonoBehaviour
         weaponCards[weaponNumber].GetComponent<Image>().enabled = false;
 
         //Unequip current weapon.
-        if (weaponList.Count > 0 /*&& currentWeapon != skullParent*/)
+        if (weaponList.Count > 0)
         {
             //If there is already a weapon equipped, hide it.
             currentWeapon.SetActive(false);

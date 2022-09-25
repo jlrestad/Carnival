@@ -52,6 +52,12 @@ public class MovingTarget : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Pool more target objects if they drop below the amount of the timer.
+        if (poolAmount < (int)skillshotGM.timeCounter)
+        {
+            poolAmount = (int)skillshotGM.timeCounter;
+            skillshotGM.PoolObjects(targetPrefab, pooledTargets, poolAmount, parentPos, targetParent);
+        }
 
         if (!skillshotGM.gameOver && !skillshotGM.gameWon)
         {

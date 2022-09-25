@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class SkillShotGameManager : GameBooth
 {
     public static SkillShotGameManager Instance;
+    [SerializeField] GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
     public bool gameOver;
     public bool targetFlipped;
@@ -15,7 +16,6 @@ public class SkillShotGameManager : GameBooth
     public bool gameJustPlayed;
     public List<GameObject> targetRows;
     public MovingTarget[] movingTarget;
-    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
     private void Awake()
     {
@@ -114,19 +114,29 @@ public class SkillShotGameManager : GameBooth
                 {
                     playerWeapon.SetActive(false); //Remove weapon from player's hands.
                 }
-                //If the game is lost or quit and the weapon list is empty, set the current weapon to null.
+                //If the game is lost and player has weapons, re-equip the last held weapon.
                 if (WE.weaponList.Count > 0)
+                {
+                    WE.currentWeapon = saveCurrentWeapon; //Assign current weapon to the previously held weapon.
+                    WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                    WE.currentWeapon.SetActive(true); //Show player holding the weapon.
+                }
+            }
+            //If the game is quit and the weapon list is empty, set the current weapon to null.
+            if (WE.weaponList.Count == 0)
+            {
+                WE.currentWeapon = null;
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
+            }
+            else if (WE.weaponList.Count > 0 && !ssWon)
+            {
+                //Re-equip the weapon that was held before playing new minigame.
+                if (saveCurrentWeapon != null)
                 {
                     WE.currentWeapon = saveCurrentWeapon;
                     WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
                     WE.currentWeapon.SetActive(true); //Show the last held weapon
                 }
-            }
-            //If the game is lost or quit and the weapon list is empty, set the current weapon to null.
-            if (WE.weaponList.Count == 0)
-            {
-                WE.currentWeapon = null;
-                playerWeapon.SetActive(false); //Remove weapon from player's hands.
             }
         }
     }
@@ -136,7 +146,7 @@ public class SkillShotGameManager : GameBooth
     public void PoolObjects(GameObject targetPrefab, List<GameObject> pooledTargets, int poolAmount, Transform parentPos, Transform targetParent)
     {
         GameObject gameTarget;
-        poolAmount = (int)timeCounter - 2;
+        poolAmount = (int)timeCounter;
 
         //Pool the amount of targets needed and hold them in a list.
         while(pooledTargets.Count < poolAmount)
@@ -173,11 +183,10 @@ public class SkillShotGameManager : GameBooth
 
         while (i < pooledTargets.Count && gameOn)
         {
-            //call translate while it hasn't reached end
-              
             pooledTargets[i].SetActive(true);
             pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);
             yield return new WaitForSeconds(timeBetweenTargets);
+
 
             if (pooledTargets[i].GetComponentInChildren<TargetSetActive>().reachedEnd)
             {

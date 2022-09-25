@@ -41,6 +41,7 @@ public class CasketBasketsGameManager : GameBooth
     [SerializeField] AudioClip CBSpookFail;
     [SerializeField] AudioClip CBLose;
     [SerializeField] AudioClip CBWin;
+    GameObject saveCurrentWeapon; //Used to save current weapon info for re-equip
 
 
     [Header("INTERNAL/DEBUG")]
@@ -81,10 +82,18 @@ public class CasketBasketsGameManager : GameBooth
         //When the game turns on, run GameStart
         if (gameOn)
         {
-            //FPSController.Instance.gameOn = true;
+            //WEAPON EQUIP
+            //1. Hide weapon, if holding one, before holding this game's weapon, & disable the active Tarot card for it.
+            if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
+            {
+                weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
+                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
+                WE.currentWeapon.SetActive(false); //Hide the weapon
+                saveCurrentWeapon = WE.currentWeapon; //Store this so it can be equipped
+            }
 
             //turn on audio
-            if (! tentAudio.enabled)
+            if (!tentAudio.enabled)
             {
                 tentAudio.enabled = true;
             }
@@ -95,7 +104,7 @@ public class CasketBasketsGameManager : GameBooth
             //Timer
             if (isRunning)
                 StartCoroutine(CountDownTimer());
-            
+
             //Pause
             if (Input.GetButtonDown("Menu")) //pausing during minigame
             {
@@ -117,7 +126,7 @@ public class CasketBasketsGameManager : GameBooth
                 }
 
                 //Game UI
-                scoreText = GetScoreText(); 
+                scoreText = GetScoreText();
                 timerText = GetTimerText();
                 winLoseText = GetWinLoseText();
 
@@ -128,7 +137,7 @@ public class CasketBasketsGameManager : GameBooth
                 playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
                 WE.currentWeapon = playerWeapon;
                 WE.holdingSkull = true;
-                
+
                 //Display Proper Tarot if a different weapon was in hand during game start.
                 if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
                 {
@@ -144,17 +153,41 @@ public class CasketBasketsGameManager : GameBooth
         else if (!gameOn && isRunning)
         {
             GameEnd();
+
+            if (!cbWon)
+            {
+                playerWeapon.SetActive(false); //Remove weapon from player's hands.
+                WE.holdingSkull = false;
+            }
+            //If the game is lost and player has weapons, re-equip the last held weapon.
+            if (WE.weaponList.Count > 0)
+            {
+                WE.currentWeapon = saveCurrentWeapon;
+                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                WE.currentWeapon.SetActive(true); //Show the last held weapon
+            }
         }
 
-        if (!gameOn && !cbWon)
+        //If the game is quit and the weapon list is empty, set the current weapon to null.
+        if (WE.weaponList.Count == 0)
         {
+            WE.currentWeapon = null;
             playerWeapon.SetActive(false); //Remove weapon from player's hands.
-            WE.holdingSkull = false;
+        }
+        else if (WE.weaponList.Count > 0 && !cbWon)
+        {
+            //Re-equip the weapon that was held before playing new minigame.
+            if (saveCurrentWeapon != null)
+            {
+                WE.currentWeapon = saveCurrentWeapon;
+                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                WE.currentWeapon.SetActive(true); //Show the last held weapon
+            }
         }
 
 
-        //-----Intensity effects-----
-        if (score >= 1 && score < casketList.Count) //if score is within range
+//-----Intensity effects-----
+if (score >= 1 && score < casketList.Count) //if score is within range
         {
             if(tentAudio.clip != CBSpook) //if the sfx isn't playing (to prevent infinite loop)
             {

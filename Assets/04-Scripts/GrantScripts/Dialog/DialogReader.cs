@@ -55,7 +55,7 @@ public class DialogReader : MonoBehaviour
                 if (TextAnimator != null) //as long as we have an animator component on the DialogArea object...
                 {
                     SpokenText.text = currentDialog.spokenDialog; //input the dialog from the holder into the SpokenDialog text.
-                    GuideText.text = currentDialog.guideDialog; //input the dialog from the holder into the GuideDialog text.
+                    //GuideText.text = currentDialog.guideDialog; //input the dialog from the holder into the GuideDialog text.
                     textFadeOutTime = currentDialog.fadeOutTime; //input the amount of time for the text to fade out.
                     TextAnimator.SetTrigger("FadeIn"); //tell the animator to start fading the text box in.
                     StopCoroutine("FadeTimer"); //stop the timer in case it was already running
