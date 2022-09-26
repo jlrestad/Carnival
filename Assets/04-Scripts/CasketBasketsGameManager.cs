@@ -86,10 +86,27 @@ public class CasketBasketsGameManager : GameBooth
             //1. Hide weapon, if holding one, before holding this game's weapon, & disable the active Tarot card for it.
             if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
             {
-                weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon); //Get index of current weapon
-                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false; //Hide the tarot of current weapon
-                WE.currentWeapon.SetActive(false); //Hide the weapon
+                //DisablePreviousActiveCard();
+
+                //Get the index of the current weapon that isnt this game's weapon so it can be disabled.
+                weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon);
+                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false;
+                WE.currentWeapon.SetActive(false);
                 saveCurrentWeapon = WE.currentWeapon; //Store this so it can be equipped
+            }
+
+            //2. Equip this game's weapon & assign to current weapon
+            playerWeapon.SetActive(true); //Show player holding weapon
+            playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
+            WE.currentWeapon = playerWeapon;
+            WE.holdingSkull = true;
+
+            //3. Display Proper Tarot if a different weapon was in hand during game start.
+            if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
+            {
+                //EnableGameActiveCard();
+                int index = WE.weaponList.IndexOf(playerWeapon); //Get the index of this weapon in the list
+                WE.weaponCards[index].GetComponent<Image>().enabled = true; //Show the Tarot for this weapon
             }
 
             //turn on audio
@@ -113,36 +130,12 @@ public class CasketBasketsGameManager : GameBooth
 
             if (!isRunning)
             {
-                //Hide weapon, if holding one, before holding new weapon.
-                if (WE.currentWeapon != null && WE.currentWeapon != playerWeapon)
-                {
-                    //DisablePreviousActiveCard();
-
-                    //Get the index of the current weapon that isnt this game's weapon so it can be disabled.
-                    weaponListIndex = WE.weaponList.IndexOf(WE.currentWeapon);
-                    WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = false;
-                    WE.currentWeapon.SetActive(false);
-
-                }
-
                 //Game UI
                 scoreText = GetScoreText();
                 timerText = GetTimerText();
                 winLoseText = GetWinLoseText();
 
                 scoreText.text = "SURVIVE";
-
-                //WEAPON - Player holds weapon to play game
-                playerWeapon.SetActive(true); //Show player holding weapon
-                playerWeapon.transform.GetChild(0).gameObject.SetActive(true); //Show player holding weapon
-                WE.currentWeapon = playerWeapon;
-                WE.holdingSkull = true;
-
-                //Display Proper Tarot if a different weapon was in hand during game start.
-                if (WE.haveSkull /*&& WE.currentWeapon != playerWeapon*/)
-                {
-                    EnableGameActiveCard();
-                }
 
                 if (!isPaused)
                 {
@@ -154,40 +147,43 @@ public class CasketBasketsGameManager : GameBooth
         {
             GameEnd();
 
-            if (!cbWon)
+            if (showLostText)
             {
+                if (!cbWon)
+                {
+                    playerWeapon.SetActive(false); //Remove weapon from player's hands.
+                    WE.holdingSkull = false;
+
+                    //If the game is lost and player has weapons, re-equip the last held weapon.
+                    if (WE.weaponList.Count > 0)
+                    {
+                        WE.currentWeapon = saveCurrentWeapon;
+                        WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                        WE.currentWeapon.SetActive(true); //Show the last held weapon
+                    }
+                }
+            }
+            //If the game is quit and the weapon list is empty, set the current weapon to null.
+            if (WE.weaponList.Count == 0)
+            {
+                WE.currentWeapon = null;
                 playerWeapon.SetActive(false); //Remove weapon from player's hands.
-                WE.holdingSkull = false;
             }
-            //If the game is lost and player has weapons, re-equip the last held weapon.
-            if (WE.weaponList.Count > 0)
+            else if (WE.weaponList.Count > 0 && !cbWon)
             {
-                WE.currentWeapon = saveCurrentWeapon;
-                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
-                WE.currentWeapon.SetActive(true); //Show the last held weapon
+                //Re-equip the weapon that was held before playing new minigame.
+                if (saveCurrentWeapon != null)
+                {
+                    playerWeapon.SetActive(false); //Remove weapon from player's hands.
+                    WE.currentWeapon = saveCurrentWeapon;
+                    WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
+                    WE.currentWeapon.SetActive(true); //Show the last held weapon
+                }
             }
         }
 
-        //If the game is quit and the weapon list is empty, set the current weapon to null.
-        if (WE.weaponList.Count == 0)
-        {
-            WE.currentWeapon = null;
-            playerWeapon.SetActive(false); //Remove weapon from player's hands.
-        }
-        else if (WE.weaponList.Count > 0 && !cbWon)
-        {
-            //Re-equip the weapon that was held before playing new minigame.
-            if (saveCurrentWeapon != null)
-            {
-                WE.currentWeapon = saveCurrentWeapon;
-                WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
-                WE.currentWeapon.SetActive(true); //Show the last held weapon
-            }
-        }
-
-
-//-----Intensity effects-----
-if (score >= 1 && score < casketList.Count) //if score is within range
+        //-----Intensity effects-----
+        if (score >= 1 && score < casketList.Count) //if score is within range
         {
             if(tentAudio.clip != CBSpook) //if the sfx isn't playing (to prevent infinite loop)
             {

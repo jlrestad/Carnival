@@ -38,6 +38,11 @@ public class Gun : MonoBehaviour
     }
     void Update()
     {
+        if (WeaponEquip.Instance.gunHold.activeInHierarchy)
+        {
+            canShoot = true;
+        }
+
         if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
         {
             //StartCoroutine(BurstFire());

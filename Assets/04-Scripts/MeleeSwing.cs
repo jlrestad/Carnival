@@ -86,114 +86,116 @@ public class MeleeSwing : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
-
             //Physically swing the mallet.
             StartCoroutine(SwingMallet());
-
-            //Send a raycast out from the player as far as the range.
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, range))
-            {
-                //Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
-
-                //Debug.Log(hit.distance);
-                //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
-
-                Transform target = hit.collider.GetComponent<Transform>(); //For breakable
-                CritterEnemy enemy = hit.transform.GetComponent<CritterEnemy>();
-                CarnivalSmashGameManager carnivalsmashGM = hit.transform.GetComponentInParent<CarnivalSmashGameManager>();
-
-                enemyCollider = hit.collider;
-                
-
-                //FOR BREAKABLES
-                if (target != null && target.CompareTag("CrateBreakable"))
-                {
-                    //Swap unbroken for broken
-                    Instantiate(brokenCrate, target.transform.position, target.transform.rotation);
-                    Destroy(target.gameObject);
-                }
-                if (target.CompareTag("CrateBroken"))
-                {
-                    //Add force to the broken object rigidbody
-                    hit.rigidbody.AddForce(target.up * force);
-                }
-                //
-                if (target != null && target.CompareTag("BottleBreakable"))
-                {
-                    //Swap unbroken for broken
-                    Instantiate(brokenBottle, target.transform.position, target.transform.rotation);
-                    Destroy(target.gameObject);
-                }
-
-                //FOR CRITTERS
-                if (target != null && enemy)
-                {
-                    //Show hit VFX to let player know it has been hit.
-                    GameObject hitVfx = Instantiate(hitEnemyVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
-                    Destroy(hitVfx, 0.5f);
-
-                    enemy.hasBeenHit = true;
-
-                    hitEnemySound.Play();
-
-                    //Turn off enemy after hit
-                    enemy.HitEnemy();
-
-                    //Increase speed after each hit
-                    carnivalsmashGM.IncreaseSpeed();
-
-                   
-                    //Add to the score
-                    if (!carnivalsmashGM.isTaunting)
-                    {
-                        carnivalsmashGM.score++;
-                    }
-                }
-                else if (hit.collider && !enemy)
-                {
-                    //Show hit VFX to let player know something has been hit.
-                    GameObject hitVfx = Instantiate(hitColliderVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
-                    Destroy(hitVfx, 0.5f);
-                }
-
-                //FOR BOSS
-                //if minigames won and boss is active run this loop
-                // replace if line with this line after we don't need boss AI scene anymore
-                // if (skillshotGM.gameWon && whackemGM.gameWon && boss.activeInHierarchy)
-
-                //*** CODE FOR BOSS APPEARANCE ***  
-                //if (ssWon && csWon && boss.activeInHierarchy)
-                //{
-                //    Debug.Log("BossAI melee");
-                //    //this part for Boss fight
-                //    //continualy find boss critters && find the object hold for bossAI fight
-                //    bossCritters = FindObjectsOfType<BossCritterBehaviors>();
-                //    Transform hld = hold.transform;
-
-                //    if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
-                //    {
-                //        Debug.Log("Hit: " + hit.collider.name);
-                //        BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
-                //        bossCritter.hasBeenHit = true;
-                //    }
-                //}
-                //else
-                //{
-                //this part for CS game
-                //Get raycast hit information and use it to calculate damage
-                //Look into spherecast to see if this will be better 
-
-            }
+            
         }
     }
 
+    IEnumerator MalletHit()
+    {
+    //Send a raycast out from the player as far as the range.
+    if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, range))
+    {
+        //Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.green); //Draw a line to show the direction of the raycast.
+
+        //Debug.Log(hit.distance);
+        //Debug.Log(hit.transform.name); //Return the name of what the raycast hit.
+
+        Transform target = hit.collider.GetComponent<Transform>(); //For breakable
+        CritterEnemy enemy = hit.transform.GetComponent<CritterEnemy>();
+        CarnivalSmashGameManager carnivalsmashGM = hit.transform.GetComponentInParent<CarnivalSmashGameManager>();
+
+        enemyCollider = hit.collider;
+
+        //FOR BREAKABLES
+        if (target != null && target.CompareTag("CrateBreakable"))
+        {
+            //Swap unbroken for broken
+            Instantiate(brokenCrate, target.transform.position, target.transform.rotation);
+            Destroy(target.gameObject);
+        }
+        if (target.CompareTag("CrateBroken"))
+        {
+            //Add force to the broken object rigidbody
+            hit.rigidbody.AddForce(target.up * force);
+        }
+        //
+        if (target != null && target.CompareTag("BottleBreakable"))
+        {
+            //Swap unbroken for broken
+            Instantiate(brokenBottle, target.transform.position, target.transform.rotation);
+            Destroy(target.gameObject);
+        }
+
+        //FOR CRITTERS
+        if (target != null && enemy)
+        {
+            yield return new WaitForSeconds(0.2f);
+            //Show hit VFX to let player know it has been hit.
+            GameObject hitVfx = Instantiate(hitEnemyVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
+            Destroy(hitVfx, 0.5f);
+
+            enemy.hasBeenHit = true;
+
+            hitEnemySound.Play();
+
+            //Turn off enemy after hit
+            enemy.HitEnemy();
+
+            //Increase speed after each hit
+            carnivalsmashGM.IncreaseSpeed();
+
+
+            //Add to the score
+            if (!carnivalsmashGM.isTaunting)
+            {
+                carnivalsmashGM.score++;
+            }
+        }
+        else if (hit.collider && !enemy)
+        {
+            //Show hit VFX to let player know something has been hit.
+            GameObject hitVfx = Instantiate(hitColliderVFX, VFXSpawnPoint.transform.position, Quaternion.identity);
+            Destroy(hitVfx, 0.5f);
+        }
+
+            //FOR BOSS
+            //if minigames won and boss is active run this loop
+            // replace if line with this line after we don't need boss AI scene anymore
+            // if (skillshotGM.gameWon && whackemGM.gameWon && boss.activeInHierarchy)
+
+            //*** CODE FOR BOSS APPEARANCE ***  
+            //if (ssWon && csWon && boss.activeInHierarchy)
+            //{
+            //    Debug.Log("BossAI melee");
+            //    //this part for Boss fight
+            //    //continualy find boss critters && find the object hold for bossAI fight
+            //    bossCritters = FindObjectsOfType<BossCritterBehaviors>();
+            //    Transform hld = hold.transform;
+
+            //    if (Physics.Raycast(hld.position, hld.forward, out hit, bossRange))
+            //    {
+            //        Debug.Log("Hit: " + hit.collider.name);
+            //        BossCritterBehaviors bossCritter = hit.transform.GetComponent<BossCritterBehaviors>();
+            //        bossCritter.hasBeenHit = true;
+            //    }
+            //}
+            //else
+            //{
+            //this part for CS game
+            //Get raycast hit information and use it to calculate damage
+            //Look into spherecast to see if this will be better 
+        }
+
+    }
     IEnumerator SwingMallet()
     {
         //Keep player from clicking the card screen off by accident. 
         if (CarnivalSmashGameManager.Instance.displayScreen.activeInHierarchy)
         {
             canSwing = false;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.1f);
             canSwing = true;
         }
 
@@ -202,10 +204,12 @@ public class MeleeSwing : MonoBehaviour
         swingTrailVFX.emitting = true; //Only emit when the mallet is swung.
         canSwing = false;
 
-        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(MalletHit()); //* Allows multiple hits. Need to fix.
 
-        //transform.Rotate(Vector3.right, -60f);
+        yield return new WaitForSeconds(1.1f);
+
         canSwing = true;
+
         animator.SetBool("Swing", false);
 
         yield return new WaitForSeconds(0.5f);

@@ -133,6 +133,7 @@ public class SkillShotGameManager : GameBooth
                 //Re-equip the weapon that was held before playing new minigame.
                 if (saveCurrentWeapon != null)
                 {
+                    playerWeapon.SetActive(false); //Remove weapon from player's hands.
                     WE.currentWeapon = saveCurrentWeapon;
                     WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
                     WE.currentWeapon.SetActive(true); //Show the last held weapon

@@ -93,7 +93,7 @@ public class Menu : MonoBehaviour
         GM = GameManager.Instance;
         GM.OnStateChange += HandleOnStateChange;
 
-        if (controllerArray != null || controllerArray[0] == "")
+        if (controllerArray != null)
             controllerArray = Input.GetJoystickNames();
     }
 
@@ -104,9 +104,6 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        //Add the joystick to the array if there is one.
-        if (controllerArray == null || controllerArray[0] == "") { controllerArray = Input.GetJoystickNames(); }
-
         //Find these scripts if they haven't been found yet.
         if (carnivalSmashGM == null)
             carnivalSmashGM = FindObjectOfType<CarnivalSmashGameManager>();
@@ -135,7 +132,7 @@ public class Menu : MonoBehaviour
         }
 
         //DETECT CONTROLLER
-        if (controllerArray == null || controllerArray[0] == "")
+        if (controllerArray == null /*|| controllerArray[0] == ""*/)
         {
             usingJoystick = false;
             //Show cursor
