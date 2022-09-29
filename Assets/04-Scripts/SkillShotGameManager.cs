@@ -117,7 +117,11 @@ public class SkillShotGameManager : GameBooth
                 //If the game is lost and player has weapons, re-equip the last held weapon.
                 if (WE.weaponList.Count > 0)
                 {
-                    WE.currentWeapon = saveCurrentWeapon; //Assign current weapon to the previously held weapon.
+                    if (saveCurrentWeapon != null)
+                    {
+                        WE.currentWeapon = saveCurrentWeapon; //Assign current weapon to the previously held weapon.
+                    }
+
                     WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
                     WE.currentWeapon.SetActive(true); //Show player holding the weapon.
                 }

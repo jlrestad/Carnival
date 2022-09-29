@@ -15,7 +15,7 @@ public class MeleeSwing : MonoBehaviour
     CharacterController characterController;
     Animator animator;
 
-    public bool canSwing;
+    public bool canSwing = true;
     [SerializeField] float force = 10.0f;
     [HideInInspector] RaycastHit hit;
 
@@ -57,14 +57,14 @@ public class MeleeSwing : MonoBehaviour
 
     private void Start()
     {
+        canSwing = true;
+
         //Initialize
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerCamera = player.GetComponentInChildren<Camera>();
         characterController = player.GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         swingTrailVFX = GetComponentInChildren<TrailRenderer>();
-
-        canSwing = true;
 
         //spawnerManager = FindObjectOfType<CritterSpawnerManager>();
         //skillshotGM = FindObjectOfType<SkillShotGameManager>();
@@ -85,7 +85,7 @@ public class MeleeSwing : MonoBehaviour
         //if (skillshotGM.gameWon) ssWon = true;
         //if (whackemGM.gameWon) csWon = true;
 
-        if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
+        if (Input.GetButtonDown("Fire1") && canSwing|| Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
             canSwing = true;
 
@@ -93,6 +93,17 @@ public class MeleeSwing : MonoBehaviour
             StartCoroutine(SwingMallet());
             
         }
+        else
+        {
+            //Idle animation when not swinging the mallet.
+            animator.SetBool("Swing", false);
+        }
+    }
+
+    //Called from CS game menu on Play button press.
+    public void SetSwing()
+    {
+        canSwing = true;
     }
 
     IEnumerator MalletHit()
@@ -194,31 +205,27 @@ public class MeleeSwing : MonoBehaviour
     }
     IEnumerator SwingMallet()
     {
-        //if (CarnivalSmashGameManager.Instance.displayScreen.activeInHierarchy)
-        //{
-        //    canSwing = false;
-        //    yield return new WaitForSeconds(1.2f);
-        //    canSwing = true;
-        //}
-
-        //transform.Rotate(Vector3.right, 60f);
         animator.SetBool("Swing", true);
-        swingTrailVFX.emitting = true; //Only emit when the mallet is swung.
-        swingSound.Play();  
+        swingSound.Play();
         canSwing = false;
 
-        StartCoroutine(MalletHit()); //* Allows multiple hits. Need to fix.
-
+        StartCoroutine(SwingFX());
+        StartCoroutine(MalletHit());
+            
         yield return new WaitForSeconds(1.1f);
 
         canSwing = true;
+    }
 
-        animator.SetBool("Swing", false);
+    IEnumerator SwingFX()
+    {
+        swingTrailVFX.emitting = true; //Only emit when the mallet is swung.
 
         yield return new WaitForSeconds(0.5f);
 
         swingTrailVFX.emitting = false; //Don't allow emit during idle.
     }
+        
 
     //void MeleeAttack()
     //{

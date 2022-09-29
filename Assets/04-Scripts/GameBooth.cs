@@ -242,11 +242,11 @@ public class GameBooth : MonoBehaviour
         Menu.Instance.counter = -1;
 
         //Switch look movement to the left stick when playing a minigame. More intuitive and easier to access buttons.
-        if (Menu.Instance.usingJoystick)
-        {
-            FPSController.Instance.xInput = "Mouse X2";
-            FPSController.Instance.yInput = "Mouse Y2";
-        }
+        //if (Menu.Instance.usingJoystick)
+        //{
+        //    FPSController.Instance.xInput = "Mouse X2";
+        //    FPSController.Instance.yInput = "Mouse Y2";
+        //}
 
         if (!gameOn)
         {
@@ -325,11 +325,11 @@ public class GameBooth : MonoBehaviour
         Menu.Instance.counter = 0;
 
         //Switch the look rotation back to default.
-        if (Menu.Instance.usingJoystick)
-        {
-            FPSController.Instance.xInput = "Mouse X";
-            FPSController.Instance.yInput = "Mouse Y";
-        }
+        //if (Menu.Instance.usingJoystick)
+        //{
+        //    FPSController.Instance.xInput = "Mouse X";
+        //    FPSController.Instance.yInput = "Mouse Y";
+        //}
 
         //Reset bools
         gameOn = false;

@@ -145,7 +145,11 @@ public class CarnivalSmashGameManager : GameBooth
                 }
                 if (WE.weaponList.Count > 0)
                 {
-                    WE.currentWeapon = saveCurrentWeapon; //Assign current weapon to the previously held weapon.
+                    if (saveCurrentWeapon != null)
+                    {
+                        WE.currentWeapon = saveCurrentWeapon; //Assign current weapon to the previously held weapon.
+                    }
+
                     WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
                     WE.currentWeapon.SetActive(true); //Show the last held weapon
                 }
