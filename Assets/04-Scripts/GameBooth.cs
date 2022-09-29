@@ -347,6 +347,7 @@ public class GameBooth : MonoBehaviour
         score = 0;
         timeLeft = timeCounter;
         if (winLoseText != null) { winLoseText.text = ""; }
+        if (WE.weaponList.Count > 0) { WE.isEquipped = true; }
 
         StartCoroutine(ShutDownGameMusicAndLights());
         HideCursor();

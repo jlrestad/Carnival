@@ -182,7 +182,7 @@ public class SkillShotGameManager : GameBooth
     {
         int i = 0;
 
-        while (i < pooledTargets.Count && gameOn)
+        while (i < pooledTargets.Count && gameOn && !isPaused)
         {
             pooledTargets[i].SetActive(true);
             pooledTargets[i].transform.Translate(direction * Vector3.right * (moveSpeed * Time.deltaTime), Space.Self);

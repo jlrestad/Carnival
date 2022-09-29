@@ -26,6 +26,7 @@ public class MeleeSwing : MonoBehaviour
     [Header("AUDIO")]
     [SerializeField] AudioSource hitEnemySound; //Sound played when enemy is hit
     [SerializeField] AudioSource hitColliderSound; //Sound played when collider is hit
+    [SerializeField] AudioSource swingSound; //Swoosh sound when mallet is swung
 
     [Header("SPAWNED OBJECTS")]
     [SerializeField] GameObject brokenCrate; //Broken crate prefab
@@ -74,10 +75,10 @@ public class MeleeSwing : MonoBehaviour
     private void Update()
     {
         //Fix Mallet not being able to swing when a new game is won or lost while holding the mallet.
-        if (WeaponEquip.Instance.malletHold.activeInHierarchy)
-        {
-            canSwing = true;
-        }
+        //if (WeaponEquip.Instance.malletHold.activeInHierarchy)
+        //{
+        //    canSwing = true;
+        //}
 
         //can remove from full game.
         // need to comment these two lines when in boss AI scene, and check the boxes for these bools in the inspector
@@ -86,6 +87,8 @@ public class MeleeSwing : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && canSwing || Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
+            canSwing = true;
+
             //Physically swing the mallet.
             StartCoroutine(SwingMallet());
             
@@ -191,17 +194,17 @@ public class MeleeSwing : MonoBehaviour
     }
     IEnumerator SwingMallet()
     {
-        //Keep player from clicking the card screen off by accident. 
-        if (CarnivalSmashGameManager.Instance.displayScreen.activeInHierarchy)
-        {
-            canSwing = false;
-            yield return new WaitForSeconds(1.1f);
-            canSwing = true;
-        }
+        //if (CarnivalSmashGameManager.Instance.displayScreen.activeInHierarchy)
+        //{
+        //    canSwing = false;
+        //    yield return new WaitForSeconds(1.2f);
+        //    canSwing = true;
+        //}
 
         //transform.Rotate(Vector3.right, 60f);
         animator.SetBool("Swing", true);
         swingTrailVFX.emitting = true; //Only emit when the mallet is swung.
+        swingSound.Play();  
         canSwing = false;
 
         StartCoroutine(MalletHit()); //* Allows multiple hits. Need to fix.

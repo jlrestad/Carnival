@@ -141,12 +141,11 @@ public class CarnivalSmashGameManager : GameBooth
                 StartCoroutine(ShutDownGameMusicAndLights());
                 if (!csWon)
                 {
-                    WE.haveSkull = false;
                     playerWeapon.SetActive(false); //Remove weapon from player's hands.
                 }
                 if (WE.weaponList.Count > 0)
                 {
-                    WE.currentWeapon = saveCurrentWeapon;
+                    WE.currentWeapon = saveCurrentWeapon; //Assign current weapon to the previously held weapon.
                     WE.weaponCards[weaponListIndex].GetComponent<Image>().enabled = true; //Show the tarot of last held weapon
                     WE.currentWeapon.SetActive(true); //Show the last held weapon
                 }
@@ -155,7 +154,6 @@ public class CarnivalSmashGameManager : GameBooth
             if (WE.weaponList.Count == 0)
             {
                 WE.currentWeapon = null;
-                WE.haveSkull = false;
                 playerWeapon.SetActive(false); //Remove weapon from player's hands.
             }
             else if (WE.weaponList.Count > 0 && !csWon) 

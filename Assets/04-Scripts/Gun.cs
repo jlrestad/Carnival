@@ -40,33 +40,37 @@ public class Gun : MonoBehaviour
     {
         if (WeaponEquip.Instance.gunHold.activeInHierarchy)
         {
-            canShoot = true;
+            //canShoot = true;
         }
 
-        if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0 && canShoot)
+        if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0f && canShoot)
         {
+            canShoot = true;
             //StartCoroutine(BurstFire());
+            //Shoot();
+
             StartCoroutine(GetTriggerUse());
         }
 
-        if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") < 0.1f)
-        {
-            muzzleLight.GetComponent<Light>().enabled = false;
-        }
-        else
-        {
-            return;
-        }
+        //if (Input.GetButtonUp("Fire1") || Input.GetAxis("RtTrigger") < 0.1f)
+        //{
+        //    muzzleLight.GetComponent<Light>().enabled = false;
+        //}
+        //else
+        //{
+        //    return;
+        //}
     }
 
     //Used to control Joystick trigger from the ability to spam fire.
     IEnumerator GetTriggerUse()
     {
-        //if (Input.GetAxis("RtTrigger") > 0 || Input.GetButtonDown("Fire1"))
+        //if (Input.GetAxis("RtTrigger") < 0.5f)
         //{
             Shoot();
+
             canShoot = false;
-            yield return new WaitForSeconds(coolDown);
+            yield return new WaitForSeconds(0.3f);
             canShoot = true;
         //}
     }
@@ -98,6 +102,7 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
+        canShoot = false;
         //Turn on the light effect
         muzzleLight.GetComponent<Light>().enabled = true;
         muzzleFlash.Play();

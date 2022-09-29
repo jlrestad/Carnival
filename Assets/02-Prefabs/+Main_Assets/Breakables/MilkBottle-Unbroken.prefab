@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4124257022240691612}
   - component: {fileID: 3418786326511599715}
   - component: {fileID: 8868078781728451652}
+  - component: {fileID: 6480642401672441004}
   m_Layer: 0
   m_Name: MilkBottle-Unbroken
   m_TagString: BottleBreakable
@@ -109,7 +110,20 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.17
-  m_Height: 0.55
+  m_Radius: 0.12
+  m_Height: 0.45
   m_Direction: 1
-  m_Center: {x: 0.0000000037252903, y: 0.20837623, z: -0.000000011175871}
+  m_Center: {x: 0.0000000037252903, y: 0.22, z: -0.000000011175871}
+--- !u!65 &6480642401672441004
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2467041967180002377}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.43, z: 0.1}
+  m_Center: {x: 0.0000000037252903, y: 0.21, z: -0.000000011175871}
