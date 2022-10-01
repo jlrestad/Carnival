@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class CasketManager : MonoBehaviour
 {
@@ -113,6 +114,13 @@ public class CasketManager : MonoBehaviour
             myAudio.Stop();
             myAudio.PlayOneShot(CBStop);
         }
+
+        if (!CasketBasketsGameManager.Instance.gameOn)
+        {
+            animator.SetBool("open", false);
+            animator.SetBool("shaking", false);
+            CasketBasketsGameManager.Instance.score = 0;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -120,6 +128,8 @@ public class CasketManager : MonoBehaviour
         //if this object is a trigger area inside the coffin, the coffin is open, and a "head" object enters the trigger area...
         if(isOpen && gameObject.tag == "Goal" && other.gameObject.tag == "Head")
         {
+            CasketBasketsGameManager.Instance.RegisterHit();
+
             CloseFinish(); //close the casket and activate the functions for when the player gets a hit.
             hitSkull = other.gameObject.GetComponent<Head>(); //save a reference to this object so it can be disabled later.
             if (hitSkull == null) Debug.LogWarning("Skull was missing a 'Head' script. May not behave correctly.");
@@ -173,9 +183,9 @@ public class CasketManager : MonoBehaviour
 
         isOpen = false;
         
-        CasketBasketsGameManager.Instance.score -= 1; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
+        //CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
         //Debug.Log("Coffin Hit");
-        CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
+        //CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
     }
 
     //--------------------------------------------------|OpenFinish|
@@ -229,15 +239,18 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|CoffinReset|
     public void CoffinReset()
     {
-        StopAllCoroutines();
         currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
         animator.SetBool("open", false);
+        animator.SetBool("shaking", false);
 
         canOpen = true;
         isOpen = false;
         currentSpeed = baseMoveSpeed; //set speed to base
         currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
         currentClosedTimer = closedTimer; //set closed timer to base
+
+        CasketBasketsGameManager.Instance.score = 0;
+        StopAllCoroutines();
     }
     #endregion
     //==================================================

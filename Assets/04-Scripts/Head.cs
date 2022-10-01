@@ -57,7 +57,10 @@ public class Head : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && WE.holdingSkull || Input.GetAxis("RtTrigger") > 0 && WE.holdingSkull && canThrow)
         {
             //Debug.Log("this code is reachable");
-            ThrowSkull();
+            //ThrowSkull();
+
+            //canThrow = true;
+
             StartCoroutine(GetTriggerUse());
         }
     }
@@ -69,7 +72,7 @@ public class Head : MonoBehaviour
         //For Casket Baskets game
         if (other.CompareTag("Goal"))
         {
-            //If skull hits the bucket then hide it from the scene.
+            //If skull hits the casket then close the doors.
             //WE.skull.SetActive(false);
         }
 
@@ -88,13 +91,13 @@ public class Head : MonoBehaviour
     //Used to control Joystick trigger from the ability to spam fire.
     IEnumerator GetTriggerUse()
     {
-        if (Input.GetAxis("RtTrigger") > 0)
-        {
-            canThrow = false;
-            yield return new WaitForSeconds(0.1f);
-            canThrow = true;
-        }
+        ThrowSkull();
+
+        //canThrow = false;
+        yield return new WaitForSeconds(1.0f);
+        canThrow = true;
     }
+
     public void SetSkullWeapon()
     {
         WE.currentWeapon = skullParent.gameObject; //Set current weapon
@@ -102,7 +105,6 @@ public class Head : MonoBehaviour
         WE.skull.SetActive(true); //Make the skull visible
 
         WE.holdingSkull = true;
-        //WE.inInventory = false;
     }
 
     //
@@ -110,7 +112,7 @@ public class Head : MonoBehaviour
     public void ThrowSkull()
     {
         //Debug.Log("Skull Thrown");
-
+        canThrow = false;
         skull.transform.parent = null; //Detach from parent
        
         //Use gravity so the skull can use physics movement

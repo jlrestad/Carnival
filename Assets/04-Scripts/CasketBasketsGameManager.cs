@@ -119,8 +119,10 @@ public class CasketBasketsGameManager : GameBooth
             StartCoroutine(WinLoseDisplay());
 
             //Timer
-            if (isRunning)
+            if (isRunning) 
+            { 
                 StartCoroutine(CountDownTimer());
+            }
 
             //Pause
             if (Input.GetButtonDown("Menu")) //pausing during minigame
@@ -193,7 +195,7 @@ public class CasketBasketsGameManager : GameBooth
             }
             
         }
-        else if(score <= 0 && tentAudio.clip == CBSpook)
+        else if(score == 0 && tentAudio.clip == CBSpook)
         {
             tentAudio.clip = null;
         }
@@ -252,7 +254,6 @@ public class CasketBasketsGameManager : GameBooth
         foreach(CasketManager CM in casketList)
         {
             CM.CoffinReset(); //reset each coffin to its original state
-            score = 0; //reset score to zero
         }
 
         isRunning = false; //stop the coffin movement
@@ -260,6 +261,7 @@ public class CasketBasketsGameManager : GameBooth
         if (gameWon)
         {
             WinTickets(3, 1);
+            ResetGame();
 
             //* When game is played after being won, this will keep the win description screen from being displayed again.
             if (!cbWon)
@@ -292,14 +294,15 @@ public class CasketBasketsGameManager : GameBooth
                 tentAudio.enabled = false;
             }
         }
-        
-        //FPSController.Instance.gameOn = false;
-
     }
 
     //--------------------------------------------------|RegisterHit|
     public void RegisterHit()
     {
+        score--;
+
+        //if (score < 0) { score = 0; }
+
         foreach (CasketManager CM in casketList)
         {
             //Make the game harder by speeding things up a tiny bit
@@ -313,16 +316,17 @@ public class CasketBasketsGameManager : GameBooth
         }
     }
     //--------------------------------------------------|PickCoffin|
-    public void PickCoffin()
-    {
-        //StopCoroutine(PickTimer()); //stops the coroutine this was called from in order to prevent infinite looping.
-        if (!isPaused)
-        {
-            int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
-            casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
-            StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
-        }
-    }
+    //PickCoffin data added to PickTimer() in order to simplify the code.
+    //public void PickCoffin()
+    //{
+    //    //StopCoroutine(PickTimer()); //stops the coroutine this was called from in order to prevent infinite looping.
+    //    if (!isPaused)
+    //    {
+    //        int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
+    //        casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
+    //        StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
+    //    }
+    //}
     #endregion
 
     //==================================================
@@ -334,16 +338,17 @@ public class CasketBasketsGameManager : GameBooth
         tentAudio.Stop();
         tentAudio.PlayOneShot(CBSpookFail);
         yield return new WaitForSeconds(2); //let the lose FX play
-        //GameEnd(); //* being called in the update...
-        //ResetGame(); //end the game //* This doesn't seem to be doing anything. Moved it to the bottom of GameEnd().
     }
 
     public IEnumerator PickTimer()
     {
-        if(isRunning)
+        if(isRunning && !isPaused)
         {
             yield return new WaitForSeconds(coffinPickerWaitTime);
-            PickCoffin();
+         
+            int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
+            casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
+            StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
         }
     }
     #endregion
