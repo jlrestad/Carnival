@@ -22,6 +22,7 @@ public class Gun : MonoBehaviour
     [HideInInspector] public RaycastHit hit;
 
     [SerializeField] bool canShoot = true;
+    bool usingGun;
 
     public GameObject brokenBottle;
     public AudioSource shootAudio;
@@ -35,17 +36,19 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         canShoot = true;
+        usingGun = WeaponEquip.Instance.gunHold.activeInHierarchy;
     }
     void Update()
     {
-        if (WeaponEquip.Instance.gunHold.activeInHierarchy)
+        if (usingGun)
         {
-            //canShoot = true;
+            canShoot = true;
+            usingGun = false;
         }
 
         if (Input.GetButtonDown("Fire1") && canShoot || Input.GetAxis("RtTrigger") > 0f && canShoot)
         {
-            canShoot = true;
+            //canShoot = true;
             //StartCoroutine(BurstFire());
             //Shoot();
 
@@ -98,11 +101,12 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
 
         muzzleLight.GetComponent<Light>().enabled = false;
+        //canShoot = true;
     }
 
     void Shoot()
     {
-        canShoot = false;
+        //canShoot = false;
         //Turn on the light effect
         muzzleLight.GetComponent<Light>().enabled = true;
         muzzleFlash.Play();

@@ -240,7 +240,7 @@ public class GameBooth : MonoBehaviour
     {
         isPaused = false;
         Menu.Instance.counter = -1;
-
+        
         //Switch look movement to the left stick when playing a minigame. More intuitive and easier to access buttons.
         //if (Menu.Instance.usingJoystick)
         //{
@@ -306,7 +306,7 @@ public class GameBooth : MonoBehaviour
 
             if (minigameAudio.volume == 0)
             {
-                minigameAudio.volume = 0.7f;
+                minigameAudio.volume = 0.4f;
             }
             minigameAudio.Play();
         }
@@ -473,7 +473,7 @@ public class GameBooth : MonoBehaviour
         minigameAudio.Stop();
         Menu.Instance.sceneMusic.enabled = true; //Turn on the game music
 
-        minigameAudio.volume = 0.7f;
+        minigameAudio.volume = 0.4f;
     }
 
     public IEnumerator WinLoseDisplay()

@@ -43,7 +43,7 @@ public class TargetSetActive : MonoBehaviour
     {
         if (flippable)
         {
-            flipTime = UnityEngine.Random.Range(1.0f, 1.5f); //Random time to flip the target.
+            flipTime = UnityEngine.Random.Range(0.75f, 1.25f); //Random time to flip the target.
 
             StartCoroutine(FlipAround());
             if (skillshotGM.isPaused)

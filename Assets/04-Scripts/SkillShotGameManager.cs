@@ -87,7 +87,7 @@ public class SkillShotGameManager : GameBooth
 
             if (gameWon)
             {
-                WinTickets(3, 1);
+                WinTickets(2, 1);
 
                 if (!ssWon)
                 {

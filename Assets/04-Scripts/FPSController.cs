@@ -9,7 +9,7 @@ public class FPSController : MonoBehaviour
 {
     public static FPSController Instance;
 
-    CharacterController characterController;
+    [HideInInspector] public CharacterController characterController;
 
     public WeaponEquip weaponEquip;
 

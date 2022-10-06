@@ -260,7 +260,7 @@ public class CasketBasketsGameManager : GameBooth
 
         if (gameWon)
         {
-            WinTickets(3, 1);
+            WinTickets(2, 1);
             ResetGame();
 
             //* When game is played after being won, this will keep the win description screen from being displayed again.
@@ -271,7 +271,6 @@ public class CasketBasketsGameManager : GameBooth
             }
             else
             {
-                ResetGame();
                 if (tentAudio.enabled)
                 {
                     tentAudio.enabled = false;
@@ -299,7 +298,7 @@ public class CasketBasketsGameManager : GameBooth
     //--------------------------------------------------|RegisterHit|
     public void RegisterHit()
     {
-        score--;
+        //score--;
 
         //if (score < 0) { score = 0; }
 
@@ -342,13 +341,23 @@ public class CasketBasketsGameManager : GameBooth
 
     public IEnumerator PickTimer()
     {
-        if(isRunning && !isPaused)
+        if (isRunning)
         {
-            yield return new WaitForSeconds(coffinPickerWaitTime);
-         
-            int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
-            casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
-            StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
+            if (!isPaused)
+            {
+                yield return new WaitForSeconds(coffinPickerWaitTime);
+
+                int randomCoffin = Random.Range(0, casketList.Count); //pick a random coffin from the list
+                casketList[randomCoffin].AttemptOpen(); //attempt to tell that coffin to open
+                StartCoroutine(PickTimer()); //start the coroutine again to pick another coffin
+            }
+            else
+            {
+                //When the game is paused, wait until it was unpaused and start the coroutine again.
+                yield return new WaitUntil(() => !isPaused);
+
+                StartCoroutine(PickTimer());
+            }
         }
     }
     #endregion

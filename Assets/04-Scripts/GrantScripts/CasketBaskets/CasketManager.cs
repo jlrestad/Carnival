@@ -92,7 +92,7 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|Update|
     private void Update()
     {
-        if(gameObject.transform.position != currentGoal) //if not currently at our goal position...
+        if(transform.position != currentGoal) //if not currently at our goal position...
         {
             //Casket movement will stop when game is paused.
             if (!CasketBasketsGameManager.Instance.isPaused)
@@ -108,7 +108,7 @@ public class CasketManager : MonoBehaviour
                 moving = true; //trigger moving so that this doesn't play every frame
             }
         }
-        else if(gameObject.transform.position == currentGoal && moving) //if we ARE at our goal position and just stopped moving...
+        else if(transform.position == currentGoal && moving) //if we ARE at our goal position and just stopped moving...
         {
             moving = false; //turn off moving so that this doesn't play every frame
             myAudio.Stop();
@@ -121,12 +121,18 @@ public class CasketManager : MonoBehaviour
             animator.SetBool("shaking", false);
             CasketBasketsGameManager.Instance.score = 0;
         }
+
+        //* Doesn't quite work. Sometimes a coffin is closed but isOpen is true. Haven't found the reason why yet.
+        //if (isOpen);
+        //{
+        //    animator.SetBool("open", true);
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //if this object is a trigger area inside the coffin, the coffin is open, and a "head" object enters the trigger area...
-        if(isOpen && gameObject.tag == "Goal" && other.gameObject.tag == "Head")
+        if(other.CompareTag("Head") && isOpen)
         {
             CasketBasketsGameManager.Instance.RegisterHit();
 
@@ -167,7 +173,7 @@ public class CasketManager : MonoBehaviour
     {
         if(canOpen && !isOpen) //if the coffin is closed and the closed timer has run to zero...
         {
-            StartCoroutine("OpenStart");
+            StartCoroutine(OpenStart());
             animator.SetBool("open", false);
             animator.SetBool("shaking", true);
         }
@@ -176,14 +182,15 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|CloseFinish|
     public void CloseFinish()
     {
+        isOpen = false;
+        CasketBasketsGameManager.Instance.score--;
         //animation (close doors)
         animator.SetBool("open", false);
+        animator.SetBool("shaking", false);
 
-        //sfx
-
-        isOpen = false;
-        
+        //* Score is deducted in CBGM.RegisterHit()
         //CasketBasketsGameManager.Instance.score--; //utilize the score variable as a way of tracking how many coffins are currently open. Reduces by one.
+        
         //Debug.Log("Coffin Hit");
         //CasketBasketsGameManager.Instance.RegisterHit(); //tell the parent class that the player scored a hit
     }
@@ -191,13 +198,13 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|OpenFinish|
     public void OpenFinish()
     {
+        isOpen = true;
+
         //animation (open doors)
         animator.SetBool("open", true);
         animator.SetBool("shaking", false);
 
         //sfx
-
-        isOpen = true;
 
         CasketBasketsGameManager.Instance.score++; //utilize the score variable as a way of tracking how many coffins are currently open. Adds one.
     }
@@ -239,18 +246,19 @@ public class CasketManager : MonoBehaviour
     //--------------------------------------------------|CoffinReset|
     public void CoffinReset()
     {
+        canOpen = true;
+        isOpen = false;
+
         currentGoal.y = bottomPosition.transform.position.y; //move to the bottom
         animator.SetBool("open", false);
         animator.SetBool("shaking", false);
 
-        canOpen = true;
-        isOpen = false;
         currentSpeed = baseMoveSpeed; //set speed to base
         currentGoalShiftTime = baseGoalShiftTime; //set goal shift time to base
         currentClosedTimer = closedTimer; //set closed timer to base
 
-        CasketBasketsGameManager.Instance.score = 0;
         StopAllCoroutines();
+        CasketBasketsGameManager.Instance.score = 0;
     }
     #endregion
     //==================================================

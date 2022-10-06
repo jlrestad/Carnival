@@ -35,7 +35,8 @@ public class MeleeSwing : MonoBehaviour
     [SerializeField] TrailRenderer swingTrailVFX; //Gives the appearance of motion.
 
     Vector3 distanceToPlayer;
-    
+    bool usingMallet;
+
     private new Collider enemyCollider;
 
     //for boss fight
@@ -58,6 +59,7 @@ public class MeleeSwing : MonoBehaviour
     private void Start()
     {
         canSwing = true;
+        usingMallet = WeaponEquip.Instance.malletHold.activeInHierarchy;
 
         //Initialize
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -75,10 +77,11 @@ public class MeleeSwing : MonoBehaviour
     private void Update()
     {
         //Fix Mallet not being able to swing when a new game is won or lost while holding the mallet.
-        //if (WeaponEquip.Instance.malletHold.activeInHierarchy)
-        //{
-        //    canSwing = true;
-        //}
+        if (usingMallet)
+        {
+            canSwing = true;
+            usingMallet = false;
+        }
 
         //can remove from full game.
         // need to comment these two lines when in boss AI scene, and check the boxes for these bools in the inspector
@@ -87,7 +90,7 @@ public class MeleeSwing : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && canSwing|| Input.GetAxis("RtTrigger") > 0 && canSwing)
         {
-            canSwing = true;
+            //canSwing = true;
 
             //Physically swing the mallet.
             StartCoroutine(SwingMallet());
